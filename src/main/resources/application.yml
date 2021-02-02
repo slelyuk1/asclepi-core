@@ -1,0 +1,12 @@
+# todo configure logging
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:in_memory_test_db
+    username: test
+    password: test
+
+
+  jpa:
+    open-in-view: false
