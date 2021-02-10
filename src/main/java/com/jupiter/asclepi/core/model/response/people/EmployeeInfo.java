@@ -1,13 +1,12 @@
 package com.jupiter.asclepi.core.model.response.people;
 
-import com.jupiter.asclepi.core.model.entity.people.Role;
 import lombok.Value;
 
 @Value
 public class EmployeeInfo {
-    Integer id;
+    int id;
     String login;
-    Role role;
+    int roleId;
     String name;
     String surname;
     String middleName;
