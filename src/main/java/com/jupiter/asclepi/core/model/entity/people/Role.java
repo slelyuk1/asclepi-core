@@ -2,14 +2,21 @@ package com.jupiter.asclepi.core.model.entity.people;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 @Getter
 public enum Role {
-    ADMINISTRATOR("Administrator"), DOCTOR("Doctor");
+    ADMIN(1), DOCTOR(2);
+    private final int id;
 
-    private final String name;
-    private String description;
+    Role(int id) {
+        this.id = id;
+    }
 
-    Role(String name) {
-        this.name = name;
+    public static Optional<Role> from(int id) {
+        return Arrays.stream(Role.values())
+                .filter(role -> role.id == id)
+                .findAny();
     }
 }
