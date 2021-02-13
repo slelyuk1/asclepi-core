@@ -1,14 +1,112 @@
 = Employee
 
 == Create
-Creates an employee in the system.
 
-=== Request Fields
+=== Description
+
+Creates an employee in the system
+
+==== Request Fields
+
 include::{snippets}/test-successful-employee-creation-request-response-signatures/request-fields.adoc[]
-=== Response Fields
+
+==== Response Fields
+
 include::{snippets}/test-successful-employee-creation-request-response-signatures/response-fields.adoc[]
-=== Request Example
+
+==== Request Example
+
 include::{snippets}/test-successful-employee-creation-request-response-signatures/request-body.adoc[]
-=== Response Example
+
+==== Response Example
+
 include::{snippets}/test-successful-employee-creation-request-response-signatures/response-body.adoc[]
+
+== Edit
+
+=== Description
+
+Edits an employee in the system.
+
+==== Request Fields
+
+include::{snippets}/test-successful-employee-editing-request-response-signatures/request-fields.adoc[]
+
+==== Response Fields
+
+include::{snippets}/test-successful-employee-editing-request-response-signatures/response-fields.adoc[]
+
+==== Request Example
+
+include::{snippets}/test-successful-employee-editing-request-response-signatures/request-body.adoc[]
+
+==== Response Example
+
+include::{snippets}/test-successful-employee-editing-request-response-signatures/response-body.adoc[]
+
+== Delete
+
+=== Description
+
+Deletes an employee from the system.
+
+==== Request Fields
+
+None
+
+==== Response Fields
+
+None
+
+==== Request Example
+
+include::{snippets}/test-successful-employee-deletion-request-response-signatures/request-body.adoc[]
+
+==== Response Example
+
+include::{snippets}/test-successful-employee-deletion-request-response-signatures/response-body.adoc[]
+
+== Get
+
+=== Description
+
+Gets an employee from the system.
+
+==== Request Fields
+
+None
+
+==== Response Fields
+
+include::{snippets}/test-successful-employee-getting-request-response-signatures/response-fields.adoc[]
+
+==== Request Example
+
+include::{snippets}/test-successful-employee-getting-request-response-signatures/request-body.adoc[]
+
+==== Response Example
+
+include::{snippets}/test-successful-employee-getting-request-response-signatures/response-body.adoc[]
+
+== Get All
+
+=== Description
+
+Gets all employees from the system.
+
+==== Request Fields
+
+None
+
+==== Response Fields
+
+include::{snippets}/test-successful-all-employees-getting-request-response-signatures/response-fields.adoc[]
+
+==== Request Example
+
+include::{snippets}/test-successful-all-employees-getting-request-response-signatures/request-body.adoc[]
+
+==== Response Example
+
+include::{snippets}/test-successful-all-employees-getting-request-response-signatures/response-body.adoc[]
 

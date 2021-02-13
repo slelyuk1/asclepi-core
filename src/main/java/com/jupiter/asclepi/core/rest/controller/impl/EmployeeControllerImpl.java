@@ -8,6 +8,7 @@ import com.jupiter.asclepi.core.rest.controller.EmployeeController;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +26,10 @@ public class EmployeeControllerImpl implements EmployeeController {
     private final ConversionService conversionService;
 
     @Override
-    public EmployeeInfo create(CreateEmployeeRequest createRequest) {
+    public ResponseEntity<EmployeeInfo> create(CreateEmployeeRequest createRequest) {
         Employee employee = employeeService.create(createRequest);
-        return conversionService.convert(employee, EmployeeInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(conversionService.convert(employee, EmployeeInfo.class));
     }
 
     @Override

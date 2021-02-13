@@ -3,8 +3,11 @@ package com.jupiter.asclepi.core.model.request.people;
 import com.jupiter.asclepi.core.model.other.Role;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 public class EditEmployeeRequest {
+    @NotNull
     private Integer id;
     private String login;
     private String password;

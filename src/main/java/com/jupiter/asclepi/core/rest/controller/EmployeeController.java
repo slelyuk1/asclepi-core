@@ -13,19 +13,19 @@ public interface EmployeeController extends ControllerCrud<Integer, CreateEmploy
 
     @Override
     @PostMapping("/create")
-    EmployeeInfo create(@RequestBody CreateEmployeeRequest createRequest);
+    ResponseEntity<EmployeeInfo> create(@RequestBody CreateEmployeeRequest createRequest);
 
     @Override
-    @DeleteMapping("/{id}/delete")
-    ResponseEntity<?> delete(@PathVariable("id") Integer id);
+    @DeleteMapping("/{employeeId}")
+    ResponseEntity<?> delete(@PathVariable("employeeId") Integer id);
 
     @Override
     @PostMapping("/edit")
     EmployeeInfo edit(@RequestBody EditEmployeeRequest editRequest);
 
     @Override
-    @GetMapping("/{id}")
-    ResponseEntity<EmployeeInfo> getOne(@PathVariable("id") Integer id);
+    @GetMapping("/{employeeId}")
+    ResponseEntity<EmployeeInfo> getOne(@PathVariable("employeeId") Integer employeeId);
 
     @Override
     @GetMapping("/all")

@@ -54,7 +54,7 @@ public class EmployeeControllerServiceTest {
     @Test
     void testSuccessfulEmployeeCreation() throws Exception {
         this.mockMvc.perform(createEmployeeRequest())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
                     EmployeeInfo employeeInfo = objectMapper.readValue(result.getResponse().getContentAsString(), EmployeeInfo.class);

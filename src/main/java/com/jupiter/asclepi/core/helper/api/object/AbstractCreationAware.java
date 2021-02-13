@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.helper.api.object;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.PrePersist;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -30,5 +31,11 @@ public class AbstractCreationAware<T> implements CreationAware<T> {
     @Override
     public Date getCreatedWhen() {
         return createdWhen;
+    }
+
+    @PrePersist
+    void prePersist() {
+        setCreatedWhen(new Date());
+        // todo set creator
     }
 }
