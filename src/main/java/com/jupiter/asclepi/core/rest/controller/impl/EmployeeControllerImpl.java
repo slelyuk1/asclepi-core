@@ -7,49 +7,59 @@ import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
 import com.jupiter.asclepi.core.rest.controller.EmployeeController;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/employee")
+// todo erroneous situations
 public class EmployeeControllerImpl implements EmployeeController {
 
-    private final EmployeeService service;
+    private final EmployeeService employeeService;
+    private final ConversionService conversionService;
 
     @Override
     public EmployeeInfo create(CreateEmployeeRequest createRequest) {
-        // todo erroneous situations
-        Employee employee = service.create(createRequest);
-        return new EmployeeInfo(employee.getId(), employee.getLogin(), employee.getRole(), employee.getName(), employee.getSurname(),
-                employee.getMiddleName(), employee.getAdditionalInfo());
+        Employee employee = employeeService.create(createRequest);
+        return conversionService.convert(employee, EmployeeInfo.class);
     }
 
     @Override
-    public ResponseEntity<?> delete(Integer deleteRequest) {
-        throw new UnsupportedOperationException("This operation is not implemented yet");
+    public ResponseEntity<?> delete(Integer toDeleteId) {
+        boolean result = employeeService.delete(toDeleteId);
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @Override
     public EmployeeInfo edit(EditEmployeeRequest editRequest) {
-        throw new UnsupportedOperationException("This operation is not implemented yet");
+        Employee employee = employeeService.edit(editRequest);
+        return conversionService.convert(employee, EmployeeInfo.class);
     }
 
     @Override
-    public EmployeeInfo getOne(Integer getRequest) {
-        throw new UnsupportedOperationException("This operation is not implemented yet");
+    public ResponseEntity<EmployeeInfo> getOne(Integer employeeId) {
+        return employeeService.getOne(employeeId)
+                .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override
     public List<EmployeeInfo> getAll() {
-        throw new UnsupportedOperationException("This operation is not implemented yet");
+        return employeeService.getAll().stream()
+                .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
+                .collect(Collectors.toList());
+
     }
 
     @Override
     public EmployeeInfo getOne() {
-        throw new UnsupportedOperationException("This operation is not implemented yet");
+        throw new UnsupportedOperationException("This functionality is not implemented yet!");
     }
 }

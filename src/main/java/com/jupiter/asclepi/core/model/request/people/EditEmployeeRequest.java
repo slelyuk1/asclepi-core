@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class EditEmployeeRequest {
+    private Integer id;
     private String login;
     private String password;
     private Role role;

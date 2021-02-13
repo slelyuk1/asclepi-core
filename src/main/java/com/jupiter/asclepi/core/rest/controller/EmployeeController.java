@@ -25,7 +25,7 @@ public interface EmployeeController extends ControllerCrud<Integer, CreateEmploy
 
     @Override
     @GetMapping("/{id}")
-    EmployeeInfo getOne(@PathVariable("id") Integer id);
+    ResponseEntity<EmployeeInfo> getOne(@PathVariable("id") Integer id);
 
     @Override
     @GetMapping("/all")

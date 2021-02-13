@@ -4,7 +4,7 @@ import com.jupiter.asclepi.core.helper.api.business.shared.*;
 import org.springframework.http.ResponseEntity;
 
 public interface ControllerCrud<GetRequestType, CreateRequestType, EditRequestType, ResponseType> extends
-        Getting<GetRequestType, ResponseType>,
+        Getting<GetRequestType, ResponseEntity<ResponseType>>,
         GettingAll<ResponseType>,
         Creation<CreateRequestType, ResponseType>,
         Editing<EditRequestType, ResponseType>,
