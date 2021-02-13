@@ -8,6 +8,5 @@ public class EditClientRequest {
     private String middleName;
     private String residence;
     private Boolean gender;
-    // todo maybe other class
     private Job job;
 }
