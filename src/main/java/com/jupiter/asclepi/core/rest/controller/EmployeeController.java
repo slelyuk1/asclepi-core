@@ -1,14 +1,15 @@
 package com.jupiter.asclepi.core.rest.controller;
 
-import com.jupiter.asclepi.core.helper.service.api.Crud;
+import com.jupiter.asclepi.core.helper.api.business.controller.ControllerCrud;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public interface EmployeeController extends Crud<Integer, CreateEmployeeRequest, EditEmployeeRequest, EmployeeInfo> {
+public interface EmployeeController extends ControllerCrud<Integer, CreateEmployeeRequest, EditEmployeeRequest, EmployeeInfo> {
 
     @Override
     @PostMapping("/create")
@@ -16,7 +17,7 @@ public interface EmployeeController extends Crud<Integer, CreateEmployeeRequest,
 
     @Override
     @DeleteMapping("/{id}/delete")
-    void delete(@PathVariable("id") Integer id);
+    ResponseEntity<?> delete(@PathVariable("id") Integer id);
 
     @Override
     @PostMapping("/edit")

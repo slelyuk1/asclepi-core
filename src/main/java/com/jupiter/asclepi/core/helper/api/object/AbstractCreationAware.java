@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.helper.object.api;
+package com.jupiter.asclepi.core.helper.api.object;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

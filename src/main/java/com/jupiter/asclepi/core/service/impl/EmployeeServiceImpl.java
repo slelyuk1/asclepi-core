@@ -1,7 +1,6 @@
 package com.jupiter.asclepi.core.service.impl;
 
 import com.jupiter.asclepi.core.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.other.Role;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.EmployeeRepository;
@@ -10,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -33,8 +33,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void delete(Integer deleteRequest) {
-        throw new UnsupportedOperationException("This operation is not implemented yet");
+    public Boolean delete(Integer toDeleteId) {
+        return repository.findById(toDeleteId)
+                .map(toDelete -> {
+                    repository.delete(toDelete);
+                    return true;
+                })
+                .orElse(false);
     }
 
     @Override
@@ -43,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getOne(Integer getRequest) {
+    public Optional<Employee> getOne(Integer getRequest) {
         throw new UnsupportedOperationException("This operation is not implemented yet");
     }
 

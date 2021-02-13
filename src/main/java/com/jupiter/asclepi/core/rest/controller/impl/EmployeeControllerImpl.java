@@ -7,6 +7,7 @@ import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
 import com.jupiter.asclepi.core.rest.controller.EmployeeController;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,13 +22,14 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     @Override
     public EmployeeInfo create(CreateEmployeeRequest createRequest) {
+        // todo erroneous situations
         Employee employee = service.create(createRequest);
         return new EmployeeInfo(employee.getId(), employee.getLogin(), employee.getRole(), employee.getName(), employee.getSurname(),
                 employee.getMiddleName(), employee.getAdditionalInfo());
     }
 
     @Override
-    public void delete(Integer deleteRequest) {
+    public ResponseEntity<?> delete(Integer deleteRequest) {
         throw new UnsupportedOperationException("This operation is not implemented yet");
     }
 

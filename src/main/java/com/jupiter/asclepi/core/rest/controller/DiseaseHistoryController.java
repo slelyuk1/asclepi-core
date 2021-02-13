@@ -4,9 +4,9 @@ import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHisto
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
-import com.jupiter.asclepi.core.helper.service.api.Creation;
-import com.jupiter.asclepi.core.helper.service.api.Editing;
-import com.jupiter.asclepi.core.helper.service.api.Getting;
+import com.jupiter.asclepi.core.helper.api.business.shared.Creation;
+import com.jupiter.asclepi.core.helper.api.business.shared.Editing;
+import com.jupiter.asclepi.core.helper.api.business.shared.Getting;
 
 import java.util.List;
 

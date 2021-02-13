@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.entity.people;
 
-import com.jupiter.asclepi.core.helper.object.api.AbstractCreationAware;
+import com.jupiter.asclepi.core.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.other.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

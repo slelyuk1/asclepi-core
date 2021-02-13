@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.entity.disease;
 
-import com.jupiter.asclepi.core.helper.object.api.AbstractCreationAware;
+import com.jupiter.asclepi.core.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import lombok.Data;
 
