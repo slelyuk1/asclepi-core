@@ -124,12 +124,12 @@ public class EmployeeControllerBusinessTest extends AbstractEmployeeTest {
     }
 
     private void assertEmployeeIsEqualToEmployeeInfo(Employee employee, EmployeeInfo employeeInfo) {
-        Assertions.assertEquals(employeeInfo.getId(), employeeInfo.getId());
-        Assertions.assertEquals(employeeInfo.getLogin(), employeeInfo.getLogin());
-        Assertions.assertEquals(employeeInfo.getName(), employeeInfo.getName());
-        Assertions.assertEquals(employeeInfo.getSurname(), employeeInfo.getSurname());
-        Assertions.assertEquals(employeeInfo.getRole(), employeeInfo.getRole());
-        Assertions.assertEquals(employeeInfo.getMiddleName(), employeeInfo.getMiddleName());
-        Assertions.assertEquals(employeeInfo.getAdditionalInfo(), employeeInfo.getAdditionalInfo());
+        Assertions.assertEquals(employee.getId(), employeeInfo.getId());
+        Assertions.assertEquals(employee.getLogin(), employeeInfo.getLogin());
+        Assertions.assertEquals(employee.getName(), employeeInfo.getName());
+        Assertions.assertEquals(employee.getSurname(), employeeInfo.getSurname());
+        Assertions.assertEquals(employee.getRole(), employeeInfo.getRole());
+        Assertions.assertEquals(employee.getMiddleName(), employeeInfo.getMiddleName());
+        Assertions.assertEquals(employee.getAdditionalInfo(), employeeInfo.getAdditionalInfo());
     }
 }
