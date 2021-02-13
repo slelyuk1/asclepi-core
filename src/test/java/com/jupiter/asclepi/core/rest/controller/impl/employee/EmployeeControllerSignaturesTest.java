@@ -133,6 +133,16 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
     }
 
     @Test
+    void testNonExistentEmployeeGettingRequestResponseSignatures() throws Exception {
+        this.mockMvc.perform(getEmployeeRequest(0))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").doesNotExist())
+                .andDo(document("{method-name}",
+                        pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
+                ));
+    }
+
+    @Test
     void testSuccessfulAllEmployeesGettingRequestResponseSignatures() throws Exception {
         Employee testEmployee = createTestEmployee();
         getEntityManager().persist(testEmployee);

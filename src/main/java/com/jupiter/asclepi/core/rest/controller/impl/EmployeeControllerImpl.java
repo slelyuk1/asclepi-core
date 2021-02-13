@@ -19,12 +19,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/employee")
-// todo erroneous situations
 public class EmployeeControllerImpl implements EmployeeController {
 
     private final EmployeeService employeeService;
     private final ConversionService conversionService;
 
+    // todo erroneous situations
     @Override
     public ResponseEntity<EmployeeInfo> create(CreateEmployeeRequest createRequest) {
         Employee employee = employeeService.create(createRequest);
@@ -32,18 +32,23 @@ public class EmployeeControllerImpl implements EmployeeController {
                 .body(conversionService.convert(employee, EmployeeInfo.class));
     }
 
+    // todo erroneous situations
     @Override
     public ResponseEntity<?> delete(Integer toDeleteId) {
         boolean result = employeeService.delete(toDeleteId);
         return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
+    // todo erroneous situations
     @Override
-    public EmployeeInfo edit(EditEmployeeRequest editRequest) {
-        Employee employee = employeeService.edit(editRequest);
-        return conversionService.convert(employee, EmployeeInfo.class);
+    public ResponseEntity<EmployeeInfo> edit(EditEmployeeRequest editRequest) {
+        return employeeService.edit(editRequest)
+                .map(editedEmployee -> conversionService.convert(editedEmployee, EmployeeInfo.class))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    // todo erroneous situations
     @Override
     public ResponseEntity<EmployeeInfo> getOne(Integer employeeId) {
         return employeeService.getOne(employeeId)
@@ -52,6 +57,7 @@ public class EmployeeControllerImpl implements EmployeeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // todo erroneous situations
     @Override
     public List<EmployeeInfo> getAll() {
         return employeeService.getAll().stream()
@@ -62,6 +68,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     @Override
     public EmployeeInfo getOne() {
+        // todo implement when security features will be implemented
         throw new UnsupportedOperationException("This functionality is not implemented yet!");
     }
 }

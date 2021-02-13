@@ -35,10 +35,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElse(false);
     }
 
+    // todo correct implementation
     @Override
-    public Employee edit(EditEmployeeRequest editRequest) {
-        Employee toEdit = conversionService.convert(editRequest, Employee.class);
-        return repository.save(Objects.requireNonNull(toEdit));
+    public Optional<Employee> edit(EditEmployeeRequest editRequest) {
+        return Optional.ofNullable(conversionService.convert(editRequest, Employee.class))
+                .filter(toSave -> Objects.nonNull(toSave.getId()))
+                .filter(toSave -> repository.existsById(toSave.getId()))
+                .map(repository::save);
     }
 
     @Override

@@ -21,7 +21,7 @@ public interface EmployeeController extends ControllerCrud<Integer, CreateEmploy
 
     @Override
     @PostMapping("/edit")
-    EmployeeInfo edit(@RequestBody EditEmployeeRequest editRequest);
+    ResponseEntity<EmployeeInfo> edit(@RequestBody EditEmployeeRequest editRequest);
 
     @Override
     @GetMapping("/{employeeId}")

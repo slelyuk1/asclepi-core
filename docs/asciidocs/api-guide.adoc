@@ -4,7 +4,7 @@
 
 === Description
 
-Creates an employee in the system
+Creates an employee in the system.
 
 ==== Request Fields
 
@@ -14,11 +14,11 @@ include::{snippets}/test-successful-employee-creation-request-response-signature
 
 include::{snippets}/test-successful-employee-creation-request-response-signatures/response-fields.adoc[]
 
-==== Request Example
+==== Successful Request Example
 
 include::{snippets}/test-successful-employee-creation-request-response-signatures/request-body.adoc[]
 
-==== Response Example
+==== Successful Response Example
 
 include::{snippets}/test-successful-employee-creation-request-response-signatures/response-body.adoc[]
 

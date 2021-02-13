@@ -8,6 +8,6 @@ public interface ServiceCrud<GetRequestType, CreateRequestType, EditRequestType,
         Getting<GetRequestType, Optional<ResponseType>>,
         GettingAll<ResponseType>,
         Creation<CreateRequestType, ResponseType>,
-        Editing<EditRequestType, ResponseType>,
+        Editing<EditRequestType, Optional<ResponseType>>,
         Deletion<GetRequestType, DeleteResponseType> {
 }
