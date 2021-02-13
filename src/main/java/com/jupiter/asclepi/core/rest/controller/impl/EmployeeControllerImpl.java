@@ -22,7 +22,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     @Override
     public EmployeeInfo create(CreateEmployeeRequest createRequest) {
         Employee employee = service.create(createRequest);
-        return new EmployeeInfo(employee.getId(), employee.getLogin(), employee.getRole().getId(), employee.getName(), employee.getSurname(),
+        return new EmployeeInfo(employee.getId(), employee.getLogin(), employee.getRole(), employee.getName(), employee.getSurname(),
                 employee.getMiddleName(), employee.getAdditionalInfo());
     }
 

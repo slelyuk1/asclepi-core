@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.response.people;
 
-import com.jupiter.asclepi.core.model.entity.people.Job;
+import com.jupiter.asclepi.core.model.other.Job;
 import lombok.Value;
 
 @Value

@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.model.request.people;
 
+import com.jupiter.asclepi.core.model.other.Job;
 import lombok.Data;
 
 @Data
@@ -9,5 +10,6 @@ public class CreateClientRequest {
     private String middleName;
     private String residence;
     private Boolean gender;
-    // todo job
+    // todo maybe other class
+    private Job job;
 }

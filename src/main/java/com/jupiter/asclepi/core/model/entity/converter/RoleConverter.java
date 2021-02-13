@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.entity.converter;
 
-import com.jupiter.asclepi.core.model.entity.people.Role;
+import com.jupiter.asclepi.core.model.other.Role;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
@@ -16,7 +16,6 @@ public class RoleConverter implements AttributeConverter<Role, Integer> {
 
     @Override
     public Role convertToEntityAttribute(Integer roleId) {
-        return Role.from(roleId)
-                .orElseThrow(() -> new IllegalArgumentException(String.format(ROLE_NOT_EXISTS_MESSAGE, roleId)));
+        return Role.fromWithException(roleId);
     }
 }

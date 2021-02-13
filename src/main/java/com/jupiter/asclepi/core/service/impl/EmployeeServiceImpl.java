@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.impl;
 
 import com.jupiter.asclepi.core.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.entity.people.Role;
+import com.jupiter.asclepi.core.model.other.Role;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.EmployeeRepository;
@@ -27,10 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         toCreate.setName(createRequest.getName());
         toCreate.setSurname(createRequest.getSurname());
         toCreate.setMiddleName(createRequest.getMiddleName());
-        // todo remove exception throwing
-        Role role = Role.from(createRequest.getRoleId())
-                .orElseThrow(() -> new IllegalArgumentException(String.format(ROLE_NOT_EXISTS_MESSAGE, createRequest.getRoleId())));
-        toCreate.setRole(role);
+        toCreate.setRole(createRequest.getRole());
         toCreate.setAdditionalInfo(createRequest.getAdditionalInfo());
         return repository.save(toCreate);
     }

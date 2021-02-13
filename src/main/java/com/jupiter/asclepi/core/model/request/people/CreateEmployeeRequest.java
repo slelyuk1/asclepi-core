@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.model.request.people;
 
+import com.jupiter.asclepi.core.model.other.Role;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -11,12 +12,11 @@ public class CreateEmployeeRequest {
     private String login;
     @NotBlank
     private String password;
-    // todo enum
     @NotNull
-    private Integer roleId;
-    @NotNull
+    private Role role;
+    @NotBlank
     private String name;
-    @NotNull
+    @NotBlank
     private String surname;
     private String middleName;
     private String additionalInfo;

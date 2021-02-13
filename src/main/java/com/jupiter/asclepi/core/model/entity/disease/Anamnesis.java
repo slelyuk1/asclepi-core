@@ -5,7 +5,6 @@ import lombok.Data;
 import java.math.BigInteger;
 
 @Data
-// todo may be better name ???
 public class Anamnesis {
     private BigInteger id;
     private DiseaseHistory diseaseHistory;

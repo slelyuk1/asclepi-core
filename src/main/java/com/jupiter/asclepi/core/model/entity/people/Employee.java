@@ -1,6 +1,7 @@
 package com.jupiter.asclepi.core.model.entity.people;
 
 import com.jupiter.asclepi.core.helper.object.api.AbstractCreationAware;
+import com.jupiter.asclepi.core.model.other.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
@@ -25,7 +27,7 @@ public class Employee extends AbstractCreationAware<Employee> {
     @NotBlank
     private String password;
 
-    @NotBlank
+    @NotNull
     private Role role;
 
     @NotBlank

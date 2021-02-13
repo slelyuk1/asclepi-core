@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.model.entity.people;
+package com.jupiter.asclepi.core.model.other;
 
 import lombok.Data;
 

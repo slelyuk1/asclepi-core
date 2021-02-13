@@ -1,0 +1,14 @@
+= Employee
+
+== Create
+Creates an employee in the system.
+
+=== Request Fields
+include::{snippets}/test-successful-employee-creation-request-response-signatures/request-fields.adoc[]
+=== Response Fields
+include::{snippets}/test-successful-employee-creation-request-response-signatures/response-fields.adoc[]
+=== Request Example
+include::{snippets}/test-successful-employee-creation-request-response-signatures/request-body.adoc[]
+=== Response Example
+include::{snippets}/test-successful-employee-creation-request-response-signatures/response-body.adoc[]
+
