@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 public interface ControllerCrud<GetRequestType, CreateRequestType, EditRequestType, ResponseType> extends
         Getting<GetRequestType, ResponseEntity<ResponseType>>,
         GettingAll<ResponseType>,
-        Creation<CreateRequestType, ResponseEntity<ResponseType>>,
+        Creation<CreateRequestType, ResponseEntity<?>>,
         Editing<EditRequestType, ResponseEntity<ResponseType>>,
         Deletion<GetRequestType, ResponseEntity<?>> {
 }

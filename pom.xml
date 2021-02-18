@@ -15,6 +15,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <vavr.version>0.10.3</vavr.version>
         <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
     </properties>
 
@@ -57,8 +58,14 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.200</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>${vavr.version}</version>
+        </dependency>
+
 
         <!-- Dependencies for testing -->
         <dependency>

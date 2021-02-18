@@ -1,12 +1,16 @@
 package com.jupiter.asclepi.core.service.impl.employee;
 
+import com.jupiter.asclepi.core.exception.LoginNotUniqueException;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.EmployeeRepository;
 import com.jupiter.asclepi.core.service.EmployeeService;
+import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +24,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository repository;
 
     @Override
-    public Employee create(CreateEmployeeRequest createRequest) {
+    public Try<Employee> create(CreateEmployeeRequest createRequest) {
         Employee toCreate = conversionService.convert(createRequest, Employee.class);
-        return repository.save(Objects.requireNonNull(toCreate));
+        return Try.of(() -> {
+            try {
+                return repository.save(Objects.requireNonNull(toCreate));
+            } catch (DataAccessException e) {
+                if (e.getCause() instanceof ConstraintViolationException) {
+                    throw new LoginNotUniqueException(createRequest.getLogin(), e);
+                }
+                throw e;
+            }
+        });
     }
 
     @Override
@@ -45,8 +58,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> getOne(Integer getRequest) {
-        return repository.findById(getRequest);
+    public Optional<Employee> getOne(Integer employeeId) {
+        return repository.findById(employeeId);
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface EmployeeController extends ControllerCrud<Integer, CreateEmploy
 
     @Override
     @PostMapping("/create")
-    ResponseEntity<EmployeeInfo> create(@RequestBody CreateEmployeeRequest createRequest);
+    ResponseEntity<?> create(@RequestBody CreateEmployeeRequest createRequest);
 
     @Override
     @DeleteMapping("/{employeeId}")
