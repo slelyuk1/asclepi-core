@@ -7,6 +7,6 @@ public interface ControllerCrud<GetRequestType, CreateRequestType, EditRequestTy
         Getting<GetRequestType, ResponseEntity<ResponseType>>,
         GettingAll<ResponseType>,
         Creation<CreateRequestType, ResponseEntity<?>>,
-        Editing<EditRequestType, ResponseEntity<ResponseType>>,
+        Editing<EditRequestType, ResponseEntity<?>>,
         Deletion<GetRequestType, ResponseEntity<?>> {
 }

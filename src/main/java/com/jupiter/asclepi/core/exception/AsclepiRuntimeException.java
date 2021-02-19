@@ -1,7 +1,11 @@
 package com.jupiter.asclepi.core.exception;
 
 public class AsclepiRuntimeException extends RuntimeException {
-    
+
+    public AsclepiRuntimeException(String message) {
+        super(message);
+    }
+
     public AsclepiRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }

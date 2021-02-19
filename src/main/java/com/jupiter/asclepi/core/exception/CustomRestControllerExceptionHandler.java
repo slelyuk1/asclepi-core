@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.exception;
 
+import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,6 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
     private static final String SERVICE_UNAVAILABLE_MESSAGE = "Unfortunately, service is unavailable. Please, try later.";
     private static final String FIELD_VALIDATION_MESSAGE_TEMPLATE = "Field '%s' %s";
 
-
-    // todo review
     @ExceptionHandler(AsclepiRuntimeException.class)
     public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull AsclepiRuntimeException e) {
         Throwable cause = e.getCause();
@@ -33,9 +32,18 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
     public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull TransactionSystemException e) {
         Throwable maybeConstraintViolation = e.getOriginalException();
         if (maybeConstraintViolation != null && maybeConstraintViolation.getCause() instanceof ConstraintViolationException) {
-            return handleConstraintViolationException((ConstraintViolationException) maybeConstraintViolation);
+            return handleConstraintViolationException((ConstraintViolationException) maybeConstraintViolation.getCause());
         }
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(e.getMessage()));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    private ResponseEntity<ErrorInfo> handleConstraintViolationException(@NotNull ConstraintViolationException exception) {
+        String message = exception.getConstraintViolations().stream()
+                .map(violation -> String.format(FIELD_VALIDATION_MESSAGE_TEMPLATE, violation.getPropertyPath().toString(), violation.getMessage()))
+                .findAny()
+                .orElse("Unknown constraint violation!");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorInfo(message));
     }
 
     @Override
@@ -47,13 +55,5 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
                 .map(fieldError -> String.format(FIELD_VALIDATION_MESSAGE_TEMPLATE, fieldError.getField(), fieldError.getDefaultMessage()))
                 .map(message -> handleExceptionInternal(e, new ErrorInfo(message), headers, status, request))
                 .orElseGet(() -> super.handleMethodArgumentNotValid(e, headers, status, request));
-    }
-
-    private ResponseEntity<ErrorInfo> handleConstraintViolationException(ConstraintViolationException exception) {
-        String message = exception.getConstraintViolations().stream()
-                .map(violation -> String.format(FIELD_VALIDATION_MESSAGE_TEMPLATE, violation.getPropertyPath().toString(), violation.getMessage()))
-                .findAny()
-                .orElse("Unknown constraint violation!");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorInfo(message));
     }
 }

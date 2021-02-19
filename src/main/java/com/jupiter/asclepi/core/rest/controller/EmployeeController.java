@@ -7,25 +7,27 @@ import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface EmployeeController extends ControllerCrud<Integer, CreateEmployeeRequest, EditEmployeeRequest, EmployeeInfo> {
 
     @Override
     @PostMapping("/create")
-    ResponseEntity<?> create(@RequestBody CreateEmployeeRequest createRequest);
+    ResponseEntity<?> create(@Valid @NotNull @RequestBody CreateEmployeeRequest createRequest);
 
     @Override
     @DeleteMapping("/{employeeId}")
-    ResponseEntity<?> delete(@PathVariable("employeeId") Integer id);
+    ResponseEntity<?> delete(@NotNull @PathVariable("employeeId") Integer id);
 
     @Override
     @PostMapping("/edit")
-    ResponseEntity<EmployeeInfo> edit(@RequestBody EditEmployeeRequest editRequest);
+    ResponseEntity<?> edit(@Valid @NotNull @RequestBody EditEmployeeRequest editRequest);
 
     @Override
     @GetMapping("/{employeeId}")
-    ResponseEntity<EmployeeInfo> getOne(@PathVariable("employeeId") Integer employeeId);
+    ResponseEntity<EmployeeInfo> getOne(@NotNull @PathVariable("employeeId") Integer employeeId);
 
     @Override
     @GetMapping("/all")

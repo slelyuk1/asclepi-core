@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.repository;
+package com.jupiter.asclepi.core.repository.employee;
 
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;

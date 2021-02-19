@@ -1,13 +1,15 @@
 package com.jupiter.asclepi.core.rest.controller.impl;
 
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
-import com.jupiter.asclepi.core.exception.ErrorInfo;
-import com.jupiter.asclepi.core.exception.LoginNotUniqueException;
+import com.jupiter.asclepi.core.exception.employee.LoginNotUniqueException;
+import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
+import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
 import com.jupiter.asclepi.core.rest.controller.EmployeeController;
 import com.jupiter.asclepi.core.service.EmployeeService;
+import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -28,14 +30,15 @@ public class EmployeeControllerImpl implements EmployeeController {
     private final EmployeeService employeeService;
     private final ConversionService conversionService;
 
-    // todo better usage of Try
     @Override
     public ResponseEntity<?> create(CreateEmployeeRequest createRequest) {
-        return employeeService.create(createRequest)
-                .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
-                .<ResponseEntity<?>>map(employeeInfo -> ResponseEntity.status(HttpStatus.CREATED).body(employeeInfo))
+        Try<ResponseEntity<?>> creationTry = employeeService.create(createRequest).map(employee -> {
+            EmployeeInfo employeeInfo = conversionService.convert(employee, EmployeeInfo.class);
+            return ResponseEntity.status(HttpStatus.CREATED).body(employeeInfo);
+        });
+        return creationTry
                 .recover(LoginNotUniqueException.class, e -> ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage())))
-                .onFailure(ex -> log.error("An error occurred during employee creation: ", ex))
+                .onFailure(e -> log.error("An error occurred during employee creation: ", e))
                 .getOrElseThrow(AsclepiRuntimeException::new);
     }
 
@@ -45,13 +48,17 @@ public class EmployeeControllerImpl implements EmployeeController {
         return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
-    // todo erroneous situations
     @Override
-    public ResponseEntity<EmployeeInfo> edit(EditEmployeeRequest editRequest) {
-        return employeeService.edit(editRequest)
-                .map(editedEmployee -> conversionService.convert(editedEmployee, EmployeeInfo.class))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<?> edit(EditEmployeeRequest editRequest) {
+        Try<ResponseEntity<?>> editionTry = employeeService.edit(editRequest).map(edited -> {
+            EmployeeInfo employeeInfo = conversionService.convert(edited, EmployeeInfo.class);
+            return ResponseEntity.ok().body(employeeInfo);
+        });
+        return editionTry
+                .recover(NonExistentIdException.class, e -> ResponseEntity.notFound().build())
+                .recover(LoginNotUniqueException.class, e -> ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage())))
+                .onFailure(e -> log.error("An error occurred during employee creation: ", e))
+                .getOrElseThrow(AsclepiRuntimeException::new);
     }
 
     @Override
