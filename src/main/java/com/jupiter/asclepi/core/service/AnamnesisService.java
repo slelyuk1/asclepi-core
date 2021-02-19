@@ -8,5 +8,8 @@ import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisR
 
 import java.math.BigInteger;
 
-public interface AnamnesisService extends GetService<BigInteger, Anamnesis>, CreateService<CreateAnamnesisRequest, Anamnesis>, DeleteService<BigInteger, Void> {
+public interface AnamnesisService extends
+        GetService<BigInteger, Anamnesis>,
+        CreateService<CreateAnamnesisRequest, Anamnesis>,
+        DeleteService<BigInteger, Void> {
 }
