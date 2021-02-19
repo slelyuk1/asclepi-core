@@ -42,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Boolean delete(@NotNull Integer toDeleteId) {
+    public Boolean delete(@Valid @NotNull Integer toDeleteId) {
         return repository.findById(toDeleteId)
                 .map(toDelete -> {
                     repository.delete(toDelete);
@@ -67,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> getOne(@NotNull Integer employeeId) {
+    public Optional<Employee> getOne(@Valid @NotNull Integer employeeId) {
         return repository.findById(employeeId);
     }
 
