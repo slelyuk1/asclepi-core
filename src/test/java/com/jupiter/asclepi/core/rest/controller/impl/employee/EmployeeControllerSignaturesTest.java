@@ -46,6 +46,12 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
             fieldWithPath("additionalInfo").description("Additional info about the employee in the system").type(JsonFieldType.STRING).optional()
     };
 
+    private static final FieldDescriptor[] CREATE_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS = generateCreateEmployeeRequestDescriptors();
+    private static final FieldDescriptor[] EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS = generateEditEmployeeRequestDescriptors();
+    private static final FieldDescriptor[] ERROR_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
+            fieldWithPath("message").description("Error message").type(JsonFieldType.STRING)
+    };
+
     private MockMvc mockMvc;
 
     @Autowired
@@ -63,28 +69,25 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testSuccessfulEmployeeCreationRequestResponseSignatures() throws Exception {
-        ConstraintDocumentationHelper constraintDocumentationHelper = ConstraintDocumentationHelper.of(CreateEmployeeRequest.class);
         this.mockMvc.perform(createEmployeeRequest(createEmployeeParams()))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("{method-name}",
-                        requestFields(
-                                constraintDocumentationHelper.fieldDescriptorFor("login")
-                                        .description("Login of the created employee").type(JsonFieldType.STRING),
-                                constraintDocumentationHelper.fieldDescriptorFor("password")
-                                        .description("Password of the created employee").type(JsonFieldType.STRING),
-                                constraintDocumentationHelper.fieldDescriptorFor("role")
-                                        .description("Role id of the created employee").type(JsonFieldType.NUMBER),
-                                constraintDocumentationHelper.fieldDescriptorFor("name")
-                                        .description("Name of the created employee").type(JsonFieldType.STRING),
-                                constraintDocumentationHelper.fieldDescriptorFor("surname")
-                                        .description("Surname of the created employee").type(JsonFieldType.STRING),
-                                constraintDocumentationHelper.fieldDescriptorFor("middleName")
-                                        .description("Middle name of the created employee").type(JsonFieldType.STRING).optional(),
-                                constraintDocumentationHelper.fieldDescriptorFor("additionalInfo")
-                                        .description("Additional info about the created employee").type(JsonFieldType.STRING).optional()
-                        ),
+                        requestFields(CREATE_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
                         responseFields(EMPLOYEE_INFO_FIELD_DESCRIPTORS)
+                ));
+    }
+
+    @Test
+    void testFailedDueToExistingLoginEmployeeCreationRequestResponseSignature() throws Exception {
+        Employee testEmployee = createTestEmployee();
+        getEntityManager().persist(testEmployee);
+        this.mockMvc.perform(createEmployeeRequest(createEmployeeParams()))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("{method-name}",
+                        requestFields(CREATE_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
+                        responseFields(ERROR_INFO_FIELD_DESCRIPTORS)
                 ));
     }
 
@@ -92,32 +95,40 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
     void testSuccessfulEmployeeEditingRequestResponseSignatures() throws Exception {
         Employee testEmployee = createTestEmployee();
         getEntityManager().persist(testEmployee);
-        ConstraintDocumentationHelper constraintDocumentationHelper = ConstraintDocumentationHelper.of(EditEmployeeRequest.class);
         this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(testEmployee.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("{method-name}",
-                        requestFields(
-                                constraintDocumentationHelper.fieldDescriptorFor("id")
-                                        .description("ID of the edited employee").type(JsonFieldType.NUMBER),
-                                constraintDocumentationHelper.fieldDescriptorFor("login")
-                                        .description("Login of the edited employee").type(JsonFieldType.STRING),
-                                constraintDocumentationHelper.fieldDescriptorFor("password")
-                                        .description("Password of the edited employee").type(JsonFieldType.STRING),
-                                constraintDocumentationHelper.fieldDescriptorFor("role")
-                                        .description("Role id of the edited employee").type(JsonFieldType.NUMBER),
-                                constraintDocumentationHelper.fieldDescriptorFor("name")
-                                        .description("Name of the edited employee").type(JsonFieldType.STRING),
-                                constraintDocumentationHelper.fieldDescriptorFor("surname")
-                                        .description("Surname of the edited employee").type(JsonFieldType.STRING),
-                                constraintDocumentationHelper.fieldDescriptorFor("middleName")
-                                        .description("Middle name of the edited employee").type(JsonFieldType.STRING).optional(),
-                                constraintDocumentationHelper.fieldDescriptorFor("additionalInfo")
-                                        .description("Additional info about the edited employee").type(JsonFieldType.STRING).optional()
-                        ),
+                        requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
                         responseFields(EMPLOYEE_INFO_FIELD_DESCRIPTORS)
                 ));
     }
+
+    @Test
+    void testFailedDueToNonExistentEmployeeEditingRequestResponseSignatures() throws Exception {
+        Employee testEmployee = createTestEmployee();
+        getEntityManager().persist(testEmployee);
+        this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(0)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").doesNotExist())
+                .andDo(document("{method-name}",
+                        requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS)
+                ));
+    }
+
+    // todo
+//    @Test
+//    void testFailedDueToExistingLoginEmployeeEditingRequestResponseSignatures() throws Exception {
+//        Employee testEmployee = createTestEmployee();
+//        getEntityManager().persist(testEmployee);
+//        this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(testEmployee.getId())))
+//                .andExpect(status().isConflict())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andDo(document("{method-name}",
+//                        requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
+//                        responseFields(ERROR_INFO_FIELD_DESCRIPTORS)
+//                ));
+//    }
 
     @Test
     void testSuccessfulEmployeeGettingRequestResponseSignatures() throws Exception {
@@ -165,5 +176,59 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
                 .andDo(document("{method-name}",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
                 ));
+    }
+
+    @Test
+    void testNonExistentEmployeeDeletionRequestResponseSignatures() throws Exception {
+        Employee testEmployee = createTestEmployee();
+        getEntityManager().persist(testEmployee);
+        this.mockMvc.perform(deleteEmployeeRequest(0))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$").doesNotExist())
+                .andDo(document("{method-name}",
+                        pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
+                ));
+    }
+
+    private static FieldDescriptor[] generateCreateEmployeeRequestDescriptors() {
+        ConstraintDocumentationHelper constraintDocumentationHelper = ConstraintDocumentationHelper.of(CreateEmployeeRequest.class);
+        return new FieldDescriptor[]{
+                constraintDocumentationHelper.fieldDescriptorFor("login")
+                        .description("Login of the created employee").type(JsonFieldType.STRING),
+                constraintDocumentationHelper.fieldDescriptorFor("password")
+                        .description("Password of the created employee").type(JsonFieldType.STRING),
+                constraintDocumentationHelper.fieldDescriptorFor("role")
+                        .description("Role id of the created employee").type(JsonFieldType.NUMBER),
+                constraintDocumentationHelper.fieldDescriptorFor("name")
+                        .description("Name of the created employee").type(JsonFieldType.STRING),
+                constraintDocumentationHelper.fieldDescriptorFor("surname")
+                        .description("Surname of the created employee").type(JsonFieldType.STRING),
+                constraintDocumentationHelper.fieldDescriptorFor("middleName")
+                        .description("Middle name of the created employee").type(JsonFieldType.STRING).optional(),
+                constraintDocumentationHelper.fieldDescriptorFor("additionalInfo")
+                        .description("Additional info about the created employee").type(JsonFieldType.STRING).optional()
+        };
+    }
+
+    private static FieldDescriptor[] generateEditEmployeeRequestDescriptors() {
+        ConstraintDocumentationHelper constraintDocumentationHelper = ConstraintDocumentationHelper.of(EditEmployeeRequest.class);
+        return new FieldDescriptor[]{
+                constraintDocumentationHelper.fieldDescriptorFor("id")
+                        .description("ID of the edited employee").type(JsonFieldType.NUMBER),
+                constraintDocumentationHelper.fieldDescriptorFor("login")
+                        .description("Login of the edited employee").type(JsonFieldType.STRING),
+                constraintDocumentationHelper.fieldDescriptorFor("password")
+                        .description("Password of the edited employee").type(JsonFieldType.STRING),
+                constraintDocumentationHelper.fieldDescriptorFor("role")
+                        .description("Role id of the edited employee").type(JsonFieldType.NUMBER),
+                constraintDocumentationHelper.fieldDescriptorFor("name")
+                        .description("Name of the edited employee").type(JsonFieldType.STRING),
+                constraintDocumentationHelper.fieldDescriptorFor("surname")
+                        .description("Surname of the edited employee").type(JsonFieldType.STRING),
+                constraintDocumentationHelper.fieldDescriptorFor("middleName")
+                        .description("Middle name of the edited employee").type(JsonFieldType.STRING).optional(),
+                constraintDocumentationHelper.fieldDescriptorFor("additionalInfo")
+                        .description("Additional info about the edited employee").type(JsonFieldType.STRING).optional()
+        };
     }
 }

@@ -1,6 +1,7 @@
 package com.jupiter.asclepi.core.exception;
 
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.constraints.NotNull;
+import java.util.stream.Collectors;
 
+@Slf4j
 @ControllerAdvice
 public class CustomRestControllerExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String SERVICE_UNAVAILABLE_MESSAGE = "Unfortunately, service is unavailable. Please, try later.";
@@ -25,6 +28,7 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
         if (cause instanceof TransactionSystemException) {
             return handleTransactionException((TransactionSystemException) cause);
         }
+        log.warn("Not recognized exception wrapped in AsclepiRuntimeException occurred: ", e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(SERVICE_UNAVAILABLE_MESSAGE));
     }
 
@@ -34,6 +38,7 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
         if (maybeConstraintViolation != null && maybeConstraintViolation.getCause() instanceof ConstraintViolationException) {
             return handleConstraintViolationException((ConstraintViolationException) maybeConstraintViolation.getCause());
         }
+        log.warn("Not recognized TransactionSystemException exception occurred: ", e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(e.getMessage()));
     }
 
@@ -41,8 +46,7 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
     private ResponseEntity<ErrorInfo> handleConstraintViolationException(@NotNull ConstraintViolationException exception) {
         String message = exception.getConstraintViolations().stream()
                 .map(violation -> String.format(FIELD_VALIDATION_MESSAGE_TEMPLATE, violation.getPropertyPath().toString(), violation.getMessage()))
-                .findAny()
-                .orElse("Unknown constraint violation!");
+                .collect(Collectors.joining(". "));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorInfo(message));
     }
 
@@ -51,9 +55,9 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
-        return e.getBindingResult().getFieldErrors().stream().findAny()
+        String message = e.getBindingResult().getFieldErrors().stream()
                 .map(fieldError -> String.format(FIELD_VALIDATION_MESSAGE_TEMPLATE, fieldError.getField(), fieldError.getDefaultMessage()))
-                .map(message -> handleExceptionInternal(e, new ErrorInfo(message), headers, status, request))
-                .orElseGet(() -> super.handleMethodArgumentNotValid(e, headers, status, request));
+                .collect(Collectors.joining(". "));
+        return handleExceptionInternal(e, new ErrorInfo(message), headers, status, request);
     }
 }

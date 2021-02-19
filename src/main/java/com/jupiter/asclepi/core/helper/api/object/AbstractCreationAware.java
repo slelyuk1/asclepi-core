@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.PrePersist;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -36,6 +37,6 @@ public class AbstractCreationAware<T> implements CreationAware<T> {
     @PrePersist
     void prePersist() {
         setCreatedWhen(new Date());
-        // todo set creator
+        // todo set creator and its constraint when security implemented
     }
 }
