@@ -7,5 +7,6 @@ import com.jupiter.asclepi.core.model.request.disease.document.EditDocumentReque
 
 import java.math.BigInteger;
 
+// todo configure and implement REST controller (Viktor Muratov) (see com.jupiter.asclepi.core.rest.controller.EmployeeController)
 public interface DocumentController extends CrudController<BigInteger, CreateDocumentRequest, EditDocumentRequest, DocumentInfo> {
 }

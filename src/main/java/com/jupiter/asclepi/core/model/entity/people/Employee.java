@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 public class Employee extends AbstractCreationAware<Employee> {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Include
     private Integer id;
 
     @NotBlank
