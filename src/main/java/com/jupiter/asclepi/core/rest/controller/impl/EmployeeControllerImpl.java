@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.rest.controller.impl;
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.exception.employee.LoginNotUniqueException;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
+import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
