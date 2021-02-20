@@ -10,7 +10,6 @@ public class ClientInfo {
     String surname;
     String middleName;
     String residence;
-    // can be more than two ??? hehehe
     Boolean gender;
     Job job;
 }

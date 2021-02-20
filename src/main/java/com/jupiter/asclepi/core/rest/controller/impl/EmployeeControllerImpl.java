@@ -13,13 +13,18 @@ import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 @AllArgsConstructor
@@ -45,7 +50,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     @Override
     public ResponseEntity<?> delete(Integer toDeleteId) {
         boolean result = employeeService.delete(toDeleteId);
-        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        return result ? ResponseEntity.ok().build() : generateNotFoundResponse();
     }
 
     @Override
@@ -55,7 +60,7 @@ public class EmployeeControllerImpl implements EmployeeController {
             return ResponseEntity.ok().body(employeeInfo);
         });
         return editionTry
-                .recover(NonExistentIdException.class, e -> ResponseEntity.notFound().build())
+                .recover(NonExistentIdException.class, e -> generateNotFoundResponse())
                 .recover(LoginNotUniqueException.class, e -> ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage())))
                 .onFailure(e -> log.error("An error occurred during employee creation: ", e))
                 .getOrElseThrow(AsclepiRuntimeException::new);
@@ -66,7 +71,7 @@ public class EmployeeControllerImpl implements EmployeeController {
         return employeeService.getOne(employeeId)
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(generateNotFoundResponse());
     }
 
     @Override
@@ -81,5 +86,9 @@ public class EmployeeControllerImpl implements EmployeeController {
     public EmployeeInfo getOne() {
         // todo implement when security features will be implemented
         throw new UnsupportedOperationException("This functionality is not implemented yet!");
+    }
+
+    private static <T> ResponseEntity<T> generateNotFoundResponse(){
+        return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
     }
 }

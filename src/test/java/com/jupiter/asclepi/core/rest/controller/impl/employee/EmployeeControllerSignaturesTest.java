@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
+// todo refactor (Oleksandr Leliuk)
 class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     private static final FieldDescriptor[] EMPLOYEE_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
@@ -110,6 +111,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
         getEntityManager().persist(testEmployee);
         this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(0)))
                 .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("{method-name}",
                         requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS)
@@ -147,6 +149,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
     void testNonExistentEmployeeGettingRequestResponseSignatures() throws Exception {
         this.mockMvc.perform(getEmployeeRequest(0))
                 .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("{method-name}",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
@@ -184,6 +187,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
         getEntityManager().persist(testEmployee);
         this.mockMvc.perform(deleteEmployeeRequest(0))
                 .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("{method-name}",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
@@ -216,15 +220,15 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
                 constraintDocumentationHelper.fieldDescriptorFor("id")
                         .description("ID of the edited employee").type(JsonFieldType.NUMBER),
                 constraintDocumentationHelper.fieldDescriptorFor("login")
-                        .description("Login of the edited employee").type(JsonFieldType.STRING),
+                        .description("Login of the edited employee").type(JsonFieldType.STRING).optional(),
                 constraintDocumentationHelper.fieldDescriptorFor("password")
-                        .description("Password of the edited employee").type(JsonFieldType.STRING),
+                        .description("Password of the edited employee").type(JsonFieldType.STRING).optional(),
                 constraintDocumentationHelper.fieldDescriptorFor("role")
-                        .description("Role id of the edited employee").type(JsonFieldType.NUMBER),
+                        .description("Role id of the edited employee").type(JsonFieldType.NUMBER).optional(),
                 constraintDocumentationHelper.fieldDescriptorFor("name")
-                        .description("Name of the edited employee").type(JsonFieldType.STRING),
+                        .description("Name of the edited employee").type(JsonFieldType.STRING).optional(),
                 constraintDocumentationHelper.fieldDescriptorFor("surname")
-                        .description("Surname of the edited employee").type(JsonFieldType.STRING),
+                        .description("Surname of the edited employee").type(JsonFieldType.STRING).optional(),
                 constraintDocumentationHelper.fieldDescriptorFor("middleName")
                         .description("Middle name of the edited employee").type(JsonFieldType.STRING).optional(),
                 constraintDocumentationHelper.fieldDescriptorFor("additionalInfo")

@@ -22,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
+// todo refactor (Oleksandr Leliuk)
 public class EmployeeControllerBusinessTest extends AbstractEmployeeTest {
 
     private MockMvc mockMvc;

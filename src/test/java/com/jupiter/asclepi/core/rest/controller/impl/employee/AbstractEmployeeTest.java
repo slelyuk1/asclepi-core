@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @Getter
 @RequiredArgsConstructor
+// todo refactor (Oleksandr Leliuk)
 public abstract class AbstractEmployeeTest {
     private final ObjectMapper objectMapper;
     private final EntityManager entityManager;
