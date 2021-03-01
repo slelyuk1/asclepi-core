@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.PrePersist;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -15,23 +14,23 @@ public class AbstractCreationAware<T> implements CreationAware<T> {
     private Date createdWhen;
 
     @Override
-    public void setCreator(T creator) {
-        this.creator = creator;
-    }
-
-    @Override
-    public void setCreatedWhen(Date createdWhen) {
-        this.createdWhen = createdWhen;
-    }
-
-    @Override
     public T getCreator() {
         return creator;
     }
 
     @Override
+    public void setCreator(T creator) {
+        this.creator = creator;
+    }
+
+    @Override
     public Date getCreatedWhen() {
         return createdWhen;
+    }
+
+    @Override
+    public void setCreatedWhen(Date createdWhen) {
+        this.createdWhen = createdWhen;
     }
 
     @PrePersist

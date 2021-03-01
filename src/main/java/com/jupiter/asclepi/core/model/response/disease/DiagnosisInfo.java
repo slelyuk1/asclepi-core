@@ -1,6 +1,5 @@
 package com.jupiter.asclepi.core.model.response.disease;
 
-import lombok.Data;
 import lombok.Value;
 
 import java.math.BigInteger;

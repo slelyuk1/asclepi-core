@@ -3,7 +3,6 @@ package com.jupiter.asclepi.core.rest.controller.impl;
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.exception.employee.LoginNotUniqueException;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
@@ -14,9 +13,7 @@ import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +32,10 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     private final EmployeeService employeeService;
     private final ConversionService conversionService;
+
+    private static <T> ResponseEntity<T> generateNotFoundResponse() {
+        return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
+    }
 
     @Override
     public ResponseEntity<?> create(CreateEmployeeRequest createRequest) {
@@ -87,9 +88,5 @@ public class EmployeeControllerImpl implements EmployeeController {
     public EmployeeInfo getOne() {
         // todo implement when security features will be implemented
         throw new UnsupportedOperationException("This functionality is not implemented yet!");
-    }
-
-    private static <T> ResponseEntity<T> generateNotFoundResponse(){
-        return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
     }
 }

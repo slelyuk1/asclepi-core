@@ -20,11 +20,6 @@ public enum Role {
         this.roleName = roleName;
     }
 
-    @JsonValue
-    public int getId() {
-        return id;
-    }
-
     public static Optional<Role> from(int id) {
         return Arrays.stream(Role.values())
                 .filter(role -> role.id == id)
@@ -34,5 +29,10 @@ public enum Role {
     @JsonCreator
     public static Role fromWithException(int id) throws IllegalArgumentException {
         return from(id).orElseThrow(() -> new IllegalArgumentException(String.format(ROLE_NOT_EXISTS_MESSAGE, id)));
+    }
+
+    @JsonValue
+    public int getId() {
+        return id;
     }
 }

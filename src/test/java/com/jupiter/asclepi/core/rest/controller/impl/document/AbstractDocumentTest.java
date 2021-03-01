@@ -3,8 +3,6 @@ package com.jupiter.asclepi.core.rest.controller.impl.document;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jupiter.asclepi.core.model.entity.document.Document;
-import com.jupiter.asclepi.core.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.other.Job;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
