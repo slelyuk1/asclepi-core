@@ -25,6 +25,7 @@ public class Client extends AbstractCreationAware<Employee> {
     private Integer id;
 
     @NotBlank
+    @Column(name = "client_name")//(insertable=false, updatable=false)
     private String name;
 
     @NotBlank
@@ -35,8 +36,8 @@ public class Client extends AbstractCreationAware<Employee> {
     @NotBlank
     private String residence;
 
-    @NotBlank
+    @NotNull
     private Boolean gender;
 
-    //private Job job;
+    private Job job;
 }

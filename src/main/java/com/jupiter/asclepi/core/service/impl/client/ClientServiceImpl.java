@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.service.impl.employee;
+package com.jupiter.asclepi.core.service.impl.client;
 
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.model.entity.people.Client;

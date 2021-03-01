@@ -9,6 +9,7 @@ import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.model.response.people.ClientInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.constraints.NotNull;
@@ -35,6 +36,6 @@ public interface ClientController extends
     List<ClientInfo> getAll();
 
     @Override
-    @GetMapping("/")
-    ResponseEntity<ClientInfo> getOne(@NotNull Integer getRequest);
+    @GetMapping("/{clientId}")
+    ResponseEntity<ClientInfo> getOne(@NotNull @PathVariable("clientId") Integer getRequest);
 }

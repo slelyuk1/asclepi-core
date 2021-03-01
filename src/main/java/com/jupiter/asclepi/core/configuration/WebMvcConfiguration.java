@@ -1,5 +1,8 @@
 package com.jupiter.asclepi.core.configuration;
 
+import com.jupiter.asclepi.core.service.impl.client.converter.ClientConverter;
+import com.jupiter.asclepi.core.service.impl.client.converter.CreateClientRequestConverter;
+import com.jupiter.asclepi.core.service.impl.client.converter.EditClientRequestConverter;
 import com.jupiter.asclepi.core.service.impl.employee.converter.CreateEmployeeRequestConverter;
 import com.jupiter.asclepi.core.service.impl.employee.converter.EditEmployeeRequestConverter;
 import com.jupiter.asclepi.core.service.impl.employee.converter.EmployeeConverter;
@@ -15,5 +18,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new CreateEmployeeRequestConverter());
         registry.addConverter(new EditEmployeeRequestConverter());
         registry.addConverter(new EmployeeConverter());
+        registry.addConverter(new CreateClientRequestConverter());
+        registry.addConverter(new EditClientRequestConverter());
+        registry.addConverter(new ClientConverter());
     }
 }
