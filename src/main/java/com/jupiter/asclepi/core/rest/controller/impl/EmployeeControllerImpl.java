@@ -8,6 +8,7 @@ import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
 import com.jupiter.asclepi.core.rest.controller.EmployeeController;
+import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
@@ -33,10 +34,6 @@ public class EmployeeControllerImpl implements EmployeeController {
     private final EmployeeService employeeService;
     private final ConversionService conversionService;
 
-    private static <T> ResponseEntity<T> generateNotFoundResponse() {
-        return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
-    }
-
     @Override
     public ResponseEntity<?> create(CreateEmployeeRequest createRequest) {
         Try<ResponseEntity<?>> creationTry = employeeService.create(createRequest).map(employee -> {
@@ -52,7 +49,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     @Override
     public ResponseEntity<?> delete(Integer toDeleteId) {
         boolean result = employeeService.delete(toDeleteId);
-        return result ? ResponseEntity.ok().build() : generateNotFoundResponse();
+        return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
     }
 
     @Override
@@ -62,7 +59,7 @@ public class EmployeeControllerImpl implements EmployeeController {
             return ResponseEntity.ok().body(employeeInfo);
         });
         return editionTry
-                .recover(NonExistentIdException.class, e -> generateNotFoundResponse())
+                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
                 .recover(LoginNotUniqueException.class, e -> ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage())))
                 .onFailure(e -> log.error("An error occurred during employee creation: ", e))
                 .getOrElseThrow(AsclepiRuntimeException::new);
@@ -73,7 +70,7 @@ public class EmployeeControllerImpl implements EmployeeController {
         return employeeService.getOne(employeeId)
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(generateNotFoundResponse());
+                .orElse(ControllerUtils.notFoundResponse());
     }
 
     @Override

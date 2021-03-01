@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.configuration;
 import com.jupiter.asclepi.core.service.impl.employee.converter.CreateEmployeeRequestConverter;
 import com.jupiter.asclepi.core.service.impl.employee.converter.EditEmployeeRequestConverter;
 import com.jupiter.asclepi.core.service.impl.employee.converter.EmployeeConverter;
+import com.jupiter.asclepi.core.service.impl.security.converter.EmployeeToUserConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -15,5 +16,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new CreateEmployeeRequestConverter());
         registry.addConverter(new EditEmployeeRequestConverter());
         registry.addConverter(new EmployeeConverter());
+        registry.addConverter(new EmployeeToUserConverter());
     }
 }

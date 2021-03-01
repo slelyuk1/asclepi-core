@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,6 +29,9 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
         if (cause instanceof TransactionSystemException) {
             return handleTransactionException((TransactionSystemException) cause);
         }
+        if(cause instanceof AuthenticationException){
+            handleAuthenticationException((AuthenticationException) cause);
+        }
         log.warn("Not recognized exception wrapped in AsclepiRuntimeException occurred: ", e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(SERVICE_UNAVAILABLE_MESSAGE));
     }
@@ -43,11 +47,16 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    private ResponseEntity<ErrorInfo> handleConstraintViolationException(@NotNull ConstraintViolationException exception) {
+    public ResponseEntity<ErrorInfo> handleConstraintViolationException(@NotNull ConstraintViolationException exception) {
         String message = exception.getConstraintViolations().stream()
                 .map(violation -> String.format(FIELD_VALIDATION_MESSAGE_TEMPLATE, violation.getPropertyPath().toString(), violation.getMessage()))
                 .collect(Collectors.joining(". "));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorInfo(message));
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorInfo> handleAuthenticationException(@NotNull AuthenticationException exception){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorInfo(exception.getMessage()));
     }
 
     @Override

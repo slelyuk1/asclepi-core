@@ -1,0 +1,33 @@
+{
+  "properties": [
+    {
+      "name": "security.secret",
+      "type": "java.lang.String",
+      "description": "Secret needed to generate securely encrypted authentication tokens."
+    },
+    {
+      "name": "security.serverInteger",
+      "type": "java.lang.Integer",
+      "description": "Server number needed to generate securely encrypted authentication tokens."
+    },
+    {
+      "name": "security.admin.login",
+      "type": "java.lang.String",
+      "description": "Login of main admin user."
+    },
+    {
+      "name": "security.admin.password",
+      "type": "java.lang.String",
+      "description": "Password of main admin user."
+    },
+    {
+      "name": "security.admin.name",
+      "type": "java.lang.String",
+      "description": "Name of main admin user."
+    },
+    {
+      "name": "security.admin.surname",
+      "type": "java.lang.String",
+      "description": "Surname of main admin user."
+    }
+  ] }
