@@ -23,3 +23,6 @@ security:
     surname: Admin
 
 # todo configure logging
+#logging:
+#  level:
+#    root: debug

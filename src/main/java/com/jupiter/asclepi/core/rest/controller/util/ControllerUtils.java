@@ -7,11 +7,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public final class ControllerUtils {
 
-    public static <T> ResponseEntity<T> notFoundResponse(){
+    public static <T> ResponseEntity<T> notFoundResponse() {
         return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
     }
 
-    private ControllerUtils(){
+    private ControllerUtils() {
         throw new IllegalStateException("ControllerUtils class mustn't be instantiated");
     }
 }
