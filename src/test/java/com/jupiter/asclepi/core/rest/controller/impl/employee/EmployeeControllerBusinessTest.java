@@ -87,7 +87,7 @@ public class EmployeeControllerBusinessTest extends AbstractEmployeeTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
                     EmployeeInfo[] employeeInfos = getObjectMapper().readValue(result.getResponse().getContentAsString(), EmployeeInfo[].class);
-                    Assertions.assertEquals(employeeInfos.length, 2);
+                    Assertions.assertEquals(3, employeeInfos.length);
                     EmployeeInfo testEmployeeInfo = Arrays.stream(employeeInfos)
                             .filter(employeeInfo -> employeeInfo.getId() == testEmployee.getId())
                             .findAny()

@@ -67,7 +67,7 @@ class SecurityControllerSignaturesTest extends AbstractSecurityTest {
                         responseHeaders(
                                 headerWithName(HttpHeaders.SET_COOKIE).description("Token which is used for authorization")
                         )
-                ));
+                )).andReturn();
     }
 
     private static FieldDescriptor[] generateAuthenticateRequestDescriptors() {

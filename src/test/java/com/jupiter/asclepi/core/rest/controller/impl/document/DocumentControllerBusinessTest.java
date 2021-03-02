@@ -5,6 +5,7 @@ import com.jupiter.asclepi.core.model.entity.document.Document;
 import com.jupiter.asclepi.core.model.response.disease.DocumentInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
+@Disabled
 public class DocumentControllerBusinessTest extends AbstractDocumentTest {
 
     private MockMvc mockMvc;
