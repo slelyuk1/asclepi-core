@@ -101,7 +101,7 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("{method-name}",
-                        requestFields(ERROR_INFO_FIELD_DESCRIPTORS)
+                        requestFields(EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS)
                 ));
     }
 
@@ -139,29 +139,6 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
                 .andDo(document("{method-name}",
                         responseFields(fieldWithPath("[]").description("Array of ClientInfo").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[]", CLIENT_INFO_FIELD_DESCRIPTORS)
-                ));
-    }
-
-    @Test
-    void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(true);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateDeleteRequest(testClient.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client"))
-                ));
-    }
-
-    @Test
-    void testNonExistentDeletionRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(generateDeleteRequest(0))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client"))
                 ));
     }
 

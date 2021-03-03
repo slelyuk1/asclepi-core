@@ -12,9 +12,6 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-//done
-// todo configure for persistence (Dima Kuzmenko) (see com.jupiter.asclepi.core.model.entity.people.Employee)
-// todo configure validation (Dima Kuzmenko)
 @Data
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Entity

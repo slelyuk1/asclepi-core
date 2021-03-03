@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -25,11 +26,11 @@ public interface ClientController extends
 
     @PostMapping("/create")
     @Override
-    ResponseEntity<?> create(@NotNull CreateClientRequest createRequest);
+    ResponseEntity<?> create(@NotNull @RequestBody CreateClientRequest createRequest);
 
     @Override
     @PostMapping("/edit")
-    ResponseEntity<?> edit(@NotNull EditClientRequest editRequest);
+    ResponseEntity<?> edit(@NotNull @RequestBody EditClientRequest editRequest);
 
     @Override
     @GetMapping("/all")

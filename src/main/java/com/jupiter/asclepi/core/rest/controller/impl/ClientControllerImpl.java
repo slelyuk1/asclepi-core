@@ -64,11 +64,13 @@ public class ClientControllerImpl implements ClientController {
 
     @Override
     public ResponseEntity<ClientInfo> getOne(@NotNull Integer getRequest) {
-        // todo implement when security features will be implemented
-        throw new UnsupportedOperationException("This functionality is not implemented yet!");
+        return clientService.getOne(getRequest)
+                .map(client -> conversionService.convert(client, ClientInfo.class))
+                .map(ResponseEntity::ok)
+                .orElse(generateNotFoundResponse());
     }
 
-    private static <T> ResponseEntity<T> generateNotFoundResponse(){
+    private static <T> ResponseEntity<T> generateNotFoundResponse() {
         return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
     }
 }
