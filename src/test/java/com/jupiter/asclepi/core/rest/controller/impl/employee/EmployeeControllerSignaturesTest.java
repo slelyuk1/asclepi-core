@@ -5,6 +5,7 @@ import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
+import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,15 +18,12 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -62,10 +60,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(documentationConfiguration(restDocumentation))
-                .alwaysDo(document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .build();
+        this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
     }
 
     @Test
@@ -73,7 +68,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
         this.mockMvc.perform(createEmployeeRequest(createEmployeeParams()))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("employeeSuccessfulCreation",
                         requestFields(CREATE_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
                         responseFields(EMPLOYEE_INFO_FIELD_DESCRIPTORS)
                 ));
@@ -86,7 +81,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
         this.mockMvc.perform(createEmployeeRequest(createEmployeeParams()))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("employeeExistingLoginCreation",
                         requestFields(CREATE_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
                         responseFields(ERROR_INFO_FIELD_DESCRIPTORS)
                 ));
@@ -99,7 +94,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
         this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(testEmployee.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("employeeSuccessfulEdition",
                         requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
                         responseFields(EMPLOYEE_INFO_FIELD_DESCRIPTORS)
                 ));
@@ -113,7 +108,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
+                .andDo(document("employeeNonExistentEdition",
                         requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS)
                 ));
     }
@@ -139,7 +134,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
         this.mockMvc.perform(getEmployeeRequest(testEmployee.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("employeeSuccessfulGetting",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee")),
                         responseFields(EMPLOYEE_INFO_FIELD_DESCRIPTORS)
                 ));
@@ -151,7 +146,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
+                .andDo(document("employeeNonExistentGetting",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
                 ));
     }
@@ -163,7 +158,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
         this.mockMvc.perform(getAllEmployeesRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("employeeSuccessfulGettingAll",
                         responseFields(fieldWithPath("[]").description("Array of EmployeeInfo").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[]", EMPLOYEE_INFO_FIELD_DESCRIPTORS)
                 ));
@@ -176,7 +171,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
         this.mockMvc.perform(deleteEmployeeRequest(testEmployee.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
+                .andDo(document("employeeSuccessfulDeletion",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
                 ));
     }
@@ -189,7 +184,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
+                .andDo(document("employeeNonExistentDeletion",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
                 ));
     }
