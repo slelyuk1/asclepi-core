@@ -1,112 +1,179 @@
-= Employee
+= Asclepi Core Documentation
 
-== Create
+== Employee Operations
 
-=== Description
+=== Create Operation
+
+==== Description
 
 Creates an employee in the system.
 
-==== Request Fields
+===== Request Fields
 
-include::{snippets}/test-successful-employee-creation-request-response-signatures/request-fields.adoc[]
+include::{snippets}/employeeSuccessfulCreation/request-fields.adoc[]
 
-==== Response Fields
+===== Response Fields
 
-include::{snippets}/test-successful-employee-creation-request-response-signatures/response-fields.adoc[]
+include::{snippets}/employeeSuccessfulCreation/response-fields.adoc[]
 
-==== Successful Request Example
+===== Successful Request Example
 
-include::{snippets}/test-successful-employee-creation-request-response-signatures/request-body.adoc[]
+include::{snippets}/employeeSuccessfulCreation/http-request.adoc[]
 
-==== Successful Response Example
+===== Successful Response Example
 
-include::{snippets}/test-successful-employee-creation-request-response-signatures/response-body.adoc[]
+include::{snippets}/employeeSuccessfulCreation/http-response.adoc[]
 
-== Edit
+=== Edit Operation
 
-=== Description
+==== Description
 
 Edits an employee in the system.
 
-==== Request Fields
+===== Request Fields
 
-include::{snippets}/test-successful-employee-editing-request-response-signatures/request-fields.adoc[]
+include::{snippets}/employeeSuccessfulEdition/request-fields.adoc[]
 
-==== Response Fields
+===== Response Fields
 
-include::{snippets}/test-successful-employee-editing-request-response-signatures/response-fields.adoc[]
+include::{snippets}/employeeSuccessfulEdition/response-fields.adoc[]
 
-==== Request Example
+===== Request Example
 
-include::{snippets}/test-successful-employee-editing-request-response-signatures/request-body.adoc[]
+include::{snippets}/employeeSuccessfulEdition/http-request.adoc[]
 
-==== Response Example
+===== Response Example
 
-include::{snippets}/test-successful-employee-editing-request-response-signatures/response-body.adoc[]
+include::{snippets}/employeeSuccessfulEdition/http-response.adoc[]
 
-== Delete
+=== Delete Operation
 
-=== Description
+==== Description
 
 Deletes an employee from the system.
 
-==== Request Fields
+===== Request Example
 
-None
+include::{snippets}/employeeSuccessfulDeletion/http-request.adoc[]
 
-==== Response Fields
+===== Response Example
 
-None
+include::{snippets}/employeeSuccessfulDeletion/http-response.adoc[]
 
-==== Request Example
+=== Get Operation
 
-include::{snippets}/test-successful-employee-deletion-request-response-signatures/request-body.adoc[]
-
-==== Response Example
-
-include::{snippets}/test-successful-employee-deletion-request-response-signatures/response-body.adoc[]
-
-== Get
-
-=== Description
+==== Description
 
 Gets an employee from the system.
 
-==== Request Fields
+===== Response Fields
 
-None
+include::{snippets}/employeeSuccessfulGetting/response-fields.adoc[]
 
-==== Response Fields
+===== Request Example
 
-include::{snippets}/test-successful-employee-getting-request-response-signatures/response-fields.adoc[]
+include::{snippets}/employeeSuccessfulGetting/http-request.adoc[]
 
-==== Request Example
+===== Response Example
 
-include::{snippets}/test-successful-employee-getting-request-response-signatures/request-body.adoc[]
+include::{snippets}/employeeSuccessfulGetting/http-response.adoc[]
 
-==== Response Example
+=== Get All Operation
 
-include::{snippets}/test-successful-employee-getting-request-response-signatures/response-body.adoc[]
-
-== Get All
-
-=== Description
+==== Description
 
 Gets all employees from the system.
 
-==== Request Fields
+===== Response Fields
 
-None
+include::{snippets}/employeeSuccessfulGettingAll/response-fields.adoc[]
 
-==== Response Fields
+===== Request Example
 
-include::{snippets}/test-successful-all-employees-getting-request-response-signatures/response-fields.adoc[]
+include::{snippets}/employeeSuccessfulGettingAll/http-request.adoc[]
 
-==== Request Example
+===== Response Example
 
-include::{snippets}/test-successful-all-employees-getting-request-response-signatures/request-body.adoc[]
+include::{snippets}/employeeSuccessfulGettingAll/http-response.adoc[]
 
-==== Response Example
+== Client Operations
 
-include::{snippets}/test-successful-all-employees-getting-request-response-signatures/response-body.adoc[]
+=== Create Operation
 
+==== Description
+
+Creates a client in the system.
+
+===== Request Fields
+
+include::{snippets}/clientSuccessfulCreation/request-fields.adoc[]
+
+===== Response Fields
+
+include::{snippets}/clientSuccessfulCreation/response-fields.adoc[]
+
+===== Request Example
+
+include::{snippets}/clientSuccessfulCreation/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/clientSuccessfulCreation/http-response.adoc[]
+
+=== Edit Operation
+
+==== Description
+
+Edits a client in the system.
+
+===== Request Fields
+
+include::{snippets}/clientSuccessfulEdition/request-fields.adoc[]
+
+===== Response Fields
+
+include::{snippets}/clientSuccessfulEdition/response-fields.adoc[]
+
+===== Request Example
+
+include::{snippets}/clientSuccessfulEdition/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/clientSuccessfulEdition/http-response.adoc[]
+
+=== Get Operation
+
+==== Description
+
+Gets a client from the system.
+
+===== Response Fields
+
+include::{snippets}/clientSuccessfulGetting/response-fields.adoc[]
+
+===== Request Example
+
+include::{snippets}/clientSuccessfulGetting/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/clientSuccessfulGetting/http-response.adoc[]
+
+=== Get All Operation
+
+==== Description
+
+Gets all clients from the system.
+
+===== Response Fields
+
+include::{snippets}/clientSuccessfulGettingAll/response-fields.adoc[]
+
+===== Request Example
+
+include::{snippets}/clientSuccessfulGettingAll/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/clientSuccessfulGettingAll/http-response.adoc[]

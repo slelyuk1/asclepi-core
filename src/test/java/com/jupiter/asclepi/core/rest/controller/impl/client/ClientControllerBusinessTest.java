@@ -100,19 +100,6 @@ public class ClientControllerBusinessTest extends AbstractClientTest {
                 });
     }
 
-    @Test
-    void testSuccessfulDeletion() throws Exception {
-        Client test = createTestClient(true);
-        getEntityManager().persist(test);
-        this.mockMvc.perform(generateDeleteRequest(test.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(result -> {
-                    Client found = getEntityManager().find(Client.class, test.getId());
-                    Assertions.assertNull(found);
-                });
-    }
-
     @SuppressWarnings("SameParameterValue")
     private Client createAnother(boolean withOptional) {
         Client other = createTestClient(true);

@@ -5,6 +5,7 @@ import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
+import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,10 +63,7 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
 
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(documentationConfiguration(restDocumentation))
-                .alwaysDo(document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .build();
+        this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
     }
 
     @Test
@@ -73,7 +71,7 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
         this.mockMvc.perform(generateCreateRequest(generateCreateParams(false)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("clientSuccessfulCreation",
                         requestFields(CREATE_CLIENT_REQUEST_FIELD_DESCRIPTORS),
                         responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
                 ));
@@ -86,7 +84,7 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
         this.mockMvc.perform(generateEditRequest(generateEditParams(testClient.getId(), false)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("clientSuccessfulEdition",
                         requestFields(EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS),
                         responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
                 ));
@@ -100,8 +98,8 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
-                        requestFields(ERROR_INFO_FIELD_DESCRIPTORS)
+                .andDo(document("clientNonExistentEdition",
+                        requestFields(EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS)
                 ));
     }
 
@@ -112,7 +110,7 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
         this.mockMvc.perform(generateGetRequest(testClient.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("clientSuccessfulGetting",
                         pathParameters(parameterWithName("clientId").description("ID of the existing client")),
                         responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
                 ));
@@ -124,44 +122,21 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
+                .andDo(document("clientNonExistentGetting",
                         pathParameters(parameterWithName("clientId").description("ID of the existing client"))
                 ));
     }
 
     @Test
-    void testSuccessfulAllsGettingRequestResponseSignatures() throws Exception {
+    void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
         Client testClient = createTestClient(true);
         getEntityManager().persist(testClient);
         this.mockMvc.perform(generateGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("{method-name}",
+                .andDo(document("clientSuccessfulGettingAll",
                         responseFields(fieldWithPath("[]").description("Array of ClientInfo").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[]", CLIENT_INFO_FIELD_DESCRIPTORS)
-                ));
-    }
-
-    @Test
-    void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(true);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateDeleteRequest(testClient.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client"))
-                ));
-    }
-
-    @Test
-    void testNonExistentDeletionRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(generateDeleteRequest(0))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("{method-name}",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client"))
                 ));
     }
 
