@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-// done
-// todo configure and implement REST controller (Dima Kuzmenko) (see com.jupiter.asclepi.core.rest.controller.EmployeeController)
 public interface ClientController extends
         GetController<Integer, ClientInfo>,
         GetAllController<ClientInfo>,
