@@ -22,7 +22,7 @@ public class Client extends AbstractCreationAware<Employee> {
     private Integer id;
 
     @NotBlank
-    @Column(name = "client_name")//(insertable=false, updatable=false)
+    @Column(name = "client_name")
     private String name;
 
     @NotBlank
