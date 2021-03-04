@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -29,14 +30,17 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
     private final ConversionService conversionService;
     private final EmployeeRepository repository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public Try<Employee> create(@Valid @NotNull CreateEmployeeRequest createRequest) {
-        Employee toCreate = conversionService.convert(createRequest, Employee.class);
+        Employee toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Employee.class));
         return Try.of(() -> {
             if (employeeWithLoginExists(createRequest.getLogin())) {
                 throw new LoginNotUniqueException(createRequest.getLogin());
             }
+            toCreate.setPassword(passwordEncoder.encode(toCreate.getPassword()));
             return repository.save(Objects.requireNonNull(toCreate));
         });
     }
@@ -80,5 +84,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employeeWithLogin = new Employee();
         employeeWithLogin.setLogin(login);
         return repository.exists(Example.of(employeeWithLogin));
+    }
+
+    @Override
+    public Optional<Employee> findEmployeeByLogin(@NotNull String login) {
+        Employee toSearch = new Employee();
+        toSearch.setLogin(login);
+        return repository.findOne(Example.of(toSearch));
     }
 }

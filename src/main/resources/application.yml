@@ -1,5 +1,3 @@
-# todo configure logging
-
 spring:
   datasource:
     driver-class-name: org.h2.Driver
@@ -13,3 +11,18 @@ spring:
   h2:
     console:
       enabled: true
+
+# todo through environmental variables
+security:
+  secret: secret
+  serverInteger: 1
+  admin:
+    login: admin
+    password: admin
+    name: Admin
+    surname: Admin
+
+# todo configure logging
+#logging:
+#  level:
+#    root: debug

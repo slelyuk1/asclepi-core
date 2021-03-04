@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.other.Role;
-import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

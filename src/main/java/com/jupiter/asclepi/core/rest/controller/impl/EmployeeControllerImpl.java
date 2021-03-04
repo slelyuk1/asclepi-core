@@ -3,20 +3,18 @@ package com.jupiter.asclepi.core.rest.controller.impl;
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.exception.employee.LoginNotUniqueException;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
 import com.jupiter.asclepi.core.rest.controller.EmployeeController;
+import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +49,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     @Override
     public ResponseEntity<?> delete(Integer toDeleteId) {
         boolean result = employeeService.delete(toDeleteId);
-        return result ? ResponseEntity.ok().build() : generateNotFoundResponse();
+        return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
     }
 
     @Override
@@ -61,7 +59,7 @@ public class EmployeeControllerImpl implements EmployeeController {
             return ResponseEntity.ok().body(employeeInfo);
         });
         return editionTry
-                .recover(NonExistentIdException.class, e -> generateNotFoundResponse())
+                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
                 .recover(LoginNotUniqueException.class, e -> ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage())))
                 .onFailure(e -> log.error("An error occurred during employee creation: ", e))
                 .getOrElseThrow(AsclepiRuntimeException::new);
@@ -72,7 +70,7 @@ public class EmployeeControllerImpl implements EmployeeController {
         return employeeService.getOne(employeeId)
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(generateNotFoundResponse());
+                .orElse(ControllerUtils.notFoundResponse());
     }
 
     @Override
@@ -87,9 +85,5 @@ public class EmployeeControllerImpl implements EmployeeController {
     public EmployeeInfo getOne() {
         // todo implement when security features will be implemented
         throw new UnsupportedOperationException("This functionality is not implemented yet!");
-    }
-
-    private static <T> ResponseEntity<T> generateNotFoundResponse(){
-        return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
     }
 }

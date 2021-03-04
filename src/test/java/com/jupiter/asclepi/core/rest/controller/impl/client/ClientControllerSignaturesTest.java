@@ -7,6 +7,7 @@ import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
+@Disabled
 class ClientControllerSignaturesTest extends AbstractClientTest {
 
     private static final FieldDescriptor[] CLIENT_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{

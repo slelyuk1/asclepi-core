@@ -16,7 +16,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.math.BigInteger;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Objects;

@@ -2,7 +2,6 @@ package com.jupiter.asclepi.core.model.request.disease.document;
 
 import lombok.Data;
 
-import java.math.BigInteger;
 import java.nio.file.Path;
 
 // todo add disease history when its functionality is implemented

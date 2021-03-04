@@ -7,9 +7,6 @@ import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHisto
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
-import com.jupiter.asclepi.core.helper.api.business.service.CreateService;
-import com.jupiter.asclepi.core.helper.api.business.service.EditService;
-import com.jupiter.asclepi.core.helper.api.business.service.GetService;
 
 import java.util.List;
 
