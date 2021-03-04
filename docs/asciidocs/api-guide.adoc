@@ -1,5 +1,38 @@
 = Asclepi Core Documentation
 
+== Authentication and Authorization Operations
+
+=== Authentication (Login)
+
+==== Description
+
+All endpoints, accept this one, in asclepi-core are secured.
+Thus, any request to a secured endpoint produces 403 (Forbidden) response status.
+To gain access to secured endpoint, a requester must provide access token.
+This token is encrypted and contains all needed information for authorization.
+Requester gains access token by sending a valid request to this endpoint.
+To gain access to secured endpoints this token must be stored in 'Cookies' header of HTTP request.
+
+===== Request Fields
+
+include::{snippets}/securitySuccessfulAuthentication/request-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/securitySuccessfulAuthentication/curl-request.adoc[]
+
+===== Successful Request Example
+
+include::{snippets}/securitySuccessfulAuthentication/http-request.adoc[]
+
+===== Successful Response Example
+
+include::{snippets}/securitySuccessfulAuthentication/http-response.adoc[]
+
+===== Unsuccessful Response Example
+
+include::{snippets}/securityUnsuccessfulAuthentication/http-response.adoc[]
+
 == Employee Operations
 
 === Create Operation
@@ -15,6 +48,10 @@ include::{snippets}/employeeSuccessfulCreation/request-fields.adoc[]
 ===== Response Fields
 
 include::{snippets}/employeeSuccessfulCreation/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/employeeSuccessfulCreation/curl-request.adoc[]
 
 ===== Successful Request Example
 
@@ -37,6 +74,10 @@ include::{snippets}/employeeSuccessfulEdition/request-fields.adoc[]
 ===== Response Fields
 
 include::{snippets}/employeeSuccessfulEdition/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/employeeSuccessfulEdition/curl-request.adoc[]
 
 ===== Request Example
 
@@ -70,6 +111,10 @@ Gets an employee from the system.
 
 include::{snippets}/employeeSuccessfulGetting/response-fields.adoc[]
 
+===== Curl
+
+include::{snippets}/employeeSuccessfulGetting/curl-request.adoc[]
+
 ===== Request Example
 
 include::{snippets}/employeeSuccessfulGetting/http-request.adoc[]
@@ -87,6 +132,10 @@ Gets all employees from the system.
 ===== Response Fields
 
 include::{snippets}/employeeSuccessfulGettingAll/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/employeeSuccessfulGettingAll/curl-request.adoc[]
 
 ===== Request Example
 
@@ -112,6 +161,10 @@ include::{snippets}/clientSuccessfulCreation/request-fields.adoc[]
 
 include::{snippets}/clientSuccessfulCreation/response-fields.adoc[]
 
+===== Curl
+
+include::{snippets}/clientSuccessfulCreation/curl-request.adoc[]
+
 ===== Request Example
 
 include::{snippets}/clientSuccessfulCreation/http-request.adoc[]
@@ -134,6 +187,10 @@ include::{snippets}/clientSuccessfulEdition/request-fields.adoc[]
 
 include::{snippets}/clientSuccessfulEdition/response-fields.adoc[]
 
+===== Curl
+
+include::{snippets}/clientSuccessfulEdition/curl-request.adoc[]
+
 ===== Request Example
 
 include::{snippets}/clientSuccessfulEdition/http-request.adoc[]
@@ -152,6 +209,10 @@ Gets a client from the system.
 
 include::{snippets}/clientSuccessfulGetting/response-fields.adoc[]
 
+===== Curl
+
+include::{snippets}/clientSuccessfulGetting/curl-request.adoc[]
+
 ===== Request Example
 
 include::{snippets}/clientSuccessfulGetting/http-request.adoc[]
@@ -169,6 +230,10 @@ Gets all clients from the system.
 ===== Response Fields
 
 include::{snippets}/clientSuccessfulGettingAll/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/clientSuccessfulGettingAll/curl-request.adoc[]
 
 ===== Request Example
 

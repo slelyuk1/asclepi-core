@@ -15,6 +15,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -27,9 +28,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.headerWit
 import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional
@@ -44,6 +43,7 @@ class SecurityControllerSignaturesTest extends AbstractSecurityTest {
     private MockMvc mockMvc;
     @Autowired
     private EmployeeService employeeService;
+
     @Autowired
     public SecurityControllerSignaturesTest(ObjectMapper objectMapper, EntityManager entityManager) {
         super(objectMapper, entityManager);
@@ -52,8 +52,8 @@ class SecurityControllerSignaturesTest extends AbstractSecurityTest {
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
                 .apply(documentationConfiguration(restDocumentation))
-                .alwaysDo(document("{method-name}", preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
                 .build();
     }
 
@@ -62,11 +62,21 @@ class SecurityControllerSignaturesTest extends AbstractSecurityTest {
         employeeService.create(generateCreateEmployeeRequest(Role.ADMIN));
         this.mockMvc.perform(generateAuthenticationRequest(generateAuthenticateParams()))
                 .andExpect(status().isOk())
-                .andDo(document("{method-name}",
+                .andDo(document("securitySuccessfulAuthentication",
                         requestFields(AUTHENTICATE_REQUEST_FIELD_DESCRIPTORS),
                         responseHeaders(
                                 headerWithName(HttpHeaders.SET_COOKIE).description("Token which is used for authorization")
                         )
+                )).andReturn();
+    }
+
+    @Test
+    void testForbiddenAuthenticationRequestSignature() throws Exception {
+        this.mockMvc.perform(generateAuthenticationRequest(generateAuthenticateParams()))
+                .andExpect(status().isForbidden())
+                .andDo(document("securityUnsuccessfulAuthentication",
+                        requestFields(AUTHENTICATE_REQUEST_FIELD_DESCRIPTORS),
+                        responseFields(ERROR_INFO_FIELD_DESCRIPTORS)
                 )).andReturn();
     }
 

@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
-@Disabled
 public class ClientControllerBusinessTest extends AbstractClientTest {
 
     private MockMvc mockMvc;
