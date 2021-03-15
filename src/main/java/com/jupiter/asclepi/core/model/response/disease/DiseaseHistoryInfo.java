@@ -1,14 +1,16 @@
 package com.jupiter.asclepi.core.model.response.disease;
 
-import com.jupiter.asclepi.core.helper.api.object.AbstractCreationAware;
 import lombok.Value;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Value
-public class DiseaseHistoryInfo extends AbstractCreationAware<Integer> {
+public class DiseaseHistoryInfo {
     Integer clientId;
     Integer number;
-    BigInteger diagnosisId;
+    List<BigInteger> diagnosisIds;
     Integer doctorId;
+
+    // todo created by and created when
 }

@@ -7,6 +7,7 @@ import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHisto
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -16,5 +17,8 @@ public interface DiseaseHistoryController extends
         EditController<EditDiseaseHistoryRequest> {
 
     List<DiseaseHistoryInfo> getForClient(Integer clientId);
-    // todo close and abort disease history
+
+    ResponseEntity<?> abort(GetDiseaseHistoryRequest request);
+
+    ResponseEntity<?> close(GetDiseaseHistoryRequest request);
 }
