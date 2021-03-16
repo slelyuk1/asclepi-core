@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @Component
 @AllArgsConstructor
-public class EmployeeHelper {
+public class EmployeeTestHelper {
     private static final String TEST_LOGIN = "testLogin";
     private static final String TEST_PASSWORD = "testPassword";
     private static final Role TEST_ROLE = Role.ADMIN;

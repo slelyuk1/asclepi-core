@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.rest.controller.impl.client;
 
-import com.jupiter.asclepi.core.helper.ClientHelper;
+import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
@@ -24,12 +24,12 @@ import java.util.Objects;
 public class ClientControllerBusinessTest {
 
     private MockMvc mockMvc;
-    private final ClientHelper helper;
+    private final ClientTestHelper helper;
     private final ClientService service;
     private final EntityManager entityManager;
 
     @Autowired
-    public ClientControllerBusinessTest(ClientHelper helper, ClientService service, EntityManager entityManager) {
+    public ClientControllerBusinessTest(ClientTestHelper helper, ClientService service, EntityManager entityManager) {
         this.helper = helper;
         this.service = service;
         this.entityManager = entityManager;

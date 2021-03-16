@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @Component
 @AllArgsConstructor
-public class ClientHelper {
+public class ClientTestHelper {
     private static final String TEST_NAME = "testName";
     private static final String TEST_SURNAME = "testSurname";
     private static final String TEST_MIDDLE_NAME = "testMiddleName";

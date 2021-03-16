@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.rest.controller.impl.employee;
 
-import com.jupiter.asclepi.core.helper.EmployeeHelper;
+import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
@@ -19,12 +19,12 @@ import java.util.Objects;
 @SpringBootTest
 public class EmployeeControllerBusinessTest {
 
-    private final EmployeeHelper helper;
+    private final EmployeeTestHelper helper;
     private final EmployeeService service;
     private final EntityManager entityManager;
 
     @Autowired
-    public EmployeeControllerBusinessTest(EmployeeHelper helper, EmployeeService service, EntityManager entityManager) {
+    public EmployeeControllerBusinessTest(EmployeeTestHelper helper, EmployeeService service, EntityManager entityManager) {
         this.helper = helper;
         this.service = service;
         this.entityManager = entityManager;

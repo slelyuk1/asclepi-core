@@ -1,8 +1,9 @@
 package com.jupiter.asclepi.core.rest.controller.impl.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.model.other.Role;
+import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
+import com.jupiter.asclepi.core.helper.SecurityTestHelper;
 import com.jupiter.asclepi.core.model.request.other.AuthenticationRequest;
+import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
@@ -34,19 +34,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-class SecurityControllerSignaturesTest extends AbstractSecurityTest {
+class SecurityControllerSignaturesTest {
     private static final FieldDescriptor[] AUTHENTICATE_REQUEST_FIELD_DESCRIPTORS = generateAuthenticateRequestDescriptors();
     private static final FieldDescriptor[] ERROR_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
             fieldWithPath("message").description("Error message").type(JsonFieldType.STRING)
     };
-
+    
     private MockMvc mockMvc;
-    @Autowired
-    private EmployeeService employeeService;
+    private final SecurityTestHelper securityTestHelper;
+    private final EmployeeTestHelper employeeTestHelper;
+    private final EmployeeService employeeService;
 
     @Autowired
-    public SecurityControllerSignaturesTest(ObjectMapper objectMapper, EntityManager entityManager) {
-        super(objectMapper, entityManager);
+    public SecurityControllerSignaturesTest(SecurityTestHelper securityTestHelper, EmployeeTestHelper employeeTestHelper, EmployeeService employeeService) {
+        this.securityTestHelper = securityTestHelper;
+        this.employeeTestHelper = employeeTestHelper;
+        this.employeeService = employeeService;
     }
 
     @BeforeEach
@@ -59,8 +62,14 @@ class SecurityControllerSignaturesTest extends AbstractSecurityTest {
 
     @Test
     void testSuccessfulAuthenticationRequestSignature() throws Exception {
-        employeeService.create(generateCreateEmployeeRequest(Role.ADMIN));
-        this.mockMvc.perform(generateAuthenticationRequest(generateAuthenticateParams()))
+        CreateEmployeeRequest createEmployeeRequest = employeeTestHelper.generateCreateRequest(true);
+        String login = createEmployeeRequest.getLogin();
+        String password = createEmployeeRequest.getPassword();
+        employeeService.create(createEmployeeRequest);
+        AuthenticationRequest request = new AuthenticationRequest();
+        request.setLogin(login);
+        request.setPassword(password);
+        this.mockMvc.perform(securityTestHelper.createMockedAuthenticationRequest(request))
                 .andExpect(status().isOk())
                 .andDo(document("securitySuccessfulAuthentication",
                         requestFields(AUTHENTICATE_REQUEST_FIELD_DESCRIPTORS),
@@ -72,7 +81,7 @@ class SecurityControllerSignaturesTest extends AbstractSecurityTest {
 
     @Test
     void testForbiddenAuthenticationRequestSignature() throws Exception {
-        this.mockMvc.perform(generateAuthenticationRequest(generateAuthenticateParams()))
+        this.mockMvc.perform(securityTestHelper.createMockedAuthenticationRequest(securityTestHelper.generateAuthenticationRequest()))
                 .andExpect(status().isForbidden())
                 .andDo(document("securityUnsuccessfulAuthentication",
                         requestFields(AUTHENTICATE_REQUEST_FIELD_DESCRIPTORS),

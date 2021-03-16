@@ -1,13 +1,12 @@
 package com.jupiter.asclepi.core.rest.controller.impl.employee;
 
-import com.jupiter.asclepi.core.helper.EmployeeHelper;
+import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,12 +52,12 @@ class EmployeeControllerSignaturesTest {
     };
 
     private MockMvc mockMvc;
-    private final EmployeeHelper helper;
+    private final EmployeeTestHelper helper;
     private final EntityManager entityManager;
     private final EmployeeService service;
 
     @Autowired
-    public EmployeeControllerSignaturesTest(EmployeeHelper helper, EntityManager entityManager, EmployeeService service) {
+    public EmployeeControllerSignaturesTest(EmployeeTestHelper helper, EntityManager entityManager, EmployeeService service) {
         this.helper = helper;
         this.entityManager = entityManager;
         this.service = service;

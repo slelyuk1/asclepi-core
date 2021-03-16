@@ -1,13 +1,12 @@
 package com.jupiter.asclepi.core.rest.controller.impl.client;
 
-import com.jupiter.asclepi.core.helper.ClientHelper;
+import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +21,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -54,11 +52,11 @@ class ClientControllerSignaturesTest {
     };
 
     private MockMvc mockMvc;
-    private final ClientHelper helper;
+    private final ClientTestHelper helper;
     private final ClientService service;
 
     @Autowired
-    public ClientControllerSignaturesTest(ClientHelper helper, ClientService service) {
+    public ClientControllerSignaturesTest(ClientTestHelper helper, ClientService service) {
         this.helper = helper;
         this.service = service;
     }
