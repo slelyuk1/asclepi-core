@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.rest.controller.impl.history;
+package com.jupiter.asclepi.core.rest.controller.impl.diseaseHistory;
 
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
@@ -10,7 +10,6 @@ import com.jupiter.asclepi.core.model.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
@@ -115,28 +114,34 @@ public class DiseaseHistoryControllerBusinessTest {
         assertEntitiesAreFullyEqual(created, found);
     }
 
-//    @Test
-//    void testSuccessfulGettingAll() throws Exception {
-//        CreateClientRequest createRequest = helper.generateCreateRequest(false);
-//        Client one = service.create(createRequest).get();
-//        Client another = service.create(helper.generateAnotherCreateRequest(createRequest)).get();
-//        entityManager.flush();
-//        entityManager.detach(one);
-//        entityManager.detach(another);
-//
-//        Collection<Client> all = service.getAll();
-//        Assertions.assertEquals(all.size(), 2);
-//        Client oneInfo = all.stream()
-//                .filter(info -> Objects.equals(info.getId(), one.getId()))
-//                .findAny()
-//                .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
-//        Client anotherInfo = all.stream()
-//                .filter(info -> Objects.equals(info.getId(), another.getId()))
-//                .findAny()
-//                .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
-//        assertEntitiesAreFullyEqual(one, oneInfo);
-//        assertEntitiesAreFullyEqual(another, anotherInfo);
-//    }
+    @Test
+    void testSuccessfulGettingAll() throws Exception {
+        CreateDiseaseHistoryRequest oneRequest = new CreateDiseaseHistoryRequest();
+        oneRequest.setDoctorId(existingDoctor.getId());
+        oneRequest.setClientId(existingClient.getId());
+        DiseaseHistory one = diseaseHistoryService.create(oneRequest).get();
+        CreateDiseaseHistoryRequest anotherRequest = oneRequest.clone();
+        anotherRequest.setDoctorId(anotherDoctor.getId());
+        DiseaseHistory another = diseaseHistoryService.create(anotherRequest).get();
+        entityManager.flush();
+        entityManager.detach(one);
+        entityManager.detach(another);
+
+        Collection<DiseaseHistory> all = diseaseHistoryService.getAll();
+        Assertions.assertEquals(all.size(), 2);
+        DiseaseHistory foundOne = all.stream()
+                .filter(history -> Objects.equals(history.getClient(), one.getClient()))
+                .filter(history -> Objects.equals(history.getNumber(), one.getNumber()))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
+        DiseaseHistory foundAnother = all.stream()
+                .filter(history -> Objects.equals(history.getClient(), another.getClient()))
+                .filter(history -> Objects.equals(history.getNumber(), another.getNumber()))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
+        assertEntitiesAreFullyEqual(one, foundOne);
+        assertEntitiesAreFullyEqual(another, foundAnother);
+    }
 
     private void assertEntityIsValidAfterCreation(CreateDiseaseHistoryRequest request, DiseaseHistory entity) {
         Assertions.assertEquals(request.getClientId(), entity.getClient().getId());
@@ -144,22 +149,18 @@ public class DiseaseHistoryControllerBusinessTest {
     }
 
     private void assertEntityIsValidAfterEdition(EditDiseaseHistoryRequest request, DiseaseHistory entity) {
-        // todo
-//        Assertions.assertEquals(request.getId(), entity.getId());
-//        if (Objects.nonNull(request.getName())) {
-//            Assertions.assertEquals(request.getName(), entity.getName());
-//        }
+        Assertions.assertEquals(request.getClientId(), entity.getClient().getId());
+        Assertions.assertEquals(request.getNumber(), entity.getNumber());
+        if (Objects.nonNull(request.getDoctorId())) {
+            Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
+        }
     }
 
     @SuppressWarnings("SameParameterValue")
     private void assertEntitiesAreFullyEqual(DiseaseHistory expected, DiseaseHistory actual) {
-        // todo
-//        Assertions.assertEquals(expected.getClient().getId(), actual.getClient().getId());
-//        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
-//        Assertions.assertEquals(expected.getDoctor().getId(), actual.getDoctor().getId());
-//        Assertions.assertEquals(expected.get, actual.getMiddleName());
-//        Assertions.assertEquals(expected.getGender(), actual.getGender());
-//        Assertions.assertEquals(expected.getJob(), actual.getJob());
-//        Assertions.assertEquals(expected.getResidence(), actual.getResidence());
+        clientHelper.assertEntitiesAreFullyEqual(expected.getClient(), actual.getClient());
+        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
+        employeeHelper.assertEntitiesAreFullyEqual(expected.getDoctor(), actual.getDoctor());
+        Assertions.assertEquals(expected.getDiagnoses(), actual.getDiagnoses());
     }
 }

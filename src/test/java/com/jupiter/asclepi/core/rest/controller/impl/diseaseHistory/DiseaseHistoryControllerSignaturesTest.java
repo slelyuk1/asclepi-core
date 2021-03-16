@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.rest.controller.impl.history;
+package com.jupiter.asclepi.core.rest.controller.impl.diseaseHistory;
 
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
