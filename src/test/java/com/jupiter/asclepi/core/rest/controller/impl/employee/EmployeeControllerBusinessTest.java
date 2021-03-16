@@ -34,7 +34,7 @@ public class EmployeeControllerBusinessTest {
     void testSuccessfulCreation() throws Exception {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
         Employee created = service.create(request).get();
-        assertEntityIsValidAfterCreation(request, created);
+        helper.assertEntityIsValidAfterCreation(request, created);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class EmployeeControllerBusinessTest {
         entityManager.detach(created);
         EditEmployeeRequest request = helper.generateEditRequest(created.getId(), true);
         Employee edited = service.edit(request).get();
-        assertEntityIsValidAfterEdition(request, edited);
+        helper.assertEntityIsValidAfterEdition(request, edited);
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -54,7 +54,7 @@ public class EmployeeControllerBusinessTest {
         entityManager.flush();
         entityManager.detach(created);
         Employee found = service.getOne(created.getId()).get();
-        assertEntitiesAreFullyEqual(created, found);
+        helper.assertEntitiesAreFullyEqual(created, found);
     }
 
     @Test
@@ -76,8 +76,8 @@ public class EmployeeControllerBusinessTest {
                 .filter(info -> Objects.equals(info.getId(), another.getId()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
-        assertEntitiesAreFullyEqual(one, oneInfo);
-        assertEntitiesAreFullyEqual(another, anotherInfo);
+        helper.assertEntitiesAreFullyEqual(one, oneInfo);
+        helper.assertEntitiesAreFullyEqual(another, anotherInfo);
     }
 
     @Test
@@ -87,46 +87,5 @@ public class EmployeeControllerBusinessTest {
         entityManager.detach(created);
         Assertions.assertTrue(service.delete(created.getId()));
         Assertions.assertFalse(service.getOne(created.getId()).isPresent());
-    }
-
-    private void assertEntityIsValidAfterCreation(CreateEmployeeRequest request, Employee entity) {
-        Assertions.assertEquals(request.getLogin(), entity.getLogin());
-        Assertions.assertEquals(request.getName(), entity.getName());
-        Assertions.assertEquals(request.getSurname(), entity.getSurname());
-        Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
-        Assertions.assertEquals(request.getRole(), entity.getRole());
-        Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
-    }
-
-    private void assertEntityIsValidAfterEdition(EditEmployeeRequest request, Employee entity) {
-        Assertions.assertEquals(request.getId(), entity.getId());
-        if (Objects.nonNull(request.getLogin())) {
-            Assertions.assertEquals(request.getLogin(), entity.getLogin());
-        }
-        if (Objects.nonNull(request.getRole())) {
-            Assertions.assertEquals(request.getRole(), entity.getRole());
-        }
-        if (Objects.nonNull(request.getName())) {
-            Assertions.assertEquals(request.getName(), entity.getName());
-        }
-        if (Objects.nonNull(request.getSurname())) {
-            Assertions.assertEquals(request.getSurname(), entity.getSurname());
-        }
-        if (Objects.nonNull(request.getMiddleName())) {
-            Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
-        }
-        if (Objects.nonNull(request.getAdditionalInfo())) {
-            Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
-        }
-    }
-
-    private void assertEntitiesAreFullyEqual(Employee expected, Employee actual) {
-        Assertions.assertEquals(expected.getId(), actual.getId());
-        Assertions.assertEquals(expected.getLogin(), actual.getLogin());
-        Assertions.assertEquals(expected.getName(), actual.getName());
-        Assertions.assertEquals(expected.getSurname(), actual.getSurname());
-        Assertions.assertEquals(expected.getRole(), actual.getRole());
-        Assertions.assertEquals(expected.getMiddleName(), actual.getMiddleName());
-        Assertions.assertEquals(expected.getAdditionalInfo(), actual.getAdditionalInfo());
     }
 }

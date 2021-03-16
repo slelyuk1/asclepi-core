@@ -2,10 +2,12 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.other.Role;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -109,5 +111,46 @@ public class EmployeeTestHelper {
 
     public MockHttpServletRequestBuilder createMockedDeleteRequest(int id) {
         return delete("/api/v1/employee/{employeeId}", id);
+    }
+
+    public void assertEntityIsValidAfterCreation(CreateEmployeeRequest request, Employee entity) {
+        Assertions.assertEquals(request.getLogin(), entity.getLogin());
+        Assertions.assertEquals(request.getName(), entity.getName());
+        Assertions.assertEquals(request.getSurname(), entity.getSurname());
+        Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
+        Assertions.assertEquals(request.getRole(), entity.getRole());
+        Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
+    }
+
+    public void assertEntityIsValidAfterEdition(EditEmployeeRequest request, Employee entity) {
+        Assertions.assertEquals(request.getId(), entity.getId());
+        if (Objects.nonNull(request.getLogin())) {
+            Assertions.assertEquals(request.getLogin(), entity.getLogin());
+        }
+        if (Objects.nonNull(request.getRole())) {
+            Assertions.assertEquals(request.getRole(), entity.getRole());
+        }
+        if (Objects.nonNull(request.getName())) {
+            Assertions.assertEquals(request.getName(), entity.getName());
+        }
+        if (Objects.nonNull(request.getSurname())) {
+            Assertions.assertEquals(request.getSurname(), entity.getSurname());
+        }
+        if (Objects.nonNull(request.getMiddleName())) {
+            Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
+        }
+        if (Objects.nonNull(request.getAdditionalInfo())) {
+            Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
+        }
+    }
+
+    public void assertEntitiesAreFullyEqual(Employee expected, Employee actual) {
+        Assertions.assertEquals(expected.getId(), actual.getId());
+        Assertions.assertEquals(expected.getLogin(), actual.getLogin());
+        Assertions.assertEquals(expected.getName(), actual.getName());
+        Assertions.assertEquals(expected.getSurname(), actual.getSurname());
+        Assertions.assertEquals(expected.getRole(), actual.getRole());
+        Assertions.assertEquals(expected.getMiddleName(), actual.getMiddleName());
+        Assertions.assertEquals(expected.getAdditionalInfo(), actual.getAdditionalInfo());
     }
 }

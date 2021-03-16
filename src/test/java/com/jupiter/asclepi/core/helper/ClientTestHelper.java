@@ -2,10 +2,12 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.other.Job;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -99,5 +101,47 @@ public class ClientTestHelper {
 
     public MockHttpServletRequestBuilder createMockedGetAllRequest() {
         return get("/api/v1/client/all");
+    }
+
+    public void assertEntityIsValidAfterCreation(CreateClientRequest request, Client entity) {
+        Assertions.assertEquals(request.getName(), entity.getName());
+        Assertions.assertEquals(request.getSurname(), entity.getSurname());
+        Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
+        Assertions.assertEquals(request.getGender(), entity.getGender());
+        Assertions.assertEquals(request.getResidence(), entity.getResidence());
+        Assertions.assertEquals(request.getJob(), entity.getJob());
+    }
+
+    public void assertEntityIsValidAfterEdition(EditClientRequest request, Client entity) {
+        Assertions.assertEquals(request.getId(), entity.getId());
+        if (Objects.nonNull(request.getName())) {
+            Assertions.assertEquals(request.getName(), entity.getName());
+        }
+        if (Objects.nonNull(request.getSurname())) {
+            Assertions.assertEquals(request.getSurname(), entity.getSurname());
+        }
+        if (Objects.nonNull(request.getMiddleName())) {
+            Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
+        }
+        if (Objects.nonNull(request.getGender())) {
+            Assertions.assertEquals(request.getGender(), entity.getGender());
+        }
+        if (Objects.nonNull(request.getResidence())) {
+            Assertions.assertEquals(request.getResidence(), entity.getResidence());
+        }
+        if (Objects.nonNull(request.getJob())) {
+            Assertions.assertEquals(request.getJob(), entity.getJob());
+        }
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    public void assertEntitiesAreFullyEqual(Client expected, Client actual) {
+        Assertions.assertEquals(expected.getId(), actual.getId());
+        Assertions.assertEquals(expected.getName(), actual.getName());
+        Assertions.assertEquals(expected.getSurname(), actual.getSurname());
+        Assertions.assertEquals(expected.getMiddleName(), actual.getMiddleName());
+        Assertions.assertEquals(expected.getGender(), actual.getGender());
+        Assertions.assertEquals(expected.getJob(), actual.getJob());
+        Assertions.assertEquals(expected.getResidence(), actual.getResidence());
     }
 }
