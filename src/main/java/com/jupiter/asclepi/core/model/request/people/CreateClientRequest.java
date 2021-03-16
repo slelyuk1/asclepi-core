@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CreateClientRequest {
+public class CreateClientRequest implements Cloneable {
     @NotEmpty
     private String name;
     @NotEmpty
@@ -19,4 +19,15 @@ public class CreateClientRequest {
     private Boolean gender;
     @NotNull
     private Job job;
+
+    @Override
+    public CreateClientRequest clone() {
+        try {
+            CreateClientRequest cloned = (CreateClientRequest) super.clone();
+            cloned.job = job.clone();
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new IllegalStateException("CloneNotSupportedException cannot be thrown here", e);
+        }
+    }
 }

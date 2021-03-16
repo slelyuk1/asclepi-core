@@ -1,9 +1,10 @@
 package com.jupiter.asclepi.core.rest.controller.impl.employee;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
+import com.jupiter.asclepi.core.service.EmployeeService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,8 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-// todo refactor (Oleksandr Leliuk)
-class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
+class EmployeeControllerSignaturesTest {
 
     private static final FieldDescriptor[] EMPLOYEE_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
             fieldWithPath("id").description("ID of the employee in the system").type(JsonFieldType.NUMBER),
@@ -52,10 +52,15 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
     };
 
     private MockMvc mockMvc;
+    private final EmployeeTestHelper helper;
+    private final EntityManager entityManager;
+    private final EmployeeService service;
 
     @Autowired
-    public EmployeeControllerSignaturesTest(ObjectMapper objectMapper, EntityManager entityManager) {
-        super(objectMapper, entityManager);
+    public EmployeeControllerSignaturesTest(EmployeeTestHelper helper, EntityManager entityManager, EmployeeService service) {
+        this.helper = helper;
+        this.entityManager = entityManager;
+        this.service = service;
     }
 
     @BeforeEach
@@ -65,7 +70,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testSuccessfulEmployeeCreationRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(createEmployeeRequest(createEmployeeParams()))
+        this.mockMvc.perform(helper.createMockedCreateRequest(helper.generateCreateRequest(false)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeSuccessfulCreation",
@@ -76,9 +81,9 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testFailedDueToExistingLoginEmployeeCreationRequestResponseSignature() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(createEmployeeRequest(createEmployeeParams()))
+        CreateEmployeeRequest request = helper.generateCreateRequest(false);
+        service.create(request).get();
+        this.mockMvc.perform(helper.createMockedCreateRequest(request))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeExistingLoginCreation",
@@ -89,9 +94,9 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testSuccessfulEmployeeEditingRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(testEmployee.getId())))
+        CreateEmployeeRequest request = helper.generateCreateRequest(false);
+        Employee created = service.create(request).get();
+        this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(created.getId(), true)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeSuccessfulEdition",
@@ -102,9 +107,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testFailedDueToNonExistentEmployeeEditingRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(0)))
+        this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(0, false)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
@@ -113,25 +116,27 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
                 ));
     }
 
-    // todo
-//    @Test
-//    void testFailedDueToExistingLoginEmployeeEditingRequestResponseSignatures() throws Exception {
-//        Employee testEmployee = createTestEmployee();
-//        getEntityManager().persist(testEmployee);
-//        this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(testEmployee.getId())))
-//                .andExpect(status().isConflict())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andDo(document("{method-name}",
-//                        requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
-//                        responseFields(ERROR_INFO_FIELD_DESCRIPTORS)
-//                ));
-//    }
+    @Test
+    void testFailedDueToExistingLoginEmployeeEditingRequestResponseSignatures() throws Exception {
+        CreateEmployeeRequest request = helper.generateCreateRequest(false);
+        Employee one = service.create(request).get();
+        Employee another = service.create(helper.generateAnotherCreateRequest(request)).get();
+        EditEmployeeRequest editRequest = helper.generateEditRequest(one.getId(), true);
+        editRequest.setLogin(another.getLogin());
+        this.mockMvc.perform(helper.createMockedEditRequest(editRequest))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("{method-name}",
+                        requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
+                        responseFields(ERROR_INFO_FIELD_DESCRIPTORS)
+                ));
+    }
 
     @Test
     void testSuccessfulEmployeeGettingRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(getEmployeeRequest(testEmployee.getId()))
+        CreateEmployeeRequest request = helper.generateCreateRequest(false);
+        Employee created = service.create(request).get();
+        this.mockMvc.perform(helper.createMockedGetRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeSuccessfulGetting",
@@ -142,7 +147,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testNonExistentEmployeeGettingRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(getEmployeeRequest(0))
+        this.mockMvc.perform(helper.createMockedGetRequest(0))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
@@ -153,9 +158,9 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testSuccessfulAllEmployeesGettingRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(getAllEmployeesRequest())
+        CreateEmployeeRequest request = helper.generateCreateRequest(false);
+        Employee created = service.create(request).get();
+        this.mockMvc.perform(helper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeSuccessfulGettingAll",
@@ -166,9 +171,9 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testSuccessfulEmployeeDeletionRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(deleteEmployeeRequest(testEmployee.getId()))
+        CreateEmployeeRequest request = helper.generateCreateRequest(false);
+        Employee created = service.create(request).get();
+        this.mockMvc.perform(helper.createMockedDeleteRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("employeeSuccessfulDeletion",
@@ -178,9 +183,7 @@ class EmployeeControllerSignaturesTest extends AbstractEmployeeTest {
 
     @Test
     void testNonExistentEmployeeDeletionRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(deleteEmployeeRequest(0))
+        this.mockMvc.perform(helper.createMockedDeleteRequest(0))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())

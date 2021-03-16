@@ -1,13 +1,13 @@
 package com.jupiter.asclepi.core.rest.controller.impl.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +19,11 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -36,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-class ClientControllerSignaturesTest extends AbstractClientTest {
+class ClientControllerSignaturesTest {
 
     private static final FieldDescriptor[] CLIENT_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
             fieldWithPath("id").description("ID of the client in the system").type(JsonFieldType.NUMBER),
@@ -54,91 +50,14 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
     private static final FieldDescriptor[] ERROR_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
             fieldWithPath("message").description("Error message").type(JsonFieldType.STRING)
     };
-
+    private final ClientTestHelper helper;
+    private final ClientService service;
     private MockMvc mockMvc;
 
     @Autowired
-    public ClientControllerSignaturesTest(ObjectMapper objectMapper, EntityManager entityManager) {
-        super(objectMapper, entityManager);
-    }
-
-    @BeforeEach
-    void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
-    }
-
-    @Test
-    void testSuccessfulClientCreationRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(generateCreateRequest(generateCreateParams(false)))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("clientSuccessfulCreation",
-                        requestFields(CREATE_CLIENT_REQUEST_FIELD_DESCRIPTORS),
-                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
-                ));
-    }
-
-    @Test
-    void testSuccessfulEditingRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(true);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateEditRequest(generateEditParams(testClient.getId(), false)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("clientSuccessfulEdition",
-                        requestFields(EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS),
-                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
-                ));
-    }
-
-    @Test
-    void testFailedDueToNonExistentEditingRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(false);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateEditRequest(generateEditParams(0, false)))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("clientNonExistentEdition",
-                        requestFields(EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS)
-                ));
-    }
-
-    @Test
-    void testSuccessfulGettingRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(true);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateGetRequest(testClient.getId()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("clientSuccessfulGetting",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client")),
-                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
-                ));
-    }
-
-    @Test
-    void testNonExistentGettingRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(generateGetRequest(0))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("clientNonExistentGetting",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client"))
-                ));
-    }
-
-    @Test
-    void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(true);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateGetAllRequest())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("clientSuccessfulGettingAll",
-                        responseFields(fieldWithPath("[]").description("Array of ClientInfo").type(JsonFieldType.ARRAY))
-                                .andWithPrefix("[]", CLIENT_INFO_FIELD_DESCRIPTORS)
-                ));
+    public ClientControllerSignaturesTest(ClientTestHelper helper, ClientService service) {
+        this.helper = helper;
+        this.service = service;
     }
 
     private static FieldDescriptor[] generateCreateRequestDescriptors() {
@@ -169,5 +88,82 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
                 docHelper.fieldDescriptorFor("job.organization")
                         .description("Job organization to update client to").type(JsonFieldType.STRING).optional()
         };
+    }
+
+    @BeforeEach
+    void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
+        this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
+    }
+
+    @Test
+    void testSuccessfulClientCreationRequestResponseSignatures() throws Exception {
+        this.mockMvc.perform(helper.createMockedCreatedRequest(helper.generateCreateRequest(false)))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("clientSuccessfulCreation",
+                        requestFields(CREATE_CLIENT_REQUEST_FIELD_DESCRIPTORS),
+                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
+                ));
+    }
+
+    @Test
+    void testSuccessfulEditingRequestResponseSignatures() throws Exception {
+        CreateClientRequest request = helper.generateCreateRequest(false);
+        Client created = service.create(request).get();
+        this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(created.getId(), false)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("clientSuccessfulEdition",
+                        requestFields(EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS),
+                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
+                ));
+    }
+
+    @Test
+    void testFailedDueToNonExistentEditingRequestResponseSignatures() throws Exception {
+        this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(0, false)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").doesNotExist())
+                .andDo(document("clientNonExistentEdition",
+                        requestFields(EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS)
+                ));
+    }
+
+    @Test
+    void testSuccessfulGettingRequestResponseSignatures() throws Exception {
+        CreateClientRequest request = helper.generateCreateRequest(false);
+        Client created = service.create(request).get();
+        this.mockMvc.perform(helper.createMockedGetRequest(created.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("clientSuccessfulGetting",
+                        pathParameters(parameterWithName("clientId").description("ID of the existing client")),
+                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
+                ));
+    }
+
+    @Test
+    void testNonExistentGettingRequestResponseSignatures() throws Exception {
+        this.mockMvc.perform(helper.createMockedGetRequest(0))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").doesNotExist())
+                .andDo(document("clientNonExistentGetting",
+                        pathParameters(parameterWithName("clientId").description("ID of the existing client"))
+                ));
+    }
+
+    @Test
+    void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
+        CreateClientRequest request = helper.generateCreateRequest(false);
+        service.create(request).get();
+        this.mockMvc.perform(helper.createMockedGetAllRequest())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("clientSuccessfulGettingAll",
+                        responseFields(fieldWithPath("[]").description("Array of ClientInfo").type(JsonFieldType.ARRAY))
+                                .andWithPrefix("[]", CLIENT_INFO_FIELD_DESCRIPTORS)
+                ));
     }
 }

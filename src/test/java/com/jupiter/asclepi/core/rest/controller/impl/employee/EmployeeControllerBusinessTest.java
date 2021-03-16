@@ -1,136 +1,132 @@
 package com.jupiter.asclepi.core.rest.controller.impl.employee;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.other.Role;
-import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
+import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
+import com.jupiter.asclepi.core.service.EmployeeService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.Arrays;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import java.util.Collection;
+import java.util.Objects;
 
 @Transactional
 @SpringBootTest
-// todo refactor (Oleksandr Leliuk)
-public class EmployeeControllerBusinessTest extends AbstractEmployeeTest {
+public class EmployeeControllerBusinessTest {
 
-    private MockMvc mockMvc;
+    private final EmployeeTestHelper helper;
+    private final EmployeeService service;
+    private final EntityManager entityManager;
 
     @Autowired
-    public EmployeeControllerBusinessTest(ObjectMapper objectMapper, EntityManager entityManager) {
-        super(objectMapper, entityManager);
-    }
-
-    @BeforeEach
-    void setUp(WebApplicationContext webApplicationContext) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    public EmployeeControllerBusinessTest(EmployeeTestHelper helper, EmployeeService service, EntityManager entityManager) {
+        this.helper = helper;
+        this.service = service;
+        this.entityManager = entityManager;
     }
 
     @Test
-    void testSuccessfulEmployeeCreation() throws Exception {
-        this.mockMvc.perform(createEmployeeRequest(createEmployeeParams()))
-                .andExpect(status().isCreated())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    EmployeeInfo employeeInfo = getObjectMapper().readValue(result.getResponse().getContentAsString(), EmployeeInfo.class);
-                    Employee createdEmployee = getEntityManager().find(Employee.class, employeeInfo.getId());
-                    assertEmployeeIsEqualToEmployeeInfo(createdEmployee, employeeInfo);
-                });
+    void testSuccessfulCreation() throws Exception {
+        CreateEmployeeRequest request = helper.generateCreateRequest(false);
+        Employee created = service.create(request).get();
+        assertEntityIsValidAfterCreation(request, created);
     }
 
     @Test
-    void testSuccessfulEmployeeEditing() throws Exception {
-        Employee toEdit = createAnotherEmployee();
-        getEntityManager().persist(toEdit);
-
-        this.mockMvc.perform(editEmployeeRequest(editEmployeeParams(toEdit.getId())))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    EmployeeInfo employeeInfo = getObjectMapper().readValue(result.getResponse().getContentAsString(), EmployeeInfo.class);
-                    assertEmployeeIsEqualToEmployeeInfo(toEdit, employeeInfo);
-                });
+    void testSuccessfulEdition() throws Exception {
+        Employee created = service.create(helper.generateCreateRequest(false)).get();
+        entityManager.flush();
+        entityManager.detach(created);
+        EditEmployeeRequest request = helper.generateEditRequest(created.getId(), true);
+        Employee edited = service.edit(request).get();
+        assertEntityIsValidAfterEdition(request, edited);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    void testSuccessfulEmployeeGettingRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(getEmployeeRequest(testEmployee.getId()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    EmployeeInfo employeeInfo = getObjectMapper().readValue(result.getResponse().getContentAsString(), EmployeeInfo.class);
-                    assertEmployeeIsEqualToEmployeeInfo(testEmployee, employeeInfo);
-                });
+    void testSuccessfulGetting() throws Exception {
+        Employee created = service.create(helper.generateCreateRequest(false)).get();
+        entityManager.flush();
+        entityManager.detach(created);
+        Employee found = service.getOne(created.getId()).get();
+        assertEntitiesAreFullyEqual(created, found);
     }
 
     @Test
     void testSuccessfulAllEmployeesGettingRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        Employee anotherEmployee = createAnotherEmployee();
-        getEntityManager().persist(testEmployee);
-        getEntityManager().persist(anotherEmployee);
-        this.mockMvc.perform(getAllEmployeesRequest())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(result -> {
-                    EmployeeInfo[] employeeInfos = getObjectMapper().readValue(result.getResponse().getContentAsString(), EmployeeInfo[].class);
-                    Assertions.assertEquals(3, employeeInfos.length);
-                    EmployeeInfo testEmployeeInfo = Arrays.stream(employeeInfos)
-                            .filter(employeeInfo -> employeeInfo.getId() == testEmployee.getId())
-                            .findAny()
-                            .orElseThrow(() -> new IllegalStateException("EmployeeInfo list doesn't contain existing employee!"));
-                    EmployeeInfo anotherEmployeeInfo = Arrays.stream(employeeInfos)
-                            .filter(employeeInfo -> employeeInfo.getId() == anotherEmployee.getId())
-                            .findAny()
-                            .orElseThrow(() -> new IllegalStateException("EmployeeInfo list doesn't contain existing employee!"));
-                    assertEmployeeIsEqualToEmployeeInfo(testEmployee, testEmployeeInfo);
-                    assertEmployeeIsEqualToEmployeeInfo(anotherEmployee, anotherEmployeeInfo);
-                });
+        CreateEmployeeRequest createRequest = helper.generateCreateRequest(false);
+        Employee one = service.create(createRequest).get();
+        Employee another = service.create(helper.generateAnotherCreateRequest(createRequest)).get();
+        entityManager.flush();
+        entityManager.detach(one);
+        entityManager.detach(another);
+
+        Collection<Employee> all = service.getAll();
+        Assertions.assertEquals(all.size(), 3);
+        Employee oneInfo = all.stream()
+                .filter(info -> Objects.equals(info.getId(), one.getId()))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
+        Employee anotherInfo = all.stream()
+                .filter(info -> Objects.equals(info.getId(), another.getId()))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
+        assertEntitiesAreFullyEqual(one, oneInfo);
+        assertEntitiesAreFullyEqual(another, anotherInfo);
     }
 
     @Test
     void testSuccessfulEmployeeDeletionRequestResponseSignatures() throws Exception {
-        Employee testEmployee = createTestEmployee();
-        getEntityManager().persist(testEmployee);
-        this.mockMvc.perform(deleteEmployeeRequest(testEmployee.getId()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(result -> {
-                    Employee found = getEntityManager().find(Employee.class, testEmployee.getId());
-                    Assertions.assertNull(found);
-                });
+        Employee created = service.create(helper.generateCreateRequest(false)).get();
+        entityManager.flush();
+        entityManager.detach(created);
+        Assertions.assertTrue(service.delete(created.getId()));
+        Assertions.assertFalse(service.getOne(created.getId()).isPresent());
     }
 
-    private Employee createAnotherEmployee() {
-        Employee otherEmployee = new Employee();
-        otherEmployee.setLogin("oldLogin");
-        otherEmployee.setPassword("password");
-        otherEmployee.setRole(Role.DOCTOR);
-        otherEmployee.setName("oldName");
-        otherEmployee.setSurname("oldSurname");
-        return otherEmployee;
+    private void assertEntityIsValidAfterCreation(CreateEmployeeRequest request, Employee entity) {
+        Assertions.assertEquals(request.getLogin(), entity.getLogin());
+        Assertions.assertEquals(request.getName(), entity.getName());
+        Assertions.assertEquals(request.getSurname(), entity.getSurname());
+        Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
+        Assertions.assertEquals(request.getRole(), entity.getRole());
+        Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
     }
 
-    private void assertEmployeeIsEqualToEmployeeInfo(Employee employee, EmployeeInfo employeeInfo) {
-        Assertions.assertEquals(employee.getId(), employeeInfo.getId());
-        Assertions.assertEquals(employee.getLogin(), employeeInfo.getLogin());
-        Assertions.assertEquals(employee.getName(), employeeInfo.getName());
-        Assertions.assertEquals(employee.getSurname(), employeeInfo.getSurname());
-        Assertions.assertEquals(employee.getRole(), employeeInfo.getRole());
-        Assertions.assertEquals(employee.getMiddleName(), employeeInfo.getMiddleName());
-        Assertions.assertEquals(employee.getAdditionalInfo(), employeeInfo.getAdditionalInfo());
+    private void assertEntityIsValidAfterEdition(EditEmployeeRequest request, Employee entity) {
+        Assertions.assertEquals(request.getId(), entity.getId());
+        if (Objects.nonNull(request.getLogin())) {
+            Assertions.assertEquals(request.getLogin(), entity.getLogin());
+        }
+        if (Objects.nonNull(request.getRole())) {
+            Assertions.assertEquals(request.getRole(), entity.getRole());
+        }
+        if (Objects.nonNull(request.getName())) {
+            Assertions.assertEquals(request.getName(), entity.getName());
+        }
+        if (Objects.nonNull(request.getSurname())) {
+            Assertions.assertEquals(request.getSurname(), entity.getSurname());
+        }
+        if (Objects.nonNull(request.getMiddleName())) {
+            Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
+        }
+        if (Objects.nonNull(request.getAdditionalInfo())) {
+            Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
+        }
+    }
+
+    private void assertEntitiesAreFullyEqual(Employee expected, Employee actual) {
+        Assertions.assertEquals(expected.getId(), actual.getId());
+        Assertions.assertEquals(expected.getLogin(), actual.getLogin());
+        Assertions.assertEquals(expected.getName(), actual.getName());
+        Assertions.assertEquals(expected.getSurname(), actual.getSurname());
+        Assertions.assertEquals(expected.getRole(), actual.getRole());
+        Assertions.assertEquals(expected.getMiddleName(), actual.getMiddleName());
+        Assertions.assertEquals(expected.getAdditionalInfo(), actual.getAdditionalInfo());
     }
 }

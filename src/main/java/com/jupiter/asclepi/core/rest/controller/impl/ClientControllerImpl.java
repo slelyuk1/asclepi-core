@@ -32,6 +32,10 @@ public class ClientControllerImpl implements ClientController {
     private final ClientService clientService;
     private final ConversionService conversionService;
 
+    private static <T> ResponseEntity<T> generateNotFoundResponse() {
+        return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
+    }
+
     @Override
     public ResponseEntity<?> create(CreateClientRequest createRequest) {
         Try<ResponseEntity<?>> creationTry = clientService.create(createRequest).map(client -> {
@@ -68,9 +72,5 @@ public class ClientControllerImpl implements ClientController {
                 .map(client -> conversionService.convert(client, ClientInfo.class))
                 .map(ResponseEntity::ok)
                 .orElse(generateNotFoundResponse());
-    }
-
-    private static <T> ResponseEntity<T> generateNotFoundResponse() {
-        return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
     }
 }

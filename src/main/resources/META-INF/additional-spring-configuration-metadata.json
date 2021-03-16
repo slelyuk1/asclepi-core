@@ -30,4 +30,5 @@
       "type": "java.lang.String",
       "description": "Surname of main admin user."
     }
-  ] }
+  ]
+}

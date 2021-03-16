@@ -46,7 +46,7 @@ public abstract class AbstractDocumentTest {
     protected final Document createTestEntity(boolean withOptional) {
         Document document = new Document();
         document.setPath(TEST_PATH);
-        if(withOptional){
+        if (withOptional) {
             document.setDescription(TEST_DESCRIPTION);
         }
         return document;
