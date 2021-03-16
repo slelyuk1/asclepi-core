@@ -1,13 +1,14 @@
 package com.jupiter.asclepi.core.rest.controller.impl.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.helper.ClientHelper;
 import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,12 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -36,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-class ClientControllerSignaturesTest extends AbstractClientTest {
+class ClientControllerSignaturesTest {
 
     private static final FieldDescriptor[] CLIENT_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
             fieldWithPath("id").description("ID of the client in the system").type(JsonFieldType.NUMBER),
@@ -56,10 +54,13 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
     };
 
     private MockMvc mockMvc;
+    private final ClientHelper helper;
+    private final ClientService service;
 
     @Autowired
-    public ClientControllerSignaturesTest(ObjectMapper objectMapper, EntityManager entityManager) {
-        super(objectMapper, entityManager);
+    public ClientControllerSignaturesTest(ClientHelper helper, ClientService service) {
+        this.helper = helper;
+        this.service = service;
     }
 
     @BeforeEach
@@ -69,7 +70,7 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
 
     @Test
     void testSuccessfulClientCreationRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(generateCreateRequest(generateCreateParams(false)))
+        this.mockMvc.perform(helper.createMockedCreatedRequest(helper.generateCreateRequest(false)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("clientSuccessfulCreation",
@@ -80,9 +81,9 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
 
     @Test
     void testSuccessfulEditingRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(true);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateEditRequest(generateEditParams(testClient.getId(), false)))
+        CreateClientRequest request = helper.generateCreateRequest(false);
+        Client created = service.create(request).get();
+        this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(created.getId(), false)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("clientSuccessfulEdition",
@@ -93,9 +94,7 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
 
     @Test
     void testFailedDueToNonExistentEditingRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(false);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateEditRequest(generateEditParams(0, false)))
+        this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(0, false)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
@@ -106,9 +105,9 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
 
     @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(true);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateGetRequest(testClient.getId()))
+        CreateClientRequest request = helper.generateCreateRequest(false);
+        Client created = service.create(request).get();
+        this.mockMvc.perform(helper.createMockedGetRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("clientSuccessfulGetting",
@@ -119,7 +118,7 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
 
     @Test
     void testNonExistentGettingRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(generateGetRequest(0))
+        this.mockMvc.perform(helper.createMockedGetRequest(0))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
@@ -130,9 +129,9 @@ class ClientControllerSignaturesTest extends AbstractClientTest {
 
     @Test
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
-        Client testClient = createTestClient(true);
-        getEntityManager().persist(testClient);
-        this.mockMvc.perform(generateGetAllRequest())
+        CreateClientRequest request = helper.generateCreateRequest(false);
+        service.create(request).get();
+        this.mockMvc.perform(helper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("clientSuccessfulGettingAll",

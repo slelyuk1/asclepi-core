@@ -9,7 +9,6 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
 public final class TestUtils {
-
     public static MockMvc createMockMvcDefaultConfiguration(WebApplicationContext context, RestDocumentationContextProvider restDocumentation) {
         return MockMvcBuilders.webAppContextSetup(context)
                 .apply(
