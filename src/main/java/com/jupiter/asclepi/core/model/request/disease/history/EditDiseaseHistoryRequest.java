@@ -6,6 +6,7 @@ import java.math.BigInteger;
 
 @Data
 public class EditDiseaseHistoryRequest {
-    private Integer newDoctorId;
-    private BigInteger newDiagnosisId;
+    private BigInteger clientId;
+    private Integer number;
+    private Integer doctorId;
 }

@@ -4,11 +4,12 @@ import com.jupiter.asclepi.core.model.other.Job;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 
 @Data
 public class EditClientRequest {
     @NotNull
-    private Integer id;
+    private BigInteger id;
     private String name;
     private String surname;
     private String middleName;

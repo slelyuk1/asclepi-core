@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Boolean delete(@Valid @NotNull Integer toDeleteId) {
+    public Boolean delete(@Valid @NotNull BigInteger toDeleteId) {
         return repository.findById(toDeleteId)
                 .map(toDelete -> {
                     repository.delete(toDelete);
@@ -65,7 +66,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Optional<Client> getOne(@Valid @NotNull Integer clientId) {
+    public Optional<Client> getOne(@Valid @NotNull BigInteger clientId) {
         return repository.findById(clientId);
     }
 }

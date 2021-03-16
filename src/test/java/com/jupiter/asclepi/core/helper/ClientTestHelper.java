@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.math.BigInteger;
 import java.util.Objects;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
@@ -62,7 +63,7 @@ public class ClientTestHelper {
         return another;
     }
 
-    public EditClientRequest generateEditRequest(int id, boolean withOptional) {
+    public EditClientRequest generateEditRequest(BigInteger id, boolean withOptional) {
         Job job = new Job();
         job.setName(TEST_JOB_NAME);
         job.setOrganization(TEST_JOB_ORGANIZATION);
@@ -98,9 +99,5 @@ public class ClientTestHelper {
 
     public MockHttpServletRequestBuilder createMockedGetAllRequest() {
         return get("/api/v1/client/all");
-    }
-
-    public MockHttpServletRequestBuilder createMockedDeleteRequest(int id) {
-        return delete("/api/v1/client/{clientId}", id);
     }
 }

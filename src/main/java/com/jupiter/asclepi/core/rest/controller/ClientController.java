@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.util.List;
 
 public interface ClientController extends
-        GetController<Integer, ClientInfo>,
+        GetController<BigInteger, ClientInfo>,
         GetAllController<ClientInfo>,
         CreateController<CreateClientRequest>,
         EditController<EditClientRequest> {
@@ -36,5 +37,5 @@ public interface ClientController extends
 
     @Override
     @GetMapping("/{clientId}")
-    ResponseEntity<ClientInfo> getOne(@NotNull @PathVariable("clientId") Integer getRequest);
+    ResponseEntity<ClientInfo> getOne(@NotNull @PathVariable("clientId") BigInteger getRequest);
 }

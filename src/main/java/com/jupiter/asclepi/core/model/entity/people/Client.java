@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 
 @Data
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
@@ -19,7 +20,7 @@ public class Client extends AbstractCreationAware<Employee> {
     @Id
     @GeneratedValue
     @EqualsAndHashCode.Include
-    private Integer id;
+    private BigInteger id;
 
     @NotBlank
     @Column(name = "client_name")

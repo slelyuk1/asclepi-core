@@ -11,4 +11,5 @@ public class Diagnosis {
     private String disease;
     private String complications;
     private String etiologyAndPathogenesis;
+    private Boolean isFinal;
 }

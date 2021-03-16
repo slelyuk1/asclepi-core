@@ -5,5 +5,7 @@ import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 
-public interface ClientService extends CrudService<Integer, CreateClientRequest, EditClientRequest, Client, Boolean> {
+import java.math.BigInteger;
+
+public interface ClientService extends CrudService<BigInteger, CreateClientRequest, EditClientRequest, Client, Boolean> {
 }

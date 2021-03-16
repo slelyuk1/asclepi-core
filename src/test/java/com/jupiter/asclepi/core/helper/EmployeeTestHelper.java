@@ -44,6 +44,12 @@ public class EmployeeTestHelper {
         return request;
     }
 
+    public CreateEmployeeRequest generateCreateRequest(boolean withOptional, Role role){
+        CreateEmployeeRequest request = generateCreateRequest(withOptional);
+        request.setRole(role);
+        return request;
+    }
+
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public CreateEmployeeRequest generateAnotherCreateRequest(CreateEmployeeRequest request) {
         CreateEmployeeRequest another = request.clone();
