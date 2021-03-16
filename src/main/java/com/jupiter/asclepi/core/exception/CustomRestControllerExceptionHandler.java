@@ -29,7 +29,7 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
         if (cause instanceof TransactionSystemException) {
             return handleTransactionException((TransactionSystemException) cause);
         }
-        if(cause instanceof AuthenticationException){
+        if (cause instanceof AuthenticationException) {
             handleAuthenticationException((AuthenticationException) cause);
         }
         log.warn("Not recognized exception wrapped in AsclepiRuntimeException occurred: ", e);
@@ -55,7 +55,7 @@ public class CustomRestControllerExceptionHandler extends ResponseEntityExceptio
     }
 
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorInfo> handleAuthenticationException(@NotNull AuthenticationException exception){
+    public ResponseEntity<ErrorInfo> handleAuthenticationException(@NotNull AuthenticationException exception) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorInfo(exception.getMessage()));
     }
 

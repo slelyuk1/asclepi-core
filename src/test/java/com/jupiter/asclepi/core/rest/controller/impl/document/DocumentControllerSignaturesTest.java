@@ -37,6 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @Disabled
+// todo refactor and fix
 class DocumentControllerSignaturesTest extends AbstractDocumentTest {
 
     private static final FieldDescriptor[] INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
@@ -60,6 +61,33 @@ class DocumentControllerSignaturesTest extends AbstractDocumentTest {
     @Autowired
     public DocumentControllerSignaturesTest(ObjectMapper objectMapper, EntityManager entityManager) {
         super(objectMapper, entityManager);
+    }
+
+    private static FieldDescriptor[] generateCreateRequestDescriptors() {
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateDocumentRequest.class);
+        return new FieldDescriptor[]{
+                //todo remove optional when diseaseHistory functionality is implemented
+                docHelper.fieldDescriptorFor("diseaseHistoryId")
+                        .description("Disease history id of the created document").type(JsonFieldType.STRING).optional(),
+                //todo remove optional when diseaseHistory functionality is implemented
+                docHelper.fieldDescriptorFor("analysisId")
+                        .description("Analysis id of the created document").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("path").description("Path of the created document").type(JsonFieldType.STRING),
+                docHelper.fieldDescriptorFor("description").description("Description of the created document").type(JsonFieldType.STRING).optional(),
+        };
+    }
+
+    private static FieldDescriptor[] generateEditRequestDescriptors() {
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditDocumentRequest.class);
+        return new FieldDescriptor[]{
+                docHelper.fieldDescriptorFor("id").description("Id of the edited document").type(JsonFieldType.NUMBER),
+                docHelper.fieldDescriptorFor("diseaseHistoryId")
+                        .description("Disease history id of the created document").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("analysisId")
+                        .description("Analysis id of the created document").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("path").description("Path of the created document").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("description").description("Description of the created document").type(JsonFieldType.STRING).optional(),
+        };
     }
 
     @BeforeEach
@@ -165,32 +193,5 @@ class DocumentControllerSignaturesTest extends AbstractDocumentTest {
                 .andDo(document("{method-name}",
                         pathParameters(parameterWithName("documentId").description("ID of the existing document"))
                 ));
-    }
-
-    private static FieldDescriptor[] generateCreateRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateDocumentRequest.class);
-        return new FieldDescriptor[]{
-                //todo remove optional when diseaseHistory functionality is implemented
-                docHelper.fieldDescriptorFor("diseaseHistoryId")
-                        .description("Disease history id of the created document").type(JsonFieldType.STRING).optional(),
-                //todo remove optional when diseaseHistory functionality is implemented
-                docHelper.fieldDescriptorFor("analysisId")
-                        .description("Analysis id of the created document").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("path").description("Path of the created document").type(JsonFieldType.STRING),
-                docHelper.fieldDescriptorFor("description").description("Description of the created document").type(JsonFieldType.STRING).optional(),
-        };
-    }
-
-    private static FieldDescriptor[] generateEditRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditDocumentRequest.class);
-        return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("id").description("Id of the edited document").type(JsonFieldType.NUMBER),
-                docHelper.fieldDescriptorFor("diseaseHistoryId")
-                        .description("Disease history id of the created document").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("analysisId")
-                        .description("Analysis id of the created document").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("path").description("Path of the created document").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("description").description("Description of the created document").type(JsonFieldType.STRING).optional(),
-        };
     }
 }

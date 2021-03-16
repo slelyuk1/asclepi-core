@@ -50,15 +50,44 @@ class ClientControllerSignaturesTest {
     private static final FieldDescriptor[] ERROR_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
             fieldWithPath("message").description("Error message").type(JsonFieldType.STRING)
     };
-
-    private MockMvc mockMvc;
     private final ClientTestHelper helper;
     private final ClientService service;
+    private MockMvc mockMvc;
 
     @Autowired
     public ClientControllerSignaturesTest(ClientTestHelper helper, ClientService service) {
         this.helper = helper;
         this.service = service;
+    }
+
+    private static FieldDescriptor[] generateCreateRequestDescriptors() {
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateClientRequest.class);
+        return new FieldDescriptor[]{
+                docHelper.fieldDescriptorFor("name").description("Name of the created client").type(JsonFieldType.STRING),
+                docHelper.fieldDescriptorFor("surname").description("Surname of the created client").type(JsonFieldType.STRING),
+                docHelper.fieldDescriptorFor("middleName").description("Middle name of the created client").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("residence").description("Residence of the created client").type(JsonFieldType.STRING),
+                docHelper.fieldDescriptorFor("gender")
+                        .description("Gender of the created client (false = male, true = female)").type(JsonFieldType.BOOLEAN),
+                docHelper.fieldDescriptorFor("job.name").description("Job name of the created client").type(JsonFieldType.STRING),
+                docHelper.fieldDescriptorFor("job.organization").description("Job name of the created client").type(JsonFieldType.STRING)
+        };
+    }
+
+    private static FieldDescriptor[] generateEditClientRequestDescriptors() {
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditClientRequest.class);
+        return new FieldDescriptor[]{
+                docHelper.fieldDescriptorFor("id").description("Id of the edited client").type(JsonFieldType.NUMBER),
+                docHelper.fieldDescriptorFor("name").description("Name to update client to").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("surname").description("Surname to update client to").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("middleName").description("Middle name to update client to").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("residence").description("Residence to update client to").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("gender")
+                        .description("Gender to update client to (false = male, true = female)").type(JsonFieldType.BOOLEAN).optional(),
+                docHelper.fieldDescriptorFor("job.name").description("Job name to update client to").type(JsonFieldType.STRING).optional(),
+                docHelper.fieldDescriptorFor("job.organization")
+                        .description("Job organization to update client to").type(JsonFieldType.STRING).optional()
+        };
     }
 
     @BeforeEach
@@ -136,35 +165,5 @@ class ClientControllerSignaturesTest {
                         responseFields(fieldWithPath("[]").description("Array of ClientInfo").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[]", CLIENT_INFO_FIELD_DESCRIPTORS)
                 ));
-    }
-
-    private static FieldDescriptor[] generateCreateRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateClientRequest.class);
-        return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("name").description("Name of the created client").type(JsonFieldType.STRING),
-                docHelper.fieldDescriptorFor("surname").description("Surname of the created client").type(JsonFieldType.STRING),
-                docHelper.fieldDescriptorFor("middleName").description("Middle name of the created client").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("residence").description("Residence of the created client").type(JsonFieldType.STRING),
-                docHelper.fieldDescriptorFor("gender")
-                        .description("Gender of the created client (false = male, true = female)").type(JsonFieldType.BOOLEAN),
-                docHelper.fieldDescriptorFor("job.name").description("Job name of the created client").type(JsonFieldType.STRING),
-                docHelper.fieldDescriptorFor("job.organization").description("Job name of the created client").type(JsonFieldType.STRING)
-        };
-    }
-
-    private static FieldDescriptor[] generateEditClientRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditClientRequest.class);
-        return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("id").description("Id of the edited client").type(JsonFieldType.NUMBER),
-                docHelper.fieldDescriptorFor("name").description("Name to update client to").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("surname").description("Surname to update client to").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("middleName").description("Middle name to update client to").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("residence").description("Residence to update client to").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("gender")
-                        .description("Gender to update client to (false = male, true = female)").type(JsonFieldType.BOOLEAN).optional(),
-                docHelper.fieldDescriptorFor("job.name").description("Job name to update client to").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("job.organization")
-                        .description("Job organization to update client to").type(JsonFieldType.STRING).optional()
-        };
     }
 }

@@ -30,6 +30,10 @@ public class SecurityControllerImpl implements SecurityController {
     private final TokenService tokenService;
     private final ConversionService conversionService;
 
+    private static String tokenToAuthenticationCookie(Token token) {
+        return String.format("%s=%s", SecurityConfiguration.AUTHENTICATION_COOKIE_NAME, token.getKey());
+    }
+
     @Override
     public ResponseEntity<?> authenticate(AuthenticationRequest request) {
         Try<ResponseEntity<?>> authenticationTry = securityService.generateAuthentication(request)
@@ -45,9 +49,5 @@ public class SecurityControllerImpl implements SecurityController {
                 })
                 .onFailure(e -> log.error("An exception occurred during authentication:", e))
                 .getOrElseThrow(AsclepiRuntimeException::new);
-    }
-
-    private static String tokenToAuthenticationCookie(Token token) {
-        return String.format("%s=%s", SecurityConfiguration.AUTHENTICATION_COOKIE_NAME, token.getKey());
     }
 }

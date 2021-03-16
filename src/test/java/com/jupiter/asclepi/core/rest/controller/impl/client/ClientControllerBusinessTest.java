@@ -23,10 +23,10 @@ import java.util.Objects;
 @SpringBootTest
 public class ClientControllerBusinessTest {
 
-    private MockMvc mockMvc;
     private final ClientTestHelper helper;
     private final ClientService service;
     private final EntityManager entityManager;
+    private MockMvc mockMvc;
 
     @Autowired
     public ClientControllerBusinessTest(ClientTestHelper helper, ClientService service, EntityManager entityManager) {
