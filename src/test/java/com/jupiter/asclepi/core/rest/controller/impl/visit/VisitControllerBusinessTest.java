@@ -119,8 +119,8 @@ public class VisitControllerBusinessTest {
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Visit foundAnother = all.stream()
-                .filter(visit -> Objects.equals(visit.getDiseaseHistory(), one.getDiseaseHistory()))
-                .filter(visit -> Objects.equals(visit.getNumber(), one.getNumber()))
+                .filter(visit -> Objects.equals(visit.getDiseaseHistory(), another.getDiseaseHistory()))
+                .filter(visit -> Objects.equals(visit.getNumber(), another.getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         visitHelper.assertEntitiesAreFullyEqual(one, foundOne);

@@ -10,9 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,5 +41,11 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
 
     public DiseaseHistory() {
         diagnoses = new ArrayList<>();
+    }
+
+    public DiseaseHistory(@NotNull Client client, @NotNull int number) {
+        this();
+        this.client = client;
+        this.number = number;
     }
 }

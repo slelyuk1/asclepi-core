@@ -13,6 +13,9 @@ import com.jupiter.asclepi.core.service.impl.employee.converter.EmployeeConverte
 import com.jupiter.asclepi.core.service.impl.security.converter.AuthenticationToStringConverter;
 import com.jupiter.asclepi.core.service.impl.security.converter.EmployeeToUserConverter;
 import com.jupiter.asclepi.core.service.impl.security.converter.StringToAuthenticationConverter;
+import com.jupiter.asclepi.core.service.impl.visit.converter.CreateVisitRequestConverter;
+import com.jupiter.asclepi.core.service.impl.visit.converter.EditVisitRequestConverter;
+import com.jupiter.asclepi.core.service.impl.visit.converter.GetVisitRequestConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -40,5 +43,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new CreateDiseaseHistoryConverter());
         registry.addConverter(new EditDiseaseHistoryConverter());
         registry.addConverter(new GetDiseaseHistoryRequestConverter());
+
+        registry.addConverter(new CreateVisitRequestConverter());
+        registry.addConverter(new EditVisitRequestConverter());
+        registry.addConverter(new GetVisitRequestConverter());
     }
 }

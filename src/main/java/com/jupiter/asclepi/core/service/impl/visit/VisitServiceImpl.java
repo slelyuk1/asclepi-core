@@ -1,49 +1,75 @@
 package com.jupiter.asclepi.core.service.impl.visit;
 
+import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
+import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.VisitRepository;
+import com.jupiter.asclepi.core.service.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.VisitService;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Validated
 @Service
 public class VisitServiceImpl implements VisitService {
 
     private final VisitRepository repository;
+    private final DiseaseHistoryService diseaseHistoryService;
+    private final ConversionService conversionService;
 
     @Override
     public Try<Visit> create(@Valid @NotNull CreateVisitRequest createRequest) {
-        throw new UnsupportedOperationException();
+        return Try.of(() -> {
+            GetDiseaseHistoryRequest diseaseHistoryGetter = createRequest.getDiseaseHistory();
+            diseaseHistoryService.getOne(diseaseHistoryGetter)
+                    .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
+            Visit toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Visit.class));
+            return repository.save(toCreate);
+        });
     }
 
     @Override
     public Try<Visit> edit(@Valid @NotNull EditVisitRequest editRequest) {
-        throw new UnsupportedOperationException();
+        return Try.of(() -> {
+            Visit toCopyTo = getOne(editRequest.getVisit())
+                    .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getVisit()));
+            Visit toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Visit.class));
+            BeanUtils.copyProperties(toCopyFrom, toCopyTo);
+            return repository.save(toCopyTo);
+        });
     }
 
     @Override
     public List<Visit> getAll() {
-        throw new UnsupportedOperationException();
+        return repository.findAll();
     }
 
     @Override
     public Optional<Visit> getOne(@Valid @NotNull GetVisitRequest getRequest) {
-        throw new UnsupportedOperationException();
+        Visit toFind = Objects.requireNonNull(conversionService.convert(getRequest, Visit.class));
+        return repository.findOne(Example.of(toFind));
     }
 
     @Override
     public List<Visit> getByDiseaseHistory(DiseaseHistory diseaseHistory) {
-        throw new UnsupportedOperationException();
+        Visit toFind = new Visit();
+        toFind.setDiseaseHistory(diseaseHistory);
+        return repository.findAll(Example.of(toFind));
     }
 }

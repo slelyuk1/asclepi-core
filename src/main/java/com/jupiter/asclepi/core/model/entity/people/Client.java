@@ -4,6 +4,7 @@ import com.jupiter.asclepi.core.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.other.Job;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 @Entity
 public class Client extends AbstractCreationAware<Employee> {
@@ -38,4 +40,8 @@ public class Client extends AbstractCreationAware<Employee> {
     private Boolean gender;
 
     private Job job;
+
+    public Client(@NotNull BigInteger id) {
+        this.id = id;
+    }
 }
