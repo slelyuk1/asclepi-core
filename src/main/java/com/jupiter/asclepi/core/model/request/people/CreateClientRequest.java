@@ -2,6 +2,7 @@ package com.jupiter.asclepi.core.model.request.people;
 
 import com.jupiter.asclepi.core.model.other.Job;
 import lombok.Data;
+import lombok.SneakyThrows;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,14 +21,11 @@ public class CreateClientRequest implements Cloneable {
     @NotNull
     private Job job;
 
+    @SneakyThrows
     @Override
     public CreateClientRequest clone() {
-        try {
-            CreateClientRequest cloned = (CreateClientRequest) super.clone();
-            cloned.job = job.clone();
-            return cloned;
-        } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("CloneNotSupportedException cannot be thrown here", e);
-        }
+        CreateClientRequest cloned = (CreateClientRequest) super.clone();
+        cloned.job = job.clone();
+        return cloned;
     }
 }

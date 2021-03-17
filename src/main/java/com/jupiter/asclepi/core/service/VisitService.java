@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.service;
 
 import com.jupiter.asclepi.core.helper.api.business.service.CrudService;
-import com.jupiter.asclepi.core.model.entity.disease.DiseaseHistory;
-import com.jupiter.asclepi.core.model.entity.disease.Visit;
+import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;

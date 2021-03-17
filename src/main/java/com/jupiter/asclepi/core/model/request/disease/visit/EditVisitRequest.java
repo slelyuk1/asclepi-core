@@ -2,9 +2,10 @@ package com.jupiter.asclepi.core.model.request.disease.visit;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class EditVisitRequest {
-    private Date when;
+    private GetVisitRequest visit;
+    private LocalDateTime when;
 }

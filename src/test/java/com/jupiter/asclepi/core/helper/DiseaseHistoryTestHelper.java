@@ -2,15 +2,20 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.model.entity.disease.DiseaseHistory;
+import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
+import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,11 +32,13 @@ public class DiseaseHistoryTestHelper {
         return request;
     }
 
-    public EditDiseaseHistoryRequest generateEditRequest(DiseaseHistory entity, Integer doctorId) {
+    public EditDiseaseHistoryRequest generateEditRequest(DiseaseHistory diseaseHistory, Integer doctorId) {
         EditDiseaseHistoryRequest request = new EditDiseaseHistoryRequest();
-        request.setDoctorId(entity.getDoctor().getId());
-        request.setNumber(entity.getNumber());
+        GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest();
+        getter.setClientId(diseaseHistory.getId().getClientId());
+        getter.setNumber(diseaseHistory.getId().getNumber());
         request.setDoctorId(doctorId);
+        request.setDiseaseHistory(getter);
         return request;
     }
 
@@ -65,5 +72,26 @@ public class DiseaseHistoryTestHelper {
 
     public MockHttpServletRequestBuilder createMockedCloseRequest(BigInteger clientId, int historyNumber) {
         return post("/api/v1/diseaseHistory/{clientId}/{historyNumber}/close", clientId, historyNumber);
+    }
+
+    public void assertEntityIsValidAfterCreation(CreateDiseaseHistoryRequest request, DiseaseHistory entity) {
+        Assertions.assertEquals(request.getClientId(), entity.getId().getClientId());
+        Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
+    }
+
+    public void assertEntityIsValidAfterEdition(EditDiseaseHistoryRequest request, DiseaseHistory entity) {
+        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getId().getClientId());
+        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getId().getNumber());
+        if (Objects.nonNull(request.getDoctorId())) {
+            Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
+        }
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    public void assertEntitiesAreFullyEqual(DiseaseHistory expected, DiseaseHistory actual) {
+        Assertions.assertEquals(expected.getId(), actual.getId());
+        Assertions.assertEquals(expected.getId().getNumber(), actual.getId().getNumber());
+        Assertions.assertEquals(expected.getDoctor(), actual.getDoctor());
+        Assertions.assertEquals(expected.getDiagnoses(), actual.getDiagnoses());
     }
 }
