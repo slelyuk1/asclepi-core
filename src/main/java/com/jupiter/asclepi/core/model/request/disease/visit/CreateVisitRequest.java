@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.SneakyThrows;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -14,7 +15,7 @@ public class CreateVisitRequest implements Cloneable {
     @NotNull
     private GetDiseaseHistoryRequest diseaseHistory;
 
-    @NotNull
+    @Future
     private LocalDateTime when;
 
     @SneakyThrows

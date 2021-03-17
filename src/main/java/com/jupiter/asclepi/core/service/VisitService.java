@@ -18,6 +18,6 @@ public interface VisitService extends
         GetService<GetVisitRequest, Visit>,
         GetAllService<Visit> {
 
-    List<Visit> getByDiseaseHistory(DiseaseHistory diseaseHistory);
+    List<Visit> getForDiseaseHistory(DiseaseHistory diseaseHistory);
     // todo finish visit
 }

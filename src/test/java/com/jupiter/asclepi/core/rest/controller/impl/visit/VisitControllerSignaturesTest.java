@@ -22,7 +22,6 @@ import com.jupiter.asclepi.core.service.VisitService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +40,7 @@ import org.springframework.web.context.WebApplicationContext;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -117,6 +117,7 @@ class VisitControllerSignaturesTest {
         visitGetter.setDiseaseHistory(getter);
         visitGetter.setNumber(0);
         request.setVisit(visitGetter);
+        request.setWhen(LocalDateTime.now().plusDays(1));
         this.mockMvc.perform(visitHelper.createMockedEditRequest(request))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -139,9 +140,11 @@ class VisitControllerSignaturesTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("visitSuccessfulGetting",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client.")),
-                        pathParameters(parameterWithName("diseaseHistoryId").description("ID of the existing disease history.")),
-                        pathParameters(parameterWithName("number").description("Number of the existing visit.")),
+                        pathParameters(
+                                parameterWithName("clientId").description("ID of the existing client."),
+                                parameterWithName("diseaseHistoryNumber").description("ID of the existing disease history."),
+                                parameterWithName("number").description("Number of the existing visit.")
+                        ),
                         generateInfoResponse()
                 ));
     }
@@ -159,9 +162,11 @@ class VisitControllerSignaturesTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("visitNonExistentGetting",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client.")),
-                        pathParameters(parameterWithName("diseaseHistoryId").description("ID of the existing disease history.")),
-                        pathParameters(parameterWithName("number").description("Number of the existing visit."))
+                        pathParameters(
+                                parameterWithName("clientId").description("ID of the existing client."),
+                                parameterWithName("diseaseHistoryNumber").description("ID of the existing disease history."),
+                                parameterWithName("number").description("Number of the existing visit.")
+                        )
                 ));
     }
 
@@ -174,7 +179,7 @@ class VisitControllerSignaturesTest {
                 .andDo(document("visitSuccessfulGettingAll",
                         responseFields(fieldWithPath("[]").description("Array of DiseaseHistory").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
-                                .andWithPrefix("[].visit", generateGetRequestDescriptors())
+                                .andWithPrefix("[].visit.", generateGetRequestDescriptors())
                                 .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
                 ));
     }
@@ -189,11 +194,13 @@ class VisitControllerSignaturesTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("visitSuccessfulGettingForDiseaseHistory",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client.")),
-                        pathParameters(parameterWithName("diseaseHistoryId").description("ID of the existing disease history.")),
+                        pathParameters(
+                                parameterWithName("clientId").description("ID of the existing client."),
+                                parameterWithName("diseaseHistoryNumber").description("ID of the existing disease history.")
+                        ),
                         responseFields(fieldWithPath("[]").description("Array of DiseaseHistory").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
-                                .andWithPrefix("[].visit", generateGetRequestDescriptors())
+                                .andWithPrefix("[].visit.", generateGetRequestDescriptors())
                                 .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
                 ));
     }
@@ -217,14 +224,14 @@ class VisitControllerSignaturesTest {
 
     private static FieldDescriptor[] generateInfoFieldDescriptor() {
         return new FieldDescriptor[]{
-                fieldWithPath("when").description("When visit will be held.")
+                fieldWithPath("when").description("When visit will be held.").type(JsonFieldType.STRING)
         };
     }
 
     private static FieldDescriptor[] generateGetRequestDescriptors() {
         ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetVisitRequest.class);
         return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("number").description("Number of visit.")
+                docHelper.fieldDescriptorFor("number").description("Number of visit.").type(JsonFieldType.NUMBER)
         };
     }
 
@@ -232,7 +239,7 @@ class VisitControllerSignaturesTest {
         ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateClientRequest.class);
         return new FieldDescriptor[]{
                 docHelper.fieldDescriptorFor("when")
-                        .description("Date and time when this disease history is held.").type(JsonFieldType.NUMBER)
+                        .description("Date and time when this disease history is held.").type(JsonFieldType.STRING)
         };
     }
 
@@ -240,7 +247,7 @@ class VisitControllerSignaturesTest {
         ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateClientRequest.class);
         return new FieldDescriptor[]{
                 docHelper.fieldDescriptorFor("when")
-                        .description("Date and time when this disease history is held.").type(JsonFieldType.NUMBER).optional()
+                        .description("Date and time when this disease history is held.").type(JsonFieldType.STRING).optional()
         };
     }
 }

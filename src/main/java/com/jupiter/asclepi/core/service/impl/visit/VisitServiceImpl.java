@@ -67,7 +67,7 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public List<Visit> getByDiseaseHistory(DiseaseHistory diseaseHistory) {
+    public List<Visit> getForDiseaseHistory(DiseaseHistory diseaseHistory) {
         Visit toFind = new Visit();
         toFind.setDiseaseHistory(diseaseHistory);
         return repository.findAll(Example.of(toFind));

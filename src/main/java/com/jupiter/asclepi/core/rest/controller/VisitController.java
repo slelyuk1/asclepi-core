@@ -39,7 +39,7 @@ public interface VisitController extends
                                      @NotNull @PathVariable("number") Integer number);
 
     @GetMapping("/{clientId}/{diseaseHistoryNumber}")
-    List<VisitInfo> getByDiseaseHistory(@NotNull @PathVariable("clientId") BigInteger diseaseHistoryId,
+    List<VisitInfo> getByDiseaseHistory(@NotNull @PathVariable("clientId") BigInteger clientId,
                                         @NotNull @PathVariable("diseaseHistoryNumber") Integer diseaseHistoryNumber);
 
     // todo implement

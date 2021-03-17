@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.model.request.disease.visit;
 import lombok.Data;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -12,6 +13,6 @@ public class EditVisitRequest {
     @NotNull
     private GetVisitRequest visit;
 
-    @NotNull
+    @Future
     private LocalDateTime when;
 }

@@ -16,6 +16,7 @@ import com.jupiter.asclepi.core.service.impl.security.converter.StringToAuthenti
 import com.jupiter.asclepi.core.service.impl.visit.converter.CreateVisitRequestConverter;
 import com.jupiter.asclepi.core.service.impl.visit.converter.EditVisitRequestConverter;
 import com.jupiter.asclepi.core.service.impl.visit.converter.GetVisitRequestConverter;
+import com.jupiter.asclepi.core.service.impl.visit.converter.VisitConverter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -47,5 +48,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new CreateVisitRequestConverter());
         registry.addConverter(new EditVisitRequestConverter());
         registry.addConverter(new GetVisitRequestConverter());
+        registry.addConverter(new VisitConverter());
     }
 }
