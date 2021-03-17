@@ -38,7 +38,7 @@ public interface DiseaseHistoryController extends
                                               @NotNull @PathVariable("historyNumber") Integer historyNumber);
 
     @GetMapping("/{clientId}")
-    List<DiseaseHistoryInfo> getForClient(@PathVariable("clientId") Integer clientId);
+    List<DiseaseHistoryInfo> getForClient(@PathVariable("clientId") BigInteger clientId);
 
     // todo implement
     // ResponseEntity<?> abort(GetDiseaseHistoryRequest request);

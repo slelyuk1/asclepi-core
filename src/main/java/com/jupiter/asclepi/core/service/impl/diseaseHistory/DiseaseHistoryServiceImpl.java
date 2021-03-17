@@ -14,6 +14,7 @@ import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -63,6 +64,8 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
 
     @Override
     public List<DiseaseHistory> getForClient(Client client) {
-        throw new UnsupportedOperationException();
+        DiseaseHistory toFind = new DiseaseHistory();
+        toFind.setClient(client);
+        return repository.findAll(Example.of(toFind));
     }
 }

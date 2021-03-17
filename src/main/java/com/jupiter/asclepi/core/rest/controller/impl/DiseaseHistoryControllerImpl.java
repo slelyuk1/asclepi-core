@@ -8,6 +8,7 @@ import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryR
 import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
 import com.jupiter.asclepi.core.rest.controller.DiseaseHistoryController;
 import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
+import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/diseaseHistory")
 public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
 
+    private final ClientService clientService;
     private final DiseaseHistoryService diseaseHistoryService;
     private final ConversionService conversionService;
 
@@ -75,7 +78,12 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
     }
 
     @Override
-    public List<DiseaseHistoryInfo> getForClient(Integer clientId) {
-        throw new UnsupportedOperationException();
+    public List<DiseaseHistoryInfo> getForClient(BigInteger clientId) {
+        return clientService.getOne(clientId)
+                .map(diseaseHistoryService::getForClient)
+                .map(histories -> histories.stream()
+                        .map(history -> conversionService.convert(history, DiseaseHistoryInfo.class))
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
 }

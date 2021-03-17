@@ -144,4 +144,33 @@ public class DiseaseHistoryControllerBusinessTest {
         historyHelper.assertEntitiesAreFullyEqual(one, foundOne);
         historyHelper.assertEntitiesAreFullyEqual(another, foundAnother);
     }
+
+    @Test
+    void testSuccessfulGettingForClient() {
+        CreateDiseaseHistoryRequest oneRequest = new CreateDiseaseHistoryRequest();
+        oneRequest.setDoctorId(existingDoctor.getId());
+        oneRequest.setClientId(existingClient.getId());
+        DiseaseHistory one = diseaseHistoryService.create(oneRequest).get();
+        CreateDiseaseHistoryRequest anotherRequest = oneRequest.clone();
+        anotherRequest.setDoctorId(anotherDoctor.getId());
+        DiseaseHistory another = diseaseHistoryService.create(anotherRequest).get();
+        entityManager.flush();
+        entityManager.detach(one);
+        entityManager.detach(another);
+
+        Collection<DiseaseHistory> all = diseaseHistoryService.getForClient(one.getClient());
+        Assertions.assertEquals(all.size(), 2);
+        DiseaseHistory foundOne = all.stream()
+                .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
+                .filter(history -> Objects.equals(history.getNumber(), one.getNumber()))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
+        DiseaseHistory foundAnother = all.stream()
+                .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
+                .filter(history -> Objects.equals(history.getNumber(), another.getNumber()))
+                .findAny()
+                .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
+        historyHelper.assertEntitiesAreFullyEqual(one, foundOne);
+        historyHelper.assertEntitiesAreFullyEqual(another, foundAnother);
+    }
 }

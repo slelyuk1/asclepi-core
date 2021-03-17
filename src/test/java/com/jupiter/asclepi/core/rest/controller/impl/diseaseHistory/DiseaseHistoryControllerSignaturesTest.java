@@ -10,7 +10,6 @@ import com.jupiter.asclepi.core.model.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
@@ -153,6 +152,20 @@ public class DiseaseHistoryControllerSignaturesTest {
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
         diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
         this.mockMvc.perform(diseaseHistoryHelper.createMockedGetAllRequest())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("diseaseHistorySuccessfulGettingAll",
+                        responseFields(fieldWithPath("[]").description("Array of DiseaseHistory").type(JsonFieldType.ARRAY))
+                                .andWithPrefix("[].", generateInfoDescriptors())
+                                .andWithPrefix("[].diseaseHistory.", generateGetRequestDescriptors())
+                ));
+    }
+
+    @Test
+    void testSuccessfulGettingForClientRequestResponseSignatures() throws Exception {
+        DiseaseHistory created = diseaseHistoryService
+                .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
+        this.mockMvc.perform(diseaseHistoryHelper.createMockedGetForClientRequest(created.getClient().getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("diseaseHistorySuccessfulGettingAll",
