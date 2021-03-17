@@ -32,8 +32,8 @@ public class VisitTestHelper {
     public CreateVisitRequest generateCreateRequest(DiseaseHistory history) {
         CreateVisitRequest request = new CreateVisitRequest();
         GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest();
-        getter.setClientId(history.getId().getClientId());
-        getter.setNumber(history.getId().getNumber());
+        getter.setClientId(history.getClientId());
+        getter.setNumber(history.getNumber());
         request.setDiseaseHistory(getter);
         request.setWhen(TEST_WHEN);
         return request;

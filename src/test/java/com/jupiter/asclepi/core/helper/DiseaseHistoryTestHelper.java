@@ -35,8 +35,8 @@ public class DiseaseHistoryTestHelper {
     public EditDiseaseHistoryRequest generateEditRequest(DiseaseHistory diseaseHistory, Integer doctorId) {
         EditDiseaseHistoryRequest request = new EditDiseaseHistoryRequest();
         GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest();
-        getter.setClientId(diseaseHistory.getId().getClientId());
-        getter.setNumber(diseaseHistory.getId().getNumber());
+        getter.setClientId(diseaseHistory.getClientId());
+        getter.setNumber(diseaseHistory.getNumber());
         request.setDoctorId(doctorId);
         request.setDiseaseHistory(getter);
         return request;
@@ -54,8 +54,8 @@ public class DiseaseHistoryTestHelper {
                 .content(objectMapper.writeValueAsString(request));
     }
 
-    public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger clientId, int historyNumber) {
-        return get("/api/v1/diseaseHistory/{clientId}/{historyNumber}", clientId, historyNumber);
+    public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger clientId, int number) {
+        return get("/api/v1/diseaseHistory/{clientId}/{number}", clientId, number);
     }
 
     public MockHttpServletRequestBuilder createMockedGetAllRequest() {
@@ -75,13 +75,13 @@ public class DiseaseHistoryTestHelper {
     }
 
     public void assertEntityIsValidAfterCreation(CreateDiseaseHistoryRequest request, DiseaseHistory entity) {
-        Assertions.assertEquals(request.getClientId(), entity.getId().getClientId());
+        Assertions.assertEquals(request.getClientId(), entity.getClientId());
         Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
     }
 
     public void assertEntityIsValidAfterEdition(EditDiseaseHistoryRequest request, DiseaseHistory entity) {
-        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getId().getClientId());
-        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getId().getNumber());
+        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getClientId());
+        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getNumber());
         if (Objects.nonNull(request.getDoctorId())) {
             Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
         }
@@ -89,9 +89,9 @@ public class DiseaseHistoryTestHelper {
 
     @SuppressWarnings("SameParameterValue")
     public void assertEntitiesAreFullyEqual(DiseaseHistory expected, DiseaseHistory actual) {
-        Assertions.assertEquals(expected.getId(), actual.getId());
-        Assertions.assertEquals(expected.getId().getNumber(), actual.getId().getNumber());
+        Assertions.assertEquals(expected.getClientId(), actual.getClientId());
+        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
         Assertions.assertEquals(expected.getDoctor(), actual.getDoctor());
-        Assertions.assertEquals(expected.getDiagnoses(), actual.getDiagnoses());
+        Assertions.assertIterableEquals(expected.getDiagnoses(), actual.getDiagnoses());
     }
 }

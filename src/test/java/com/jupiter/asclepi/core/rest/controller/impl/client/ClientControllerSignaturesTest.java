@@ -23,6 +23,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
 
+import java.math.BigInteger;
+
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -121,7 +123,7 @@ class ClientControllerSignaturesTest {
 
     @Test
     void testFailedDueToNonExistentEditingRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(0, false)))
+        this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(BigInteger.ZERO, false)))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
@@ -145,7 +147,7 @@ class ClientControllerSignaturesTest {
 
     @Test
     void testNonExistentGettingRequestResponseSignatures() throws Exception {
-        this.mockMvc.perform(helper.createMockedGetRequest(0))
+        this.mockMvc.perform(helper.createMockedGetRequest(BigInteger.ZERO))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())

@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.repository.client;
+package com.jupiter.asclepi.core.repository;
 
 import com.jupiter.asclepi.core.model.entity.people.Client;
 import org.springframework.data.jpa.repository.JpaRepository;

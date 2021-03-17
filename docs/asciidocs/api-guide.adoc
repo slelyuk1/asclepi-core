@@ -242,3 +242,101 @@ include::{snippets}/clientSuccessfulGettingAll/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/clientSuccessfulGettingAll/http-response.adoc[]
+
+== Disease History Operations
+
+=== Create Operation
+
+==== Description
+
+Creates a disease history in the system.
+
+===== Request Fields
+
+include::{snippets}/diseaseHistorySuccessfulCreation/request-fields.adoc[]
+
+===== Response Fields
+
+include::{snippets}/diseaseHistorySuccessfulCreation/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/diseaseHistorySuccessfulCreation/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/diseaseHistorySuccessfulCreation/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/diseaseHistorySuccessfulCreation/http-response.adoc[]
+
+=== Edit Operation
+
+==== Description
+
+Edits a disease history in the system.
+
+===== Request Fields
+
+include::{snippets}/diseaseHistorySuccessfulEdition/request-fields.adoc[]
+
+===== Response Fields
+
+include::{snippets}/diseaseHistorySuccessfulEdition/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/diseaseHistorySuccessfulEdition/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/diseaseHistorySuccessfulEdition/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/diseaseHistorySuccessfulEdition/http-response.adoc[]
+
+=== Get Operation
+
+==== Description
+
+Gets an existing disease history.
+
+===== Response Fields
+
+include::{snippets}/diseaseHistorySuccessfulGetting/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/diseaseHistorySuccessfulGetting/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/diseaseHistorySuccessfulGetting/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/diseaseHistorySuccessfulGetting/http-response.adoc[]
+
+=== Get All Operation
+
+==== Description
+
+Gets all disease histories from the system.
+
+===== Response Fields
+
+include::{snippets}/diseaseHistorySuccessfulGettingAll/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/diseaseHistorySuccessfulGettingAll/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/diseaseHistorySuccessfulGettingAll/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/diseaseHistorySuccessfulGettingAll/http-response.adoc[]

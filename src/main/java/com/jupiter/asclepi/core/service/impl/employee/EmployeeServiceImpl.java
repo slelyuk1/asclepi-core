@@ -5,7 +5,7 @@ import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
-import com.jupiter.asclepi.core.repository.employee.EmployeeRepository;
+import com.jupiter.asclepi.core.repository.EmployeeRepository;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;

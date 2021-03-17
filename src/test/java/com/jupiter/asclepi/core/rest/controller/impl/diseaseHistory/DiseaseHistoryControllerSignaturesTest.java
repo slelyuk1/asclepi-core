@@ -18,7 +18,6 @@ import com.jupiter.asclepi.core.service.EmployeeService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -38,8 +38,7 @@ import javax.transaction.Transactional;
 import java.math.BigInteger;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -47,7 +46,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@Disabled
 public class DiseaseHistoryControllerSignaturesTest {
 
     @Autowired
@@ -125,12 +123,14 @@ public class DiseaseHistoryControllerSignaturesTest {
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         DiseaseHistory created = diseaseHistoryService
                 .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
-        this.mockMvc.perform(diseaseHistoryHelper.createMockedGetRequest(created.getId().getClientId(), created.getId().getNumber()))
+        this.mockMvc.perform(diseaseHistoryHelper.createMockedGetRequest(created.getClientId(), created.getNumber()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("diseaseHistorySuccessfulGetting",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client")),
-                        pathParameters(parameterWithName("number").description("Number of the disease history")),
+                        pathParameters(
+                                parameterWithName("clientId").description("ID of the existing client"),
+                                parameterWithName("number").description("Number of the disease history")
+                        ),
                         generateInfoResponse()
                 ));
     }
@@ -142,8 +142,10 @@ public class DiseaseHistoryControllerSignaturesTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("diseaseHistoryNonExistentGetting",
-                        pathParameters(parameterWithName("clientId").description("ID of the existing client")),
-                        pathParameters(parameterWithName("number").description("Number of the disease history"))
+                        pathParameters(
+                                parameterWithName("clientId").description("ID of the existing client"),
+                                parameterWithName("number").description("Number of the disease history")
+                        )
                 ));
     }
 
@@ -155,8 +157,8 @@ public class DiseaseHistoryControllerSignaturesTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("diseaseHistorySuccessfulGettingAll",
                         responseFields(fieldWithPath("[]").description("Array of DiseaseHistory").type(JsonFieldType.ARRAY))
-                                .andWithPrefix("[]", generateInfoDescriptors())
-                                .andWithPrefix("[].diseaseHistory", generateGetRequestDescriptors())
+                                .andWithPrefix("[].", generateInfoDescriptors())
+                                .andWithPrefix("[].diseaseHistory.", generateGetRequestDescriptors())
                 ));
     }
 
@@ -165,19 +167,18 @@ public class DiseaseHistoryControllerSignaturesTest {
                 .andWithPrefix("diseaseHistory.", generateGetRequestDescriptors());
     }
 
-    public static ResponseFieldsSnippet generateCreateRequest() {
-        return responseFields(generateCreateRequestDescriptors())
-                .andWithPrefix("diseaseHistory.", generateGetRequestDescriptors());
+    public static RequestFieldsSnippet generateCreateRequest() {
+        return requestFields(generateCreateRequestDescriptors());
     }
 
-    public static ResponseFieldsSnippet generateEditRequest() {
-        return responseFields(generateEditRequestDescriptors())
+    public static RequestFieldsSnippet generateEditRequest() {
+        return requestFields(generateEditRequestDescriptors())
                 .andWithPrefix("diseaseHistory.", generateGetRequestDescriptors());
     }
 
     private static FieldDescriptor[] generateInfoDescriptors() {
         return new FieldDescriptor[]{
-                fieldWithPath("diagnosisIds[]").description("IDs of diagnoses linked to the disease history.").type(JsonFieldType.ARRAY),
+                fieldWithPath("diagnosisIds").description("IDs of diagnoses linked to the disease history.").type(JsonFieldType.ARRAY),
                 fieldWithPath("doctorId").description("ID of the doctor which leads this history.").type(JsonFieldType.NUMBER)
         };
     }
@@ -193,7 +194,7 @@ public class DiseaseHistoryControllerSignaturesTest {
     }
 
     private static FieldDescriptor[] generateCreateRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateClientRequest.class);
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateDiseaseHistoryRequest.class);
         return new FieldDescriptor[]{
                 docHelper.fieldDescriptorFor("clientId")
                         .description("ID of the client to which the created history will belong.").type(JsonFieldType.NUMBER),
@@ -203,7 +204,7 @@ public class DiseaseHistoryControllerSignaturesTest {
     }
 
     private static FieldDescriptor[] generateEditRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateClientRequest.class);
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditDiseaseHistoryRequest.class);
         return new FieldDescriptor[]{
                 docHelper.fieldDescriptorFor("doctorId")
                         .description("ID of the doctor which leads this history.").type(JsonFieldType.NUMBER).optional()

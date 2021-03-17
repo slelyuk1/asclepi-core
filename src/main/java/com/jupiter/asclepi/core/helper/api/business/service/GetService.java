@@ -2,7 +2,8 @@ package com.jupiter.asclepi.core.helper.api.business.service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 public interface GetService<RequestType, GettingType> {
-    GettingType getOne(@Valid @NotNull RequestType getRequest);
+    Optional<GettingType> getOne(@Valid @NotNull RequestType getRequest);
 }

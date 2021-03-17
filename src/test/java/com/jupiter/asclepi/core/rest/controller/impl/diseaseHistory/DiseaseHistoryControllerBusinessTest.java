@@ -30,7 +30,6 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
-@Disabled
 public class DiseaseHistoryControllerBusinessTest {
 
     private final EntityManager entityManager;
@@ -64,7 +63,7 @@ public class DiseaseHistoryControllerBusinessTest {
     }
 
     @BeforeEach
-    void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
+    void setUp() {
         CreateEmployeeRequest createEmployeeRequest = employeeHelper.generateCreateRequest(true, Role.DOCTOR);
         existingDoctor = employeeService.create(createEmployeeRequest).get();
         CreateEmployeeRequest anotherEmployeeCreateRequest = employeeHelper.generateAnotherCreateRequest(createEmployeeRequest);
@@ -111,8 +110,8 @@ public class DiseaseHistoryControllerBusinessTest {
         entityManager.detach(created);
 
         GetDiseaseHistoryRequest getRequest = new GetDiseaseHistoryRequest();
-        getRequest.setClientId(created.getId().getClientId());
-        getRequest.setNumber(created.getId().getNumber());
+        getRequest.setClientId(created.getClientId());
+        getRequest.setNumber(created.getNumber());
         DiseaseHistory found = diseaseHistoryService.getOne(getRequest).get();
         historyHelper.assertEntitiesAreFullyEqual(created, found);
     }
@@ -133,11 +132,13 @@ public class DiseaseHistoryControllerBusinessTest {
         Collection<DiseaseHistory> all = diseaseHistoryService.getAll();
         Assertions.assertEquals(all.size(), 2);
         DiseaseHistory foundOne = all.stream()
-                .filter(history -> Objects.equals(history.getId(), one.getId()))
+                .filter(history -> Objects.equals(history.getClientId(), one.getClientId()))
+                .filter(history -> Objects.equals(history.getNumber(), one.getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         DiseaseHistory foundAnother = all.stream()
-                .filter(history -> Objects.equals(history.getId(), another.getId()))
+                .filter(history -> Objects.equals(history.getClientId(), another.getClientId()))
+                .filter(history -> Objects.equals(history.getNumber(), another.getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         historyHelper.assertEntitiesAreFullyEqual(one, foundOne);

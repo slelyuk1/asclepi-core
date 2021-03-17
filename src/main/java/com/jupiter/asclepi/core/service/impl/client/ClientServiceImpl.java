@@ -4,7 +4,7 @@ import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
-import com.jupiter.asclepi.core.repository.client.ClientRepository;
+import com.jupiter.asclepi.core.repository.ClientRepository;
 import com.jupiter.asclepi.core.service.ClientService;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
@@ -34,9 +34,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Try<Client> create(@Valid @NotNull CreateClientRequest createRequest) {
         Client toCreate = conversionService.convert(createRequest, Client.class);
-        return Try.of(() -> {
-            return repository.save(Objects.requireNonNull(toCreate));
-        });
+        return Try.of(() -> repository.save(Objects.requireNonNull(toCreate)));
     }
 
     @Override

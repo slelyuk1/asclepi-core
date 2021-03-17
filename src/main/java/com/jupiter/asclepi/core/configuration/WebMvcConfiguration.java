@@ -3,6 +3,10 @@ package com.jupiter.asclepi.core.configuration;
 import com.jupiter.asclepi.core.service.impl.client.converter.ClientConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.CreateClientRequestConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.EditClientRequestConverter;
+import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.CreateDiseaseHistoryConverter;
+import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.DiseaseHistoryConverter;
+import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.EditDiseaseHistoryConverter;
+import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.GetDiseaseHistoryRequestConverter;
 import com.jupiter.asclepi.core.service.impl.employee.converter.CreateEmployeeRequestConverter;
 import com.jupiter.asclepi.core.service.impl.employee.converter.EditEmployeeRequestConverter;
 import com.jupiter.asclepi.core.service.impl.employee.converter.EmployeeConverter;
@@ -23,11 +27,18 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new CreateEmployeeRequestConverter());
         registry.addConverter(new EditEmployeeRequestConverter());
         registry.addConverter(new EmployeeConverter());
+
         registry.addConverter(new CreateClientRequestConverter());
         registry.addConverter(new EditClientRequestConverter());
         registry.addConverter(new ClientConverter());
+
         registry.addConverter(new EmployeeToUserConverter());
         registry.addConverter(new AuthenticationToStringConverter());
         registry.addConverter(new StringToAuthenticationConverter());
+
+        registry.addConverter(new DiseaseHistoryConverter());
+        registry.addConverter(new CreateDiseaseHistoryConverter());
+        registry.addConverter(new EditDiseaseHistoryConverter());
+        registry.addConverter(new GetDiseaseHistoryRequestConverter());
     }
 }

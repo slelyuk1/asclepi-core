@@ -6,6 +6,7 @@ import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.model.response.people.ClientInfo;
 import com.jupiter.asclepi.core.rest.controller.ClientController;
+import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.ClientService;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
@@ -21,9 +22,6 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 @Slf4j
 @AllArgsConstructor
 @RestController
@@ -32,10 +30,6 @@ public class ClientControllerImpl implements ClientController {
 
     private final ClientService clientService;
     private final ConversionService conversionService;
-
-    private static <T> ResponseEntity<T> generateNotFoundResponse() {
-        return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
-    }
 
     @Override
     public ResponseEntity<?> create(CreateClientRequest createRequest) {
@@ -55,7 +49,7 @@ public class ClientControllerImpl implements ClientController {
             return ResponseEntity.ok().body(clientInfo);
         });
         return editionTry
-                .recover(NonExistentIdException.class, e -> generateNotFoundResponse())
+                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
                 .onFailure(e -> log.error("An error occurred during client creation: ", e))
                 .getOrElseThrow(AsclepiRuntimeException::new);
     }
@@ -72,6 +66,6 @@ public class ClientControllerImpl implements ClientController {
         return clientService.getOne(getRequest)
                 .map(client -> conversionService.convert(client, ClientInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(generateNotFoundResponse());
+                .orElse(ControllerUtils.notFoundResponse());
     }
 }

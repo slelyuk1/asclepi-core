@@ -95,7 +95,7 @@ public class ClientTestHelper {
                 .content(objectMapper.writeValueAsString(request));
     }
 
-    public MockHttpServletRequestBuilder createMockedGetRequest(int id) {
+    public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger id) {
         return get("/api/v1/client/{clientId}", id);
     }
 
