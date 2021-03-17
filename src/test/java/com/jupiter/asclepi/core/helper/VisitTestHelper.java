@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -32,7 +31,7 @@ public class VisitTestHelper {
     public CreateVisitRequest generateCreateRequest(DiseaseHistory history) {
         CreateVisitRequest request = new CreateVisitRequest();
         GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest();
-        getter.setClientId(history.getClientId());
+        getter.setClientId(history.getClient().getId());
         getter.setNumber(history.getNumber());
         request.setDiseaseHistory(getter);
         request.setWhen(TEST_WHEN);
@@ -49,7 +48,7 @@ public class VisitTestHelper {
         EditVisitRequest request = new EditVisitRequest();
         GetVisitRequest getter = new GetVisitRequest();
         GetDiseaseHistoryRequest diseaseHistoryGetter = new GetDiseaseHistoryRequest();
-        diseaseHistoryGetter.setClientId(visit.getId().getDiseaseHistoryId().getClientId());
+        diseaseHistoryGetter.setClientId(visit.getId().getDiseaseHistoryId().getClient());
         diseaseHistoryGetter.setNumber(visit.getId().getDiseaseHistoryId().getNumber());
         getter.setDiseaseHistory(diseaseHistoryGetter);
         getter.setNumber(visit.getId().getNumber());
@@ -86,13 +85,13 @@ public class VisitTestHelper {
     }
 
     public void assertEntityIsValidAfterCreation(CreateVisitRequest request, Visit entity) {
-        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getId().getDiseaseHistoryId().getClientId());
+        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getId().getDiseaseHistoryId().getClient());
         Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getId().getDiseaseHistoryId().getNumber());
         Assertions.assertEquals(request.getWhen(), entity.getWhen());
     }
 
     public void assertEntityIsValidAfterEdition(EditVisitRequest request, Visit entity) {
-        Assertions.assertEquals(request.getVisit().getDiseaseHistory().getClientId(), entity.getId().getDiseaseHistoryId().getClientId());
+        Assertions.assertEquals(request.getVisit().getDiseaseHistory().getClientId(), entity.getId().getDiseaseHistoryId().getClient());
         Assertions.assertEquals(request.getVisit().getDiseaseHistory().getNumber(), entity.getId().getDiseaseHistoryId().getNumber());
         Assertions.assertEquals(request.getVisit().getNumber(), entity.getId().getNumber());
         if (Objects.nonNull(request.getWhen())) {

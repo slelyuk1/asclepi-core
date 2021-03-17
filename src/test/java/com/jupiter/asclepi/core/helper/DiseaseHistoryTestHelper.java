@@ -35,7 +35,7 @@ public class DiseaseHistoryTestHelper {
     public EditDiseaseHistoryRequest generateEditRequest(DiseaseHistory diseaseHistory, Integer doctorId) {
         EditDiseaseHistoryRequest request = new EditDiseaseHistoryRequest();
         GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest();
-        getter.setClientId(diseaseHistory.getClientId());
+        getter.setClientId(diseaseHistory.getClient().getId());
         getter.setNumber(diseaseHistory.getNumber());
         request.setDoctorId(doctorId);
         request.setDiseaseHistory(getter);
@@ -75,12 +75,12 @@ public class DiseaseHistoryTestHelper {
     }
 
     public void assertEntityIsValidAfterCreation(CreateDiseaseHistoryRequest request, DiseaseHistory entity) {
-        Assertions.assertEquals(request.getClientId(), entity.getClientId());
+        Assertions.assertEquals(request.getClientId(), entity.getClient().getId());
         Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
     }
 
     public void assertEntityIsValidAfterEdition(EditDiseaseHistoryRequest request, DiseaseHistory entity) {
-        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getClientId());
+        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getClient().getId());
         Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getNumber());
         if (Objects.nonNull(request.getDoctorId())) {
             Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
@@ -89,7 +89,7 @@ public class DiseaseHistoryTestHelper {
 
     @SuppressWarnings("SameParameterValue")
     public void assertEntitiesAreFullyEqual(DiseaseHistory expected, DiseaseHistory actual) {
-        Assertions.assertEquals(expected.getClientId(), actual.getClientId());
+        Assertions.assertEquals(expected.getClient(), actual.getClient());
         Assertions.assertEquals(expected.getNumber(), actual.getNumber());
         Assertions.assertEquals(expected.getDoctor(), actual.getDoctor());
         Assertions.assertIterableEquals(expected.getDiagnoses(), actual.getDiagnoses());

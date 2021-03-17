@@ -2,6 +2,7 @@ package com.jupiter.asclepi.core.service.impl.diseaseHistory.converter;
 
 import com.jupiter.asclepi.core.model.entity.disease.Diagnosis;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
 import org.springframework.core.convert.converter.Converter;
@@ -14,7 +15,7 @@ public class DiseaseHistoryConverter implements Converter<DiseaseHistory, Diseas
     @Override
     public DiseaseHistoryInfo convert(DiseaseHistory source) {
         GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest();
-        getter.setClientId(source.getClientId());
+        getter.setClientId(source.getClient().getId());
         getter.setNumber(source.getNumber());
         List<BigInteger> diagnosisIds = source.getDiagnoses().stream()
                 .map(Diagnosis::getId)

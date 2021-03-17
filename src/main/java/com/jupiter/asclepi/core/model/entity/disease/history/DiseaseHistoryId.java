@@ -9,6 +9,6 @@ import java.math.BigInteger;
 
 @Data
 public class DiseaseHistoryId implements Serializable {
-    private BigInteger clientId;
+    private BigInteger client;
     private Integer number;
 }

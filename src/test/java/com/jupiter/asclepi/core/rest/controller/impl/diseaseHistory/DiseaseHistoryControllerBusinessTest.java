@@ -110,7 +110,7 @@ public class DiseaseHistoryControllerBusinessTest {
         entityManager.detach(created);
 
         GetDiseaseHistoryRequest getRequest = new GetDiseaseHistoryRequest();
-        getRequest.setClientId(created.getClientId());
+        getRequest.setClientId(created.getClient().getId());
         getRequest.setNumber(created.getNumber());
         DiseaseHistory found = diseaseHistoryService.getOne(getRequest).get();
         historyHelper.assertEntitiesAreFullyEqual(created, found);
@@ -132,12 +132,12 @@ public class DiseaseHistoryControllerBusinessTest {
         Collection<DiseaseHistory> all = diseaseHistoryService.getAll();
         Assertions.assertEquals(all.size(), 2);
         DiseaseHistory foundOne = all.stream()
-                .filter(history -> Objects.equals(history.getClientId(), one.getClientId()))
+                .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
                 .filter(history -> Objects.equals(history.getNumber(), one.getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         DiseaseHistory foundAnother = all.stream()
-                .filter(history -> Objects.equals(history.getClientId(), another.getClientId()))
+                .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
                 .filter(history -> Objects.equals(history.getNumber(), another.getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));

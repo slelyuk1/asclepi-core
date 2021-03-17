@@ -123,7 +123,7 @@ public class DiseaseHistoryControllerSignaturesTest {
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         DiseaseHistory created = diseaseHistoryService
                 .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
-        this.mockMvc.perform(diseaseHistoryHelper.createMockedGetRequest(created.getClientId(), created.getNumber()))
+        this.mockMvc.perform(diseaseHistoryHelper.createMockedGetRequest(created.getClient().getId(), created.getNumber()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("diseaseHistorySuccessfulGetting",

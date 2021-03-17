@@ -8,7 +8,7 @@ public class GetDiseaseHistoryRequestConverter implements Converter<GetDiseaseHi
     @Override
     public DiseaseHistoryId convert(GetDiseaseHistoryRequest source) {
         DiseaseHistoryId id = new DiseaseHistoryId();
-        id.setClientId(source.getClientId());
+        id.setClient(source.getClientId());
         id.setNumber(source.getNumber());
         return id;
     }

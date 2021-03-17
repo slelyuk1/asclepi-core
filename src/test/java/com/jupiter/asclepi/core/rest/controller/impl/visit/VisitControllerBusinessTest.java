@@ -98,7 +98,7 @@ public class VisitControllerBusinessTest {
         getRequest.setNumber(created.getId().getNumber());
         GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
         historyGetter.setNumber(created.getId().getDiseaseHistoryId().getNumber());
-        historyGetter.setClientId(created.getId().getDiseaseHistoryId().getClientId());
+        historyGetter.setClientId(created.getId().getDiseaseHistoryId().getClient());
         getRequest.setDiseaseHistory(historyGetter);
         Visit found = visitService.getOne(getRequest).get();
         visitHelper.assertEntitiesAreFullyEqual(created, found);
