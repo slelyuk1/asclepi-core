@@ -340,3 +340,123 @@ include::{snippets}/diseaseHistorySuccessfulGettingAll/http-request.adoc[]
 ===== Response Example
 
 include::{snippets}/diseaseHistorySuccessfulGettingAll/http-response.adoc[]
+
+== Visit Operations
+
+=== Create Operation
+
+==== Description
+
+Creates a visit in the system.
+
+===== Request Fields
+
+include::{snippets}/visitSuccessfulCreation/request-fields.adoc[]
+
+===== Response Fields
+
+include::{snippets}/visitSuccessfulCreation/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/visitSuccessfulCreation/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/visitSuccessfulCreation/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/visitSuccessfulCreation/http-response.adoc[]
+
+=== Edit Operation
+
+==== Description
+
+Edits a visit in the system.
+
+===== Request Fields
+
+include::{snippets}/visitSuccessfulEdition/request-fields.adoc[]
+
+===== Response Fields
+
+include::{snippets}/visitSuccessfulEdition/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/visitSuccessfulEdition/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/visitSuccessfulEdition/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/visitSuccessfulEdition/http-response.adoc[]
+
+=== Get Operation
+
+==== Description
+
+Gets an existing visit.
+
+===== Response Fields
+
+include::{snippets}/visitSuccessfulGetting/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/visitSuccessfulGetting/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/visitSuccessfulGetting/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/visitSuccessfulGetting/http-response.adoc[]
+
+=== Get All Operation
+
+==== Description
+
+Gets all visits.
+
+===== Response Fields
+
+include::{snippets}/visitSuccessfulGettingAll/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/visitSuccessfulGettingAll/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/visitSuccessfulGettingAll/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/visitSuccessfulGettingAll/http-response.adoc[]
+
+=== Get For Disease History
+
+==== Description
+
+Gets all visits for a disease history.
+
+===== Response Fields
+
+include::{snippets}/visitSuccessfulGettingForDiseaseHistory/response-fields.adoc[]
+
+===== Curl
+
+include::{snippets}/visitSuccessfulGettingForDiseaseHistory/curl-request.adoc[]
+
+===== Request Example
+
+include::{snippets}/visitSuccessfulGettingForDiseaseHistory/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/visitSuccessfulGettingForDiseaseHistory/http-response.adoc[]
