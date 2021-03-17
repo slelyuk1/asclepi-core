@@ -48,10 +48,10 @@ public class VisitTestHelper {
         EditVisitRequest request = new EditVisitRequest();
         GetVisitRequest getter = new GetVisitRequest();
         GetDiseaseHistoryRequest diseaseHistoryGetter = new GetDiseaseHistoryRequest();
-        diseaseHistoryGetter.setClientId(visit.getId().getDiseaseHistoryId().getClient());
-        diseaseHistoryGetter.setNumber(visit.getId().getDiseaseHistoryId().getNumber());
+        diseaseHistoryGetter.setClientId(visit.getDiseaseHistory().getClient().getId());
+        diseaseHistoryGetter.setNumber(visit.getDiseaseHistory().getNumber());
         getter.setDiseaseHistory(diseaseHistoryGetter);
-        getter.setNumber(visit.getId().getNumber());
+        getter.setNumber(visit.getNumber());
         request.setVisit(getter);
         request.setWhen(when);
         return request;
@@ -85,15 +85,15 @@ public class VisitTestHelper {
     }
 
     public void assertEntityIsValidAfterCreation(CreateVisitRequest request, Visit entity) {
-        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getId().getDiseaseHistoryId().getClient());
-        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getId().getDiseaseHistoryId().getNumber());
+        Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getDiseaseHistory().getClient().getId());
+        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getDiseaseHistory().getNumber());
         Assertions.assertEquals(request.getWhen(), entity.getWhen());
     }
 
     public void assertEntityIsValidAfterEdition(EditVisitRequest request, Visit entity) {
-        Assertions.assertEquals(request.getVisit().getDiseaseHistory().getClientId(), entity.getId().getDiseaseHistoryId().getClient());
-        Assertions.assertEquals(request.getVisit().getDiseaseHistory().getNumber(), entity.getId().getDiseaseHistoryId().getNumber());
-        Assertions.assertEquals(request.getVisit().getNumber(), entity.getId().getNumber());
+        Assertions.assertEquals(request.getVisit().getDiseaseHistory().getClientId(), entity.getDiseaseHistory().getClient().getId());
+        Assertions.assertEquals(request.getVisit().getDiseaseHistory().getNumber(), entity.getDiseaseHistory().getNumber());
+        Assertions.assertEquals(request.getVisit().getNumber(), entity.getNumber());
         if (Objects.nonNull(request.getWhen())) {
             Assertions.assertEquals(request.getWhen(), entity.getWhen());
         }
@@ -101,7 +101,8 @@ public class VisitTestHelper {
 
     @SuppressWarnings("SameParameterValue")
     public void assertEntitiesAreFullyEqual(Visit expected, Visit actual) {
-        Assertions.assertEquals(expected.getId(), actual.getId());
+        Assertions.assertEquals(expected.getDiseaseHistory(), actual.getDiseaseHistory());
+        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
         Assertions.assertEquals(expected.getWhen(), actual.getWhen());
     }
 }

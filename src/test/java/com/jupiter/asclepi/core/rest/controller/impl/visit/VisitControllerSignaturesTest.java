@@ -130,10 +130,10 @@ class VisitControllerSignaturesTest {
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory)).get();
         GetVisitRequest getter = new GetVisitRequest();
-        getter.setNumber(created.getId().getNumber());
+        getter.setNumber(created.getNumber());
         GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
-        historyGetter.setClientId(created.getId().getDiseaseHistoryId().getClient());
-        historyGetter.setNumber(created.getId().getDiseaseHistoryId().getNumber());
+        historyGetter.setClientId(created.getDiseaseHistory().getClient().getId());
+        historyGetter.setNumber(created.getDiseaseHistory().getNumber());
         getter.setDiseaseHistory(historyGetter);
         this.mockMvc.perform(visitHelper.createMockedGetRequest(getter))
                 .andExpect(status().isOk())
@@ -183,8 +183,8 @@ class VisitControllerSignaturesTest {
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
         Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory)).get();
         GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest();
-        request.setClientId(created.getId().getDiseaseHistoryId().getClient());
-        request.setNumber(created.getId().getDiseaseHistoryId().getNumber());
+        request.setClientId(created.getDiseaseHistory().getClient().getId());
+        request.setNumber(created.getDiseaseHistory().getNumber());
         this.mockMvc.perform(visitHelper.createMockedGetForDiseaseHistory(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

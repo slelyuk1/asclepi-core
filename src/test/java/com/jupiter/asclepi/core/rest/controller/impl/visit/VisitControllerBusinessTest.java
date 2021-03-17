@@ -20,7 +20,6 @@ import com.jupiter.asclepi.core.service.EmployeeService;
 import com.jupiter.asclepi.core.service.VisitService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -94,10 +93,10 @@ public class VisitControllerBusinessTest {
         entityManager.detach(created);
 
         GetVisitRequest getRequest = new GetVisitRequest();
-        getRequest.setNumber(created.getId().getNumber());
+        getRequest.setNumber(created.getNumber());
         GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
-        historyGetter.setNumber(created.getId().getDiseaseHistoryId().getNumber());
-        historyGetter.setClientId(created.getId().getDiseaseHistoryId().getClient());
+        historyGetter.setNumber(created.getDiseaseHistory().getNumber());
+        historyGetter.setClientId(created.getDiseaseHistory().getClient().getId());
         getRequest.setDiseaseHistory(historyGetter);
         Visit found = visitService.getOne(getRequest).get();
         visitHelper.assertEntitiesAreFullyEqual(created, found);
@@ -115,11 +114,13 @@ public class VisitControllerBusinessTest {
         Collection<Visit> all = visitService.getAll();
         Assertions.assertEquals(all.size(), 2);
         Visit foundOne = all.stream()
-                .filter(visit -> Objects.equals(visit.getId(), one.getId()))
+                .filter(visit -> Objects.equals(visit.getDiseaseHistory(), one.getDiseaseHistory()))
+                .filter(visit -> Objects.equals(visit.getNumber(), one.getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Visit foundAnother = all.stream()
-                .filter(visit -> Objects.equals(visit.getId(), one.getId()))
+                .filter(visit -> Objects.equals(visit.getDiseaseHistory(), one.getDiseaseHistory()))
+                .filter(visit -> Objects.equals(visit.getNumber(), one.getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         visitHelper.assertEntitiesAreFullyEqual(one, foundOne);
