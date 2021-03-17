@@ -16,6 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -23,8 +24,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service
 @RequiredArgsConstructor
+@Service
+@Validated
 public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
     private final DiseaseHistoryRepository repository;
     private final ConversionService conversionService;
