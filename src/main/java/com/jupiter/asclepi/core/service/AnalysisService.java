@@ -1,11 +1,17 @@
 package com.jupiter.asclepi.core.service;
 
 import com.jupiter.asclepi.core.helper.api.business.service.CrudService;
-import com.jupiter.asclepi.core.model.request.disease.anamnesis.EditAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.consultation.CreateAnalysisRequest;
-import com.jupiter.asclepi.core.model.response.disease.AnalysisInfo;
+import com.jupiter.asclepi.core.model.entity.disease.Analysis;
+import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
+import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
 
-import java.math.BigInteger;
+import java.util.List;
 
-public interface AnalysisService extends CrudService<BigInteger, CreateAnalysisRequest, EditAnalysisRequest, AnalysisInfo, Void> {
+public interface AnalysisService extends CrudService<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, Analysis, Void> {
+    List<Analysis> getForVisit(Visit visit);
+
+    List<Analysis> getForDiseaseHistory(DiseaseHistory history);
 }

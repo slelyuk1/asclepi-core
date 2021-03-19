@@ -51,7 +51,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-class VisitControllerSignaturesTest {
+public class VisitControllerSignaturesTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired
@@ -222,13 +222,18 @@ class VisitControllerSignaturesTest {
                 .andWithPrefix("visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors());
     }
 
+    public static RequestFieldsSnippet generateGetRequest() {
+        return requestFields(generateGetRequestDescriptors())
+                .andWithPrefix("diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors());
+    }
+
     private static FieldDescriptor[] generateInfoFieldDescriptor() {
         return new FieldDescriptor[]{
                 fieldWithPath("when").description("When visit will be held.").type(JsonFieldType.STRING)
         };
     }
 
-    private static FieldDescriptor[] generateGetRequestDescriptors() {
+    public static FieldDescriptor[] generateGetRequestDescriptors() {
         ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetVisitRequest.class);
         return new FieldDescriptor[]{
                 docHelper.fieldDescriptorFor("number").description("Number of visit.").type(JsonFieldType.NUMBER)
