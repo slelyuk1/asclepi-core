@@ -189,6 +189,10 @@ public class DiseaseHistoryControllerSignaturesTest {
                 .andWithPrefix("diseaseHistory.", generateGetRequestDescriptors());
     }
 
+    public static RequestFieldsSnippet generateGetRequest(){
+        return requestFields(generateGetRequestDescriptors());
+    }
+
     private static FieldDescriptor[] generateInfoDescriptors() {
         return new FieldDescriptor[]{
                 fieldWithPath("diagnosisIds").description("IDs of diagnoses linked to the disease history.").type(JsonFieldType.ARRAY),

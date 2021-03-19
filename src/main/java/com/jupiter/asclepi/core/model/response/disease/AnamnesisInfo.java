@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.model.response.disease;
 
+import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import lombok.Value;
 
 import java.math.BigInteger;
@@ -7,7 +8,7 @@ import java.math.BigInteger;
 @Value
 public class AnamnesisInfo {
     BigInteger id;
-    BigInteger diseaseHistoryId;
+    GetDiseaseHistoryRequest diseaseHistory;
     String complaints;
     String morbi;
     String vitae;

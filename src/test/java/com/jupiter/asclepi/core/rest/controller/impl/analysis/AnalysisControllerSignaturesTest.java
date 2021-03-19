@@ -154,7 +154,7 @@ class AnalysisControllerSignaturesTest {
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("visitNonExistentGetting",
+                .andDo(document("analysisNonExistentGetting",
                         generateGetRequest()
                 ));
     }
