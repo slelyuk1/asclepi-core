@@ -39,8 +39,8 @@ public interface VisitController extends
                                      @NotNull @PathVariable("number") Integer number);
 
     @GetMapping("/{clientId}/{diseaseHistoryNumber}")
-    List<VisitInfo> getByDiseaseHistory(@NotNull @PathVariable("clientId") BigInteger clientId,
-                                        @NotNull @PathVariable("diseaseHistoryNumber") Integer diseaseHistoryNumber);
+    List<VisitInfo> getForDiseaseHistory(@NotNull @PathVariable("clientId") BigInteger clientId,
+                                         @NotNull @PathVariable("diseaseHistoryNumber") Integer diseaseHistoryNumber);
 
     // todo implement
     // ResponseEntity<?> finish(BigInteger diseaseHistoryId);

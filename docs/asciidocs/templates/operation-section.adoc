@@ -1,0 +1,43 @@
+ifdef::operation-name[]
+=== {operation-name}
+
+endif::operation-name[]
+
+ifdef::operation-description[]
+==== Description
+
+{operation-description}
+endif::operation-description[]
+
+ifdef::operation-snippet-name[]
+ifdef::operation-with-request[]
+ifeval::["{operation-with-request}" == "true"]
+===== Request Fields
+
+include::{snippets}/{operation-snippet-name}/request-fields.adoc[]
+
+endif::[]
+endif::operation-with-request[]
+
+ifdef::operation-with-response[]
+ifeval::["{operation-with-response}" == "true"]
+
+===== Response Fields
+
+include::{snippets}/{operation-snippet-name}/response-fields.adoc[]
+
+endif::[]
+endif::operation-with-response[]
+
+===== Curl
+
+include::{snippets}/{operation-snippet-name}/curl-request.adoc[]
+
+===== Successful Request Example
+
+include::{snippets}/{operation-snippet-name}/http-request.adoc[]
+
+===== Successful Response Example
+
+include::{snippets}/{operation-snippet-name}/http-response.adoc[]
+endif::operation-snippet-name[]

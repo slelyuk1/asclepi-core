@@ -2,461 +2,97 @@
 
 == Authentication and Authorization Operations
 
-=== Authentication (Login)
-
-==== Description
-
-All endpoints, accept this one, in asclepi-core are secured.
-Thus, any request to a secured endpoint produces 403 (Forbidden) response status.
-To gain access to secured endpoint, a requester must provide access token.
-This token is encrypted and contains all needed information for authorization.
-Requester gains access token by sending a valid request to this endpoint.
-To gain access to secured endpoints this token must be stored in 'Cookies' header of HTTP request.
-
-===== Request Fields
-
-include::{snippets}/securitySuccessfulAuthentication/request-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/securitySuccessfulAuthentication/curl-request.adoc[]
-
-===== Successful Request Example
-
-include::{snippets}/securitySuccessfulAuthentication/http-request.adoc[]
-
-===== Successful Response Example
-
-include::{snippets}/securitySuccessfulAuthentication/http-response.adoc[]
+:operation-name: Authentication (Login)
+:operation-description: All endpoints, accept this one, in asclepi-core are secured. \
+                        Thus, any request to a secured endpoint produces 403 (Forbidden) response status. \
+                        To gain access to secured endpoint, a requester must provide access token. \
+                        This token is encrypted and contains all needed information for authorization. \
+                        Requester gains access token by sending a valid request to this endpoint. \
+                        To gain access to secured endpoints this token must be stored in 'Cookies' header of HTTP request.
+:operation-snippet-name: securitySuccessfulAuthentication
+include::templates/operation-section.adoc[]
 
 ===== Unsuccessful Response Example
 
 include::{snippets}/securityUnsuccessfulAuthentication/http-response.adoc[]
 
-== Employee Operations
+// --------------------------------- Section Start ---------------------------------
 
-=== Create Operation
+:domain-name: Employee
+:create-operation-description: Creates an employee in the system.
+:create-snippet-name: employeeSuccessfulCreation
 
-==== Description
+:edit-operation-description: Edits an employee in the system.
+:edit-snippet-name: employeeSuccessfulEdition
 
-Creates an employee in the system.
+:delete-operation-description: Deletes an employee from the system.
+:delete-snippet-name: employeeSuccessfulDeletion
 
-===== Request Fields
+:get-operation-description: Get an employee from the system.
+:get-snippet-name: employeeSuccessfulGetting
 
-include::{snippets}/employeeSuccessfulCreation/request-fields.adoc[]
+:get-all-operation-description: Get all employees from the system.
+:get-all-snippet-name: employeeSuccessfulGettingAll
+include::templates/operations-section.adoc[]
 
-===== Response Fields
+// todo add getOne documentation
 
-include::{snippets}/employeeSuccessfulCreation/response-fields.adoc[]
+// --------------------------------- Section Start ---------------------------------
 
-===== Curl
+:domain-name: Client
+:create-operation-description: Creates a client in the system.
+:create-snippet-name: clientSuccessfulCreation
 
-include::{snippets}/employeeSuccessfulCreation/curl-request.adoc[]
+:edit-operation-description: Edits a client in the system.
+:edit-snippet-name: clientSuccessfulEdition
 
-===== Successful Request Example
+:get-operation-description: Gets a client from the system.
+:get-snippet-name: clientSuccessfulGetting
 
-include::{snippets}/employeeSuccessfulCreation/http-request.adoc[]
+:get-all-operation-description: Gets all clients from the system.
+:get-all-snippet-name: clientSuccessfulGettingAll
+include::templates/operations-section.adoc[]
 
-===== Successful Response Example
+// --------------------------------- Section Start ---------------------------------
 
-include::{snippets}/employeeSuccessfulCreation/http-response.adoc[]
+:domain-name: Disease History
+:create-operation-description: Creates a disease history in the system.
+:create-snippet-name: diseaseHistorySuccessfulCreation
 
-=== Edit Operation
+:edit-operation-description: Edits a disease history in the system.
+:edit-snippet-name: diseaseHistorySuccessfulEdition
 
-==== Description
+:get-operation-description: Gets a disease history from the system.
+:get-snippet-name: diseaseHistorySuccessfulGetting
 
-Edits an employee in the system.
+:get-all-operation-description: Gets all disease history from the system.
+:get-all-snippet-name: diseaseHistorySuccessfulGettingAll
+include::templates/operations-section.adoc[]
 
-===== Request Fields
+:operation-name: Get for Client
+:operation-description: Gets disease histories related to a client.
+:operation-snippet-name: diseaseHistorySuccessfulGettingForClient
+include::templates/operation-section.adoc[]
 
-include::{snippets}/employeeSuccessfulEdition/request-fields.adoc[]
+// --------------------------------- Section Start ---------------------------------
 
-===== Response Fields
+:domain-name: Visit
+:create-operation-description: Creates a visit in the system.
+:create-snippet-name: visitSuccessfulCreation
 
-include::{snippets}/employeeSuccessfulEdition/response-fields.adoc[]
+:edit-operation-description: Edits a visit in the system.
+:edit-snippet-name: visitSuccessfulEdition
 
-===== Curl
+:get-operation-description: Gets a visit from the system.
+:get-snippet-name: visitSuccessfulGetting
 
-include::{snippets}/employeeSuccessfulEdition/curl-request.adoc[]
+:get-all-operation-description: Gets all visits from the system.
+:get-all-snippet-name: visitSuccessfulGettingAll
+include::templates/operations-section.adoc[]
 
-===== Request Example
+:operation-name: Get for Disease History
+:operation-description: Gets visits related to a disease history.
+:operation-snippet-name: visitSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]
 
-include::{snippets}/employeeSuccessfulEdition/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/employeeSuccessfulEdition/http-response.adoc[]
-
-=== Delete Operation
-
-==== Description
-
-Deletes an employee from the system.
-
-===== Request Example
-
-include::{snippets}/employeeSuccessfulDeletion/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/employeeSuccessfulDeletion/http-response.adoc[]
-
-=== Get Operation
-
-==== Description
-
-Gets an employee from the system.
-
-===== Response Fields
-
-include::{snippets}/employeeSuccessfulGetting/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/employeeSuccessfulGetting/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/employeeSuccessfulGetting/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/employeeSuccessfulGetting/http-response.adoc[]
-
-=== Get All Operation
-
-==== Description
-
-Gets all employees from the system.
-
-===== Response Fields
-
-include::{snippets}/employeeSuccessfulGettingAll/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/employeeSuccessfulGettingAll/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/employeeSuccessfulGettingAll/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/employeeSuccessfulGettingAll/http-response.adoc[]
-
-== Client Operations
-
-=== Create Operation
-
-==== Description
-
-Creates a client in the system.
-
-===== Request Fields
-
-include::{snippets}/clientSuccessfulCreation/request-fields.adoc[]
-
-===== Response Fields
-
-include::{snippets}/clientSuccessfulCreation/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/clientSuccessfulCreation/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/clientSuccessfulCreation/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/clientSuccessfulCreation/http-response.adoc[]
-
-=== Edit Operation
-
-==== Description
-
-Edits a client in the system.
-
-===== Request Fields
-
-include::{snippets}/clientSuccessfulEdition/request-fields.adoc[]
-
-===== Response Fields
-
-include::{snippets}/clientSuccessfulEdition/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/clientSuccessfulEdition/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/clientSuccessfulEdition/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/clientSuccessfulEdition/http-response.adoc[]
-
-=== Get Operation
-
-==== Description
-
-Gets a client from the system.
-
-===== Response Fields
-
-include::{snippets}/clientSuccessfulGetting/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/clientSuccessfulGetting/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/clientSuccessfulGetting/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/clientSuccessfulGetting/http-response.adoc[]
-
-=== Get All Operation
-
-==== Description
-
-Gets all clients from the system.
-
-===== Response Fields
-
-include::{snippets}/clientSuccessfulGettingAll/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/clientSuccessfulGettingAll/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/clientSuccessfulGettingAll/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/clientSuccessfulGettingAll/http-response.adoc[]
-
-== Disease History Operations
-
-=== Create Operation
-
-==== Description
-
-Creates a disease history in the system.
-
-===== Request Fields
-
-include::{snippets}/diseaseHistorySuccessfulCreation/request-fields.adoc[]
-
-===== Response Fields
-
-include::{snippets}/diseaseHistorySuccessfulCreation/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/diseaseHistorySuccessfulCreation/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/diseaseHistorySuccessfulCreation/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/diseaseHistorySuccessfulCreation/http-response.adoc[]
-
-=== Edit Operation
-
-==== Description
-
-Edits a disease history in the system.
-
-===== Request Fields
-
-include::{snippets}/diseaseHistorySuccessfulEdition/request-fields.adoc[]
-
-===== Response Fields
-
-include::{snippets}/diseaseHistorySuccessfulEdition/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/diseaseHistorySuccessfulEdition/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/diseaseHistorySuccessfulEdition/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/diseaseHistorySuccessfulEdition/http-response.adoc[]
-
-=== Get Operation
-
-==== Description
-
-Gets an existing disease history.
-
-===== Response Fields
-
-include::{snippets}/diseaseHistorySuccessfulGetting/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/diseaseHistorySuccessfulGetting/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/diseaseHistorySuccessfulGetting/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/diseaseHistorySuccessfulGetting/http-response.adoc[]
-
-=== Get All Operation
-
-==== Description
-
-Gets all disease histories from the system.
-
-===== Response Fields
-
-include::{snippets}/diseaseHistorySuccessfulGettingAll/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/diseaseHistorySuccessfulGettingAll/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/diseaseHistorySuccessfulGettingAll/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/diseaseHistorySuccessfulGettingAll/http-response.adoc[]
-
-== Visit Operations
-
-=== Create Operation
-
-==== Description
-
-Creates a visit in the system.
-
-===== Request Fields
-
-include::{snippets}/visitSuccessfulCreation/request-fields.adoc[]
-
-===== Response Fields
-
-include::{snippets}/visitSuccessfulCreation/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/visitSuccessfulCreation/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/visitSuccessfulCreation/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/visitSuccessfulCreation/http-response.adoc[]
-
-=== Edit Operation
-
-==== Description
-
-Edits a visit in the system.
-
-===== Request Fields
-
-include::{snippets}/visitSuccessfulEdition/request-fields.adoc[]
-
-===== Response Fields
-
-include::{snippets}/visitSuccessfulEdition/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/visitSuccessfulEdition/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/visitSuccessfulEdition/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/visitSuccessfulEdition/http-response.adoc[]
-
-=== Get Operation
-
-==== Description
-
-Gets an existing visit.
-
-===== Response Fields
-
-include::{snippets}/visitSuccessfulGetting/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/visitSuccessfulGetting/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/visitSuccessfulGetting/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/visitSuccessfulGetting/http-response.adoc[]
-
-=== Get All Operation
-
-==== Description
-
-Gets all visits.
-
-===== Response Fields
-
-include::{snippets}/visitSuccessfulGettingAll/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/visitSuccessfulGettingAll/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/visitSuccessfulGettingAll/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/visitSuccessfulGettingAll/http-response.adoc[]
-
-=== Get For Disease History
-
-==== Description
-
-Gets all visits for a disease history.
-
-===== Response Fields
-
-include::{snippets}/visitSuccessfulGettingForDiseaseHistory/response-fields.adoc[]
-
-===== Curl
-
-include::{snippets}/visitSuccessfulGettingForDiseaseHistory/curl-request.adoc[]
-
-===== Request Example
-
-include::{snippets}/visitSuccessfulGettingForDiseaseHistory/http-request.adoc[]
-
-===== Response Example
-
-include::{snippets}/visitSuccessfulGettingForDiseaseHistory/http-response.adoc[]
+// todo additional operations

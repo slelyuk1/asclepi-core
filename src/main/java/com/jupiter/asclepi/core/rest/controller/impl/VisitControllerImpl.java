@@ -82,7 +82,7 @@ public class VisitControllerImpl implements VisitController {
     }
 
     @Override
-    public List<VisitInfo> getByDiseaseHistory(@NotNull BigInteger clientId, @NotNull Integer diseaseHistoryNumber) {
+    public List<VisitInfo> getForDiseaseHistory(@NotNull BigInteger clientId, @NotNull Integer diseaseHistoryNumber) {
         GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
         historyGetter.setClientId(clientId);
         historyGetter.setNumber(diseaseHistoryNumber);

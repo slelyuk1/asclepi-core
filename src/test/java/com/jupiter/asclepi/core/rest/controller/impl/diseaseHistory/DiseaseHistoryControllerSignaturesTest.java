@@ -168,7 +168,7 @@ public class DiseaseHistoryControllerSignaturesTest {
         this.mockMvc.perform(diseaseHistoryHelper.createMockedGetForClientRequest(created.getClient().getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("diseaseHistorySuccessfulGettingAll",
+                .andDo(document("diseaseHistorySuccessfulGettingForClient",
                         responseFields(fieldWithPath("[]").description("Array of DiseaseHistory").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoDescriptors())
                                 .andWithPrefix("[].diseaseHistory.", generateGetRequestDescriptors())

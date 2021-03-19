@@ -1,0 +1,56 @@
+ifdef::domain-name[]
+
+== {domain-name} Operations
+
+endif::domain-name[]
+
+:operation-with-request: true
+:operation-with-response: true
+
+ifdef::create-snippet-name[]
+
+:operation-name: Create Operation
+ifdef::create-operation-description[:operation-description: {create-operation-description}]
+:operation-snippet-name: {create-snippet-name}
+include::operation-section.adoc[]
+
+endif::create-snippet-name[]
+
+ifdef::edit-snippet-name[]
+
+:operation-name: Edit Operation
+ifdef::edit-operation-description[:operation-description: {edit-operation-description}]
+:operation-snippet-name: {edit-snippet-name}
+include::operation-section.adoc[]
+
+endif::edit-snippet-name[]
+
+:operation-with-request: false
+:operation-with-response: false
+
+ifdef::delete-snippet-name[]
+
+:operation-name: Delete Operation
+ifdef::delete-operation-description[:operation-description: {delete-operation-description}]
+:operation-snippet-name: {delete-snippet-name}
+include::operation-section.adoc[]
+
+endif::delete-snippet-name[]
+
+ifdef::get-snippet-name[]
+
+:operation-name: Get Operation
+ifdef::get-operation-description[:operation-description: {get-operation-description}]
+:operation-snippet-name: {get-snippet-name}
+include::operation-section.adoc[]
+
+endif::get-snippet-name[]
+
+ifdef::get-all-snippet-name[]
+
+:operation-name: Get All Operation
+ifdef::get-all-operation-description[:operation-description: {get-all-operation-description}]
+:operation-snippet-name: {get-all-snippet-name}
+include::operation-section.adoc[]
+
+endif::get-all-snippet-name[]
