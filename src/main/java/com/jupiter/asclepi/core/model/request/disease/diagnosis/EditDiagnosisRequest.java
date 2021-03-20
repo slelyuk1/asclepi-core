@@ -2,12 +2,12 @@ package com.jupiter.asclepi.core.model.request.disease.diagnosis;
 
 import lombok.Data;
 
-import java.math.BigInteger;
-
 @Data
 public class EditDiagnosisRequest {
-    private BigInteger diseaseHistoryId;
+    private GetDiagnosisRequest diagnosis;
+    private Boolean isFinal;
     private String disease;
     private String complications;
-    private String concomitantPathology;
+    private String etiologyAndPathogenesis;
+    private String specialityOfCourse;
 }

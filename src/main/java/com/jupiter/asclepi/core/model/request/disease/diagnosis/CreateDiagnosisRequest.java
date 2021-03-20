@@ -1,13 +1,23 @@
 package com.jupiter.asclepi.core.model.request.disease.diagnosis;
 
+import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import lombok.Data;
-
-import java.math.BigInteger;
+import lombok.SneakyThrows;
 
 @Data
-public class CreateDiagnosisRequest {
-    private BigInteger diseaseHistoryId;
+public class CreateDiagnosisRequest implements Cloneable {
+    private GetDiseaseHistoryRequest diseaseHistory;
     private String disease;
+    private Boolean isFinal;
     private String complications;
-    private String concomitantPathology;
+    private String etiologyAndPathogenesis;
+    private String specialityOfCourse;
+
+    @SneakyThrows
+    @Override
+    public CreateDiagnosisRequest clone() {
+        CreateDiagnosisRequest cloned = (CreateDiagnosisRequest) super.clone();
+        cloned.diseaseHistory = diseaseHistory.clone();
+        return cloned;
+    }
 }

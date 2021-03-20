@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.model.entity.disease.history;
 
 import com.jupiter.asclepi.core.helper.api.object.AbstractCreationAware;
-import com.jupiter.asclepi.core.model.entity.disease.Diagnosis;
+import com.jupiter.asclepi.core.model.entity.disease.diagnosis.Diagnosis;
 import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import lombok.AccessLevel;
@@ -33,6 +33,7 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
     @NotNull
     @ManyToOne
     private Employee doctor;
+
 
     @Setter(AccessLevel.PRIVATE)
     @NotNull

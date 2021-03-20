@@ -9,7 +9,7 @@ import java.util.List;
 @Value
 public class DiseaseHistoryInfo {
     GetDiseaseHistoryRequest diseaseHistory;
-    List<BigInteger> diagnosisIds;
+    List<Integer> diagnosisIds;
     Integer doctorId;
 
     // todo created by and created when
