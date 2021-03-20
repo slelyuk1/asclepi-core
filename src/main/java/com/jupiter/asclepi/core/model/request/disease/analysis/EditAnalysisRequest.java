@@ -4,8 +4,7 @@ import lombok.Data;
 
 @Data
 public class EditAnalysisRequest {
-    private GetAnalysisRequest visit;
-    private Integer number;
+    private GetAnalysisRequest analysis;
     private String title;
     private String summary;
 }

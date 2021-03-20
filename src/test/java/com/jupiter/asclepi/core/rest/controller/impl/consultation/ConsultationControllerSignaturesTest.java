@@ -1,15 +1,16 @@
-package com.jupiter.asclepi.core.rest.controller.impl.analysis;
+package com.jupiter.asclepi.core.rest.controller.impl.consultation;
 
 import com.jupiter.asclepi.core.helper.*;
-import com.jupiter.asclepi.core.model.entity.disease.Analysis;
+import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
+import com.jupiter.asclepi.core.model.entity.disease.Consultation;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.other.Role;
-import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
+import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
+import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.rest.controller.impl.diseaseHistory.DiseaseHistoryControllerSignaturesTest;
@@ -34,6 +35,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
@@ -45,7 +47,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @Disabled
-class AnalysisControllerSignaturesTest {
+class ConsultationControllerSignaturesTest {
     @Autowired
     private EmployeeTestHelper employeeHelper;
     @Autowired
@@ -55,7 +57,9 @@ class AnalysisControllerSignaturesTest {
     @Autowired
     private VisitTestHelper visitHelper;
     @Autowired
-    private AnalysisTestHelper analysisHelper;
+    private AnamnesisTestHelper anamnesisHelper;
+    @Autowired
+    private ConsultationTestHelper consultationHelper;
 
     @Autowired
     private EmployeeService employeeService;
@@ -67,9 +71,14 @@ class AnalysisControllerSignaturesTest {
     private VisitService visitService;
     @Autowired
     private AnalysisService analysisService;
+    @Autowired
+    private AnamnesisService anamnesisService;
+    @Autowired
+    private ConsultationService consultationService;
 
     private MockMvc mockMvc;
     private Visit existingVisit;
+    private Anamnesis existingAnamnesis;
 
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
@@ -78,15 +87,16 @@ class AnalysisControllerSignaturesTest {
         Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
         DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
         existingVisit = visitService.create(visitHelper.generateCreateRequest(history)).get();
+        existingAnamnesis = anamnesisService.create(anamnesisHelper.generateCreateRequest(history)).get();
     }
 
     @Test
     void testSuccessfulCreationRequestResponseSignatures() throws Exception {
-        CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
-        this.mockMvc.perform(analysisHelper.createMockedCreateRequest(request))
+        CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
+        this.mockMvc.perform(consultationHelper.createMockedCreateRequest(request))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulCreation",
+                .andDo(document("consultationSuccessfulCreation",
                         generateCreateRequest(),
                         generateInfoResponse()
                 ));
@@ -94,12 +104,12 @@ class AnalysisControllerSignaturesTest {
 
     @Test
     void testSuccessfulEditingRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
-        EditAnalysisRequest request = analysisHelper.generateEditRequest(created);
-        this.mockMvc.perform(analysisHelper.createMockedEditRequest(request))
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
+        EditConsultationRequest request = consultationHelper.generateEditRequest(created);
+        this.mockMvc.perform(consultationHelper.createMockedEditRequest(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulEdition",
+                .andDo(document("consultationSuccessfulEdition",
                         generateEditRequest(),
                         generateInfoResponse()
                 ));
@@ -107,38 +117,37 @@ class AnalysisControllerSignaturesTest {
 
     @Test
     void testFailedDueToNonExistentEditingRequestResponseSignatures() throws Exception {
-        EditAnalysisRequest request = new EditAnalysisRequest();
-        GetAnalysisRequest getter = new GetAnalysisRequest(
+        EditConsultationRequest request = new EditConsultationRequest();
+        GetConsultationRequest getter = new GetConsultationRequest(
                 new GetVisitRequest(new GetDiseaseHistoryRequest(BigInteger.ZERO, 0), 0),
                 0
         );
-        request.setAnalysis(getter);
-        request.setTitle("testTitle");
-        request.setSummary("testSummary");
-        this.mockMvc.perform(analysisHelper.createMockedEditRequest(request))
+        request.setAnamnesisId(BigInteger.ZERO);
+        request.setInspection("testInspection");
+        this.mockMvc.perform(consultationHelper.createMockedEditRequest(request))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("analysisNonExistentEdition",
+                .andDo(document("consultationNonExistentEdition",
                         generateEditRequest()
                 ));
     }
 
     @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
-        GetAnalysisRequest request = new GetAnalysisRequest(
+        GetConsultationRequest request = new GetConsultationRequest(
                 new GetVisitRequest(
                         new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
                         created.getVisit().getNumber()
                 ),
                 created.getNumber()
         );
-        this.mockMvc.perform(analysisHelper.createMockedGetRequest(request))
+        this.mockMvc.perform(consultationHelper.createMockedGetRequest(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulGetting",
+                .andDo(document("consultationSuccessfulGetting",
                         generateGetRequest(),
                         generateInfoResponse()
                 ));
@@ -146,34 +155,34 @@ class AnalysisControllerSignaturesTest {
 
     @Test
     void testNonExistentGettingRequestResponseSignatures() throws Exception {
-        GetAnalysisRequest getter = new GetAnalysisRequest(
+        GetConsultationRequest getter = new GetConsultationRequest(
                 new GetVisitRequest(new GetDiseaseHistoryRequest(BigInteger.ZERO, 0), 0),
                 0
         );
-        this.mockMvc.perform(analysisHelper.createMockedGetRequest(getter))
+        this.mockMvc.perform(consultationHelper.createMockedGetRequest(getter))
                 .andExpect(status().isNotFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("analysisNonExistentGetting",
+                .andDo(document("consultationNonExistentGetting",
                         generateGetRequest()
                 ));
     }
 
     @Test
     void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
-        GetAnalysisRequest request = new GetAnalysisRequest(
+        GetConsultationRequest request = new GetConsultationRequest(
                 new GetVisitRequest(
                         new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
                         created.getVisit().getNumber()
                 ),
                 created.getNumber()
         );
-        this.mockMvc.perform(analysisHelper.createMockedDeleteRequest(request))
+        this.mockMvc.perform(consultationHelper.createMockedDeleteRequest(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulDeletion",
+                .andDo(document("ConsultationSuccessfulDeletion",
                         generateGetRequest(),
                         generateInfoResponse()
                 ));
@@ -181,12 +190,12 @@ class AnalysisControllerSignaturesTest {
 
     @Test
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
-        analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
-        this.mockMvc.perform(analysisHelper.createMockedGetAllRequest())
+        consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
+        this.mockMvc.perform(consultationHelper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulGettingAll",
-                        responseFields(fieldWithPath("[]").description("Array of analysis.").type(JsonFieldType.ARRAY))
+                .andDo(document("consultationSuccessfulGettingAll",
+                        responseFields(fieldWithPath("[]").description("Array of Consultation.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
                                 .andWithPrefix("[].visit.", generateGetRequestDescriptors())
                                 .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
@@ -195,18 +204,18 @@ class AnalysisControllerSignaturesTest {
 
     @Test
     void testSuccessfulGettingForVisitRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetVisitRequest request = new GetVisitRequest(
                 new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
                 created.getVisit().getNumber()
         );
-        this.mockMvc.perform(analysisHelper.createMockedGetForVisit(request))
+        this.mockMvc.perform(consultationHelper.createMockedGetForVisit(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulGettingForVisit",
+                .andDo(document("consultationSuccessfulGettingForVisit",
                         VisitControllerSignaturesTest.generateGetRequest(),
-                        responseFields(fieldWithPath("[]").description("Array of analysis.").type(JsonFieldType.ARRAY))
+                        responseFields(fieldWithPath("[]").description("Array of Consultation.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
                                 .andWithPrefix("[].visit.", generateGetRequestDescriptors())
                                 .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
@@ -215,15 +224,15 @@ class AnalysisControllerSignaturesTest {
 
     @Test
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber());
-        this.mockMvc.perform(analysisHelper.createMockedGetForDiseaseHistory(request))
+        this.mockMvc.perform(consultationHelper.createMockedGetForDiseaseHistory(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulGettingForDiseaseHistory",
+                .andDo(document("consultationSuccessfulGettingForDiseaseHistory",
                         VisitControllerSignaturesTest.generateGetRequest(),
-                        responseFields(fieldWithPath("[]").description("Array of analysis.").type(JsonFieldType.ARRAY))
+                        responseFields(fieldWithPath("[]").description("Array of Consultation.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
                                 .andWithPrefix("[].visit.", generateGetRequestDescriptors())
                                 .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
@@ -232,9 +241,9 @@ class AnalysisControllerSignaturesTest {
 
     private static ResponseFieldsSnippet generateInfoResponse() {
         return responseFields(generateInfoFieldDescriptor())
-                .andWithPrefix("analysis.", generateGetRequestDescriptors())
-                .andWithPrefix("analysis.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
-                .andWithPrefix("analysis.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors());
+                .andWithPrefix("consultation.", generateGetRequestDescriptors())
+                .andWithPrefix("consultation.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
+                .andWithPrefix("consultation.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors());
     }
 
     private static RequestFieldsSnippet generateCreateRequest() {
@@ -245,9 +254,9 @@ class AnalysisControllerSignaturesTest {
 
     private static RequestFieldsSnippet generateEditRequest() {
         return requestFields(generateEditRequestDescriptors())
-                .andWithPrefix("analysis.", generateGetRequestDescriptors())
-                .andWithPrefix("analysis.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
-                .andWithPrefix("analysis.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors());
+                .andWithPrefix("consultation.", generateGetRequestDescriptors())
+                .andWithPrefix("consultation.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
+                .andWithPrefix("consultation.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors());
     }
 
     private static RequestFieldsSnippet generateGetRequest() {
@@ -258,35 +267,35 @@ class AnalysisControllerSignaturesTest {
 
     private static FieldDescriptor[] generateInfoFieldDescriptor() {
         return new FieldDescriptor[]{
-                fieldWithPath("title").description("Title of analysis.").type(JsonFieldType.STRING),
-                fieldWithPath("summary").description("Summary of analysis.").type(JsonFieldType.STRING)
+                fieldWithPath("anamnesisId").description("ID of the linked anamnesis.").type(JsonFieldType.STRING),
+                fieldWithPath("inspection").description("Inspection gathered during consultation.").type(JsonFieldType.STRING)
         };
     }
 
     private static FieldDescriptor[] generateGetRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetAnalysisRequest.class);
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetConsultationRequest.class);
         return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("number").description("Number of analysis.").type(JsonFieldType.NUMBER)
+                docHelper.fieldDescriptorFor("number").description("Number of consultation.").type(JsonFieldType.NUMBER)
         };
     }
 
     private static FieldDescriptor[] generateCreateRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateAnalysisRequest.class);
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(CreateConsultationRequest.class);
         return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("title")
-                        .description("Title of the created analysis.").type(JsonFieldType.STRING),
-                docHelper.fieldDescriptorFor("summary")
-                        .description("Summary of the created analysis.").type(JsonFieldType.STRING)
+                docHelper.fieldDescriptorFor("anamnesisId")
+                        .description("ID of the linked anamnesis.").type(JsonFieldType.NUMBER),
+                docHelper.fieldDescriptorFor("inspection")
+                        .description("Inspection gathered during consultation.").type(JsonFieldType.STRING)
         };
     }
 
     private static FieldDescriptor[] generateEditRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditAnalysisRequest.class);
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditConsultationRequest.class);
         return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("title")
-                        .description("Title of the created analysis.").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("summary")
-                        .description("Summary of the created analysis.").type(JsonFieldType.STRING).optional()
+                docHelper.fieldDescriptorFor("anamnesisId")
+                        .description("ID of the linked anamnesis.").type(JsonFieldType.NUMBER).optional(),
+                docHelper.fieldDescriptorFor("inspection")
+                        .description("Inspection gathered during consultation.").type(JsonFieldType.STRING).optional()
         };
     }
 }
