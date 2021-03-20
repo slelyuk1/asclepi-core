@@ -160,6 +160,26 @@ class AnalysisControllerSignaturesTest {
     }
 
     @Test
+    void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
+        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        DiseaseHistory history = created.getVisit().getDiseaseHistory();
+        GetAnalysisRequest request = new GetAnalysisRequest(
+                new GetVisitRequest(
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
+                        created.getVisit().getNumber()
+                ),
+                created.getNumber()
+        );
+        this.mockMvc.perform(analysisHelper.createMockedDeleteRequest(request))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(document("analysisSuccessfulDeletion",
+                        generateGetRequest(),
+                        generateInfoResponse()
+                ));
+    }
+
+    @Test
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
         analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
         this.mockMvc.perform(analysisHelper.createMockedGetAllRequest())
@@ -244,7 +264,7 @@ class AnalysisControllerSignaturesTest {
     }
 
     private static FieldDescriptor[] generateGetRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetVisitRequest.class);
+        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetAnalysisRequest.class);
         return new FieldDescriptor[]{
                 docHelper.fieldDescriptorFor("number").description("Number of analysis.").type(JsonFieldType.NUMBER)
         };

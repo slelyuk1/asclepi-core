@@ -108,6 +108,26 @@ public class AnalysisControllerBusinessTest {
     }
 
     @Test
+    void testSuccessfulDeletion() {
+        CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
+        Analysis created = analysisService.create(request).get();
+        entityManager.flush();
+        entityManager.detach(created);
+
+        DiseaseHistory history = created.getVisit().getDiseaseHistory();
+        GetAnalysisRequest getRequest = new GetAnalysisRequest(
+                new GetVisitRequest(
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
+                        created.getVisit().getNumber()
+                ),
+                created.getNumber()
+        );
+        boolean isDeleted = analysisService.delete(getRequest);
+        Assertions.assertTrue(isDeleted);
+        Assertions.assertFalse(analysisService.getOne(getRequest).isPresent());
+    }
+
+    @Test
     void testSuccessfulGettingAll() throws Exception {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
         Analysis one = analysisService.create(request).get();

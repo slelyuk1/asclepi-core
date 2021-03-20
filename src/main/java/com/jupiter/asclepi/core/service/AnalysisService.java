@@ -10,7 +10,7 @@ import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisReques
 
 import java.util.List;
 
-public interface AnalysisService extends CrudService<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, Analysis, Void> {
+public interface AnalysisService extends CrudService<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, Analysis, Boolean> {
     List<Analysis> getForVisit(Visit visit);
 
     List<Analysis> getForDiseaseHistory(DiseaseHistory history);

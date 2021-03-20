@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import java.util.Objects;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @Component
@@ -79,6 +80,12 @@ public class AnalysisTestHelper {
 
     public MockHttpServletRequestBuilder createMockedGetRequest(GetAnalysisRequest request) throws JsonProcessingException {
         return get("/api/v1/analysis/get")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request));
+    }
+
+    public MockHttpServletRequestBuilder createMockedDeleteRequest(GetAnalysisRequest request) throws JsonProcessingException {
+        return delete("/api/v1/analysis/delete")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }
