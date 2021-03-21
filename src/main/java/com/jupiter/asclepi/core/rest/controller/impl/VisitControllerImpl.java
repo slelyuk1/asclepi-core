@@ -69,12 +69,7 @@ public class VisitControllerImpl implements VisitController {
 
     @Override
     public ResponseEntity<VisitInfo> getOne(@NotNull BigInteger clientId, @NotNull Integer diseaseHistoryNumber, @NotNull Integer number) {
-        GetVisitRequest request = new GetVisitRequest();
-        GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
-        historyGetter.setClientId(clientId);
-        historyGetter.setNumber(diseaseHistoryNumber);
-        request.setDiseaseHistory(historyGetter);
-        request.setNumber(number);
+        GetVisitRequest request = new GetVisitRequest(new GetDiseaseHistoryRequest(clientId, diseaseHistoryNumber), number);
         return visitService.getOne(request)
                 .map(visit -> conversionService.convert(visit, VisitInfo.class))
                 .map(ResponseEntity::ok)
@@ -83,9 +78,7 @@ public class VisitControllerImpl implements VisitController {
 
     @Override
     public List<VisitInfo> getForDiseaseHistory(@NotNull BigInteger clientId, @NotNull Integer diseaseHistoryNumber) {
-        GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
-        historyGetter.setClientId(clientId);
-        historyGetter.setNumber(diseaseHistoryNumber);
+        GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest(clientId, diseaseHistoryNumber);
         return diseaseHistoryService.getOne(historyGetter)
                 .map(visitService::getForDiseaseHistory)
                 .map(visits -> visits.stream()

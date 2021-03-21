@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.configuration;
 
+import com.jupiter.asclepi.core.service.impl.anamnesis.converter.AnamnesisConverter;
 import com.jupiter.asclepi.core.service.impl.anamnesis.converter.CreateAnamnesisRequestConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.ClientConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.CreateClientRequestConverter;
@@ -52,5 +53,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new VisitConverter());
 
         registry.addConverter(new CreateAnamnesisRequestConverter());
+        registry.addConverter(new AnamnesisConverter());
     }
 }

@@ -62,12 +62,6 @@ public class AnamnesisTestHelper {
                 .content(objectMapper.writeValueAsString(request));
     }
 
-    public MockHttpServletRequestBuilder createMockedEditRequest(EditAnamnesisRequest request) throws JsonProcessingException {
-        return post("/api/v1/anamnesis/edit")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request));
-    }
-
     public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger id) throws JsonProcessingException {
         return get("/api/v1/anamnesis/{anamnesisId}", id);
     }
@@ -77,7 +71,7 @@ public class AnamnesisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedGetForDiseaseHistory(GetDiseaseHistoryRequest request) throws JsonProcessingException {
-        return get("/api/v1/analysis/getForDiseaseHistory")
+        return get("/api/v1/anamnesis/getForDiseaseHistory")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

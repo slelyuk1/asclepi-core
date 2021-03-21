@@ -92,35 +92,6 @@ class AnamnesisControllerSignaturesTest {
     }
 
     @Test
-    void testSuccessfulEditingRequestResponseSignatures() throws Exception {
-        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
-        EditAnamnesisRequest request = anamnesisHelper.generateEditRequest(created);
-        this.mockMvc.perform(anamnesisHelper.createMockedEditRequest(request))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("anamnesisSuccessfulEdition",
-                        generateEditRequest(),
-                        generateInfoResponse()
-                ));
-    }
-
-    @Test
-    void testFailedDueToNonExistentEditingRequestResponseSignatures() throws Exception {
-        EditAnamnesisRequest request = new EditAnamnesisRequest();
-        request.setId(BigInteger.ZERO);
-        request.setComplaints("testComplaintOther");
-        request.setMorbi("testMorbi");
-        request.setVitae("testVitae");
-        this.mockMvc.perform(anamnesisHelper.createMockedEditRequest(request))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("anamnesisNonExistentEdition",
-                        generateEditRequest()
-                ));
-    }
-
-    @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
         this.mockMvc.perform(anamnesisHelper.createMockedGetRequest(created.getId()))
@@ -166,16 +137,12 @@ class AnamnesisControllerSignaturesTest {
 
     private static RequestFieldsSnippet generateCreateRequest() {
         return requestFields(generateCreateRequestDescriptors())
-                .andWithPrefix("diseaseHistory.", VisitControllerSignaturesTest.generateGetRequestDescriptors());
-    }
-
-    private static RequestFieldsSnippet generateEditRequest() {
-        return requestFields(generateEditRequestDescriptors());
+                .andWithPrefix("diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors());
     }
 
     private static FieldDescriptor[] generateInfoFieldDescriptor() {
         return new FieldDescriptor[]{
-                fieldWithPath("id").description("ID of the anamnesis.").type(JsonFieldType.STRING),
+                fieldWithPath("id").description("ID of the anamnesis.").type(JsonFieldType.NUMBER),
                 fieldWithPath("complaints").description("Complaints of the client.").type(JsonFieldType.STRING),
                 fieldWithPath("vitae").description("Past medical history of the client.").type(JsonFieldType.STRING),
                 fieldWithPath("morbi").description("History of present disease of the client.").type(JsonFieldType.STRING)
@@ -191,20 +158,6 @@ class AnamnesisControllerSignaturesTest {
                         .description("Past medical history of the client.").type(JsonFieldType.STRING),
                 docHelper.fieldDescriptorFor("morbi")
                         .description("History of present disease of the client.").type(JsonFieldType.STRING)
-        };
-    }
-
-    private static FieldDescriptor[] generateEditRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditAnamnesisRequest.class);
-        return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("id")
-                        .description("ID of the edited anamnesis.").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("complaints")
-                        .description("Complaints of the client.").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("vitae")
-                        .description("Past medical history of the client.").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("morbi")
-                        .description("History of present disease of the client.").type(JsonFieldType.STRING).optional()
         };
     }
 }
