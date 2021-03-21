@@ -95,4 +95,23 @@ include::templates/operations-section.adoc[]
 :operation-snippet-name: visitSuccessfulGettingForDiseaseHistory
 include::templates/operation-section.adoc[]
 
-// todo additional operations
+// --------------------------------- Section Start ---------------------------------
+
+:domain-name: Anamnesis
+:create-operation-description: Creates an anamnesis in the system.
+:create-snippet-name: anamnesisSuccessfulCreation
+
+:get-operation-description: Gets an anamnesis from the system.
+:get-snippet-name: anamnesisSuccessfulGetting
+
+:delete-operation-description: Deletes an anamnesis from the system.
+:delete-snippet-name: anamnesisSuccessfulDeletion
+
+include::templates/operations-section.adoc[]
+
+:operation-name: Get for Disease History
+:operation-description: Gets anamneses related to a disease history.
+:operation-snippet-name: anamnesisSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]
+
+// todo remove excess sections

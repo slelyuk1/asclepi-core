@@ -12,6 +12,7 @@ import com.jupiter.asclepi.core.model.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.EditAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.rest.controller.impl.diseaseHistory.DiseaseHistoryControllerSignaturesTest;
 import com.jupiter.asclepi.core.rest.controller.impl.visit.VisitControllerSignaturesTest;
 import com.jupiter.asclepi.core.service.AnamnesisService;
@@ -97,7 +98,7 @@ class AnamnesisControllerSignaturesTest {
         this.mockMvc.perform(anamnesisHelper.createMockedGetRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("anamnesisIdSuccessfulGetting",
+                .andDo(document("anamnesisSuccessfulGetting",
                         pathParameters(parameterWithName("anamnesisId").description("ID of the existing anamnesis.")),
                         generateInfoResponse()
                 ));
@@ -115,6 +116,17 @@ class AnamnesisControllerSignaturesTest {
     }
 
     @Test
+    void testSuccessfulEmployeeDeletionRequestResponseSignatures() throws Exception {
+        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
+        this.mockMvc.perform(anamnesisHelper.createMockedDeleteRequest(created.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").doesNotExist())
+                .andDo(document("anamnesisSuccessfulDeletion",
+                        pathParameters(parameterWithName("anamnesisId").description("ID of the existing anamnesis."))
+                ));
+    }
+
+    @Test
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
         Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
         DiseaseHistory history = created.getDiseaseHistory();
@@ -122,7 +134,7 @@ class AnamnesisControllerSignaturesTest {
         this.mockMvc.perform(anamnesisHelper.createMockedGetForDiseaseHistory(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulGettingForDiseaseHistory",
+                .andDo(document("anamnesisSuccessfulGettingForDiseaseHistory",
                         DiseaseHistoryControllerSignaturesTest.generateGetRequest(),
                         responseFields(fieldWithPath("[]").description("Array of anamnesis.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
