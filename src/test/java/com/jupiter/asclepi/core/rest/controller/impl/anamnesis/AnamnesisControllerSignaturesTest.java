@@ -49,7 +49,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@Disabled
 class AnamnesisControllerSignaturesTest {
     @Autowired
     private EmployeeTestHelper employeeHelper;

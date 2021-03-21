@@ -7,13 +7,15 @@ import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
 
 public interface AnamnesisService extends
         GetService<BigInteger, Anamnesis>,
         CreateService<CreateAnamnesisRequest, Anamnesis>,
-        DeleteService<BigInteger, Void> {
+        DeleteService<BigInteger, Boolean> {
 
-    List<Anamnesis> getForDiseaseHistory(DiseaseHistory history);
+    List<Anamnesis> getForDiseaseHistory(@Valid @NotNull DiseaseHistory history);
 }
