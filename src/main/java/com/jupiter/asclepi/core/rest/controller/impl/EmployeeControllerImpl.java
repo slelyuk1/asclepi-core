@@ -8,7 +8,7 @@ import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
 import com.jupiter.asclepi.core.rest.controller.EmployeeController;
-import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
+import com.jupiter.asclepi.core.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
@@ -58,7 +58,7 @@ public class EmployeeControllerImpl implements EmployeeController {
         return editionTry
                 .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
                 .recover(LoginNotUniqueException.class, e -> ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage())))
-                .onFailure(e -> log.error("An error occurred during employee creation: ", e))
+                .onFailure(e -> log.error("An error occurred during employee edition: ", e))
                 .getOrElseThrow(AsclepiRuntimeException::new);
     }
 

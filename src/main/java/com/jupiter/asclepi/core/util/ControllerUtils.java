@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.rest.controller.util;
+package com.jupiter.asclepi.core.util;
 
 import org.springframework.http.ResponseEntity;
 

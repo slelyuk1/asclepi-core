@@ -13,6 +13,7 @@ import com.jupiter.asclepi.core.repository.ConsultationRepository;
 import com.jupiter.asclepi.core.service.AnamnesisService;
 import com.jupiter.asclepi.core.service.ConsultationService;
 import com.jupiter.asclepi.core.service.VisitService;
+import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -75,7 +76,7 @@ public class ConsultationServiceImpl implements ConsultationService {
                         .orElseThrow(() -> new NonExistentIdException("Anamnesis", editRequest.getAnamnesisId()));
                 toCopyFrom.setAnamnesis(toSet);
             }
-            BeanUtils.copyProperties(toCopyFrom, toCopyTo);
+            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
             return repository.save(toCopyTo);
         });
     }

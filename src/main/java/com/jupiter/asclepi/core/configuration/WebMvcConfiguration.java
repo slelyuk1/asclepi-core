@@ -11,6 +11,7 @@ import com.jupiter.asclepi.core.service.impl.anamnesis.converter.CreateAnamnesis
 import com.jupiter.asclepi.core.service.impl.client.converter.ClientConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.CreateClientRequestConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.EditClientRequestConverter;
+import com.jupiter.asclepi.core.service.impl.consultation.converter.ConsultationConverter;
 import com.jupiter.asclepi.core.service.impl.consultation.converter.CreateConsultationRequestConverter;
 import com.jupiter.asclepi.core.service.impl.consultation.converter.EditConsultationRequestConverter;
 import com.jupiter.asclepi.core.service.impl.consultation.converter.GetConsultationRequestConverter;
@@ -71,5 +72,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new CreateConsultationRequestConverter());
         registry.addConverter(new EditConsultationRequestConverter(consultationIdConverter));
         registry.addConverter(consultationIdConverter);
+        registry.addConverter(new ConsultationConverter());
     }
 }

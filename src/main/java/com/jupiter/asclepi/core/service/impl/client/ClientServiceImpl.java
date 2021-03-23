@@ -6,6 +6,7 @@ import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.repository.ClientRepository;
 import com.jupiter.asclepi.core.service.ClientService;
+import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -53,7 +54,7 @@ public class ClientServiceImpl implements ClientService {
             Client existing = repository.findById(editRequest.getId())
                     .orElseThrow(() -> new NonExistentIdException("Client", editRequest.getId()));
             Client toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Client.class));
-            BeanUtils.copyProperties(toCopyFrom, existing);
+            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
             return repository.save(existing);
         });
     }

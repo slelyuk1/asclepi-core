@@ -6,7 +6,7 @@ import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisR
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.disease.AnamnesisInfo;
 import com.jupiter.asclepi.core.rest.controller.AnamnesisController;
-import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
+import com.jupiter.asclepi.core.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.AnamnesisService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
 import io.vavr.control.Try;

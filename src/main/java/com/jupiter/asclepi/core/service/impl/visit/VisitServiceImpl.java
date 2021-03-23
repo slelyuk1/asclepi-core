@@ -11,9 +11,9 @@ import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.VisitRepository;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.VisitService;
+import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -51,7 +51,7 @@ public class VisitServiceImpl implements VisitService {
             Visit toCopyTo = getOne(editRequest.getVisit())
                     .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getVisit()));
             Visit toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Visit.class));
-            BeanUtils.copyProperties(toCopyFrom, toCopyTo);
+            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
             return repository.save(toCopyTo);
         });
     }

@@ -8,7 +8,7 @@ import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.response.disease.VisitInfo;
 import com.jupiter.asclepi.core.rest.controller.VisitController;
-import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
+import com.jupiter.asclepi.core.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.VisitService;
 import io.vavr.control.Try;
