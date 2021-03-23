@@ -114,4 +114,31 @@ include::templates/operations-section.adoc[]
 :operation-snippet-name: anamnesisSuccessfulGettingForDiseaseHistory
 include::templates/operation-section.adoc[]
 
-// todo remove excess sections
+// --------------------------------- Section Start ---------------------------------
+
+:domain-name: Consultation
+:create-operation-description: Creates a consultation in the system.
+:create-snippet-name: consultationSuccessfulCreation
+
+:edit-operation-description: Edits a consultation in the system.
+:edit-snippet-name: consultationSuccessfulEdition
+
+:delete-operation-description: Deletes a consultation from the system.
+:delete-snippet-name: consultationSuccessfulDeletion
+
+:get-operation-description: Get a consultation from the system.
+:get-snippet-name: consultationSuccessfulGetting
+
+:get-all-operation-description: Get all consultations from the system.
+:get-all-snippet-name: consultationSuccessfulGettingAll
+include::templates/operations-section.adoc[]
+
+:operation-name: Get for Visit
+:operation-description: Gets consultations related to a visit.
+:operation-snippet-name: consultationSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]
+
+:operation-name: Get for Disease History
+:operation-description: Gets consultations related to a disease history.
+:operation-snippet-name: consultationSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]

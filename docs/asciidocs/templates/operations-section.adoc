@@ -4,12 +4,11 @@ ifdef::domain-name[]
 
 endif::domain-name[]
 
-:operation-with-request: true
-:operation-with-response: true
-
 ifdef::create-snippet-name[]
 
 :operation-name: Create Operation
+:operation-with-request: true
+:operation-with-response: true
 ifdef::create-operation-description[:operation-description: {create-operation-description}]
 :operation-snippet-name: {create-snippet-name}
 include::operation-section.adoc[]
@@ -19,18 +18,19 @@ endif::create-snippet-name[]
 ifdef::edit-snippet-name[]
 
 :operation-name: Edit Operation
+:operation-with-request: true
+:operation-with-response: true
 ifdef::edit-operation-description[:operation-description: {edit-operation-description}]
 :operation-snippet-name: {edit-snippet-name}
 include::operation-section.adoc[]
 
 endif::edit-snippet-name[]
 
-:operation-with-request: false
-:operation-with-response: false
-
 ifdef::delete-snippet-name[]
 
 :operation-name: Delete Operation
+:operation-with-request: false
+:operation-with-response: false
 ifdef::delete-operation-description[:operation-description: {delete-operation-description}]
 :operation-snippet-name: {delete-snippet-name}
 include::operation-section.adoc[]
@@ -40,6 +40,8 @@ endif::delete-snippet-name[]
 ifdef::get-snippet-name[]
 
 :operation-name: Get Operation
+:operation-with-request: false
+:operation-with-response: false
 ifdef::get-operation-description[:operation-description: {get-operation-description}]
 :operation-snippet-name: {get-snippet-name}
 include::operation-section.adoc[]
@@ -49,8 +51,27 @@ endif::get-snippet-name[]
 ifdef::get-all-snippet-name[]
 
 :operation-name: Get All Operation
+:operation-with-request: false
+:operation-with-response: false
 ifdef::get-all-operation-description[:operation-description: {get-all-operation-description}]
 :operation-snippet-name: {get-all-snippet-name}
 include::operation-section.adoc[]
 
 endif::get-all-snippet-name[]
+
+:domain-name!:
+
+:create-snippet-name!:
+:create-operation-description!:
+
+:edit-snippet-name!:
+:edit-operation-description!:
+
+:delete-snippet-name!:
+:delete-operation-description!:
+
+:get-snippet-name!:
+:get-operation-description!:
+
+:get-all-snippet-name!:
+:get-all-operation-description!:
