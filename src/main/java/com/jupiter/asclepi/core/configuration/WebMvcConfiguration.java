@@ -1,7 +1,9 @@
 package com.jupiter.asclepi.core.configuration;
 
+import com.jupiter.asclepi.core.model.entity.disease.consultation.ConsultationId;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.entity.disease.visit.VisitId;
+import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.service.impl.anamnesis.converter.AnamnesisConverter;
@@ -57,7 +59,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(historyIdConverter);
 
         Converter<GetVisitRequest, VisitId> visitIdConverter = new GetVisitRequestConverter(historyIdConverter);
-        registry.addConverter(new CreateVisitRequestConverter());
+        registry.addConverter(new CreateVisitRequestConverter(historyIdConverter));
         registry.addConverter(new EditVisitRequestConverter());
         registry.addConverter(visitIdConverter);
         registry.addConverter(new VisitConverter());
@@ -65,8 +67,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new CreateAnamnesisRequestConverter());
         registry.addConverter(new AnamnesisConverter());
 
+        Converter<GetConsultationRequest, ConsultationId> consultationIdConverter = new GetConsultationRequestConverter(visitIdConverter);
         registry.addConverter(new CreateConsultationRequestConverter());
-        registry.addConverter(new EditConsultationRequestConverter());
-        registry.addConverter(new GetConsultationRequestConverter(visitIdConverter));
+        registry.addConverter(new EditConsultationRequestConverter(consultationIdConverter));
+        registry.addConverter(consultationIdConverter);
     }
 }

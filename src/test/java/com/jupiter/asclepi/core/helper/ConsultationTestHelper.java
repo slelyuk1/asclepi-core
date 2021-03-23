@@ -51,13 +51,14 @@ public class ConsultationTestHelper {
     public EditConsultationRequest generateEditRequest(Consultation consultation) {
         DiseaseHistory history = consultation.getVisit().getDiseaseHistory();
         EditConsultationRequest request = new EditConsultationRequest();
-        GetConsultationRequest analysisGetter = new GetConsultationRequest(
+        GetConsultationRequest getter = new GetConsultationRequest(
                 new GetVisitRequest(
                         new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
                         consultation.getVisit().getNumber()
                 ),
                 consultation.getNumber()
         );
+        request.setConsultation(getter);
         request.setInspection(consultation.getInspection() + "Other");
         return request;
     }

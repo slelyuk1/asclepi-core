@@ -1,12 +1,15 @@
 package com.jupiter.asclepi.core.model.request.disease.consultation;
 
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import lombok.Data;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 @Data
 public class EditConsultationRequest {
+    @Valid
+    @NotNull
     private GetConsultationRequest consultation;
     private BigInteger anamnesisId;
     private String inspection;
