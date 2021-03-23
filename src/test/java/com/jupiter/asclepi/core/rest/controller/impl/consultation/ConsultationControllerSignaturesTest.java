@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.rest.controller.impl.consultation;
 
 import com.jupiter.asclepi.core.helper.*;
 import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.entity.disease.Consultation;
+import com.jupiter.asclepi.core.model.entity.disease.consultation.Consultation;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.entity.people.Client;
@@ -35,7 +35,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
@@ -69,8 +68,6 @@ class ConsultationControllerSignaturesTest {
     private DiseaseHistoryService diseaseHistoryService;
     @Autowired
     private VisitService visitService;
-    @Autowired
-    private AnalysisService analysisService;
     @Autowired
     private AnamnesisService anamnesisService;
     @Autowired

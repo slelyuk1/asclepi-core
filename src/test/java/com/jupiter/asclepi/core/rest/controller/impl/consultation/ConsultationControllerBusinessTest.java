@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.rest.controller.impl.consultation;
 
 import com.jupiter.asclepi.core.helper.*;
 import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.entity.disease.Consultation;
+import com.jupiter.asclepi.core.model.entity.disease.consultation.Consultation;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.entity.people.Client;
@@ -53,8 +53,6 @@ public class ConsultationControllerBusinessTest {
     private DiseaseHistoryService diseaseHistoryService;
     @Autowired
     private VisitService visitService;
-    @Autowired
-    private AnalysisService analysisService;
     @Autowired
     private AnamnesisService anamnesisService;
     @Autowired

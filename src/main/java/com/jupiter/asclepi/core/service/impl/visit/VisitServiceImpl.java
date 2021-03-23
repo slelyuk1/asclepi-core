@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.service.impl.visit;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
+import com.jupiter.asclepi.core.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
@@ -62,8 +63,8 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public Optional<Visit> getOne(@Valid @NotNull GetVisitRequest getRequest) {
-        Visit toFind = Objects.requireNonNull(conversionService.convert(getRequest, Visit.class));
-        return repository.findOne(Example.of(toFind));
+        VisitId id = Objects.requireNonNull(conversionService.convert(getRequest, VisitId.class));
+        return repository.findById(id);
     }
 
     @Override
