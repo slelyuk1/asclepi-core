@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.rest.controller.impl.analysis;
 
 import com.jupiter.asclepi.core.helper.*;
-import com.jupiter.asclepi.core.model.entity.disease.Analysis;
+import com.jupiter.asclepi.core.model.entity.analysis.Analysis;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.entity.people.Client;
