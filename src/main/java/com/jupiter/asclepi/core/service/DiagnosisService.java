@@ -10,7 +10,7 @@ import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequ
 import java.math.BigInteger;
 import java.util.List;
 
-public interface DiagnosisService extends CrudService<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, Diagnosis, Void> {
+public interface DiagnosisService extends CrudService<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, Diagnosis, Boolean> {
 
     List<Diagnosis> getForDiseaseHistory(DiseaseHistory diseaseHistory);
 }

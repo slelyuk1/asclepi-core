@@ -45,11 +45,14 @@ public class DiagnosisServiceImpl implements DiagnosisService {
         });
     }
 
-
-    // TODO Implement (Dima)
     @Override
-    public Void delete(@Valid @NotNull GetDiagnosisRequest deleteRequest) {
-        return null;
+    public Boolean delete(@Valid @NotNull GetDiagnosisRequest deleteRequest) {
+        return getOne(deleteRequest)
+                .map(toDelete -> {
+                    repository.delete(toDelete);
+                    return true;
+                })
+                .orElse(false);
     }
 
     @Override
