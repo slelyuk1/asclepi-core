@@ -3,10 +3,9 @@ package com.jupiter.asclepi.core.helper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.entity.disease.Consultation;
+import com.jupiter.asclepi.core.model.entity.disease.consultation.Consultation;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
-import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
@@ -52,13 +51,14 @@ public class ConsultationTestHelper {
     public EditConsultationRequest generateEditRequest(Consultation consultation) {
         DiseaseHistory history = consultation.getVisit().getDiseaseHistory();
         EditConsultationRequest request = new EditConsultationRequest();
-        GetConsultationRequest analysisGetter = new GetConsultationRequest(
+        GetConsultationRequest getter = new GetConsultationRequest(
                 new GetVisitRequest(
                         new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
                         consultation.getVisit().getNumber()
                 ),
                 consultation.getNumber()
         );
+        request.setConsultation(getter);
         request.setInspection(consultation.getInspection() + "Other");
         return request;
     }

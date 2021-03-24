@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Data
 public class DiagnosisId implements Serializable {
+    // todo use only basic types
     private DiseaseHistoryId diseaseHistory;
     private Integer number;
 }

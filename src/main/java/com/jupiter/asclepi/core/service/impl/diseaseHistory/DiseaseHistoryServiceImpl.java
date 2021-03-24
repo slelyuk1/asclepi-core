@@ -10,6 +10,7 @@ import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryR
 import com.jupiter.asclepi.core.repository.DiseaseHistoryRepository;
 import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
+import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -48,7 +49,7 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
             DiseaseHistory existing = getOne(editRequest.getDiseaseHistory())
                     .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getDiseaseHistory()));
             DiseaseHistory toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, DiseaseHistory.class));
-            BeanUtils.copyProperties(toCopyFrom, existing);
+            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
             return repository.save(existing);
         });
     }

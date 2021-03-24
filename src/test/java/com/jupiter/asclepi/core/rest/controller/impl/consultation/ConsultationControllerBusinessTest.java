@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.rest.controller.impl.consultation;
 
 import com.jupiter.asclepi.core.helper.*;
 import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.entity.disease.Consultation;
+import com.jupiter.asclepi.core.model.entity.disease.consultation.Consultation;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.entity.people.Client;
@@ -28,7 +28,6 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
-@Disabled
 public class ConsultationControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
@@ -53,8 +52,6 @@ public class ConsultationControllerBusinessTest {
     private DiseaseHistoryService diseaseHistoryService;
     @Autowired
     private VisitService visitService;
-    @Autowired
-    private AnalysisService analysisService;
     @Autowired
     private AnamnesisService anamnesisService;
     @Autowired
@@ -146,7 +143,7 @@ public class ConsultationControllerBusinessTest {
         Collection<Consultation> all = consultationService.getAll();
         Assertions.assertEquals(all.size(), 2);
         Consultation foundOne = all.stream()
-                .filter(consultation -> Objects.equals(consultation, another))
+                .filter(consultation -> Objects.equals(consultation, one))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Consultation foundAnother = all.stream()
@@ -169,7 +166,7 @@ public class ConsultationControllerBusinessTest {
         Collection<Consultation> all = consultationService.getForVisit(one.getVisit());
         Assertions.assertEquals(all.size(), 2);
         Consultation foundOne = all.stream()
-                .filter(consultation -> Objects.equals(consultation, another))
+                .filter(consultation -> Objects.equals(consultation, one))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Consultation foundAnother = all.stream()

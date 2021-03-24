@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.service.impl.visit.converter;
 
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
-import com.jupiter.asclepi.core.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
@@ -14,7 +14,7 @@ public class EditVisitRequestConverter implements Converter<EditVisitRequest, Vi
         GetVisitRequest visitGetter = source.getVisit();
         GetDiseaseHistoryRequest historyGetter = visitGetter.getDiseaseHistory();
 
-        DiseaseHistory history = new DiseaseHistory(new Client(historyGetter.getClientId()), historyGetter.getNumber());
+        DiseaseHistory history = new DiseaseHistory(new DiseaseHistoryId(historyGetter.getClientId(), historyGetter.getNumber()));
         Visit visit = new Visit();
         visit.setDiseaseHistory(history);
         visit.setNumber(visitGetter.getNumber());

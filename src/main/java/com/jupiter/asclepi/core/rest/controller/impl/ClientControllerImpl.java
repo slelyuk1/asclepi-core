@@ -6,7 +6,7 @@ import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.model.response.people.ClientInfo;
 import com.jupiter.asclepi.core.rest.controller.ClientController;
-import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
+import com.jupiter.asclepi.core.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.ClientService;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;

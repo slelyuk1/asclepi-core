@@ -31,7 +31,6 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
-@Disabled
 public class AnamnesisControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
@@ -101,7 +100,7 @@ public class AnamnesisControllerBusinessTest {
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Anamnesis foundAnother = all.stream()
-                .filter(anamnesis -> Objects.equals(anamnesis, one))
+                .filter(anamnesis -> Objects.equals(anamnesis, another))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         anamnesisHelper.assertEntitiesAreFullyEqual(one, foundOne);

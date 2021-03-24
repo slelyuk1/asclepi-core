@@ -12,6 +12,7 @@ import com.jupiter.asclepi.core.model.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.EditAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.rest.controller.impl.diseaseHistory.DiseaseHistoryControllerSignaturesTest;
 import com.jupiter.asclepi.core.rest.controller.impl.visit.VisitControllerSignaturesTest;
 import com.jupiter.asclepi.core.service.AnamnesisService;
@@ -49,7 +50,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@Disabled
 class AnamnesisControllerSignaturesTest {
     @Autowired
     private EmployeeTestHelper employeeHelper;
@@ -93,41 +93,12 @@ class AnamnesisControllerSignaturesTest {
     }
 
     @Test
-    void testSuccessfulEditingRequestResponseSignatures() throws Exception {
-        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
-        EditAnamnesisRequest request = anamnesisHelper.generateEditRequest(created);
-        this.mockMvc.perform(anamnesisHelper.createMockedEditRequest(request))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("anamnesisSuccessfulEdition",
-                        generateEditRequest(),
-                        generateInfoResponse()
-                ));
-    }
-
-    @Test
-    void testFailedDueToNonExistentEditingRequestResponseSignatures() throws Exception {
-        EditAnamnesisRequest request = new EditAnamnesisRequest();
-        request.setId(BigInteger.ZERO);
-        request.setComplaints("testComplaintOther");
-        request.setMorbi("testMorbi");
-        request.setVitae("testVitae");
-        this.mockMvc.perform(anamnesisHelper.createMockedEditRequest(request))
-                .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$").doesNotExist())
-                .andDo(document("anamnesisNonExistentEdition",
-                        generateEditRequest()
-                ));
-    }
-
-    @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
         this.mockMvc.perform(anamnesisHelper.createMockedGetRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("anamnesisIdSuccessfulGetting",
+                .andDo(document("anamnesisSuccessfulGetting",
                         pathParameters(parameterWithName("anamnesisId").description("ID of the existing anamnesis.")),
                         generateInfoResponse()
                 ));
@@ -145,6 +116,17 @@ class AnamnesisControllerSignaturesTest {
     }
 
     @Test
+    void testSuccessfulEmployeeDeletionRequestResponseSignatures() throws Exception {
+        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
+        this.mockMvc.perform(anamnesisHelper.createMockedDeleteRequest(created.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").doesNotExist())
+                .andDo(document("anamnesisSuccessfulDeletion",
+                        pathParameters(parameterWithName("anamnesisId").description("ID of the existing anamnesis."))
+                ));
+    }
+
+    @Test
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
         Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
         DiseaseHistory history = created.getDiseaseHistory();
@@ -152,7 +134,7 @@ class AnamnesisControllerSignaturesTest {
         this.mockMvc.perform(anamnesisHelper.createMockedGetForDiseaseHistory(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(document("analysisSuccessfulGettingForDiseaseHistory",
+                .andDo(document("anamnesisSuccessfulGettingForDiseaseHistory",
                         DiseaseHistoryControllerSignaturesTest.generateGetRequest(),
                         responseFields(fieldWithPath("[]").description("Array of anamnesis.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
@@ -167,16 +149,12 @@ class AnamnesisControllerSignaturesTest {
 
     private static RequestFieldsSnippet generateCreateRequest() {
         return requestFields(generateCreateRequestDescriptors())
-                .andWithPrefix("diseaseHistory.", VisitControllerSignaturesTest.generateGetRequestDescriptors());
-    }
-
-    private static RequestFieldsSnippet generateEditRequest() {
-        return requestFields(generateEditRequestDescriptors());
+                .andWithPrefix("diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors());
     }
 
     private static FieldDescriptor[] generateInfoFieldDescriptor() {
         return new FieldDescriptor[]{
-                fieldWithPath("id").description("ID of the anamnesis.").type(JsonFieldType.STRING),
+                fieldWithPath("id").description("ID of the anamnesis.").type(JsonFieldType.NUMBER),
                 fieldWithPath("complaints").description("Complaints of the client.").type(JsonFieldType.STRING),
                 fieldWithPath("vitae").description("Past medical history of the client.").type(JsonFieldType.STRING),
                 fieldWithPath("morbi").description("History of present disease of the client.").type(JsonFieldType.STRING)
@@ -192,20 +170,6 @@ class AnamnesisControllerSignaturesTest {
                         .description("Past medical history of the client.").type(JsonFieldType.STRING),
                 docHelper.fieldDescriptorFor("morbi")
                         .description("History of present disease of the client.").type(JsonFieldType.STRING)
-        };
-    }
-
-    private static FieldDescriptor[] generateEditRequestDescriptors() {
-        ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(EditAnamnesisRequest.class);
-        return new FieldDescriptor[]{
-                docHelper.fieldDescriptorFor("id")
-                        .description("ID of the edited anamnesis.").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("complaints")
-                        .description("Complaints of the client.").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("vitae")
-                        .description("Past medical history of the client.").type(JsonFieldType.STRING).optional(),
-                docHelper.fieldDescriptorFor("morbi")
-                        .description("History of present disease of the client.").type(JsonFieldType.STRING).optional()
         };
     }
 }

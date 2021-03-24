@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.rest.controller.impl.consultation;
 
 import com.jupiter.asclepi.core.helper.*;
 import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.entity.disease.Consultation;
+import com.jupiter.asclepi.core.model.entity.disease.consultation.Consultation;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.entity.people.Client;
@@ -19,7 +19,6 @@ import com.jupiter.asclepi.core.service.*;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigInteger;
 
@@ -46,7 +44,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@Disabled
 class ConsultationControllerSignaturesTest {
     @Autowired
     private EmployeeTestHelper employeeHelper;
@@ -69,8 +66,6 @@ class ConsultationControllerSignaturesTest {
     private DiseaseHistoryService diseaseHistoryService;
     @Autowired
     private VisitService visitService;
-    @Autowired
-    private AnalysisService analysisService;
     @Autowired
     private AnamnesisService anamnesisService;
     @Autowired
@@ -122,6 +117,7 @@ class ConsultationControllerSignaturesTest {
                 new GetVisitRequest(new GetDiseaseHistoryRequest(BigInteger.ZERO, 0), 0),
                 0
         );
+        request.setConsultation(getter);
         request.setAnamnesisId(BigInteger.ZERO);
         request.setInspection("testInspection");
         this.mockMvc.perform(consultationHelper.createMockedEditRequest(request))
@@ -181,10 +177,8 @@ class ConsultationControllerSignaturesTest {
         );
         this.mockMvc.perform(consultationHelper.createMockedDeleteRequest(request))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("ConsultationSuccessfulDeletion",
-                        generateGetRequest(),
-                        generateInfoResponse()
+                        generateGetRequest()
                 ));
     }
 
@@ -197,8 +191,9 @@ class ConsultationControllerSignaturesTest {
                 .andDo(document("consultationSuccessfulGettingAll",
                         responseFields(fieldWithPath("[]").description("Array of Consultation.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
-                                .andWithPrefix("[].visit.", generateGetRequestDescriptors())
-                                .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.", generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
                 ));
     }
 
@@ -217,8 +212,9 @@ class ConsultationControllerSignaturesTest {
                         VisitControllerSignaturesTest.generateGetRequest(),
                         responseFields(fieldWithPath("[]").description("Array of Consultation.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
-                                .andWithPrefix("[].visit.", generateGetRequestDescriptors())
-                                .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.", generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
                 ));
     }
 
@@ -231,11 +227,12 @@ class ConsultationControllerSignaturesTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("consultationSuccessfulGettingForDiseaseHistory",
-                        VisitControllerSignaturesTest.generateGetRequest(),
+                        DiseaseHistoryControllerSignaturesTest.generateGetRequest(),
                         responseFields(fieldWithPath("[]").description("Array of Consultation.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
-                                .andWithPrefix("[].visit.", generateGetRequestDescriptors())
-                                .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.", generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].consultation.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
                 ));
     }
 
@@ -267,7 +264,7 @@ class ConsultationControllerSignaturesTest {
 
     private static FieldDescriptor[] generateInfoFieldDescriptor() {
         return new FieldDescriptor[]{
-                fieldWithPath("anamnesisId").description("ID of the linked anamnesis.").type(JsonFieldType.STRING),
+                fieldWithPath("anamnesisId").description("ID of the linked anamnesis.").type(JsonFieldType.NUMBER),
                 fieldWithPath("inspection").description("Inspection gathered during consultation.").type(JsonFieldType.STRING)
         };
     }

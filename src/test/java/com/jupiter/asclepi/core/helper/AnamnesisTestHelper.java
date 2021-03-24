@@ -2,7 +2,6 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.model.entity.disease.Analysis;
 import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
@@ -11,12 +10,14 @@ import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryR
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.math.BigInteger;
 import java.util.Objects;
 
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -62,14 +63,12 @@ public class AnamnesisTestHelper {
                 .content(objectMapper.writeValueAsString(request));
     }
 
-    public MockHttpServletRequestBuilder createMockedEditRequest(EditAnamnesisRequest request) throws JsonProcessingException {
-        return post("/api/v1/anamnesis/edit")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request));
-    }
-
     public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger id) throws JsonProcessingException {
         return get("/api/v1/anamnesis/{anamnesisId}", id);
+    }
+
+    public MockHttpServletRequestBuilder createMockedDeleteRequest(BigInteger id) throws JsonProcessingException {
+        return delete("/api/v1/anamnesis/{anamnesisId}/delete", id);
     }
 
     public MockHttpServletRequestBuilder createMockedGetAllRequest() {
@@ -77,7 +76,7 @@ public class AnamnesisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedGetForDiseaseHistory(GetDiseaseHistoryRequest request) throws JsonProcessingException {
-        return get("/api/v1/analysis/getForDiseaseHistory")
+        return get("/api/v1/anamnesis/getForDiseaseHistory")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

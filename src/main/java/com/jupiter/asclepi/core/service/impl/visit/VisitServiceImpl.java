@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.service.impl.visit;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
+import com.jupiter.asclepi.core.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
@@ -10,9 +11,9 @@ import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.VisitRepository;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.VisitService;
+import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class VisitServiceImpl implements VisitService {
             Visit toCopyTo = getOne(editRequest.getVisit())
                     .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getVisit()));
             Visit toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Visit.class));
-            BeanUtils.copyProperties(toCopyFrom, toCopyTo);
+            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
             return repository.save(toCopyTo);
         });
     }
@@ -62,8 +63,8 @@ public class VisitServiceImpl implements VisitService {
 
     @Override
     public Optional<Visit> getOne(@Valid @NotNull GetVisitRequest getRequest) {
-        Visit toFind = Objects.requireNonNull(conversionService.convert(getRequest, Visit.class));
-        return repository.findOne(Example.of(toFind));
+        VisitId id = Objects.requireNonNull(conversionService.convert(getRequest, VisitId.class));
+        return repository.findById(id);
     }
 
     @Override

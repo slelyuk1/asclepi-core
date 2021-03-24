@@ -10,6 +10,6 @@ public class AnamnesisInfo {
     BigInteger id;
     GetDiseaseHistoryRequest diseaseHistory;
     String complaints;
-    String morbi;
     String vitae;
+    String morbi;
 }

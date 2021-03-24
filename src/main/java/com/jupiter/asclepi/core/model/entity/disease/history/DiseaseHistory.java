@@ -11,14 +11,15 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Entity
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
+@Entity
 @IdClass(DiseaseHistoryId.class)
-public class DiseaseHistory extends AbstractCreationAware<Employee> {
+public class DiseaseHistory extends AbstractCreationAware<Employee> implements Serializable {
 
     @Id
     @ManyToOne
@@ -44,9 +45,9 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
         diagnoses = new ArrayList<>();
     }
 
-    public DiseaseHistory(@NotNull Client client, @NotNull int number) {
+    public DiseaseHistory(DiseaseHistoryId id) {
         this();
-        this.client = client;
-        this.number = number;
+        client = new Client(id.getClient());
+        number = id.getNumber();
     }
 }

@@ -95,4 +95,50 @@ include::templates/operations-section.adoc[]
 :operation-snippet-name: visitSuccessfulGettingForDiseaseHistory
 include::templates/operation-section.adoc[]
 
-// todo additional operations
+// --------------------------------- Section Start ---------------------------------
+
+:domain-name: Anamnesis
+:create-operation-description: Creates an anamnesis in the system.
+:create-snippet-name: anamnesisSuccessfulCreation
+
+:get-operation-description: Gets an anamnesis from the system.
+:get-snippet-name: anamnesisSuccessfulGetting
+
+:delete-operation-description: Deletes an anamnesis from the system.
+:delete-snippet-name: anamnesisSuccessfulDeletion
+
+include::templates/operations-section.adoc[]
+
+:operation-name: Get for Disease History
+:operation-description: Gets anamneses related to a disease history.
+:operation-snippet-name: anamnesisSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]
+
+// --------------------------------- Section Start ---------------------------------
+
+:domain-name: Consultation
+:create-operation-description: Creates a consultation in the system.
+:create-snippet-name: consultationSuccessfulCreation
+
+:edit-operation-description: Edits a consultation in the system.
+:edit-snippet-name: consultationSuccessfulEdition
+
+:delete-operation-description: Deletes a consultation from the system.
+:delete-snippet-name: consultationSuccessfulDeletion
+
+:get-operation-description: Get a consultation from the system.
+:get-snippet-name: consultationSuccessfulGetting
+
+:get-all-operation-description: Get all consultations from the system.
+:get-all-snippet-name: consultationSuccessfulGettingAll
+include::templates/operations-section.adoc[]
+
+:operation-name: Get for Visit
+:operation-description: Gets consultations related to a visit.
+:operation-snippet-name: consultationSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]
+
+:operation-name: Get for Disease History
+:operation-description: Gets consultations related to a disease history.
+:operation-snippet-name: consultationSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]

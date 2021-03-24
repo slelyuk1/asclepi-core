@@ -7,6 +7,7 @@ import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.EmployeeRepository;
 import com.jupiter.asclepi.core.service.EmployeeService;
+import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -65,7 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (!existing.getLogin().equals(newLogin) && employeeWithLoginExists(newLogin)) {
                 throw new LoginNotUniqueException(newLogin);
             }
-            BeanUtils.copyProperties(toCopyFrom, existing);
+            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
             return repository.save(existing);
         });
     }

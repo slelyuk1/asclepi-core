@@ -7,7 +7,7 @@ import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistory
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
 import com.jupiter.asclepi.core.rest.controller.DiseaseHistoryController;
-import com.jupiter.asclepi.core.rest.controller.util.ControllerUtils;
+import com.jupiter.asclepi.core.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
 import io.vavr.control.Try;

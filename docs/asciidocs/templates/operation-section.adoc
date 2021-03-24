@@ -41,3 +41,9 @@ include::{snippets}/{operation-snippet-name}/http-request.adoc[]
 
 include::{snippets}/{operation-snippet-name}/http-response.adoc[]
 endif::operation-snippet-name[]
+
+:operation-name!:
+:operation-description!:
+:operation-snippet-name!:
+:operation-with-request!:
+:operation-with-response!:
