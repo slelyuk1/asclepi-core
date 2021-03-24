@@ -3,6 +3,10 @@ package com.jupiter.asclepi.core.configuration;
 import com.jupiter.asclepi.core.service.impl.client.converter.ClientConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.CreateClientRequestConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.EditClientRequestConverter;
+import com.jupiter.asclepi.core.service.impl.diagnosis.converter.CreateDiagnosisRequestConverter;
+import com.jupiter.asclepi.core.service.impl.diagnosis.converter.DiagnosisConverter;
+import com.jupiter.asclepi.core.service.impl.diagnosis.converter.EditDiagnosisRequestConverter;
+import com.jupiter.asclepi.core.service.impl.diagnosis.converter.GetDiagnosisRequestConverter;
 import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.CreateDiseaseHistoryConverter;
 import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.DiseaseHistoryConverter;
 import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.EditDiseaseHistoryConverter;
@@ -49,5 +53,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new EditVisitRequestConverter());
         registry.addConverter(new GetVisitRequestConverter());
         registry.addConverter(new VisitConverter());
+
+        registry.addConverter(new CreateDiagnosisRequestConverter());
+        registry.addConverter(new EditDiagnosisRequestConverter());
+        registry.addConverter(new GetDiagnosisRequestConverter());
+        registry.addConverter(new DiagnosisConverter());
     }
 }
