@@ -78,7 +78,7 @@ public class Analysis extends AbstractCreationAware<Employee> {
         visitNumber = visit.getNumber();
     }
 
-    public void setDiseaseHistory(DiseaseHistory diseaseHistory) {
+    public void setDiseaseHistory(@NotNull DiseaseHistory diseaseHistory) {
         this.diseaseHistory = diseaseHistory;
         clientId = diseaseHistory.getClient().getId();
         diseaseHistoryNumber = diseaseHistory.getNumber();

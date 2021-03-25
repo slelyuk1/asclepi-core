@@ -12,6 +12,7 @@ import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryR
 import com.jupiter.asclepi.core.repository.AnalysisRepository;
 import com.jupiter.asclepi.core.service.AnalysisService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
+import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -63,9 +64,9 @@ public class AnalysisServiceImpl implements AnalysisService {
     public Try<Analysis> edit(@Valid @NotNull EditAnalysisRequest editRequest) {
         return Try.of(() -> {
             Analysis toCopyTo = getOne(editRequest.getAnalysis())
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getAnalysis()));
+                    .orElseThrow(() -> new NonExistentIdException("Analysis", editRequest.getAnalysis()));
             Analysis toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Analysis.class));
-            BeanUtils.copyProperties(toCopyFrom, toCopyTo);
+            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
             return repository.save(toCopyTo);
         });
     }
@@ -77,7 +78,9 @@ public class AnalysisServiceImpl implements AnalysisService {
 
     @Override
     public Optional<Analysis> getOne(@Valid @NotNull GetAnalysisRequest getRequest) {
-        return Optional.empty();
+        AnalysisId analysisId = Objects.requireNonNull(conversionService.convert(getRequest, AnalysisId.class));
+
+        return repository.findById(analysisId);
     }
 
     @Override
