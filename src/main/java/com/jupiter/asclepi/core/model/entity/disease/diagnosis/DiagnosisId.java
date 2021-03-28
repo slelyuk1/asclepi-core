@@ -21,7 +21,7 @@ public class DiagnosisId implements Serializable {
     @NotNull
     private Integer number;
 
-    public DiagnosisId(DiseaseHistoryId diseaseHistory, Integer number) {
+    public DiagnosisId(@NotNull DiseaseHistoryId diseaseHistory, @NotNull Integer number) {
         clientId = diseaseHistory.getClient();
         diseaseHistoryNumber = diseaseHistory.getNumber();
         this.number = number;

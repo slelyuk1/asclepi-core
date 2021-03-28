@@ -28,7 +28,6 @@ public class EditDiagnosisRequestConverter implements Converter<EditDiagnosisReq
         DiseaseHistoryId diseaseHistoryId = Objects.requireNonNull(converter.convert(historyGetter));
 
         DiagnosisId diagnosisId = new DiagnosisId(diseaseHistoryId, diagnosisGetter.getNumber());
-        //DiseaseHistory history = new DiseaseHistory(new DiseaseHistoryId(historyGetter.getClientId(), historyGetter.getNumber()));
         Diagnosis diagnosis = new Diagnosis(diagnosisId);
         diagnosis.setComplications(source.getComplications());
         diagnosis.setDisease(source.getDisease());
