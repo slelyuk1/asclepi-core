@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.service.impl.diagnosis;
 
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.model.entity.disease.diagnosis.Diagnosis;
+import com.jupiter.asclepi.core.model.entity.disease.diagnosis.DiagnosisId;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
@@ -73,8 +74,8 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
     @Override
     public Optional<Diagnosis> getOne(@Valid @NotNull GetDiagnosisRequest getRequest) {
-        Diagnosis toFind = Objects.requireNonNull(conversionService.convert(getRequest, Diagnosis.class));
-        return repository.findOne(Example.of(toFind));
+        DiagnosisId toFind = Objects.requireNonNull(conversionService.convert(getRequest, DiagnosisId.class));
+        return repository.findById(toFind);
     }
 
     @Override
