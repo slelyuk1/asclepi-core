@@ -50,14 +50,6 @@ public class Analysis extends AbstractCreationAware<Employee> {
     })
     private Visit visit;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "clientId", updatable = false, insertable = false),
-            @JoinColumn(name = "diseaseHistoryNumber", updatable = false, insertable = false)
-    })
-    private DiseaseHistory diseaseHistory;
-
     private String title;
 
     @NotNull
@@ -76,20 +68,6 @@ public class Analysis extends AbstractCreationAware<Employee> {
         clientId = visit.getDiseaseHistory().getClient().getId();
         diseaseHistoryNumber = visit.getDiseaseHistory().getNumber();
         visitNumber = visit.getNumber();
-    }
-
-    public void setDiseaseHistory(@NotNull DiseaseHistory diseaseHistory) {
-        this.diseaseHistory = diseaseHistory;
-        clientId = diseaseHistory.getClient().getId();
-        diseaseHistoryNumber = diseaseHistory.getNumber();
-    }
-
-    public void setDiseaseHistoryNumber(Integer diseaseHistoryNumber) {
-        this.diseaseHistoryNumber = diseaseHistoryNumber;
-    }
-
-    public void setVisitNumber(Integer visitNumber) {
-        this.visitNumber = visitNumber;
     }
 
     public void setNumber(Integer number) {

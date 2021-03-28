@@ -28,7 +28,6 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
-@Disabled
 public class AnalysisControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;

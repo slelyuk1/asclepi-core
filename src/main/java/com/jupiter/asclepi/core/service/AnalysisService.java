@@ -8,10 +8,11 @@ import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisReq
 import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface AnalysisService extends CrudService<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, Analysis, Boolean> {
-    List<Analysis> getForVisit(Visit visit);
+    List<Analysis> getForVisit(@NotNull Visit visit);
 
-    List<Analysis> getForDiseaseHistory(DiseaseHistory history);
+    List<Analysis> getForDiseaseHistory(@NotNull DiseaseHistory history);
 }

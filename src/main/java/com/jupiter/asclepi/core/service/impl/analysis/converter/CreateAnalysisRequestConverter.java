@@ -25,9 +25,11 @@ public class CreateAnalysisRequestConverter implements Converter<CreateAnalysisR
         DiseaseHistoryId diseaseHistoryId = Objects.requireNonNull(converter.convert(source.getVisit().getDiseaseHistory()));
         VisitId visitId = Objects.requireNonNull(converter2.convert(source.getVisit()));
 
+        Visit visit = new Visit(visitId);
+        visit.setDiseaseHistory(new DiseaseHistory(diseaseHistoryId));
+
         Analysis analysis = new Analysis();
-        analysis.setDiseaseHistory(new DiseaseHistory(diseaseHistoryId));
-        analysis.setVisit(new Visit(visitId));
+        analysis.setVisit(visit);
 
 
         analysis.setTitle(source.getTitle());

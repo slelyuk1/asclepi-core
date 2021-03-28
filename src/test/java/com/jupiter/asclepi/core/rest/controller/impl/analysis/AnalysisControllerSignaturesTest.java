@@ -44,7 +44,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@Disabled
 class AnalysisControllerSignaturesTest {
     @Autowired
     private EmployeeTestHelper employeeHelper;
@@ -172,10 +171,8 @@ class AnalysisControllerSignaturesTest {
         );
         this.mockMvc.perform(analysisHelper.createMockedDeleteRequest(request))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("analysisSuccessfulDeletion",
-                        generateGetRequest(),
-                        generateInfoResponse()
+                        generateGetRequest()
                 ));
     }
 
@@ -188,8 +185,9 @@ class AnalysisControllerSignaturesTest {
                 .andDo(document("analysisSuccessfulGettingAll",
                         responseFields(fieldWithPath("[]").description("Array of analysis.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
-                                .andWithPrefix("[].visit.", generateGetRequestDescriptors())
-                                .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.", generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
                 ));
     }
 
@@ -208,8 +206,9 @@ class AnalysisControllerSignaturesTest {
                         VisitControllerSignaturesTest.generateGetRequest(),
                         responseFields(fieldWithPath("[]").description("Array of analysis.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
-                                .andWithPrefix("[].visit.", generateGetRequestDescriptors())
-                                .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.", generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
                 ));
     }
 
@@ -222,11 +221,12 @@ class AnalysisControllerSignaturesTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("analysisSuccessfulGettingForDiseaseHistory",
-                        VisitControllerSignaturesTest.generateGetRequest(),
+                        DiseaseHistoryControllerSignaturesTest.generateGetRequest(),
                         responseFields(fieldWithPath("[]").description("Array of analysis.").type(JsonFieldType.ARRAY))
                                 .andWithPrefix("[].", generateInfoFieldDescriptor())
-                                .andWithPrefix("[].visit.", generateGetRequestDescriptors())
-                                .andWithPrefix("[].visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.", generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.visit.", VisitControllerSignaturesTest.generateGetRequestDescriptors())
+                                .andWithPrefix("[].analysis.visit.diseaseHistory.", DiseaseHistoryControllerSignaturesTest.generateGetRequestDescriptors())
                 ));
     }
 

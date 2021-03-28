@@ -19,13 +19,15 @@ public class AnalysisConverter implements Converter<Analysis, AnalysisInfo> {
 
     @Override
     public AnalysisInfo convert(Analysis source) {
-        GetAnalysisRequest analysisGetter = new GetAnalysisRequest();
-        analysisGetter.setNumber(source.getNumber());
-        GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
-        GetVisitRequest visitGetter = analysisGetter.getVisit();
-        historyGetter.setClientId(source.getDiseaseHistory().getClient().getId());
-        historyGetter.setNumber(source.getDiseaseHistory().getNumber());
-        analysisGetter.getVisit().setDiseaseHistory(historyGetter);
-        return new AnalysisInfo(visitGetter, analysisGetter.getNumber(), source.getTitle(), source.getSummary());
+        DiseaseHistory history = source.getVisit().getDiseaseHistory();
+        GetAnalysisRequest analysisGetter = new GetAnalysisRequest(
+                new GetVisitRequest(
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
+                        source.getVisit().getNumber()
+                ),
+                source.getNumber()
+        );
+
+        return new AnalysisInfo(analysisGetter, source.getTitle(), source.getSummary());
     }
 }
