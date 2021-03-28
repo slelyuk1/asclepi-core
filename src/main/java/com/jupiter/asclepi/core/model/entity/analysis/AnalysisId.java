@@ -22,7 +22,7 @@ public class AnalysisId implements Serializable {
     @NotNull
     private Integer number;
 
-    public AnalysisId(DiseaseHistoryId diseaseHistory, VisitId visitId, Integer number) {
+    public AnalysisId(@NotNull DiseaseHistoryId diseaseHistory, @NotNull VisitId visitId, @NotNull Integer number) {
         clientId = diseaseHistory.getClient();
         diseaseHistoryNumber = diseaseHistory.getNumber();
         visitNumber = visitId.getNumber();
