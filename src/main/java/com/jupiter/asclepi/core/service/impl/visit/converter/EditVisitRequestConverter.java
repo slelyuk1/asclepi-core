@@ -9,6 +9,7 @@ import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import org.springframework.core.convert.converter.Converter;
 
 public class EditVisitRequestConverter implements Converter<EditVisitRequest, Visit> {
+
     @Override
     public Visit convert(EditVisitRequest source) {
         GetVisitRequest visitGetter = source.getVisit();
