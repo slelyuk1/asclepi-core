@@ -12,15 +12,14 @@ spring:
     console:
       enabled: true
 
-# todo through environmental variables
 security:
-  secret: secret
-  serverInteger: 1
+  secret: ${ASCLEPI_SECURITY_SECRET}
+  serverInteger: ${ASCLEPI_SECURITY_SERVER_INTEGER}
   admin:
-    login: admin
-    password: admin
-    name: Admin
-    surname: Admin
+    login: ${ASCLEPI_SECURITY_ADMIN_LOGIN}
+    password: ${ASCLEPI_SECURITY_ADMIN_PASSWORD}
+    name: ${ASCLEPI_SECURITY_ADMIN_NAME}
+    surname: ${ASCLEPI_SECURITY_ADMIN_SURNAME}
 
 # todo configure logging
 #logging:
