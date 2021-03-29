@@ -7,10 +7,11 @@ import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisR
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface DiagnosisService extends CrudService<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, Diagnosis, Void> {
+public interface DiagnosisService extends CrudService<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, Diagnosis, Boolean> {
 
-    List<Diagnosis> getForDiseaseHistory(DiseaseHistory diseaseHistory);
+    List<Diagnosis> getForDiseaseHistory(@NotNull DiseaseHistory diseaseHistory);
 }

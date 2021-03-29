@@ -48,7 +48,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@Disabled
 public class DiagnosisControllerSignaturesTest {
     @Autowired
     private EntityManager entityManager;
@@ -204,9 +203,9 @@ public class DiagnosisControllerSignaturesTest {
         return new FieldDescriptor[]{
                 fieldWithPath("disease").description("Disease name.").type(JsonFieldType.STRING),
                 fieldWithPath("isFinal").description("Is this diagnosis final for disease history.").type(JsonFieldType.BOOLEAN),
-                fieldWithPath("complications").description("Complications.").type(JsonFieldType.STRING),
-                fieldWithPath("etiologyAndPathogenesis").description("Etiology and pathogenesis.").type(JsonFieldType.STRING),
-                fieldWithPath("specialityOfCourse").description("Speciality of curing course.").type(JsonFieldType.STRING)
+                fieldWithPath("complications").description("Complications.").type(JsonFieldType.STRING).optional(),
+                fieldWithPath("etiologyAndPathogenesis").description("Etiology and pathogenesis.").type(JsonFieldType.STRING).optional(),
+                fieldWithPath("specialityOfCourse").description("Speciality of curing course.").type(JsonFieldType.STRING).optional()
         };
     }
 

@@ -97,7 +97,7 @@ public class DiagnosisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedGetForDiseaseHistory(GetDiseaseHistoryRequest request) throws JsonProcessingException {
-        return get("/api/v1/visit/getForDiseaseHistory")
+        return get("/api/v1/diagnosis/getForDiseaseHistory")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }
