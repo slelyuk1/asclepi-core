@@ -121,6 +121,35 @@ include::templates/operation-section.adoc[]
 
 // --------------------------------- Section Start ---------------------------------
 
+:domain-name: Analysis
+:create-operation-description: Creates an analysis in the system.
+:create-snippet-name: analysisSuccessfulCreation
+
+:edit-operation-description: Edits an analysis in the system.
+:edit-snippet-name: analysisSuccessfulEdition
+
+:delete-operation-description: Deletes an analysis from the system.
+:delete-snippet-name: analysisSuccessfulDeletion
+
+:get-operation-description: Get an analysis from the system.
+:get-snippet-name: analysisSuccessfulGetting
+
+:get-all-operation-description: Get all analyzes from the system.
+:get-all-snippet-name: analysisSuccessfulGettingAll
+include::templates/operations-section.adoc[]
+
+:operation-name: Get for Visit
+:operation-description: Gets analyzes related to a visit.
+:operation-snippet-name: analysisSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]
+
+:operation-name: Get for Disease History
+:operation-description: Gets analyzes related to a disease history.
+:operation-snippet-name: analysisSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]
+
+// --------------------------------- Section Start ---------------------------------
+
 :domain-name: Anamnesis
 :create-operation-description: Creates an anamnesis in the system.
 :create-snippet-name: anamnesisSuccessfulCreation
