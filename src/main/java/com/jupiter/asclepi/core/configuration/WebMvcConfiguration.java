@@ -3,9 +3,7 @@ package com.jupiter.asclepi.core.configuration;
 import com.jupiter.asclepi.core.model.entity.disease.consultation.ConsultationId;
 import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.entity.disease.visit.VisitId;
-import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.service.impl.analysis.converter.AnalysisConverter;
@@ -17,14 +15,14 @@ import com.jupiter.asclepi.core.service.impl.anamnesis.converter.CreateAnamnesis
 import com.jupiter.asclepi.core.service.impl.client.converter.ClientConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.CreateClientRequestConverter;
 import com.jupiter.asclepi.core.service.impl.client.converter.EditClientRequestConverter;
-import com.jupiter.asclepi.core.service.impl.diagnosis.converter.CreateDiagnosisRequestConverter;
-import com.jupiter.asclepi.core.service.impl.diagnosis.converter.DiagnosisConverter;
-import com.jupiter.asclepi.core.service.impl.diagnosis.converter.EditDiagnosisRequestConverter;
-import com.jupiter.asclepi.core.service.impl.diagnosis.converter.GetDiagnosisRequestConverter;
 import com.jupiter.asclepi.core.service.impl.consultation.converter.ConsultationConverter;
 import com.jupiter.asclepi.core.service.impl.consultation.converter.CreateConsultationRequestConverter;
 import com.jupiter.asclepi.core.service.impl.consultation.converter.EditConsultationRequestConverter;
 import com.jupiter.asclepi.core.service.impl.consultation.converter.GetConsultationRequestConverter;
+import com.jupiter.asclepi.core.service.impl.diagnosis.converter.CreateDiagnosisRequestConverter;
+import com.jupiter.asclepi.core.service.impl.diagnosis.converter.DiagnosisConverter;
+import com.jupiter.asclepi.core.service.impl.diagnosis.converter.EditDiagnosisRequestConverter;
+import com.jupiter.asclepi.core.service.impl.diagnosis.converter.GetDiagnosisRequestConverter;
 import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.CreateDiseaseHistoryConverter;
 import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.DiseaseHistoryConverter;
 import com.jupiter.asclepi.core.service.impl.diseaseHistory.converter.EditDiseaseHistoryConverter;
@@ -39,13 +37,16 @@ import com.jupiter.asclepi.core.service.impl.visit.converter.CreateVisitRequestC
 import com.jupiter.asclepi.core.service.impl.visit.converter.EditVisitRequestConverter;
 import com.jupiter.asclepi.core.service.impl.visit.converter.GetVisitRequestConverter;
 import com.jupiter.asclepi.core.service.impl.visit.converter.VisitConverter;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@AllArgsConstructor
+import java.util.Base64;
+
+@RequiredArgsConstructor
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
@@ -60,8 +61,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new ClientConverter());
 
         registry.addConverter(new EmployeeToUserConverter());
-        registry.addConverter(new AuthenticationToStringConverter());
-        registry.addConverter(new StringToAuthenticationConverter());
+        registry.addConverter(new AuthenticationToStringConverter(encoderForBytes()));
+        registry.addConverter(new StringToAuthenticationConverter(decoderForBytes()));
 
         Converter<GetDiseaseHistoryRequest, DiseaseHistoryId> historyIdConverter = new GetDiseaseHistoryRequestConverter();
 
@@ -94,5 +95,15 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addConverter(new EditAnalysisRequestConverter(historyIdConverter, visitIdConverter));
         registry.addConverter(new GetAnalysisRequestConverter(historyIdConverter, visitIdConverter));
         registry.addConverter(new AnalysisConverter());
+    }
+
+    @Bean
+    public Base64.Encoder encoderForBytes() {
+        return Base64.getEncoder();
+    }
+
+    @Bean
+    public Base64.Decoder decoderForBytes() {
+        return Base64.getDecoder();
     }
 }

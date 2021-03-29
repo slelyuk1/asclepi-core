@@ -1,7 +1,6 @@
 package com.jupiter.asclepi.core.service.impl.security.converter;
 
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
@@ -10,15 +9,18 @@ import org.springframework.security.core.Authentication;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Base64;
 
-@AllArgsConstructor
 @Slf4j
+@AllArgsConstructor
 public class StringToAuthenticationConverter implements Converter<String, Authentication> {
+
+    private final Base64.Decoder decoder;
 
     @Override
     public Authentication convert(String source) {
         try (
-                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(Base64.decode(source));
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decoder.decode(source));
                 ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
         ) {
             return (Authentication) objectInputStream.readObject();
