@@ -21,7 +21,6 @@ import com.jupiter.asclepi.core.service.EmployeeService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +115,20 @@ public class DiagnosisControllerSignaturesTest {
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("diagnosisNonExistentEdition",
                         generateEditRequest()
+                ));
+    }
+
+    @Test
+    void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
+        Diagnosis created = diagnosisService.create(diagnosisHelper.generateCreateRequest(existingHistory, false)).get();
+        GetDiagnosisRequest getter = new GetDiagnosisRequest(
+                new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getNumber()),
+                created.getNumber()
+        );
+        this.mockMvc.perform(diagnosisHelper.createMockedDeleteRequest(getter))
+                .andExpect(status().isOk())
+                .andDo(document("diagnosisSuccessfulDeletion",
+                        generateGetRequest()
                 ));
     }
 

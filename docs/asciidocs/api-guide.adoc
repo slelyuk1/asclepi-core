@@ -76,6 +76,30 @@ include::templates/operation-section.adoc[]
 
 // --------------------------------- Section Start ---------------------------------
 
+:domain-name: Diagnosis
+:create-operation-description: Creates a diagnosis in a system.
+:create-snippet-name: diagnosisSuccessfulCreation
+
+:edit-operation-description: Edits a diagnosis in the system.
+:edit-snippet-name: diagnosisSuccessfulEdition
+
+:delete-operation-description: Deletes a diagnosis from the system.
+:delete-snippet-name: diagnosisSuccessfulDeletion
+
+:get-operation-description: Get a diagnosis from the system.
+:get-snippet-name: diagnosisSuccessfulGetting
+
+:get-all-operation-description: Get all diagnoses from the system.
+:get-all-snippet-name: diagnosisSuccessfulGettingAll
+include::templates/operations-section.adoc[]
+
+:operation-name: Get for Disease History
+:operation-description: Gets diagnoses related to a disease history.
+:operation-snippet-name: diagnosisSuccessfulGettingForDiseaseHistory
+include::templates/operation-section.adoc[]
+
+// --------------------------------- Section Start ---------------------------------
+
 :domain-name: Visit
 :create-operation-description: Creates a visit in the system.
 :create-snippet-name: visitSuccessfulCreation

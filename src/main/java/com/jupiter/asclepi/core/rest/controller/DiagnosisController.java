@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface DiagnosisController extends CrudController<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, DiagnosisInfo> {
+public interface  DiagnosisController extends CrudController<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, DiagnosisInfo> {
 
     @Override
     @PostMapping("/create")
