@@ -80,7 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //        configuration.setAllowedOrigins(Collections.singletonList("https://asclepi-web-client.herokuapp.com"));
         configuration.addAllowedOrigin("*");  // TODO: lock down before deploying
         configuration.addAllowedHeader("*");
-        configuration.addExposedHeader(HttpHeaders.AUTHORIZATION);
+        configuration.addExposedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
 
