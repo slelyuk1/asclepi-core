@@ -38,7 +38,7 @@ public class SecurityControllerImpl implements SecurityController {
                     Token token = tokenService.allocateToken(serializedAuthentication);
                     return ResponseEntity.ok()
                             .header(HttpHeaders.AUTHORIZATION, token.getKey())
-                            .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "authorization")
+                            .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION)
                             .build();
                 });
         return authenticationTry
