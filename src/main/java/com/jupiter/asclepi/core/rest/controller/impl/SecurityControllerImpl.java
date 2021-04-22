@@ -30,17 +30,13 @@ public class SecurityControllerImpl implements SecurityController {
     private final TokenService tokenService;
     private final ConversionService conversionService;
 
-    private static String tokenToAuthenticationCookie(Token token) {
-        return String.format("%s=%s; SameSite=None; Secured", SecurityConfiguration.AUTHENTICATION_COOKIE_NAME, token.getKey());
-    }
-
     @Override
     public ResponseEntity<?> authenticate(AuthenticationRequest request) {
         Try<ResponseEntity<?>> authenticationTry = securityService.generateAuthentication(request)
                 .mapTry(authentication -> {
                     String serializedAuthentication = conversionService.convert(authentication, String.class);
                     Token token = tokenService.allocateToken(serializedAuthentication);
-                    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenToAuthenticationCookie(token)).build();
+                    return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token.getKey()).build();
                 });
         return authenticationTry
                 .recover(AuthenticationException.class, e -> {
@@ -49,5 +45,9 @@ public class SecurityControllerImpl implements SecurityController {
                 })
                 .onFailure(e -> log.error("An exception occurred during authentication:", e))
                 .getOrElseThrow(AsclepiRuntimeException::new);
+    }
+
+    private static String tokenToAuthenticationCookie(Token token) {
+        return String.format("%s=%s; SameSite=None; Secured", SecurityConfiguration.AUTHENTICATION_COOKIE_NAME, token.getKey());
     }
 }

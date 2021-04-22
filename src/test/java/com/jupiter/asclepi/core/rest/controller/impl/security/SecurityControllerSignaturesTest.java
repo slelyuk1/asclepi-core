@@ -39,7 +39,7 @@ class SecurityControllerSignaturesTest {
     private static final FieldDescriptor[] ERROR_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
             fieldWithPath("message").description("Error message").type(JsonFieldType.STRING)
     };
-    
+
     private MockMvc mockMvc;
     private final SecurityTestHelper securityTestHelper;
     private final EmployeeTestHelper employeeTestHelper;
@@ -74,7 +74,7 @@ class SecurityControllerSignaturesTest {
                 .andDo(document("securitySuccessfulAuthentication",
                         requestFields(AUTHENTICATE_REQUEST_FIELD_DESCRIPTORS),
                         responseHeaders(
-                                headerWithName(HttpHeaders.SET_COOKIE).description("Token which is used for authorization")
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("Token which is used for authorization")
                         )
                 )).andReturn();
     }
