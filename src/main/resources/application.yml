@@ -1,3 +1,5 @@
+
+
 spring:
   # todo normal datasource for production
   datasource:
@@ -23,6 +25,6 @@ security:
     surname: ${ASCLEPI_SECURITY_ADMIN_SURNAME}
 
 # todo configure logging
-#logging:
-#  level:
-#    root: debug
+logging:
+  level:
+    root: debug

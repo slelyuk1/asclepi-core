@@ -36,7 +36,10 @@ public class SecurityControllerImpl implements SecurityController {
                 .mapTry(authentication -> {
                     String serializedAuthentication = conversionService.convert(authentication, String.class);
                     Token token = tokenService.allocateToken(serializedAuthentication);
-                    return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token.getKey()).build();
+                    return ResponseEntity.ok()
+                            .header(HttpHeaders.AUTHORIZATION, token.getKey())
+                            .header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "authorization")
+                            .build();
                 });
         return authenticationTry
                 .recover(AuthenticationException.class, e -> {
