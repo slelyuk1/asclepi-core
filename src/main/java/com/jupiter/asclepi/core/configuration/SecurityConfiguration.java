@@ -77,7 +77,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("https://asclepi-web-client.herokuapp.com"));
+//        configuration.setAllowedOrigins(Collections.singletonList("https://asclepi-web-client.herokuapp.com"));
+        configuration.addAllowedOrigin("*");  // TODO: lock down before deploying
         configuration.addAllowedHeader("*");
         configuration.addExposedHeader(HttpHeaders.AUTHORIZATION);
         configuration.addAllowedMethod("*");

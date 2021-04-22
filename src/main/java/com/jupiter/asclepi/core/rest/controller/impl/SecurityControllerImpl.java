@@ -31,7 +31,7 @@ public class SecurityControllerImpl implements SecurityController {
     private final ConversionService conversionService;
 
     private static String tokenToAuthenticationCookie(Token token) {
-        return String.format("%s=%s", SecurityConfiguration.AUTHENTICATION_COOKIE_NAME, token.getKey());
+        return String.format("%s=%s; SameSite=None; Secured", SecurityConfiguration.AUTHENTICATION_COOKIE_NAME, token.getKey());
     }
 
     @Override
