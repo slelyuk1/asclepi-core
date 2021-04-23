@@ -53,27 +53,27 @@ import java.util.Base64;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedMethods("*")
-                .allowedHeaders("*")
-                .exposedHeaders("*")
-                .allowCredentials(true)
-                .maxAge(3600);
-
-//        CorsConfiguration configuration = new CorsConfiguration();
-////        configuration.setAllowedOrigins(Collections.singletonList("https://asclepi-web-client.herokuapp.com"));
-//        configuration.addAllowedOrigin("*");  // TODO: lock down before deploying
-//        configuration.addAllowedHeader("*");
-//        configuration.addExposedHeader("*");
-//        configuration.addAllowedMethod("*");
-//        configuration.setAllowCredentials(true);
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**")
+//                .allowedMethods("*")
+//                .allowedHeaders("*")
+//                .exposedHeaders("*")
+//                .allowCredentials(true)
+//                .maxAge(3600);
 //
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-    }
+////        CorsConfiguration configuration = new CorsConfiguration();
+//////        configuration.setAllowedOrigins(Collections.singletonList("https://asclepi-web-client.herokuapp.com"));
+////        configuration.addAllowedOrigin("*");  // TODO: lock down before deploying
+////        configuration.addAllowedHeader("*");
+////        configuration.addExposedHeader("*");
+////        configuration.addAllowedMethod("*");
+////        configuration.setAllowCredentials(true);
+////
+////        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+////        source.registerCorsConfiguration("/**", configuration);
+////        return source;
+//    }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
