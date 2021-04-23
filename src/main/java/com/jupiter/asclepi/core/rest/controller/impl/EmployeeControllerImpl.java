@@ -16,6 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -79,8 +81,11 @@ public class EmployeeControllerImpl implements EmployeeController {
     }
 
     @Override
-    public EmployeeInfo getOne() {
-        // todo implement when security features will be implemented
-        throw new UnsupportedOperationException("This functionality is not implemented yet!");
+    public ResponseEntity<EmployeeInfo> getOne() {
+        String login = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        return employeeService.findEmployeeByLogin(login)
+                .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
+                .map(ResponseEntity::ok)
+                .orElse(ControllerUtils.notFoundResponse());
     }
 }

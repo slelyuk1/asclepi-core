@@ -33,5 +33,5 @@ public interface EmployeeController extends CrudController<Integer, CreateEmploy
     List<EmployeeInfo> getAll();
 
     @GetMapping("/")
-    EmployeeInfo getOne();
+    ResponseEntity<EmployeeInfo> getOne();
 }
