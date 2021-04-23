@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+server:
+  error:
+    include-stacktrace: never
+    include-message: always
+
+security:
+  secret: ${ASCLEPI_SECURITY_SECRET}
+  serverInteger: ${ASCLEPI_SECURITY_SERVER_INTEGER}
+  admin:
+    login: ${ASCLEPI_SECURITY_ADMIN_LOGIN}
+    password: ${ASCLEPI_SECURITY_ADMIN_PASSWORD}
+    name: ${ASCLEPI_SECURITY_ADMIN_NAME}
+    surname: ${ASCLEPI_SECURITY_ADMIN_SURNAME}
+
+# todo configure logging
+logging:
+  level:
+    root: debug
