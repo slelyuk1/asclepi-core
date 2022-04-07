@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.rest.controller.impl.document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.model.entity.document.Document;
-import com.jupiter.asclepi.core.model.response.disease.DocumentInfo;
+import com.jupiter.asclepi.core.model.model.entity.document.Document;
+import com.jupiter.asclepi.core.model.model.response.disease.DocumentInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;

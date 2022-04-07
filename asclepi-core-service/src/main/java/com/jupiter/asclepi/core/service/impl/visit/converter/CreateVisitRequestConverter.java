@@ -1,10 +1,10 @@
 package com.jupiter.asclepi.core.service.impl.visit.converter;
 
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistoryId;
-import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
+import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.CreateVisitRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 

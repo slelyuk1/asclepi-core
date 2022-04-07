@@ -4,11 +4,11 @@ import com.jupiter.asclepi.core.helper.api.business.service.CreateService;
 import com.jupiter.asclepi.core.helper.api.business.service.EditService;
 import com.jupiter.asclepi.core.helper.api.business.service.GetAllService;
 import com.jupiter.asclepi.core.helper.api.business.service.GetService;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
-import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.CreateVisitRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.EditVisitRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
 
 import java.util.List;
 

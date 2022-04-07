@@ -2,10 +2,10 @@ package com.jupiter.asclepi.core.rest.controller.impl;
 
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
+import com.jupiter.asclepi.core.model.model.request.disease.history.CreateDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.EditDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.response.disease.DiseaseHistoryInfo;
 import com.jupiter.asclepi.core.rest.controller.DiseaseHistoryController;
 import com.jupiter.asclepi.core.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.ClientService;

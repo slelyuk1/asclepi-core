@@ -2,15 +2,14 @@ package com.jupiter.asclepi.core.service.impl.employee;
 
 import com.jupiter.asclepi.core.exception.employee.LoginNotUniqueException;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
-import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
+import com.jupiter.asclepi.core.model.model.entity.people.Employee;
+import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.model.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.EmployeeRepository;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.security.crypto.password.PasswordEncoder;

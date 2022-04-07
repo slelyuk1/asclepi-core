@@ -1,10 +1,10 @@
 package com.jupiter.asclepi.core.service.impl.anamnesis;
 
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.Anamnesis;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.model.request.disease.anamnesis.CreateAnamnesisRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.AnamnesisRepository;
 import com.jupiter.asclepi.core.service.AnamnesisService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;

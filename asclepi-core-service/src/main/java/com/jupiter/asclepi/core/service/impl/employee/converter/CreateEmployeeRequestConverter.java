@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.impl.employee.converter;
 
-import com.jupiter.asclepi.core.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.model.model.entity.people.Employee;
+import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
 import org.springframework.core.convert.converter.Converter;
 
 public class CreateEmployeeRequestConverter implements Converter<CreateEmployeeRequest, Employee> {

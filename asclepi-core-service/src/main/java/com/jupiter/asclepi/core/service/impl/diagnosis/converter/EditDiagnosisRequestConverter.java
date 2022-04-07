@@ -1,14 +1,11 @@
 package com.jupiter.asclepi.core.service.impl.diagnosis.converter;
 
-import com.jupiter.asclepi.core.model.entity.disease.diagnosis.Diagnosis;
-import com.jupiter.asclepi.core.model.entity.disease.diagnosis.DiagnosisId;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistoryId;
-import com.jupiter.asclepi.core.model.entity.disease.visit.Visit;
-import com.jupiter.asclepi.core.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
-import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.Diagnosis;
+import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.DiagnosisId;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
+import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.EditDiagnosisRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.GetDiagnosisRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 

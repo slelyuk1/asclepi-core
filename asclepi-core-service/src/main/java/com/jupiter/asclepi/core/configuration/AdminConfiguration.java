@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.configuration;
 
-import com.jupiter.asclepi.core.model.other.Role;
-import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.model.model.other.Role;
+import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.service.EmployeeService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

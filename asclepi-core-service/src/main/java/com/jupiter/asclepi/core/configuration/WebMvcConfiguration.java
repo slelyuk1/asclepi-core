@@ -1,11 +1,11 @@
 package com.jupiter.asclepi.core.configuration;
 
-import com.jupiter.asclepi.core.model.entity.disease.consultation.ConsultationId;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistoryId;
-import com.jupiter.asclepi.core.model.entity.disease.visit.VisitId;
-import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.consultation.ConsultationId;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
+import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.GetConsultationRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.service.impl.analysis.converter.AnalysisConverter;
 import com.jupiter.asclepi.core.service.impl.analysis.converter.CreateAnalysisRequestConverter;
 import com.jupiter.asclepi.core.service.impl.analysis.converter.EditAnalysisRequestConverter;
@@ -42,9 +42,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Base64;

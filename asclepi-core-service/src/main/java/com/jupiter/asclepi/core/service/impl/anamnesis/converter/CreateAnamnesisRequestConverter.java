@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.impl.anamnesis.converter;
 
-import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.Anamnesis;
+import com.jupiter.asclepi.core.model.model.request.disease.anamnesis.CreateAnamnesisRequest;
 import org.springframework.core.convert.converter.Converter;
 
 public class CreateAnamnesisRequestConverter implements Converter<CreateAnamnesisRequest, Anamnesis> {

@@ -1,12 +1,12 @@
 package com.jupiter.asclepi.core.rest.controller;
 
 import com.jupiter.asclepi.core.helper.api.business.controller.CrudController;
-import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.response.disease.ConsultationInfo;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.CreateConsultationRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.EditConsultationRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.GetConsultationRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.model.response.disease.ConsultationInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

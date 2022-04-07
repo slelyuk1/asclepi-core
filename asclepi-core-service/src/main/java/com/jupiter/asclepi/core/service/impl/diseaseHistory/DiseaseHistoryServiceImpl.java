@@ -1,12 +1,12 @@
 package com.jupiter.asclepi.core.service.impl.diseaseHistory;
 
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistoryId;
-import com.jupiter.asclepi.core.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
+import com.jupiter.asclepi.core.model.model.entity.people.Client;
+import com.jupiter.asclepi.core.model.model.request.disease.history.CreateDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.EditDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.DiseaseHistoryRepository;
 import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;

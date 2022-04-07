@@ -1,9 +1,9 @@
 package com.jupiter.asclepi.core.service.impl.diseaseHistory.converter;
 
-import com.jupiter.asclepi.core.model.entity.disease.diagnosis.Diagnosis;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
+import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.Diagnosis;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.response.disease.DiseaseHistoryInfo;
 import org.springframework.core.convert.converter.Converter;
 
 import java.util.List;

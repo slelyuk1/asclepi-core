@@ -17,6 +17,7 @@
 
     <modules>
         <module>asclepi-core-service</module>
+        <module>asclepi-core-model</module>
     </modules>
 
     <properties>

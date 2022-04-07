@@ -1,10 +1,10 @@
 package com.jupiter.asclepi.core.service.impl.consultation.converter;
 
-import com.jupiter.asclepi.core.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.entity.disease.consultation.Consultation;
-import com.jupiter.asclepi.core.model.entity.disease.consultation.ConsultationId;
-import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.Anamnesis;
+import com.jupiter.asclepi.core.model.model.entity.disease.consultation.Consultation;
+import com.jupiter.asclepi.core.model.model.entity.disease.consultation.ConsultationId;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.EditConsultationRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.GetConsultationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 

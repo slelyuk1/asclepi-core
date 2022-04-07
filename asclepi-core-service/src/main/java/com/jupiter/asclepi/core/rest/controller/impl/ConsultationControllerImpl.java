@@ -2,12 +2,12 @@ package com.jupiter.asclepi.core.rest.controller.impl;
 
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.response.disease.ConsultationInfo;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.CreateConsultationRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.EditConsultationRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.consultation.GetConsultationRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.model.response.disease.ConsultationInfo;
 import com.jupiter.asclepi.core.rest.controller.ConsultationController;
 import com.jupiter.asclepi.core.util.ControllerUtils;
 import com.jupiter.asclepi.core.service.ConsultationService;

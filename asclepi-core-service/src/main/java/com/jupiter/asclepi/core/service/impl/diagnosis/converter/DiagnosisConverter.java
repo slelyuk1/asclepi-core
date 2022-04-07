@@ -1,11 +1,10 @@
 package com.jupiter.asclepi.core.service.impl.diagnosis.converter;
 
-import com.jupiter.asclepi.core.model.entity.disease.diagnosis.Diagnosis;
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.response.disease.DiagnosisInfo;
+import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.Diagnosis;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
+import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.GetDiagnosisRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.response.disease.DiagnosisInfo;
 import org.springframework.core.convert.converter.Converter;
 
 public class DiagnosisConverter implements Converter<Diagnosis, DiagnosisInfo> {

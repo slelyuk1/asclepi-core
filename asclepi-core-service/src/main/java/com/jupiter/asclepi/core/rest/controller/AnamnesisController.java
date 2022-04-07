@@ -3,9 +3,9 @@ package com.jupiter.asclepi.core.rest.controller;
 import com.jupiter.asclepi.core.helper.api.business.controller.CreateController;
 import com.jupiter.asclepi.core.helper.api.business.controller.DeleteController;
 import com.jupiter.asclepi.core.helper.api.business.controller.GetController;
-import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.response.disease.AnamnesisInfo;
+import com.jupiter.asclepi.core.model.model.request.disease.anamnesis.CreateAnamnesisRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.response.disease.AnamnesisInfo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

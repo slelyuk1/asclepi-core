@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.impl.diseaseHistory.converter;
 
-import com.jupiter.asclepi.core.model.entity.disease.history.DiseaseHistoryId;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import org.springframework.core.convert.converter.Converter;
 
 public class GetDiseaseHistoryRequestConverter implements Converter<GetDiseaseHistoryRequest, DiseaseHistoryId> {

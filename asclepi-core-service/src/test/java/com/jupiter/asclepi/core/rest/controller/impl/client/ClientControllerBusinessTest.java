@@ -1,18 +1,14 @@
 package com.jupiter.asclepi.core.rest.controller.impl.client;
 
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
-import com.jupiter.asclepi.core.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
-import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.model.model.entity.people.Client;
+import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
+import com.jupiter.asclepi.core.model.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.service.ClientService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;

@@ -2,10 +2,10 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.other.Job;
-import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
-import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.model.model.entity.people.Client;
+import com.jupiter.asclepi.core.model.model.other.Job;
+import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
+import com.jupiter.asclepi.core.model.model.request.people.EditClientRequest;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;

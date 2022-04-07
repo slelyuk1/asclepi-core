@@ -2,13 +2,12 @@ package com.jupiter.asclepi.core.rest.controller.impl;
 
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.response.disease.AnalysisInfo;
-import com.jupiter.asclepi.core.model.response.disease.VisitInfo;
+import com.jupiter.asclepi.core.model.model.request.disease.analysis.CreateAnalysisRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.analysis.EditAnalysisRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.analysis.GetAnalysisRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.model.response.disease.AnalysisInfo;
 import com.jupiter.asclepi.core.rest.controller.AnalysisController;
 import com.jupiter.asclepi.core.service.AnalysisService;
 import com.jupiter.asclepi.core.service.DiseaseHistoryService;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

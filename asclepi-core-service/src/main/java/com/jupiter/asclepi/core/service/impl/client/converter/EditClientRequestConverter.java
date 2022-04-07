@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.impl.client.converter;
 
-import com.jupiter.asclepi.core.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.model.model.entity.people.Client;
+import com.jupiter.asclepi.core.model.model.request.people.EditClientRequest;
 import org.springframework.core.convert.converter.Converter;
 
 public class EditClientRequestConverter implements Converter<EditClientRequest, Client> {

@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.service;
 
-import com.jupiter.asclepi.core.model.request.other.AuthenticationRequest;
+import com.jupiter.asclepi.core.model.model.request.other.AuthenticationRequest;
 import io.vavr.control.Try;
 import org.springframework.security.core.Authentication;
 

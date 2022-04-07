@@ -2,8 +2,8 @@ package com.jupiter.asclepi.core.rest.controller.impl;
 
 import com.jupiter.asclepi.core.configuration.SecurityConfiguration;
 import com.jupiter.asclepi.core.exception.AsclepiRuntimeException;
-import com.jupiter.asclepi.core.model.request.other.AuthenticationRequest;
-import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
+import com.jupiter.asclepi.core.model.model.request.other.AuthenticationRequest;
+import com.jupiter.asclepi.core.model.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.rest.controller.SecurityController;
 import com.jupiter.asclepi.core.service.SecurityService;
 import io.vavr.control.Try;

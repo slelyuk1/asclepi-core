@@ -1,9 +1,9 @@
 package com.jupiter.asclepi.core.rest.controller.impl.client;
 
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
-import com.jupiter.asclepi.core.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
-import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.model.model.entity.people.Client;
+import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
+import com.jupiter.asclepi.core.model.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;

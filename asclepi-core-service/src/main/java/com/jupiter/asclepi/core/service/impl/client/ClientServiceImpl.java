@@ -1,15 +1,14 @@
 package com.jupiter.asclepi.core.service.impl.client;
 
 import com.jupiter.asclepi.core.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
-import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.model.model.entity.people.Client;
+import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
+import com.jupiter.asclepi.core.model.model.request.people.EditClientRequest;
 import com.jupiter.asclepi.core.repository.ClientRepository;
 import com.jupiter.asclepi.core.service.ClientService;
 import com.jupiter.asclepi.core.util.CustomBeanUtils;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
