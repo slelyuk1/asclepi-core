@@ -1,5 +1,3 @@
-
-
 spring:
   # todo normal datasource for production
   datasource:
@@ -18,13 +16,13 @@ spring:
       enabled: true
 
 security:
-  secret: ${ASCLEPI_SECURITY_SECRET}
-  serverInteger: ${ASCLEPI_SECURITY_SERVER_INTEGER}
+  secret: superSecretSecret
+  serverInteger: 1
   admin:
-    login: ${ASCLEPI_SECURITY_ADMIN_LOGIN}
-    password: ${ASCLEPI_SECURITY_ADMIN_PASSWORD}
-    name: ${ASCLEPI_SECURITY_ADMIN_NAME}
-    surname: ${ASCLEPI_SECURITY_ADMIN_SURNAME}
+    login: admin
+    password: admin
+    name: AdminName
+    surname: AdminSurname
 
 # todo configure logging
 logging:
