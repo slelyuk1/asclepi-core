@@ -16,8 +16,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>asclepi-core-service</module>
         <module>asclepi-core-model</module>
+        <module>asclepi-core-application</module>
     </modules>
 
     <properties>
