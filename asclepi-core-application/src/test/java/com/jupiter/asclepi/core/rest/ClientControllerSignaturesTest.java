@@ -4,7 +4,7 @@ import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.model.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.model.request.people.EditClientRequest;
-import com.jupiter.asclepi.core.service.ClientService;
+import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;

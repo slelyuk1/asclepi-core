@@ -4,7 +4,7 @@ import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.model.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.model.request.people.EditClientRequest;
-import com.jupiter.asclepi.core.service.ClientService;
+import com.jupiter.asclepi.core.service.api.ClientService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

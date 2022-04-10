@@ -12,7 +12,7 @@ import com.jupiter.asclepi.core.model.model.request.disease.analysis.EditAnalysi
 import com.jupiter.asclepi.core.model.model.request.disease.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.service.*;
+import com.jupiter.asclepi.core.service.api.*;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;

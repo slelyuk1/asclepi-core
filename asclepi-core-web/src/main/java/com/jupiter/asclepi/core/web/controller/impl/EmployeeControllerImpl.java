@@ -4,7 +4,7 @@ import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest
 import com.jupiter.asclepi.core.model.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.model.model.response.people.EmployeeInfo;
-import com.jupiter.asclepi.core.service.EmployeeService;
+import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;

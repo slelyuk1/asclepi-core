@@ -1,4 +1,7 @@
 /asclepi-core-application/target/
+/asclepi-core-web/target/
+/asclepi-core-service/target/
+/asclepi-core-repository/target/
 /asclepi-core-model/target/
 /.idea/
 /asclepi-core.iml

@@ -13,7 +13,7 @@ import com.jupiter.asclepi.core.model.model.request.disease.analysis.GetAnalysis
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
-import com.jupiter.asclepi.core.service.*;
+import com.jupiter.asclepi.core.service.api.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

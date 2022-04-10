@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.web.controller.impl;
 
 import com.jupiter.asclepi.core.model.model.request.other.AuthenticationRequest;
 import com.jupiter.asclepi.core.model.model.response.error.ErrorInfo;
-import com.jupiter.asclepi.core.service.SecurityService;
+import com.jupiter.asclepi.core.service.api.SecurityService;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.web.configuration.WebSecurityConfiguration;
 import com.jupiter.asclepi.core.web.controller.SecurityController;

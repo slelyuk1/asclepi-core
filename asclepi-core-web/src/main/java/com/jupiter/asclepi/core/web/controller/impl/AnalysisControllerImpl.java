@@ -6,9 +6,9 @@ import com.jupiter.asclepi.core.model.model.request.disease.analysis.GetAnalysis
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.model.response.disease.AnalysisInfo;
-import com.jupiter.asclepi.core.service.AnalysisService;
-import com.jupiter.asclepi.core.service.DiseaseHistoryService;
-import com.jupiter.asclepi.core.service.VisitService;
+import com.jupiter.asclepi.core.service.api.AnalysisService;
+import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
+import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.web.controller.AnalysisController;

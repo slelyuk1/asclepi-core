@@ -14,10 +14,10 @@ import com.jupiter.asclepi.core.model.model.request.disease.visit.CreateVisitReq
 import com.jupiter.asclepi.core.model.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
-import com.jupiter.asclepi.core.service.ClientService;
-import com.jupiter.asclepi.core.service.DiseaseHistoryService;
-import com.jupiter.asclepi.core.service.EmployeeService;
-import com.jupiter.asclepi.core.service.VisitService;
+import com.jupiter.asclepi.core.service.api.ClientService;
+import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
+import com.jupiter.asclepi.core.service.api.EmployeeService;
+import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;

@@ -13,10 +13,10 @@ import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.CreateDiag
 import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.EditDiagnosisRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.service.ClientService;
-import com.jupiter.asclepi.core.service.DiagnosisService;
-import com.jupiter.asclepi.core.service.DiseaseHistoryService;
-import com.jupiter.asclepi.core.service.EmployeeService;
+import com.jupiter.asclepi.core.service.api.ClientService;
+import com.jupiter.asclepi.core.service.api.DiagnosisService;
+import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
+import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
