@@ -1,11 +1,11 @@
 package com.jupiter.asclepi.core.model.model.entity.disease.consultation;
 
+import com.jupiter.asclepi.core.model.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.model.entity.disease.Anamnesis;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.helper.api.object.AbstractCreationAware;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 

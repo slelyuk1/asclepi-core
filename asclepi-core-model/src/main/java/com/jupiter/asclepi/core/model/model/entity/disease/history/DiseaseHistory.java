@@ -1,9 +1,9 @@
 package com.jupiter.asclepi.core.model.model.entity.disease.history;
 
-import com.jupiter.asclepi.core.model.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.Diagnosis;
+import com.jupiter.asclepi.core.model.model.entity.people.Client;
+import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
