@@ -17,6 +17,7 @@ import com.jupiter.asclepi.core.service.api.*;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,6 +197,7 @@ class ConsultationControllerSignaturesTest {
     }
 
     @Test
+    @Disabled
     void testSuccessfulGettingForVisitRequestResponseSignatures() throws Exception {
         Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
@@ -217,6 +219,7 @@ class ConsultationControllerSignaturesTest {
     }
 
     @Test
+    @Disabled
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
         Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();

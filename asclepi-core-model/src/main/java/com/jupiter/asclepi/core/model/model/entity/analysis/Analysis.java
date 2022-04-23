@@ -5,6 +5,8 @@ import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistor
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
+import com.jupiter.asclepi.core.model.support.mapstruct.ConstructorProperties;
+import com.jupiter.asclepi.core.model.support.mapstruct.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -53,6 +55,8 @@ public class Analysis extends AbstractCreationAware<Employee> {
     @NotNull
     private String summary;
 
+    @Default
+    @ConstructorProperties
     public Analysis(@NotNull AnalysisId id) {
         clientId = id.getClientId();
         diseaseHistoryNumber = id.getDiseaseHistoryNumber();

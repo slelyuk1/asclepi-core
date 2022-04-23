@@ -1,6 +1,8 @@
 package com.jupiter.asclepi.core.model.model.entity.disease.consultation;
 
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
+import com.jupiter.asclepi.core.model.support.mapstruct.ConstructorProperties;
+import com.jupiter.asclepi.core.model.support.mapstruct.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +17,8 @@ public class ConsultationId implements Serializable {
     private Integer visitNumber;
     private Integer number;
 
+    @Default
+    @ConstructorProperties
     public ConsultationId(VisitId visitId, Integer number) {
         clientId = visitId.getClientId();
         diseaseHistoryNumber = visitId.getDiseaseHistoryNumber();

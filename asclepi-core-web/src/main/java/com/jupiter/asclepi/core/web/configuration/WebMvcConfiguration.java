@@ -6,37 +6,37 @@ import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.service.converter.analysis.AnalysisConverter;
-import com.jupiter.asclepi.core.service.converter.analysis.CreateAnalysisRequestConverter;
-import com.jupiter.asclepi.core.service.converter.analysis.EditAnalysisRequestConverter;
-import com.jupiter.asclepi.core.service.converter.analysis.GetAnalysisRequestConverter;
-import com.jupiter.asclepi.core.service.converter.anamnesis.AnamnesisConverter;
-import com.jupiter.asclepi.core.service.converter.anamnesis.CreateAnamnesisRequestConverter;
-import com.jupiter.asclepi.core.service.converter.client.ClientConverter;
-import com.jupiter.asclepi.core.service.converter.client.CreateClientRequestConverter;
-import com.jupiter.asclepi.core.service.converter.client.EditClientRequestConverter;
-import com.jupiter.asclepi.core.service.converter.consultation.ConsultationConverter;
-import com.jupiter.asclepi.core.service.converter.consultation.CreateConsultationRequestConverter;
-import com.jupiter.asclepi.core.service.converter.consultation.EditConsultationRequestConverter;
-import com.jupiter.asclepi.core.service.converter.consultation.GetConsultationRequestConverter;
-import com.jupiter.asclepi.core.service.converter.diagnosis.CreateDiagnosisRequestConverter;
-import com.jupiter.asclepi.core.service.converter.diagnosis.DiagnosisConverter;
-import com.jupiter.asclepi.core.service.converter.diagnosis.EditDiagnosisRequestConverter;
-import com.jupiter.asclepi.core.service.converter.diagnosis.GetDiagnosisRequestConverter;
-import com.jupiter.asclepi.core.service.converter.diseaseHistory.CreateDiseaseHistoryConverter;
-import com.jupiter.asclepi.core.service.converter.diseaseHistory.DiseaseHistoryConverter;
-import com.jupiter.asclepi.core.service.converter.diseaseHistory.EditDiseaseHistoryConverter;
-import com.jupiter.asclepi.core.service.converter.diseaseHistory.GetDiseaseHistoryRequestConverter;
-import com.jupiter.asclepi.core.service.converter.employee.CreateEmployeeRequestConverter;
-import com.jupiter.asclepi.core.service.converter.employee.EditEmployeeRequestConverter;
-import com.jupiter.asclepi.core.service.converter.employee.EmployeeConverter;
+import com.jupiter.asclepi.core.service.converter.analysis.LegacyAnalysisConverter;
+import com.jupiter.asclepi.core.service.converter.analysis.LegacyCreateAnalysisRequestConverter;
+import com.jupiter.asclepi.core.service.converter.analysis.LegacyEditAnalysisRequestConverter;
+import com.jupiter.asclepi.core.service.converter.analysis.LegacyGetAnalysisRequestConverter;
+import com.jupiter.asclepi.core.service.converter.anamnesis.LegacyAnamnesisConverter;
+import com.jupiter.asclepi.core.service.converter.anamnesis.LegacyCreateAnamnesisRequestConverter;
+import com.jupiter.asclepi.core.service.converter.client.LegacyClientConverter;
+import com.jupiter.asclepi.core.service.converter.client.LegacyCreateClientRequestConverter;
+import com.jupiter.asclepi.core.service.converter.client.LegacyEditClientRequestConverter;
+import com.jupiter.asclepi.core.service.converter.consultation.LegacyConsultationConverter;
+import com.jupiter.asclepi.core.service.converter.consultation.LegacyCreateConsultationRequestConverter;
+import com.jupiter.asclepi.core.service.converter.consultation.LegacyEditConsultationRequestConverter;
+import com.jupiter.asclepi.core.service.converter.consultation.LegacyGetConsultationRequestConverter;
+import com.jupiter.asclepi.core.service.converter.diagnosis.LegacyCreateDiagnosisRequestConverter;
+import com.jupiter.asclepi.core.service.converter.diagnosis.LegacyDiagnosisConverter;
+import com.jupiter.asclepi.core.service.converter.diagnosis.LegacyEditDiagnosisRequestConverter;
+import com.jupiter.asclepi.core.service.converter.diagnosis.LegacyGetDiagnosisRequestConverter;
+import com.jupiter.asclepi.core.service.converter.diseaseHistory.LegacyCreateDiseaseHistoryConverter;
+import com.jupiter.asclepi.core.service.converter.diseaseHistory.LegacyDiseaseHistoryConverter;
+import com.jupiter.asclepi.core.service.converter.diseaseHistory.LegacyEditDiseaseHistoryConverter;
+import com.jupiter.asclepi.core.service.converter.diseaseHistory.LegacyGetDiseaseHistoryRequestConverter;
+import com.jupiter.asclepi.core.service.converter.employee.LegacyCreateEmployeeRequestConverter;
+import com.jupiter.asclepi.core.service.converter.employee.LegacyEditEmployeeRequestConverter;
+import com.jupiter.asclepi.core.service.converter.employee.LegacyEmployeeConverter;
 import com.jupiter.asclepi.core.service.converter.security.AuthenticationToStringConverter;
 import com.jupiter.asclepi.core.service.converter.security.EmployeeToUserConverter;
 import com.jupiter.asclepi.core.service.converter.security.StringToAuthenticationConverter;
-import com.jupiter.asclepi.core.service.converter.visit.CreateVisitRequestConverter;
-import com.jupiter.asclepi.core.service.converter.visit.EditVisitRequestConverter;
-import com.jupiter.asclepi.core.service.converter.visit.GetVisitRequestConverter;
-import com.jupiter.asclepi.core.service.converter.visit.VisitConverter;
+import com.jupiter.asclepi.core.service.converter.visit.LegacyCreateVisitRequestConverter;
+import com.jupiter.asclepi.core.service.converter.visit.LegacyEditVisitRequestConverter;
+import com.jupiter.asclepi.core.service.converter.visit.LegacyGetVisitRequestConverter;
+import com.jupiter.asclepi.core.service.converter.visit.LegacyVisitConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -74,49 +74,49 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new CreateEmployeeRequestConverter());
-        registry.addConverter(new EditEmployeeRequestConverter());
-        registry.addConverter(new EmployeeConverter());
+        registry.addConverter(new LegacyCreateEmployeeRequestConverter());
+        registry.addConverter(new LegacyEditEmployeeRequestConverter());
+        registry.addConverter(new LegacyEmployeeConverter());
 
-        registry.addConverter(new CreateClientRequestConverter());
-        registry.addConverter(new EditClientRequestConverter());
-        registry.addConverter(new ClientConverter());
+        registry.addConverter(new LegacyCreateClientRequestConverter());
+        registry.addConverter(new LegacyEditClientRequestConverter());
+        registry.addConverter(new LegacyClientConverter());
 
         registry.addConverter(new EmployeeToUserConverter());
         registry.addConverter(new AuthenticationToStringConverter(encoderForBytes()));
         registry.addConverter(new StringToAuthenticationConverter(decoderForBytes()));
 
-        Converter<GetDiseaseHistoryRequest, DiseaseHistoryId> historyIdConverter = new GetDiseaseHistoryRequestConverter();
+        Converter<GetDiseaseHistoryRequest, DiseaseHistoryId> historyIdConverter = new LegacyGetDiseaseHistoryRequestConverter();
 
-        registry.addConverter(new DiseaseHistoryConverter());
-        registry.addConverter(new CreateDiseaseHistoryConverter());
-        registry.addConverter(new EditDiseaseHistoryConverter());
+        registry.addConverter(new LegacyDiseaseHistoryConverter());
+        registry.addConverter(new LegacyCreateDiseaseHistoryConverter());
+        registry.addConverter(new LegacyEditDiseaseHistoryConverter());
         registry.addConverter(historyIdConverter);
 
-        Converter<GetVisitRequest, VisitId> visitIdConverter = new GetVisitRequestConverter(historyIdConverter);
-        registry.addConverter(new CreateVisitRequestConverter(historyIdConverter));
-        registry.addConverter(new EditVisitRequestConverter());
+        Converter<GetVisitRequest, VisitId> visitIdConverter = new LegacyGetVisitRequestConverter(historyIdConverter);
+        registry.addConverter(new LegacyCreateVisitRequestConverter(historyIdConverter));
+        registry.addConverter(new LegacyEditVisitRequestConverter());
         registry.addConverter(visitIdConverter);
-        registry.addConverter(new VisitConverter());
+        registry.addConverter(new LegacyVisitConverter());
 
-        registry.addConverter(new CreateDiagnosisRequestConverter(historyIdConverter));
-        registry.addConverter(new EditDiagnosisRequestConverter(historyIdConverter));
-        registry.addConverter(new GetDiagnosisRequestConverter(historyIdConverter));
-        registry.addConverter(new DiagnosisConverter());
+        registry.addConverter(new LegacyCreateDiagnosisRequestConverter(historyIdConverter));
+        registry.addConverter(new LegacyEditDiagnosisRequestConverter(historyIdConverter));
+        registry.addConverter(new LegacyGetDiagnosisRequestConverter(historyIdConverter));
+        registry.addConverter(new LegacyDiagnosisConverter());
 
-        registry.addConverter(new CreateAnamnesisRequestConverter());
-        registry.addConverter(new AnamnesisConverter());
+        registry.addConverter(new LegacyCreateAnamnesisRequestConverter());
+        registry.addConverter(new LegacyAnamnesisConverter());
 
-        Converter<GetConsultationRequest, ConsultationId> consultationIdConverter = new GetConsultationRequestConverter(visitIdConverter);
-        registry.addConverter(new CreateConsultationRequestConverter());
-        registry.addConverter(new EditConsultationRequestConverter(consultationIdConverter));
+        Converter<GetConsultationRequest, ConsultationId> consultationIdConverter = new LegacyGetConsultationRequestConverter(visitIdConverter);
+        registry.addConverter(new LegacyCreateConsultationRequestConverter());
+        registry.addConverter(new LegacyEditConsultationRequestConverter(consultationIdConverter));
         registry.addConverter(consultationIdConverter);
-        registry.addConverter(new ConsultationConverter());
+        registry.addConverter(new LegacyConsultationConverter());
 
-        registry.addConverter(new CreateAnalysisRequestConverter(historyIdConverter, visitIdConverter));
-        registry.addConverter(new EditAnalysisRequestConverter(historyIdConverter, visitIdConverter));
-        registry.addConverter(new GetAnalysisRequestConverter(historyIdConverter, visitIdConverter));
-        registry.addConverter(new AnalysisConverter());
+        registry.addConverter(new LegacyCreateAnalysisRequestConverter(historyIdConverter, visitIdConverter));
+        registry.addConverter(new LegacyEditAnalysisRequestConverter(historyIdConverter, visitIdConverter));
+        registry.addConverter(new LegacyGetAnalysisRequestConverter(historyIdConverter, visitIdConverter));
+        registry.addConverter(new LegacyAnalysisConverter());
     }
 
     @Bean

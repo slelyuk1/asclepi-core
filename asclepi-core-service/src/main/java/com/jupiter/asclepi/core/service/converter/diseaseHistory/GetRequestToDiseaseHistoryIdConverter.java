@@ -1,0 +1,19 @@
+package com.jupiter.asclepi.core.service.converter.diseaseHistory;
+
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
+import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
+
+@Mapper(config = MappingConfiguration.class)
+public interface GetRequestToDiseaseHistoryIdConverter extends Converter<GetDiseaseHistoryRequest, DiseaseHistoryId> {
+
+    @Override
+    @Mapping(target = "client", source = "clientId")
+    @Mapping(target = "number")
+    DiseaseHistoryId convert(@Nullable GetDiseaseHistoryRequest source);
+
+}
