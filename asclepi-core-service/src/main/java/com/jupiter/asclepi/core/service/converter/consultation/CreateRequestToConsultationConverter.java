@@ -14,6 +14,7 @@ public interface CreateRequestToConsultationConverter extends Converter<CreateCo
 
     @Override
     @Mapping(target = "anamnesis", source = ".")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "number", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)

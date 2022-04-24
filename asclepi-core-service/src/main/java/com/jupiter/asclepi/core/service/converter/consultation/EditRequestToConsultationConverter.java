@@ -9,18 +9,27 @@ import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 
+import java.math.BigInteger;
+
 @SuppressWarnings("UnmappedTargetProperties")
 @Mapper(config = MappingConfiguration.class)
 public interface EditRequestToConsultationConverter extends Converter<EditConsultationRequest, Consultation> {
 
     @Override
     @Mapping(target = "id", source = "consultation")
-    @Mapping(target = "anamnesis", source = ".")
+    @Mapping(target = "anamnesis", source = "anamnesisId")
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
     Consultation convert(@Nullable EditConsultationRequest source);
 
-    @Mapping(target = "id", source = "anamnesisId")
-    Anamnesis convertToAnamnesis(EditConsultationRequest source);
+    default Anamnesis convertToAnamnesis(BigInteger anamnesisId) {
+        if (anamnesisId == null) {
+            return null;
+        }
+
+        Anamnesis anamnesis = new Anamnesis();
+        anamnesis.setId(anamnesisId);
+        return anamnesis;
+    }
 
 }

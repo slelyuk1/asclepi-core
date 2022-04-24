@@ -20,7 +20,6 @@ import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,8 +29,6 @@ import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Objects;
 
-// todo
-@Disabled
 @Transactional
 @SpringBootTest
 public class VisitControllerBusinessTest {
