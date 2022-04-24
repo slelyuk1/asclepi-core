@@ -10,16 +10,17 @@ import java.util.Objects;
 
 public final class CustomBeanUtils {
 
-    public static <T> String[] getNullPropertyNames(T source) {
+    public static <T> String[] getNullPropertyNames(T source, boolean checkIsReadable) {
         BeanWrapper wrapper = new BeanWrapperImpl(source);
         return Arrays.stream(wrapper.getPropertyDescriptors())
                 .map(FeatureDescriptor::getName)
+                .filter(propertyName -> checkIsReadable && wrapper.isReadableProperty(propertyName))
                 .filter(propertyName -> Objects.isNull(wrapper.getPropertyValue(propertyName)))
                 .toArray(String[]::new);
     }
 
     public static <T, G> void copyPropertiesWithoutNull(T toCopyFrom, G toCopyTo) {
-        BeanUtils.copyProperties(toCopyFrom, toCopyTo, getNullPropertyNames(toCopyFrom));
+        BeanUtils.copyProperties(toCopyFrom, toCopyTo, getNullPropertyNames(toCopyFrom, true));
     }
 
     private CustomBeanUtils() {

@@ -13,7 +13,7 @@ import org.springframework.lang.Nullable;
 public interface CreateRequestToAnalysisConverter extends Converter<CreateAnalysisRequest, Analysis> {
 
     @Override
-    @Mapping(target = "visit")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "number", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)

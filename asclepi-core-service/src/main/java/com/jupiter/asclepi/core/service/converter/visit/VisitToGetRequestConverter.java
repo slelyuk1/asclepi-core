@@ -7,6 +7,7 @@ import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.lang.Nullable;
 
 @Mapper(config = MappingConfiguration.class)
 public interface VisitToGetRequestConverter extends Converter<Visit, GetVisitRequest> {
@@ -14,6 +15,6 @@ public interface VisitToGetRequestConverter extends Converter<Visit, GetVisitReq
     @Override
     @Mapping(target = "number")
     @Mapping(target = "diseaseHistory")
-    GetVisitRequest convert(Visit source);
+    GetVisitRequest convert(@Nullable Visit source);
 
 }

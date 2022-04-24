@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.Base64;
 
 @Slf4j
 @AllArgsConstructor
+@Component
 public class StringToAuthenticationConverter implements Converter<String, Authentication> {
 
     private final Base64.Decoder decoder;

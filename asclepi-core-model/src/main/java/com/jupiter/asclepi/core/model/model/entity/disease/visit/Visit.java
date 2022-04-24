@@ -4,8 +4,6 @@ import com.jupiter.asclepi.core.model.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.support.mapstruct.ConstructorProperties;
-import com.jupiter.asclepi.core.model.support.mapstruct.Default;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
@@ -44,9 +42,11 @@ public class Visit extends AbstractCreationAware<Employee> {
     @NotNull
     private LocalDateTime when;
 
-    @Default
-    @ConstructorProperties
     public Visit(VisitId id) {
+        setId(id);
+    }
+
+    public final void setId(VisitId id) {
         clientId = id.getClientId();
         diseaseHistoryNumber = id.getDiseaseHistoryNumber();
         number = id.getNumber();

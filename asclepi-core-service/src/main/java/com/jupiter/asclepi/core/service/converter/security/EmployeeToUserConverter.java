@@ -4,7 +4,9 @@ import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EmployeeToUserConverter implements Converter<Employee, User> {
     @Override
     public User convert(@Nullable Employee source) {

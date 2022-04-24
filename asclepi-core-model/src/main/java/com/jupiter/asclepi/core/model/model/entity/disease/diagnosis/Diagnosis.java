@@ -2,8 +2,6 @@ package com.jupiter.asclepi.core.model.model.entity.disease.diagnosis;
 
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
-import com.jupiter.asclepi.core.model.support.mapstruct.ConstructorProperties;
-import com.jupiter.asclepi.core.model.support.mapstruct.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,9 +52,11 @@ public class Diagnosis {
     private Boolean isFinal;
 
 
-    @Default
-    @ConstructorProperties
     public Diagnosis(@NotNull DiagnosisId id) {
+        setId(id);
+    }
+
+    public final void setId(DiagnosisId id) {
         clientId = id.getClientId();
         diseaseHistoryNumber = id.getDiseaseHistoryNumber();
         number = id.getNumber();

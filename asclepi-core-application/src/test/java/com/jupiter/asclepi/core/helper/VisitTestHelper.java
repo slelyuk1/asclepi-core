@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @Component
 @RequiredArgsConstructor
 public class VisitTestHelper {
-    private static final LocalDateTime TEST_WHEN = LocalDateTime.now().plusDays(1);
+    private static final LocalDateTime TEST_WHEN = LocalDateTime.now().plusDays(1).withNano(0);
 
     private final DiseaseHistoryTestHelper diseaseHistoryTestHelper;
     private final ObjectMapper objectMapper;
