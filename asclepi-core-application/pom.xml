@@ -23,6 +23,12 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
@@ -53,13 +59,10 @@
                     <systemPropertyVariables>
                         <ASCLEPI_SECURITY_SECRET>testSecret</ASCLEPI_SECURITY_SECRET>
                         <ASCLEPI_SECURITY_SERVER_INTEGER>1</ASCLEPI_SECURITY_SERVER_INTEGER>
-                        <ASCLEPI_SECURITY_ADMIN_LOGIN>testAdminLogin
-                        </ASCLEPI_SECURITY_ADMIN_LOGIN>
-                        <ASCLEPI_SECURITY_ADMIN_PASSWORD>testAdminPassword
-                        </ASCLEPI_SECURITY_ADMIN_PASSWORD>
+                        <ASCLEPI_SECURITY_ADMIN_LOGIN>testAdminLogin</ASCLEPI_SECURITY_ADMIN_LOGIN>
+                        <ASCLEPI_SECURITY_ADMIN_PASSWORD>testAdminPassword</ASCLEPI_SECURITY_ADMIN_PASSWORD>
                         <ASCLEPI_SECURITY_ADMIN_NAME>testAdminName</ASCLEPI_SECURITY_ADMIN_NAME>
-                        <ASCLEPI_SECURITY_ADMIN_SURNAME>testAdminSurname
-                        </ASCLEPI_SECURITY_ADMIN_SURNAME>
+                        <ASCLEPI_SECURITY_ADMIN_SURNAME>testAdminSurname</ASCLEPI_SECURITY_ADMIN_SURNAME>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

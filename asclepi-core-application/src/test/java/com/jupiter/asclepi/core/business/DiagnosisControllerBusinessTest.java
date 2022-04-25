@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.business;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiagnosisTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
@@ -22,6 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -30,6 +32,7 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 public class DiagnosisControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
@@ -99,7 +102,7 @@ public class DiagnosisControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingAll() throws Exception {
+    void testSuccessfulGettingAll() {
         CreateDiagnosisRequest request = diagnosisHelper.generateCreateRequest(existingHistory, false);
         Diagnosis one = diagnosisService.create(request).get();
         Diagnosis another = diagnosisService.create(diagnosisHelper.generateAnotherCreateRequest(request, true)).get();

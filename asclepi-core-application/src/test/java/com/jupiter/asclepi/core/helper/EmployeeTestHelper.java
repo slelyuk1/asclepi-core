@@ -6,10 +6,8 @@ import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.model.other.Role;
 import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.model.request.people.EditEmployeeRequest;
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Arrays;
@@ -19,8 +17,6 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@Component
-@AllArgsConstructor
 public class EmployeeTestHelper {
     private static final String TEST_LOGIN = "testLogin";
     private static final String TEST_PASSWORD = "testPassword";
@@ -31,6 +27,10 @@ public class EmployeeTestHelper {
     private static final String TEST_ADDITIONAL = "testAdditional";
 
     private final ObjectMapper objectMapper;
+
+    public EmployeeTestHelper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     public CreateEmployeeRequest generateCreateRequest(boolean withOptional) {
         CreateEmployeeRequest request = new CreateEmployeeRequest();

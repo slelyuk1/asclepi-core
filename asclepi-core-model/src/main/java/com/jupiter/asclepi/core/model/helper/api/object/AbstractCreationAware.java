@@ -7,6 +7,7 @@ import javax.persistence.PrePersist;
 import java.util.Date;
 
 // todo consider @CreatedBy/@CreatedWhen annotation usage
+@SuppressWarnings("unused")
 @NoArgsConstructor
 @AllArgsConstructor
 public class AbstractCreationAware<T> implements CreationAware<T> {

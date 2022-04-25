@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.rest;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.model.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -32,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 class ClientControllerSignaturesTest {
 
@@ -48,9 +51,7 @@ class ClientControllerSignaturesTest {
 
     private static final FieldDescriptor[] CREATE_CLIENT_REQUEST_FIELD_DESCRIPTORS = generateCreateRequestDescriptors();
     private static final FieldDescriptor[] EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS = generateEditClientRequestDescriptors();
-    private static final FieldDescriptor[] ERROR_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
-            fieldWithPath("message").description("Error message").type(JsonFieldType.STRING)
-    };
+    
     private final ClientTestHelper helper;
     private final ClientService service;
     private MockMvc mockMvc;

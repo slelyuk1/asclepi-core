@@ -6,7 +6,6 @@ import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 @SuppressWarnings("UnmappedTargetProperties")
 @Mapper(config = MappingConfiguration.class)
@@ -17,6 +16,6 @@ public interface EditRequestToVisitConverter extends Converter<EditVisitRequest,
     @Mapping(target = "number", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Visit convert(@Nullable EditVisitRequest source);
+    Visit convert( EditVisitRequest source);
 
 }

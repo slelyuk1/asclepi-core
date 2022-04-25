@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.business;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.*;
 import com.jupiter.asclepi.core.model.model.entity.disease.Anamnesis;
 import com.jupiter.asclepi.core.model.model.entity.disease.consultation.Consultation;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -27,6 +29,7 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 public class ConsultationControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
@@ -131,7 +134,7 @@ public class ConsultationControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingAll() throws Exception {
+    void testSuccessfulGettingAll() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
         Consultation one = consultationService.create(request).get();
         Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request)).get();
@@ -154,7 +157,7 @@ public class ConsultationControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingForVisit() throws Exception {
+    void testSuccessfulGettingForVisit() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
         Consultation one = consultationService.create(request).get();
         Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request)).get();
@@ -177,7 +180,7 @@ public class ConsultationControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingForDiseaseHistory() throws Exception {
+    void testSuccessfulGettingForDiseaseHistory() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
         Consultation one = consultationService.create(request).get();
         Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request)).get();

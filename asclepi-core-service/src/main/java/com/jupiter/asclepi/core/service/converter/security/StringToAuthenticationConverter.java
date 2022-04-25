@@ -4,7 +4,6 @@ import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -21,10 +20,10 @@ public class StringToAuthenticationConverter implements Converter<String, Authen
     private final Base64.Decoder decoder;
 
     @Override
-    public Authentication convert(@Nullable String source) {
+    public Authentication convert( String source) {
         try (
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decoder.decode(source));
-                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)
         ) {
             return (Authentication) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {

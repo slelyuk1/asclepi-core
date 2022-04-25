@@ -17,13 +17,15 @@ public interface DiseaseHistoryToInfoConverter extends Converter<DiseaseHistory,
     @Mapping(target = "diseaseHistory", source = ".")
     @Mapping(target = "diagnosisIds", source = "diagnoses")
     @Mapping(target = "doctorId", source = "doctor")
-    DiseaseHistoryInfo convert(@Nullable DiseaseHistory source);
+    DiseaseHistoryInfo convert( DiseaseHistory source);
 
-    default Integer convertDiagnosisToId(Diagnosis diagnosis) {
+    @Nullable
+    default Integer convertDiagnosisToId(@Nullable Diagnosis diagnosis) {
         return diagnosis != null ? diagnosis.getNumber() : null;
     }
 
-    default Integer convertDoctorToId(Employee doctor) {
+    @Nullable
+    default Integer convertDoctorToId(@Nullable Employee doctor) {
         return doctor != null ? doctor.getId() : null;
     }
 

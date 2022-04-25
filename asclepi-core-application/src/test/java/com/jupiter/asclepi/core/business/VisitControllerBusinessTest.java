@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.business;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
@@ -13,7 +14,6 @@ import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHi
 import com.jupiter.asclepi.core.model.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
@@ -23,6 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -31,6 +32,7 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 public class VisitControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
@@ -56,7 +58,6 @@ public class VisitControllerBusinessTest {
 
     @BeforeEach
     void setUp() {
-        CreateEmployeeRequest createEmployeeRequest = employeeHelper.generateCreateRequest(true, Role.DOCTOR);
         Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
         Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
         existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
@@ -103,7 +104,7 @@ public class VisitControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingAll() throws Exception {
+    void testSuccessfulGettingAll() {
         CreateVisitRequest request = visitHelper.generateCreateRequest(existingHistory);
         Visit one = visitService.create(request).get();
         Visit another = visitService.create(visitHelper.generateAnotherCreateRequest(request)).get();

@@ -13,7 +13,6 @@ import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitReques
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Objects;
@@ -22,7 +21,6 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@Component
 @RequiredArgsConstructor
 public class AnalysisTestHelper {
     private static final String TEST_TITLE = "testTitle";

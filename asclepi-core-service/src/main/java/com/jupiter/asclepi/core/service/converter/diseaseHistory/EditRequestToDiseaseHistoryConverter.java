@@ -20,7 +20,7 @@ public interface EditRequestToDiseaseHistoryConverter extends Converter<EditDise
     @Mapping(target = "doctor", source = ".")
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    DiseaseHistory convert(@Nullable EditDiseaseHistoryRequest source);
+    DiseaseHistory convert(EditDiseaseHistoryRequest source);
 
     @Mapping(target = "id", source = "clientId")
     Client convertToClient(GetDiseaseHistoryRequest source);
@@ -28,7 +28,8 @@ public interface EditRequestToDiseaseHistoryConverter extends Converter<EditDise
     @Mapping(target = "id", source = "doctorId")
     Employee convertToDoctor(EditDiseaseHistoryRequest source);
 
-    default Integer getNumberFromDiseaseHistory(GetDiseaseHistoryRequest diseaseHistory) {
+    @Nullable
+    default Integer getNumberFromDiseaseHistory(@Nullable GetDiseaseHistoryRequest diseaseHistory) {
         return diseaseHistory != null ? diseaseHistory.getNumber() : null;
     }
 

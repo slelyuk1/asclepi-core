@@ -6,7 +6,6 @@ import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 @SuppressWarnings("UnmappedTargetProperties")
 @Mapper(config = MappingConfiguration.class)
@@ -16,6 +15,6 @@ public interface EditRequestToAnalysisConverter extends Converter<EditAnalysisRe
     @Mapping(target = "id", source = "analysis")
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Analysis convert(@Nullable EditAnalysisRequest source);
+    Analysis convert( EditAnalysisRequest source);
 
 }

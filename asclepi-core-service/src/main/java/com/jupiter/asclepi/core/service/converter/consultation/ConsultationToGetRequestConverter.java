@@ -5,11 +5,10 @@ import com.jupiter.asclepi.core.model.model.request.disease.consultation.GetCons
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 @Mapper(config = MappingConfiguration.class)
 public interface ConsultationToGetRequestConverter extends Converter<Consultation, GetConsultationRequest> {
 
     @Override
-    GetConsultationRequest convert(@Nullable Consultation source);
+    GetConsultationRequest convert( Consultation source);
 }

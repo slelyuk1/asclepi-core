@@ -9,7 +9,6 @@ import com.jupiter.asclepi.core.model.model.request.people.EditClientRequest;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.math.BigInteger;
@@ -18,7 +17,6 @@ import java.util.Objects;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@Component
 @AllArgsConstructor
 public class ClientTestHelper {
     private static final String TEST_NAME = "testName";

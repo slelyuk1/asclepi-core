@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.business;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.AnamnesisTestHelper;
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
@@ -10,7 +11,6 @@ import com.jupiter.asclepi.core.model.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.model.other.Role;
 import com.jupiter.asclepi.core.model.model.request.disease.anamnesis.CreateAnamnesisRequest;
-import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.service.api.AnamnesisService;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
@@ -20,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -28,6 +29,7 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 public class AnamnesisControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
@@ -53,7 +55,6 @@ public class AnamnesisControllerBusinessTest {
 
     @BeforeEach
     void setUp() {
-        CreateEmployeeRequest createEmployeeRequest = employeeHelper.generateCreateRequest(true, Role.DOCTOR);
         Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
         Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
         existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
@@ -82,7 +83,7 @@ public class AnamnesisControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingForDiseaseHistory() throws Exception {
+    void testSuccessfulGettingForDiseaseHistory() {
         CreateAnamnesisRequest request = anamnesisHelper.generateCreateRequest(existingHistory);
         Anamnesis one = anamnesisService.create(request).get();
         Anamnesis another = anamnesisService.create(anamnesisHelper.generateAnotherCreateRequest(request)).get();

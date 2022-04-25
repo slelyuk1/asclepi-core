@@ -7,7 +7,6 @@ import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 @Mapper(config = MappingConfiguration.class)
 public interface GetRequestToDiseaseHistoryConverter extends Converter<GetDiseaseHistoryRequest, DiseaseHistory> {
@@ -15,7 +14,7 @@ public interface GetRequestToDiseaseHistoryConverter extends Converter<GetDiseas
     @Override
     @Mapping(target = "client", source = ".")
     @Mapping(target = "number")
-    DiseaseHistory convert(@Nullable GetDiseaseHistoryRequest source);
+    DiseaseHistory convert( GetDiseaseHistoryRequest source);
 
     @SuppressWarnings("UnmappedTargetProperties")
     @Mapping(target = "id", source = "clientId")

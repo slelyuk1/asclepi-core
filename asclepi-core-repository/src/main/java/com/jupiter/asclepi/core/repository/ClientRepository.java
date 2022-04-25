@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 
+@SuppressWarnings("unused")
 @Repository
 public interface ClientRepository extends JpaRepository<Client, BigInteger> {
 }

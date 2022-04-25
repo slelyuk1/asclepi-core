@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.rest;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -21,7 +23,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -32,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 class EmployeeControllerSignaturesTest {
 
@@ -53,13 +55,11 @@ class EmployeeControllerSignaturesTest {
 
     private MockMvc mockMvc;
     private final EmployeeTestHelper helper;
-    private final EntityManager entityManager;
     private final EmployeeService service;
 
     @Autowired
-    public EmployeeControllerSignaturesTest(EmployeeTestHelper helper, EntityManager entityManager, EmployeeService service) {
+    public EmployeeControllerSignaturesTest(EmployeeTestHelper helper, EmployeeService service) {
         this.helper = helper;
-        this.entityManager = entityManager;
         this.service = service;
     }
 
@@ -159,7 +159,7 @@ class EmployeeControllerSignaturesTest {
     @Test
     void testSuccessfulAllEmployeesGettingRequestResponseSignatures() throws Exception {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
-        Employee created = service.create(request).get();
+        service.create(request).get();
         this.mockMvc.perform(helper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

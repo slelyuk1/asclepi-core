@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.business;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.*;
 import com.jupiter.asclepi.core.model.model.entity.analysis.Analysis;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
@@ -12,13 +13,13 @@ import com.jupiter.asclepi.core.model.model.request.disease.analysis.EditAnalysi
 import com.jupiter.asclepi.core.model.model.request.disease.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.service.api.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -27,6 +28,7 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 public class AnalysisControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
@@ -56,7 +58,6 @@ public class AnalysisControllerBusinessTest {
 
     @BeforeEach
     void setUp() {
-        CreateEmployeeRequest createEmployeeRequest = employeeHelper.generateCreateRequest(true, Role.DOCTOR);
         Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
         Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
         DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
@@ -126,7 +127,7 @@ public class AnalysisControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingAll() throws Exception {
+    void testSuccessfulGettingAll() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
         Analysis one = analysisService.create(request).get();
         Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request)).get();
@@ -151,7 +152,7 @@ public class AnalysisControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingForVisit() throws Exception {
+    void testSuccessfulGettingForVisit() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
         Analysis one = analysisService.create(request).get();
         Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request)).get();
@@ -176,7 +177,7 @@ public class AnalysisControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingForDiseaseHistory() throws Exception {
+    void testSuccessfulGettingForDiseaseHistory() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
         Analysis one = analysisService.create(request).get();
         Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request)).get();

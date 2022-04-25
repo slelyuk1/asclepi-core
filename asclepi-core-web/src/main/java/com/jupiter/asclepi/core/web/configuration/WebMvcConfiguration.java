@@ -14,6 +14,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     private final Set<Converter<?, ?>> converters;
 
+    // todo why is this commented
 //    @Override
 //    public void addCorsMappings(CorsRegistry registry) {
 //        registry.addMapping("/**")

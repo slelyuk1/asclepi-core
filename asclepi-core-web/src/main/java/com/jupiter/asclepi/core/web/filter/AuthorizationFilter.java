@@ -32,6 +32,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             Authentication authentication = conversionService.convert(token.getExtendedInformation(), Authentication.class);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        // todo why is this commented
 //        if (request.getCookies() != null) {
 //            Arrays.stream(request.getCookies())
 //                    .filter(cookie -> cookie.getName().equals(SecurityConfiguration.AUTHENTICATION_COOKIE_NAME))

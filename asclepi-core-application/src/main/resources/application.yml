@@ -15,6 +15,7 @@ spring:
     console:
       enabled: true
 
+# todo make these properties through annotationprocessing
 security:
   secret: superSecretSecret
   serverInteger: 1

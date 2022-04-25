@@ -20,9 +20,10 @@ public interface EditRequestToConsultationConverter extends Converter<EditConsul
     @Mapping(target = "anamnesis", source = "anamnesisId")
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Consultation convert(@Nullable EditConsultationRequest source);
+    Consultation convert(EditConsultationRequest source);
 
-    default Anamnesis convertToAnamnesis(BigInteger anamnesisId) {
+    @Nullable
+    default Anamnesis convertToAnamnesis(@Nullable BigInteger anamnesisId) {
         if (anamnesisId == null) {
             return null;
         }

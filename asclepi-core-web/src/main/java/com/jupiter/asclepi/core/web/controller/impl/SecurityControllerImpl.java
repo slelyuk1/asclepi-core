@@ -50,7 +50,8 @@ public class SecurityControllerImpl implements SecurityController {
                 .getOrElseThrow(AsclepiRuntimeException::new);
     }
 
-    private static String tokenToAuthenticationCookie(Token token) {
-        return String.format("%s=%s; SameSite=None; Secured", WebSecurityConfiguration.AUTHENTICATION_COOKIE_NAME, token.getKey());
-    }
+    // todo why is not used
+    // private static String tokenToAuthenticationCookie(Token token) {
+    //     return String.format("%s=%s; SameSite=None; Secured", WebSecurityConfiguration.AUTHENTICATION_COOKIE_NAME, token.getKey());
+    // }
 }

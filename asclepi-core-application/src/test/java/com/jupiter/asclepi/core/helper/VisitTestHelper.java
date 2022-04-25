@@ -11,7 +11,6 @@ import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitReques
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.time.LocalDateTime;
@@ -20,7 +19,6 @@ import java.util.Objects;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@Component
 @RequiredArgsConstructor
 public class VisitTestHelper {
     private static final LocalDateTime TEST_WHEN = LocalDateTime.now().plusDays(1).withNano(0);

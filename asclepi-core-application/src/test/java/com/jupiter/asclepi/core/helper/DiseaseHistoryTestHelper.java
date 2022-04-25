@@ -9,7 +9,6 @@ import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHi
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.math.BigInteger;
@@ -18,7 +17,6 @@ import java.util.Objects;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@Component
 @RequiredArgsConstructor
 public class DiseaseHistoryTestHelper {
     private final ObjectMapper objectMapper;
@@ -62,14 +60,6 @@ public class DiseaseHistoryTestHelper {
 
     public MockHttpServletRequestBuilder createMockedGetForClientRequest(BigInteger clientId) {
         return get("/api/v1/diseaseHistory/{clientId}", clientId);
-    }
-
-    public MockHttpServletRequestBuilder createMockedAbortRequest(BigInteger clientId, int historyNumber) {
-        return post("/api/v1/diseaseHistory/{clientId}/{historyNumber}/abort", clientId, historyNumber);
-    }
-
-    public MockHttpServletRequestBuilder createMockedCloseRequest(BigInteger clientId, int historyNumber) {
-        return post("/api/v1/diseaseHistory/{clientId}/{historyNumber}/close", clientId, historyNumber);
     }
 
     public void assertEntityIsValidAfterCreation(CreateDiseaseHistoryRequest request, DiseaseHistory entity) {

@@ -6,7 +6,6 @@ import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 @Mapper(config = MappingConfiguration.class)
 public interface AnalysisToInfoConverter extends Converter<Analysis, AnalysisInfo> {
@@ -15,6 +14,6 @@ public interface AnalysisToInfoConverter extends Converter<Analysis, AnalysisInf
     @Mapping(target = "analysis", source = ".")
     @Mapping(target = "title")
     @Mapping(target = "summary")
-    AnalysisInfo convert(@Nullable Analysis source);
+    AnalysisInfo convert( Analysis source);
 
 }

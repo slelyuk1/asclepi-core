@@ -7,10 +7,8 @@ import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistor
 import com.jupiter.asclepi.core.model.model.request.disease.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.anamnesis.EditAnamnesisRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.math.BigInteger;
@@ -20,14 +18,16 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@Component
-@RequiredArgsConstructor
 public class AnamnesisTestHelper {
     private static final String TEST_COMPLAINTS = "testComplaints";
     private static final String TEST_MORBI = "testMorbi";
     private static final String TEST_VITAE = "testVitae";
 
     private final ObjectMapper objectMapper;
+
+    public AnamnesisTestHelper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     public CreateAnamnesisRequest generateCreateRequest(DiseaseHistory diseaseHistory) {
         CreateAnamnesisRequest request = new CreateAnamnesisRequest();
@@ -62,11 +62,11 @@ public class AnamnesisTestHelper {
                 .content(objectMapper.writeValueAsString(request));
     }
 
-    public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger id) throws JsonProcessingException {
+    public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger id) {
         return get("/api/v1/anamnesis/{anamnesisId}", id);
     }
 
-    public MockHttpServletRequestBuilder createMockedDeleteRequest(BigInteger id) throws JsonProcessingException {
+    public MockHttpServletRequestBuilder createMockedDeleteRequest(BigInteger id) {
         return delete("/api/v1/anamnesis/{anamnesisId}/delete", id);
     }
 

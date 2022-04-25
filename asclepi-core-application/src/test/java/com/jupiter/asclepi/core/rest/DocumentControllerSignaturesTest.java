@@ -1,6 +1,7 @@
 package com.jupiter.asclepi.core.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.api.AbstractDocumentTest;
 import com.jupiter.asclepi.core.model.model.entity.document.Document;
 import com.jupiter.asclepi.core.model.model.request.disease.document.CreateDocumentRequest;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -36,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @Disabled
 // todo refactor and fix
@@ -161,7 +164,7 @@ class DocumentControllerSignaturesTest extends AbstractDocumentTest {
     }
 
     @Test
-    void testSuccessfulAllsGettingRequestResponseSignatures() throws Exception {
+    void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
         Document test = createTestEntity(true);
         getEntityManager().persist(test);
         this.mockMvc.perform(generateGetAllRequest())

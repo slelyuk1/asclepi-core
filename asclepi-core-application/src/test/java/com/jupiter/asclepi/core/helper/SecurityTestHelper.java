@@ -5,12 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jupiter.asclepi.core.model.model.request.other.AuthenticationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-@Component
 @RequiredArgsConstructor
 public class SecurityTestHelper {
     public static final String TEST_LOGIN = "testName";

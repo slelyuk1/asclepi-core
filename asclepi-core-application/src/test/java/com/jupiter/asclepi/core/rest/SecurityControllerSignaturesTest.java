@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.rest;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.helper.SecurityTestHelper;
 import com.jupiter.asclepi.core.model.model.request.other.AuthenticationRequest;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
@@ -33,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 class SecurityControllerSignaturesTest {
     private static final FieldDescriptor[] AUTHENTICATE_REQUEST_FIELD_DESCRIPTORS = generateAuthenticateRequestDescriptors();

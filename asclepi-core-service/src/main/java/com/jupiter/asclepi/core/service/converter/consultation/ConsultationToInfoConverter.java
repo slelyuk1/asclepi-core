@@ -17,9 +17,10 @@ public interface ConsultationToInfoConverter extends Converter<Consultation, Con
     @Override
     @Mapping(target = "consultation", source = ".")
     @Mapping(target = "anamnesisId", source = "anamnesis")
-    ConsultationInfo convert(@Nullable Consultation source);
+    ConsultationInfo convert( Consultation source);
 
-    default BigInteger getIdFromAnamnesis(Anamnesis anamnesis) {
+    @Nullable
+    default BigInteger getIdFromAnamnesis(@Nullable Anamnesis anamnesis) {
         return anamnesis != null ? anamnesis.getId() : null;
     }
 }

@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.business;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.model.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -17,6 +19,7 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 public class ClientControllerBusinessTest {
 
     private final ClientTestHelper helper;
@@ -64,7 +67,7 @@ public class ClientControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulGettingAll() throws Exception {
+    void testSuccessfulGettingAll() {
         CreateClientRequest createRequest = helper.generateCreateRequest(false);
         Client one = service.create(createRequest).get();
         Client another = service.create(helper.generateAnotherCreateRequest(createRequest)).get();

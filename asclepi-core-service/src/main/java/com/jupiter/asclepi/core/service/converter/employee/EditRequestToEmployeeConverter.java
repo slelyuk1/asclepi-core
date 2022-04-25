@@ -6,7 +6,6 @@ import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 @Mapper(config = MappingConfiguration.class)
 public interface EditRequestToEmployeeConverter extends Converter<EditEmployeeRequest, Employee> {
@@ -14,6 +13,6 @@ public interface EditRequestToEmployeeConverter extends Converter<EditEmployeeRe
     @Override
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Employee convert(@Nullable EditEmployeeRequest request);
+    Employee convert( EditEmployeeRequest request);
 
 }

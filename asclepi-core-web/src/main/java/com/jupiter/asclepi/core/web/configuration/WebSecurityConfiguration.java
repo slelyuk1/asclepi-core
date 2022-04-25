@@ -32,7 +32,8 @@ import java.util.Map;
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public static final String AUTHENTICATION_ENDPOINT_PREFIX = "/api/v1/security";
     public static final String AUTHENTICATION_ENDPOINT_SUFFIX = "/authenticate";
-    public static final String AUTHENTICATION_COOKIE_NAME = "access_token";
+    // todo why it is not used
+    // public static final String AUTHENTICATION_COOKIE_NAME = "access_token";
 
     private final String serverSecret;
     private final int serverInteger;

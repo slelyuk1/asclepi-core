@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.business;
 
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -17,6 +19,7 @@ import java.util.Objects;
 
 @Transactional
 @SpringBootTest
+@Import(TestHelperConfiguration.class)
 public class EmployeeControllerBusinessTest {
 
     private final EmployeeTestHelper helper;
@@ -31,14 +34,14 @@ public class EmployeeControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulCreation() throws Exception {
+    void testSuccessfulCreation() {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
         Employee created = service.create(request).get();
         helper.assertEntityIsValidAfterCreation(request, created);
     }
 
     @Test
-    void testSuccessfulEdition() throws Exception {
+    void testSuccessfulEdition() {
         Employee created = service.create(helper.generateCreateRequest(false)).get();
         entityManager.flush();
         entityManager.detach(created);
@@ -49,7 +52,7 @@ public class EmployeeControllerBusinessTest {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
-    void testSuccessfulGetting() throws Exception {
+    void testSuccessfulGetting() {
         Employee created = service.create(helper.generateCreateRequest(false)).get();
         entityManager.flush();
         entityManager.detach(created);
@@ -58,7 +61,7 @@ public class EmployeeControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulAllEmployeesGettingRequestResponseSignatures() throws Exception {
+    void testSuccessfulAllEmployeesGettingRequestResponseSignatures() {
         CreateEmployeeRequest createRequest = helper.generateCreateRequest(false);
         Employee one = service.create(createRequest).get();
         Employee another = service.create(helper.generateAnotherCreateRequest(createRequest)).get();
@@ -81,7 +84,7 @@ public class EmployeeControllerBusinessTest {
     }
 
     @Test
-    void testSuccessfulEmployeeDeletionRequestResponseSignatures() throws Exception {
+    void testSuccessfulEmployeeDeletionRequestResponseSignatures() {
         Employee created = service.create(helper.generateCreateRequest(false)).get();
         entityManager.flush();
         entityManager.detach(created);

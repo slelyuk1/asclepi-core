@@ -4,7 +4,6 @@ import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +20,11 @@ public class AuthenticationToStringConverter implements Converter<Authentication
     private final Base64.Encoder encoder;
 
     @Override
-    public String convert(@Nullable Authentication source) {
+    public String convert( Authentication source) {
 
         try (
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)
         ) {
             objectOutputStream.writeObject(source);
             return new String(encoder.encode(byteArrayOutputStream.toByteArray()));

@@ -6,7 +6,6 @@ import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 
 @SuppressWarnings("UnmappedTargetProperties")
@@ -15,6 +14,6 @@ public interface EditRequestToDiagnosisConverter extends Converter<EditDiagnosis
 
     @Override
     @Mapping(target = "id", source = "diagnosis")
-    Diagnosis convert(@Nullable EditDiagnosisRequest source);
+    Diagnosis convert( EditDiagnosisRequest source);
 
 }

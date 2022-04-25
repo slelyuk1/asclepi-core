@@ -4,5 +4,6 @@ import com.jupiter.asclepi.core.model.model.entity.disease.consultation.Consulta
 import com.jupiter.asclepi.core.model.model.entity.disease.consultation.ConsultationId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+@SuppressWarnings("unused")
 public interface ConsultationRepository extends JpaRepository<Consultation, ConsultationId> {
 }

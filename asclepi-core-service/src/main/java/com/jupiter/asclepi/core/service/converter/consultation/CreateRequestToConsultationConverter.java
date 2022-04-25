@@ -7,7 +7,6 @@ import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 @Mapper(config = MappingConfiguration.class)
 public interface CreateRequestToConsultationConverter extends Converter<CreateConsultationRequest, Consultation> {
@@ -18,7 +17,7 @@ public interface CreateRequestToConsultationConverter extends Converter<CreateCo
     @Mapping(target = "number", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Consultation convert(@Nullable CreateConsultationRequest source);
+    Consultation convert( CreateConsultationRequest source);
 
     @SuppressWarnings("UnmappedTargetProperties")
     @Mapping(target = "id", source = "anamnesisId")

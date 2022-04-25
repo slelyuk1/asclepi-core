@@ -1,6 +1,7 @@
 package com.jupiter.asclepi.core.business;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.api.AbstractDocumentTest;
 import com.jupiter.asclepi.core.model.model.entity.document.Document;
 import com.jupiter.asclepi.core.model.model.response.disease.DocumentInfo;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -26,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @SpringBootTest
 @Disabled
+@Import(TestHelperConfiguration.class)
 // todo refactor and fix
 public class DocumentControllerBusinessTest extends AbstractDocumentTest {
 
