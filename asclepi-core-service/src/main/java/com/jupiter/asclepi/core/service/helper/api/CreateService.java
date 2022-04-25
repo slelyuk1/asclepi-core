@@ -5,6 +5,6 @@ import io.vavr.control.Try;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public interface CreateService<RequestType, CreatedType> {
-    Try<CreatedType> create(@Valid @NotNull RequestType createRequest);
+public interface CreateService<T, R> {
+    Try<R> create(@Valid @NotNull T createRequest);
 }

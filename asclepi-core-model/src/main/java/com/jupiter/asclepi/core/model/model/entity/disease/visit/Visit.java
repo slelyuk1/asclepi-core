@@ -32,10 +32,8 @@ public class Visit extends AbstractCreationAware<Employee> {
     private Integer number;
 
     @ManyToOne(optional = false)
-    @JoinColumns({
-            @JoinColumn(name = "clientId", insertable = false, updatable = false),
-            @JoinColumn(name = "diseaseHistoryNumber", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "clientId", insertable = false, updatable = false)
+    @JoinColumn(name = "diseaseHistoryNumber", insertable = false, updatable = false)
     @EqualsAndHashCode.Include
     private DiseaseHistory diseaseHistory;
 

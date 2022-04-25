@@ -39,11 +39,9 @@ public class Consultation extends AbstractCreationAware<Employee> {
 
     @NotNull
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "clientId", updatable = false, insertable = false),
-            @JoinColumn(name = "diseaseHistoryNumber", updatable = false, insertable = false),
-            @JoinColumn(name = "visitNumber", updatable = false, insertable = false)
-    })
+    @JoinColumn(name = "clientId", updatable = false, insertable = false)
+    @JoinColumn(name = "diseaseHistoryNumber", updatable = false, insertable = false)
+    @JoinColumn(name = "visitNumber", updatable = false, insertable = false)
     private Visit visit;
 
     @NotNull

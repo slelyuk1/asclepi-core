@@ -30,7 +30,7 @@ import java.util.Objects;
 @Transactional
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
-public class ConsultationControllerBusinessTest {
+class ConsultationControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired
@@ -143,7 +143,7 @@ public class ConsultationControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Consultation> all = consultationService.getAll();
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Consultation foundOne = all.stream()
                 .filter(consultation -> Objects.equals(consultation, one))
                 .findAny()
@@ -166,7 +166,7 @@ public class ConsultationControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Consultation> all = consultationService.getForVisit(one.getVisit());
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Consultation foundOne = all.stream()
                 .filter(consultation -> Objects.equals(consultation, one))
                 .findAny()
@@ -189,7 +189,7 @@ public class ConsultationControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Consultation> all = consultationService.getForDiseaseHistory(one.getVisit().getDiseaseHistory());
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Consultation foundOne = all.stream()
                 .filter(consultation -> Objects.equals(consultation, one))
                 .findAny()

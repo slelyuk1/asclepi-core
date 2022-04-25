@@ -41,11 +41,9 @@ public class Analysis extends AbstractCreationAware<Employee> {
 
     @NotNull
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "clientId", updatable = false, insertable = false),
-            @JoinColumn(name = "diseaseHistoryNumber", updatable = false, insertable = false),
-            @JoinColumn(name = "visitNumber", updatable = false, insertable = false)
-    })
+    @JoinColumn(name = "clientId", updatable = false, insertable = false)
+    @JoinColumn(name = "diseaseHistoryNumber", updatable = false, insertable = false)
+    @JoinColumn(name = "visitNumber", updatable = false, insertable = false)
     private Visit visit;
 
     private String title;
@@ -57,7 +55,7 @@ public class Analysis extends AbstractCreationAware<Employee> {
         setId(id);
     }
 
-    public final void setId(AnalysisId id){
+    public final void setId(AnalysisId id) {
         clientId = id.getClientId();
         diseaseHistoryNumber = id.getDiseaseHistoryNumber();
         visitNumber = id.getVisitNumber();

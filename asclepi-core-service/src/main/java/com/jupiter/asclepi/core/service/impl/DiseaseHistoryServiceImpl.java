@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.service.impl;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.model.entity.people.Client;
+import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import com.jupiter.asclepi.core.model.model.request.disease.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
@@ -37,11 +38,13 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
     @Override
     public Try<DiseaseHistory> create(@Valid @NotNull CreateDiseaseHistoryRequest createRequest) {
         return Try.of(() -> {
-            clientService.getOne(createRequest.getClientId())
-                    .orElseThrow(() -> new NonExistentIdException("Client", createRequest.getClientId()));
-            employeeService.getOne(createRequest.getDoctorId())
-                    .orElseThrow(() -> new NonExistentIdException("Employee", createRequest.getClientId()));
             DiseaseHistory toCreate = Objects.requireNonNull(conversionService.convert(createRequest, DiseaseHistory.class));
+            Client client = clientService.getOne(createRequest.getClientId())
+                    .orElseThrow(() -> new NonExistentIdException("Client", createRequest.getClientId()));
+            Employee doctor = employeeService.getOne(createRequest.getDoctorId())
+                    .orElseThrow(() -> new NonExistentIdException("Employee", createRequest.getClientId()));
+            toCreate.setClient(client);
+            toCreate.setDoctor(doctor);
             return repository.save(toCreate);
         });
     }

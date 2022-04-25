@@ -113,7 +113,7 @@ public class VisitControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Visit> all = visitService.getAll();
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Visit foundOne = all.stream()
                 .filter(visit -> Objects.equals(visit.getDiseaseHistory(), one.getDiseaseHistory()))
                 .filter(visit -> Objects.equals(visit.getNumber(), one.getNumber()))

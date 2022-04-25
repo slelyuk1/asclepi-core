@@ -40,11 +40,10 @@ public class AnalysisServiceImpl implements AnalysisService {
     public Try<Analysis> create(@Valid @NotNull CreateAnalysisRequest createRequest) {
         return Try.of(() -> {
             GetDiseaseHistoryRequest diseaseHistoryGetter = createRequest.getVisit().getDiseaseHistory();
-
-            diseaseHistoryService.getOne(diseaseHistoryGetter)
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
-
             Analysis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Analysis.class));
+            DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
+                    .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
+            toCreate.setDiseaseHistoryNumber(diseaseHistory.getNumber());
             return repository.save(toCreate);
         });
     }

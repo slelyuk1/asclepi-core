@@ -30,7 +30,7 @@ import java.util.Objects;
 @Transactional
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
-public class AnamnesisControllerBusinessTest {
+class AnamnesisControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired
@@ -92,7 +92,7 @@ public class AnamnesisControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Anamnesis> all = anamnesisService.getForDiseaseHistory(existingHistory);
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Anamnesis foundOne = all.stream()
                 .filter(anamnesis -> Objects.equals(anamnesis, one))
                 .findAny()

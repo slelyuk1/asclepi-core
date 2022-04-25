@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Disabled
 @Import(TestHelperConfiguration.class)
 // todo refactor and fix
-public class DocumentControllerBusinessTest extends AbstractDocumentTest {
+class DocumentControllerBusinessTest extends AbstractDocumentTest {
 
     private MockMvc mockMvc;
 
@@ -94,7 +94,7 @@ public class DocumentControllerBusinessTest extends AbstractDocumentTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
                     DocumentInfo[] infos = getObjectMapper().readValue(result.getResponse().getContentAsString(), DocumentInfo[].class);
-                    Assertions.assertEquals(infos.length, 2);
+                    Assertions.assertEquals(2, infos.length);
                     DocumentInfo oneInfo = Arrays.stream(infos)
                             .filter(info -> Objects.equals(info.getId(), one.getId()))
                             .findAny()

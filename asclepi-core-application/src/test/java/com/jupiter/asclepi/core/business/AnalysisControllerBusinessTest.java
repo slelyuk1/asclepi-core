@@ -29,7 +29,7 @@ import java.util.Objects;
 @Transactional
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
-public class AnalysisControllerBusinessTest {
+class AnalysisControllerBusinessTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired
@@ -136,7 +136,7 @@ public class AnalysisControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Analysis> all = analysisService.getAll();
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Analysis foundOne = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), one.getVisit()))
                 .filter(analysis -> Objects.equals(analysis.getNumber(), one.getNumber()))
@@ -161,7 +161,7 @@ public class AnalysisControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Analysis> all = analysisService.getForVisit(one.getVisit());
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Analysis foundOne = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), one.getVisit()))
                 .filter(analysis -> Objects.equals(analysis.getNumber(), one.getNumber()))
@@ -186,7 +186,7 @@ public class AnalysisControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Analysis> all = analysisService.getForDiseaseHistory(one.getVisit().getDiseaseHistory());
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Analysis foundOne = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), one.getVisit()))
                 .filter(analysis -> Objects.equals(analysis.getNumber(), one.getNumber()))

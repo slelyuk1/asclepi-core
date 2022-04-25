@@ -30,7 +30,7 @@ import java.util.Objects;
 @Transactional
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
-public class DiseaseHistoryControllerBusinessTest {
+class DiseaseHistoryControllerBusinessTest {
 
     private final EntityManager entityManager;
     private final DiseaseHistoryTestHelper historyHelper;
@@ -130,7 +130,7 @@ public class DiseaseHistoryControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<DiseaseHistory> all = diseaseHistoryService.getAll();
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         DiseaseHistory foundOne = all.stream()
                 .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
                 .filter(history -> Objects.equals(history.getNumber(), one.getNumber()))
@@ -159,7 +159,7 @@ public class DiseaseHistoryControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<DiseaseHistory> all = diseaseHistoryService.getForClient(one.getClient());
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         DiseaseHistory foundOne = all.stream()
                 .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
                 .filter(history -> Objects.equals(history.getNumber(), one.getNumber()))

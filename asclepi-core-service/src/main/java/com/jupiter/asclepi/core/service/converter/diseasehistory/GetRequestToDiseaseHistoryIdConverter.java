@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.service.converter.diseaseHistory;
+package com.jupiter.asclepi.core.service.converter.diseasehistory;
 
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;

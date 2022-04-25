@@ -20,7 +20,7 @@ import java.util.Objects;
 @Transactional
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
-public class EmployeeControllerBusinessTest {
+class EmployeeControllerBusinessTest {
 
     private final EmployeeTestHelper helper;
     private final EmployeeService service;
@@ -70,7 +70,7 @@ public class EmployeeControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Employee> all = service.getAll();
-        Assertions.assertEquals(all.size(), 3);
+        Assertions.assertEquals(3, all.size());
         Employee oneInfo = all.stream()
                 .filter(info -> Objects.equals(info.getId(), one.getId()))
                 .findAny()

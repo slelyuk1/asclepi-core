@@ -20,7 +20,7 @@ import java.util.Objects;
 @Transactional
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
-public class ClientControllerBusinessTest {
+class ClientControllerBusinessTest {
 
     private final ClientTestHelper helper;
     private final ClientService service;
@@ -76,7 +76,7 @@ public class ClientControllerBusinessTest {
         entityManager.detach(another);
 
         Collection<Client> all = service.getAll();
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Client oneInfo = all.stream()
                 .filter(info -> Objects.equals(info.getId(), one.getId()))
                 .findAny()
