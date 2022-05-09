@@ -12,6 +12,6 @@ import org.springframework.core.convert.converter.Converter;
 public interface CreateRequestToClientConverter extends Converter<CreateClientRequest, Client> {
 
     @Override
-    Client convert( CreateClientRequest request);
+    Client convert(CreateClientRequest request);
 
 }

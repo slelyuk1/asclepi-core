@@ -10,6 +10,6 @@ import org.springframework.core.convert.converter.Converter;
 public interface ClientToInfoConverter extends Converter<Client, ClientInfo> {
 
     @Override
-    ClientInfo convert( Client client);
+    ClientInfo convert(Client client);
 
 }

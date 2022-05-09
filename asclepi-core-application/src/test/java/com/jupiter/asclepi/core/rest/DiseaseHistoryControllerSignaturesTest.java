@@ -192,7 +192,7 @@ public class DiseaseHistoryControllerSignaturesTest {
                 .andWithPrefix("diseaseHistory.", generateGetRequestDescriptors());
     }
 
-    public static RequestFieldsSnippet generateGetRequest(){
+    public static RequestFieldsSnippet generateGetRequest() {
         return requestFields(generateGetRequestDescriptors());
     }
 

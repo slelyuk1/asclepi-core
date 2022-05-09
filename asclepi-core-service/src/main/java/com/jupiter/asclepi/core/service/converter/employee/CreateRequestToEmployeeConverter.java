@@ -14,6 +14,6 @@ public interface CreateRequestToEmployeeConverter extends Converter<CreateEmploy
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Employee convert( CreateEmployeeRequest request);
+    Employee convert(CreateEmployeeRequest request);
 
 }

@@ -10,5 +10,5 @@ import org.springframework.core.convert.converter.Converter;
 public interface ConsultationToGetRequestConverter extends Converter<Consultation, GetConsultationRequest> {
 
     @Override
-    GetConsultationRequest convert( Consultation source);
+    GetConsultationRequest convert(Consultation source);
 }

@@ -13,6 +13,6 @@ public interface GetRequestToVisitConverter extends Converter<GetVisitRequest, V
 
     @Override
     @Mapping(target = "diseaseHistory")
-    VisitId convert( GetVisitRequest source);
+    VisitId convert(GetVisitRequest source);
 
 }

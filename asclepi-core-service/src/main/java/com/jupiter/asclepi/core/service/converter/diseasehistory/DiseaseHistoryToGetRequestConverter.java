@@ -18,7 +18,7 @@ public interface DiseaseHistoryToGetRequestConverter extends Converter<DiseaseHi
     @Override
     @Mapping(target = "number")
     @Mapping(target = "clientId", source = "client")
-    GetDiseaseHistoryRequest convert( DiseaseHistory source);
+    GetDiseaseHistoryRequest convert(DiseaseHistory source);
 
     @Nullable
     default BigInteger getIdFromClient(@Nullable Client client) {

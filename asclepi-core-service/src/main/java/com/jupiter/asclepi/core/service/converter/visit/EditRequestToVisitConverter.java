@@ -16,6 +16,6 @@ public interface EditRequestToVisitConverter extends Converter<EditVisitRequest,
     @Mapping(target = "number", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Visit convert( EditVisitRequest source);
+    Visit convert(EditVisitRequest source);
 
 }

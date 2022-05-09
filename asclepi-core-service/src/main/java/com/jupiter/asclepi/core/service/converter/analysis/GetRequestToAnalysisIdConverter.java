@@ -13,6 +13,6 @@ public interface GetRequestToAnalysisIdConverter extends Converter<GetAnalysisRe
 
     @Override
     @Mapping(target = "visitId", source = "visit")
-    AnalysisId convert( GetAnalysisRequest source);
+    AnalysisId convert(GetAnalysisRequest source);
 
 }

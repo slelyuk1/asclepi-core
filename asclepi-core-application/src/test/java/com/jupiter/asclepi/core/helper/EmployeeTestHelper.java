@@ -46,7 +46,7 @@ public class EmployeeTestHelper {
         return request;
     }
 
-    public CreateEmployeeRequest generateCreateRequest(boolean withOptional, Role role){
+    public CreateEmployeeRequest generateCreateRequest(boolean withOptional, Role role) {
         CreateEmployeeRequest request = generateCreateRequest(withOptional);
         request.setRole(role);
         return request;

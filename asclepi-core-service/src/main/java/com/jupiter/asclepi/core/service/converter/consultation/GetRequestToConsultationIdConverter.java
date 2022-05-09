@@ -13,6 +13,6 @@ public interface GetRequestToConsultationIdConverter extends Converter<GetConsul
 
     @Override
     @Mapping(target = "visitId", source = "visit")
-    ConsultationId convert( GetConsultationRequest source);
+    ConsultationId convert(GetConsultationRequest source);
 
 }

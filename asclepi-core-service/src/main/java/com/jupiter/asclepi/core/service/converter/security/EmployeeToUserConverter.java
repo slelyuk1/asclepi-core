@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmployeeToUserConverter implements Converter<Employee, User> {
     @Override
-    public User convert( Employee source) {
+    public User convert(Employee source) {
         return new User(source.getLogin(), source.getPassword(), source.getRole().getAuthorities());
     }
 }

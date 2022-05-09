@@ -10,6 +10,6 @@ import org.springframework.core.convert.converter.Converter;
 public interface AnamnesisToInfoConverter extends Converter<Anamnesis, AnamnesisInfo> {
 
     @Override
-    AnamnesisInfo convert( Anamnesis source);
+    AnamnesisInfo convert(Anamnesis source);
 
 }

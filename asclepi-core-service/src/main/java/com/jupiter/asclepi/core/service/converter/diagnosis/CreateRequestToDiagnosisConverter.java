@@ -13,6 +13,6 @@ public interface CreateRequestToDiagnosisConverter extends Converter<CreateDiagn
     @Override
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "number", ignore = true)
-    Diagnosis convert( CreateDiagnosisRequest source);
+    Diagnosis convert(CreateDiagnosisRequest source);
 
 }

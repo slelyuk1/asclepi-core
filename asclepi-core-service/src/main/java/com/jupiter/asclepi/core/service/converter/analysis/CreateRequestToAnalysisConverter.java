@@ -16,6 +16,6 @@ public interface CreateRequestToAnalysisConverter extends Converter<CreateAnalys
     @Mapping(target = "number", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Analysis convert( CreateAnalysisRequest source);
+    Analysis convert(CreateAnalysisRequest source);
 
 }

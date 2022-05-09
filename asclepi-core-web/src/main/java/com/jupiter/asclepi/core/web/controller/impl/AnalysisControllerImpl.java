@@ -83,7 +83,7 @@ public class AnalysisControllerImpl implements AnalysisController {
         return visitService.getOne(visitGetter)
                 .map(analysisService::getForVisit)
                 .map(analyses -> analyses.stream()
-                .map(analysis -> conversionService.convert(analysis, AnalysisInfo.class))
+                        .map(analysis -> conversionService.convert(analysis, AnalysisInfo.class))
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
     }

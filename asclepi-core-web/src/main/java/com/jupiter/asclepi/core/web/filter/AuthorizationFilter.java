@@ -27,7 +27,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String authToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(Objects.nonNull(authToken)){
+        if (Objects.nonNull(authToken)) {
             Token token = tokenService.verifyToken(authToken);
             Authentication authentication = conversionService.convert(token.getExtendedInformation(), Authentication.class);
             SecurityContextHolder.getContext().setAuthentication(authentication);

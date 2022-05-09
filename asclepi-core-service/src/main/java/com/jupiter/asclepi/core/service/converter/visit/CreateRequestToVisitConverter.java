@@ -15,6 +15,6 @@ public interface CreateRequestToVisitConverter extends Converter<CreateVisitRequ
     @Mapping(target = "number", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Visit convert( CreateVisitRequest source);
+    Visit convert(CreateVisitRequest source);
 
 }

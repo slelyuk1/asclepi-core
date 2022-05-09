@@ -14,7 +14,7 @@ public interface GetRequestToDiseaseHistoryConverter extends Converter<GetDiseas
     @Override
     @Mapping(target = "client", source = ".")
     @Mapping(target = "number")
-    DiseaseHistory convert( GetDiseaseHistoryRequest source);
+    DiseaseHistory convert(GetDiseaseHistoryRequest source);
 
     @SuppressWarnings("UnmappedTargetProperties")
     @Mapping(target = "id", source = "clientId")

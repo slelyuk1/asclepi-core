@@ -20,7 +20,7 @@ public class StringToAuthenticationConverter implements Converter<String, Authen
     private final Base64.Decoder decoder;
 
     @Override
-    public Authentication convert( String source) {
+    public Authentication convert(String source) {
         try (
                 ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decoder.decode(source));
                 ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)

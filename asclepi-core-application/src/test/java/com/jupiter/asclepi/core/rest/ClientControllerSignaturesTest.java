@@ -51,7 +51,7 @@ class ClientControllerSignaturesTest {
 
     private static final FieldDescriptor[] CREATE_CLIENT_REQUEST_FIELD_DESCRIPTORS = generateCreateRequestDescriptors();
     private static final FieldDescriptor[] EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS = generateEditClientRequestDescriptors();
-    
+
     private final ClientTestHelper helper;
     private final ClientService service;
     private MockMvc mockMvc;

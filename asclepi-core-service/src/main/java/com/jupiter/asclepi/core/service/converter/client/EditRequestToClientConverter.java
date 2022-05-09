@@ -12,6 +12,6 @@ import org.springframework.core.convert.converter.Converter;
 public interface EditRequestToClientConverter extends Converter<EditClientRequest, Client> {
 
     @Override
-    Client convert( EditClientRequest request);
+    Client convert(EditClientRequest request);
 
 }

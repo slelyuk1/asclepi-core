@@ -82,7 +82,7 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     @Override
     public ResponseEntity<EmployeeInfo> getOne() {
-        String login = ((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        String login = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         return employeeService.findEmployeeByLogin(login)
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
                 .map(ResponseEntity::ok)

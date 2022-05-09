@@ -127,10 +127,10 @@ public class AnalysisTestHelper {
                 entity.getNumber()
         );
         Assertions.assertEquals(request.getAnalysis(), toCompare);
-        if(Objects.nonNull(request.getTitle())) {
+        if (Objects.nonNull(request.getTitle())) {
             Assertions.assertEquals(request.getSummary(), entity.getSummary());
         }
-        if(Objects.nonNull(request.getSummary())) {
+        if (Objects.nonNull(request.getSummary())) {
             Assertions.assertEquals(request.getTitle(), entity.getTitle());
         }
     }

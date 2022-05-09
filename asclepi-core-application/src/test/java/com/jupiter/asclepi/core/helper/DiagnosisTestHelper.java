@@ -35,7 +35,7 @@ public class DiagnosisTestHelper {
         request.setDiseaseHistory(getter);
         request.setDisease(TEST_DISEASE);
         request.setIsFinal(false);
-        if(withOptional) {
+        if (withOptional) {
             request.setComplications(TEST_COMPLICATIONS);
             request.setEtiologyAndPathogenesis(TEST_ETIOLOGY_AND_PATHOGENESIS);
             request.setSpecialityOfCourse(TEST_SPECIALTY_OF_COURSE);

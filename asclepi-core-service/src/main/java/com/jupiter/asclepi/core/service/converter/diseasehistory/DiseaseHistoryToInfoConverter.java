@@ -17,7 +17,7 @@ public interface DiseaseHistoryToInfoConverter extends Converter<DiseaseHistory,
     @Mapping(target = "diseaseHistory", source = ".")
     @Mapping(target = "diagnosisIds", source = "diagnoses")
     @Mapping(target = "doctorId", source = "doctor")
-    DiseaseHistoryInfo convert( DiseaseHistory source);
+    DiseaseHistoryInfo convert(DiseaseHistory source);
 
     @Nullable
     default Integer convertDiagnosisToId(@Nullable Diagnosis diagnosis) {

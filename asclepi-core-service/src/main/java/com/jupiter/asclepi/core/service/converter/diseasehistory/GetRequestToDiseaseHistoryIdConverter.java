@@ -13,6 +13,6 @@ public interface GetRequestToDiseaseHistoryIdConverter extends Converter<GetDise
     @Override
     @Mapping(target = "client", source = "clientId")
     @Mapping(target = "number")
-    DiseaseHistoryId convert( GetDiseaseHistoryRequest source);
+    DiseaseHistoryId convert(GetDiseaseHistoryRequest source);
 
 }

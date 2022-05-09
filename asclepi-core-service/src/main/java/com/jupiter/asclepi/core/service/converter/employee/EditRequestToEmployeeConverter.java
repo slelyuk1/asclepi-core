@@ -13,6 +13,6 @@ public interface EditRequestToEmployeeConverter extends Converter<EditEmployeeRe
     @Override
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
-    Employee convert( EditEmployeeRequest request);
+    Employee convert(EditEmployeeRequest request);
 
 }

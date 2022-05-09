@@ -12,6 +12,6 @@ public interface VisitToInfoConverter extends Converter<Visit, VisitInfo> {
 
     @Override
     @Mapping(target = "visit", source = ".")
-    VisitInfo convert( Visit source);
+    VisitInfo convert(Visit source);
 
 }

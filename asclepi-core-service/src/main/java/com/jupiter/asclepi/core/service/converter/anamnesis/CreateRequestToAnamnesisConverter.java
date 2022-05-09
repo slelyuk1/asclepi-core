@@ -12,6 +12,6 @@ public interface CreateRequestToAnamnesisConverter extends Converter<CreateAnamn
 
     @Override
     @Mapping(target = "id", ignore = true)
-    Anamnesis convert( CreateAnamnesisRequest source);
+    Anamnesis convert(CreateAnamnesisRequest source);
 
 }

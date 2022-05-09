@@ -14,6 +14,6 @@ public interface EditRequestToDiagnosisConverter extends Converter<EditDiagnosis
 
     @Override
     @Mapping(target = "id", source = "diagnosis")
-    Diagnosis convert( EditDiagnosisRequest source);
+    Diagnosis convert(EditDiagnosisRequest source);
 
 }

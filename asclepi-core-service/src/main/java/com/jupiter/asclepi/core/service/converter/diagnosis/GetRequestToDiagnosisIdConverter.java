@@ -11,6 +11,6 @@ import org.springframework.core.convert.converter.Converter;
 public interface GetRequestToDiagnosisIdConverter extends Converter<GetDiagnosisRequest, DiagnosisId> {
 
     @Override
-    DiagnosisId convert( GetDiagnosisRequest source);
+    DiagnosisId convert(GetDiagnosisRequest source);
 
 }

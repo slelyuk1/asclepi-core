@@ -1,19 +1,14 @@
 spring:
-  # todo normal datasource for production
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:in_memory_test_db
-    username: test
-    password: test
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/asclepi-core
+    username: asclepi_admin
+    password: asclepi_admin_password
 
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: update
-
-  h2:
-    console:
-      enabled: true
 
 # todo make these properties through annotationprocessing
 security:

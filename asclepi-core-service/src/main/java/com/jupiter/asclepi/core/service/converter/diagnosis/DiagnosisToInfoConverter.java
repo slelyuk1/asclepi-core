@@ -12,6 +12,6 @@ public interface DiagnosisToInfoConverter extends Converter<Diagnosis, Diagnosis
 
     @Override
     @Mapping(target = "diagnosis", source = ".")
-    DiagnosisInfo convert( Diagnosis source);
+    DiagnosisInfo convert(Diagnosis source);
 
 }

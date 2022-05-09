@@ -45,12 +45,12 @@ public class TestHelperConfiguration {
     }
 
     @Bean
-    public AnalysisTestHelper analysisTestHelper(ObjectMapper mapper){
+    public AnalysisTestHelper analysisTestHelper(ObjectMapper mapper) {
         return new AnalysisTestHelper(mapper);
     }
 
     @Bean
-    public SecurityTestHelper securityTestHelper(ObjectMapper mapper){
+    public SecurityTestHelper securityTestHelper(ObjectMapper mapper) {
         return new SecurityTestHelper(mapper);
     }
 

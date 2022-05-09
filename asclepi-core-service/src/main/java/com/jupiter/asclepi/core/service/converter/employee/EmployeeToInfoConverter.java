@@ -10,6 +10,6 @@ import org.springframework.core.convert.converter.Converter;
 public interface EmployeeToInfoConverter extends Converter<Employee, EmployeeInfo> {
 
     @Override
-    EmployeeInfo convert( Employee source);
+    EmployeeInfo convert(Employee source);
 
 }
