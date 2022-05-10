@@ -4,44 +4,51 @@ import com.jupiter.asclepi.core.model.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-@Entity
+@Getter
+@Setter
+@ToString
+@Entity(name = "visit")
 @IdClass(VisitId.class)
 public class Visit extends AbstractCreationAware<Employee> {
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "client_id")
     private BigInteger clientId;
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "disease_history_number")
     private Integer diseaseHistoryNumber;
 
     @Id
     @GeneratedValue
-    @EqualsAndHashCode.Include
+    @Column(name = "number")
     private Integer number;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "clientId", insertable = false, updatable = false)
-    @JoinColumn(name = "diseaseHistoryNumber", insertable = false, updatable = false)
-    @EqualsAndHashCode.Include
+    @JoinColumn(name = "client_id", insertable = false, updatable = false)
+    @JoinColumn(name = "disease_history_number", insertable = false, updatable = false)
     private DiseaseHistory diseaseHistory;
 
     @NotNull
+    @Column(name = "when")
     private LocalDateTime when;
 
     public Visit(VisitId id) {
         setId(id);
+    }
+
+    public Visit() {
     }
 
     public final void setId(VisitId id) {
@@ -51,29 +58,35 @@ public class Visit extends AbstractCreationAware<Employee> {
         diseaseHistory = new DiseaseHistory(new DiseaseHistoryId(clientId, diseaseHistoryNumber));
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
     public void setDiseaseHistory(DiseaseHistory diseaseHistory) {
         this.diseaseHistory = diseaseHistory;
         clientId = diseaseHistory.getClient().getId();
         diseaseHistoryNumber = diseaseHistory.getNumber();
     }
 
-    public void setWhen(LocalDateTime when) {
-        this.when = when;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Visit visit = (Visit) o;
+        return new EqualsBuilder()
+                .append(getClientId(), visit.getClientId())
+                .append(getDiseaseHistoryNumber(), visit.getDiseaseHistoryNumber())
+                .append(getNumber(), visit.getNumber())
+                .isEquals();
     }
 
-    public Integer getNumber() {
-        return number;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getClientId())
+                .append(getDiseaseHistoryNumber())
+                .append(getNumber())
+                .toHashCode();
     }
 
-    public DiseaseHistory getDiseaseHistory() {
-        return diseaseHistory;
-    }
-
-    public LocalDateTime getWhen() {
-        return when;
-    }
 }

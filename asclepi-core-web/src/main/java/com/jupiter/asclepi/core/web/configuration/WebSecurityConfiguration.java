@@ -40,6 +40,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final ConversionService conversionService;
 
+    // todo use @ConfigurationProperties
     @Autowired
     public WebSecurityConfiguration(@Value("${security.secret}") String serverSecret,
                                     @Value("${security.serverInteger}") Integer serverInteger,

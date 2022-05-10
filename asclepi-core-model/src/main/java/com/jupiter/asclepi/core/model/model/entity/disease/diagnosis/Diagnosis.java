@@ -2,58 +2,65 @@ package com.jupiter.asclepi.core.model.model.entity.disease.diagnosis;
 
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
-@NoArgsConstructor
 @Getter
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-@Entity
+@Setter
+@ToString
+@Entity(name = "diagnosis")
 @IdClass(DiagnosisId.class)
 public class Diagnosis {
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "client_id")
     private BigInteger clientId;
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "disease_history_number")
     private Integer diseaseHistoryNumber;
 
     @Id
     @GeneratedValue
-    @EqualsAndHashCode.Include
     @NotNull
+    @Column(name = "number")
     private Integer number;
 
     @NotNull
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "clientId", updatable = false, insertable = false),
-            @JoinColumn(name = "diseaseHistoryNumber", updatable = false, insertable = false)
-    })
+    @JoinColumn(name = "client_id", updatable = false, insertable = false)
+    @JoinColumn(name = "disease_history_number", updatable = false, insertable = false)
     private DiseaseHistory diseaseHistory;
 
     @NotNull
+    @Column(name = "disease")
     private String disease;
 
+    @Column(name = "complications")
     private String complications;
 
+    @Column(name = "etiology_and_pathogenesis")
     private String etiologyAndPathogenesis;
 
+    @Column(name = "speciality_of_course")
     private String specialityOfCourse;
 
     @NotNull
+    @Column(name = "is_final")
     private Boolean isFinal;
-
 
     public Diagnosis(@NotNull DiagnosisId id) {
         setId(id);
+    }
+
+    public Diagnosis() {
     }
 
     public final void setId(DiagnosisId id) {
@@ -69,27 +76,29 @@ public class Diagnosis {
         diseaseHistoryNumber = diseaseHistory.getNumber();
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Diagnosis diagnosis = (Diagnosis) o;
+        return new EqualsBuilder()
+                .append(getClientId(), diagnosis.getClientId())
+                .append(getDiseaseHistoryNumber(), diagnosis.getDiseaseHistoryNumber())
+                .append(getNumber(), diagnosis.getNumber())
+                .isEquals();
     }
 
-    public void setDisease(String disease) {
-        this.disease = disease;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getClientId())
+                .append(getDiseaseHistoryNumber())
+                .append(getNumber())
+                .toHashCode();
     }
 
-    public void setComplications(String complications) {
-        this.complications = complications;
-    }
-
-    public void setEtiologyAndPathogenesis(String etiologyAndPathogenesis) {
-        this.etiologyAndPathogenesis = etiologyAndPathogenesis;
-    }
-
-    public void setSpecialityOfCourse(String specialityOfCourse) {
-        this.specialityOfCourse = specialityOfCourse;
-    }
-
-    public void setIsFinal(Boolean aFinal) {
-        isFinal = aFinal;
-    }
 }

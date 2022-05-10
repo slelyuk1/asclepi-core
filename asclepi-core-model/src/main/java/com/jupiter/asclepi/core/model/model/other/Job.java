@@ -2,12 +2,15 @@ package com.jupiter.asclepi.core.model.model.other;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Data
 @Embeddable
 public class Job implements Cloneable {
+    @Column(name = "job_name")
     private String name;
+    @Column(name = "organization")
     private String organization;
 
     @Override

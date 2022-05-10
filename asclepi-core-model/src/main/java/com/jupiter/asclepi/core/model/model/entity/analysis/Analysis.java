@@ -5,54 +5,62 @@ import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistor
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 @Getter
-@NoArgsConstructor
-@Data
-@Entity
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
+@Setter
+@ToString
+@Entity(name = "analysis")
 @IdClass(AnalysisId.class)
 public class Analysis extends AbstractCreationAware<Employee> {
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "client_id")
     private BigInteger clientId;
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "disease_history_number")
     private Integer diseaseHistoryNumber;
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "visit_number")
     private Integer visitNumber;
 
     @Id
     @GeneratedValue
-    @EqualsAndHashCode.Include
+    @Column(name = "number")
     private Integer number;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "clientId", updatable = false, insertable = false)
-    @JoinColumn(name = "diseaseHistoryNumber", updatable = false, insertable = false)
-    @JoinColumn(name = "visitNumber", updatable = false, insertable = false)
+    @JoinColumn(name = "client_id", updatable = false, insertable = false)
+    @JoinColumn(name = "disease_history_number", updatable = false, insertable = false)
+    @JoinColumn(name = "visit_number", updatable = false, insertable = false)
     private Visit visit;
 
+    @Column(name = "title")
     private String title;
 
     @NotNull
+    @Column(name = "summary")
     private String summary;
+
+    // todo when documents functionality is implemented
+    // private List<Document> documents;
 
     public Analysis(@NotNull AnalysisId id) {
         setId(id);
+    }
+
+    public Analysis() {
     }
 
     public final void setId(AnalysisId id) {
@@ -70,18 +78,31 @@ public class Analysis extends AbstractCreationAware<Employee> {
         visitNumber = visit.getNumber();
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Analysis analysis = (Analysis) o;
+        return new EqualsBuilder()
+                .append(getClientId(), analysis.getClientId())
+                .append(getDiseaseHistoryNumber(), analysis.getDiseaseHistoryNumber())
+                .append(getVisitNumber(), analysis.getVisitNumber())
+                .append(getNumber(), analysis.getNumber())
+                .isEquals();
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getClientId())
+                .append(getDiseaseHistoryNumber())
+                .append(getVisitNumber())
+                .append(getNumber())
+                .toHashCode();
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    // todo when documents functionality is implemented
-    // private List<Document> documents;
 }

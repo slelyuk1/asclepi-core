@@ -2,9 +2,11 @@ package com.jupiter.asclepi.core.model.model.entity.people;
 
 import com.jupiter.asclepi.core.model.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.model.other.Job;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,14 +16,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-@Entity
+@Getter
+@Setter
+@ToString
+@Entity(name = "client")
 public class Client extends AbstractCreationAware<Employee> {
+
     @Id
     @GeneratedValue
-    @EqualsAndHashCode.Include
+    @Column(name = "id")
     private BigInteger id;
 
     @NotBlank
@@ -29,14 +32,18 @@ public class Client extends AbstractCreationAware<Employee> {
     private String name;
 
     @NotBlank
+    @Column(name = "surname")
     private String surname;
 
+    @Column(name = "middle_name")
     private String middleName;
 
     @NotBlank
+    @Column(name = "residence")
     private String residence;
 
     @NotNull
+    @Column(name = "gender")
     private Boolean gender;
 
     private Job job;
@@ -44,4 +51,29 @@ public class Client extends AbstractCreationAware<Employee> {
     public Client(@NotNull BigInteger id) {
         this.id = id;
     }
+
+    public Client() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Client client = (Client) o;
+        return new EqualsBuilder()
+                .append(getId(), client.getId())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getId())
+                .toHashCode();
+    }
+
 }

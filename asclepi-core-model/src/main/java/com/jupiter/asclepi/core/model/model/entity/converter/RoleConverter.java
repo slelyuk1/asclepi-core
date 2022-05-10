@@ -5,6 +5,7 @@ import com.jupiter.asclepi.core.model.model.other.Role;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
+// todo move this class
 @Converter(autoApply = true)
 public class RoleConverter implements AttributeConverter<Role, Integer> {
 

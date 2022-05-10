@@ -6,53 +6,62 @@ import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistor
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-@Entity
+@Getter
+@Setter
+@ToString
+@Entity(name = "consultation")
 @IdClass(ConsultationId.class)
 public class Consultation extends AbstractCreationAware<Employee> {
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "client_id")
     private BigInteger clientId;
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "disease_history_number")
     private Integer diseaseHistoryNumber;
 
     @Id
-    @EqualsAndHashCode.Include
+    @Column(name = "visit_number")
     private Integer visitNumber;
 
     @Id
     @GeneratedValue
-    @EqualsAndHashCode.Include
+    @Column(name = "number")
     private Integer number;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "clientId", updatable = false, insertable = false)
-    @JoinColumn(name = "diseaseHistoryNumber", updatable = false, insertable = false)
-    @JoinColumn(name = "visitNumber", updatable = false, insertable = false)
+    @JoinColumn(name = "client_id", updatable = false, insertable = false)
+    @JoinColumn(name = "disease_history_number", updatable = false, insertable = false)
+    @JoinColumn(name = "visit_number", updatable = false, insertable = false)
     private Visit visit;
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "anamnesis_id")
     private Anamnesis anamnesis;
 
     @NotEmpty
+    @Column(name = "inspection")
     private String inspection;
 
-    public Consultation(@NotNull ConsultationId id) {
+    public Consultation(ConsultationId id) {
         setId(id);
+    }
+
+    public Consultation() {
     }
 
     public final void setId(ConsultationId id) {
@@ -63,22 +72,6 @@ public class Consultation extends AbstractCreationAware<Employee> {
         this.visit = new Visit(new VisitId(new DiseaseHistoryId(clientId, diseaseHistoryNumber), visitNumber));
     }
 
-    public Integer getNumber() {
-        return number;
-    }
-
-    public Visit getVisit() {
-        return visit;
-    }
-
-    public Anamnesis getAnamnesis() {
-        return anamnesis;
-    }
-
-    public String getInspection() {
-        return inspection;
-    }
-
     public void setVisit(@NotNull Visit visit) {
         this.visit = visit;
         clientId = visit.getDiseaseHistory().getClient().getId();
@@ -86,15 +79,31 @@ public class Consultation extends AbstractCreationAware<Employee> {
         visitNumber = visit.getNumber();
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Consultation that = (Consultation) o;
+        return new EqualsBuilder()
+                .append(getClientId(), that.getClientId())
+                .append(getDiseaseHistoryNumber(), that.getDiseaseHistoryNumber())
+                .append(getVisitNumber(), that.getVisitNumber())
+                .append(getNumber(), that.getNumber())
+                .isEquals();
     }
 
-    public void setAnamnesis(Anamnesis anamnesis) {
-        this.anamnesis = anamnesis;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getClientId())
+                .append(getDiseaseHistoryNumber())
+                .append(getVisitNumber())
+                .append(getNumber())
+                .toHashCode();
     }
 
-    public void setInspection(String inspection) {
-        this.inspection = inspection;
-    }
 }
