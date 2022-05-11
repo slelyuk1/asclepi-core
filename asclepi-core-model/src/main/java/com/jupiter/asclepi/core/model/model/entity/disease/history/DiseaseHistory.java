@@ -7,9 +7,9 @@ import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,7 +19,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @Entity(name = "disease_history")
 @IdClass(DiseaseHistoryId.class)
 public class DiseaseHistory extends AbstractCreationAware<Employee> implements Serializable {
@@ -76,6 +75,15 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> implements S
                 .append(getClient())
                 .append(getNumber())
                 .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("client", client)
+                .append("number", number)
+                .append("doctor", doctor)
+                .toString();
     }
 
 }
