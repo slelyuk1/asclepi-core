@@ -8,9 +8,10 @@ import javax.persistence.Embeddable;
 @Data
 @Embeddable
 public class Job implements Cloneable {
+
     @Column(name = "job_name")
     private String name;
-    @Column(name = "organization")
+    @Column(name = "job_organization")
     private String organization;
 
     @Override
