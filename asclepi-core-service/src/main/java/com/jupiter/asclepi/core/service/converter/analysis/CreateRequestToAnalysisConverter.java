@@ -7,7 +7,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
 
-@SuppressWarnings("UnmappedTargetProperties")
 @Mapper(config = MappingConfiguration.class)
 public interface CreateRequestToAnalysisConverter extends Converter<CreateAnalysisRequest, Analysis> {
 
