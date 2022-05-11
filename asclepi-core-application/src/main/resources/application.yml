@@ -9,6 +9,9 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
 
 # todo make these properties through annotationprocessing
 security:
@@ -23,4 +26,4 @@ security:
 # todo configure logging
 logging:
   level:
-    root: debug
+    root: info
