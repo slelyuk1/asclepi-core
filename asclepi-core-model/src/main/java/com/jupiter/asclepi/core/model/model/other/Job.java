@@ -4,10 +4,11 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Data
 @Embeddable
-public class Job implements Cloneable {
+public class Job implements Cloneable, Serializable {
 
     @Column(name = "job_name")
     private String name;

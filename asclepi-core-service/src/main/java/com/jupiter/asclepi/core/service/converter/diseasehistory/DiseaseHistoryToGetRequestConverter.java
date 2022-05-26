@@ -16,8 +16,8 @@ import java.math.BigInteger;
 public interface DiseaseHistoryToGetRequestConverter extends Converter<DiseaseHistory, GetDiseaseHistoryRequest> {
 
     @Override
-    @Mapping(target = "number")
-    @Mapping(target = "clientId", source = "client")
+    @Mapping(target = "number", source = "id.number")
+    @Mapping(target = "clientId", source = "id.client")
     GetDiseaseHistoryRequest convert(DiseaseHistory source);
 
     @Nullable

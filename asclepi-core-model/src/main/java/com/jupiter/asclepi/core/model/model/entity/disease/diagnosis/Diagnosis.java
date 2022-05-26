@@ -67,12 +67,13 @@ public class Diagnosis {
         clientId = id.getClientId();
         diseaseHistoryNumber = id.getDiseaseHistoryNumber();
         number = id.getNumber();
-        diseaseHistory = new DiseaseHistory(new DiseaseHistoryId(clientId, diseaseHistoryNumber));
+        diseaseHistory = new DiseaseHistory();
+        diseaseHistory.setId(new DiseaseHistoryId(clientId, diseaseHistoryNumber));
     }
 
     public void setDiseaseHistory(DiseaseHistory diseaseHistory) {
         this.diseaseHistory = diseaseHistory;
-        clientId = diseaseHistory.getClient().getId();
+        clientId = diseaseHistory.getId().getClient();
         diseaseHistoryNumber = diseaseHistory.getNumber();
     }
 

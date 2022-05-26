@@ -14,6 +14,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,14 +45,23 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> implements S
     @OneToMany
     private List<Diagnosis> diagnoses;
 
-    public DiseaseHistory(DiseaseHistoryId id) {
-        this();
+    public DiseaseHistory() {
+        diagnoses = new ArrayList<>();
+    }
+
+    public DiseaseHistoryId getId() {
+        return new DiseaseHistoryId(getClient().getId(), getNumber());
+    }
+
+    public void setId(DiseaseHistoryId id) {
         client = new Client(id.getClient());
         number = id.getNumber();
     }
 
-    public DiseaseHistory() {
-        diagnoses = new ArrayList<>();
+    // todo add javadoc
+    @Deprecated
+    public Integer getNumber() {
+        return number;
     }
 
     @Override
@@ -64,25 +74,23 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> implements S
         }
         DiseaseHistory that = (DiseaseHistory) o;
         return new EqualsBuilder()
-                .append(getClient(), that.getClient())
-                .append(getNumber(), that.getNumber())
+                .append(getId(), that.getId())
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
-                .append(getClient())
-                .append(getNumber())
+                .append(getId())
                 .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("client", client)
-                .append("number", number)
-                .append("doctor", doctor)
+                .append("id", getId())
+                .append("client", getClient())
+                .append("doctor", getDoctor())
                 .toString();
     }
 

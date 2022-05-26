@@ -11,13 +11,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigInteger;
 
 @Getter
 @Setter
 @ToString
 @Entity(name = "client")
-public class Client extends AbstractCreationAware<Employee> {
+public class Client extends AbstractCreationAware<Employee> implements Serializable {
 
     @Id
     @GeneratedValue
@@ -46,7 +47,7 @@ public class Client extends AbstractCreationAware<Employee> {
     @Embedded
     private Job job;
 
-    public Client(@NotNull BigInteger id) {
+    public Client(BigInteger id){
         this.id = id;
     }
 

@@ -74,7 +74,7 @@ public class Consultation extends AbstractCreationAware<Employee> {
 
     public void setVisit(@NotNull Visit visit) {
         this.visit = visit;
-        clientId = visit.getDiseaseHistory().getClient().getId();
+        clientId = visit.getDiseaseHistory().getId().getClient();
         diseaseHistoryNumber = visit.getDiseaseHistory().getNumber();
         visitNumber = visit.getNumber();
     }

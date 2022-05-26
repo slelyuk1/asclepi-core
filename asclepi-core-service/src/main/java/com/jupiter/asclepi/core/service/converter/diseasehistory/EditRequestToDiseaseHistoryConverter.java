@@ -15,8 +15,8 @@ import org.springframework.lang.Nullable;
 public interface EditRequestToDiseaseHistoryConverter extends Converter<EditDiseaseHistoryRequest, DiseaseHistory> {
 
     @Override
+    @Mapping(target = "id", source = "diseaseHistory")
     @Mapping(target = "client", source = "diseaseHistory")
-    @Mapping(target = "number", source = "diseaseHistory")
     @Mapping(target = "doctor", source = ".")
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
