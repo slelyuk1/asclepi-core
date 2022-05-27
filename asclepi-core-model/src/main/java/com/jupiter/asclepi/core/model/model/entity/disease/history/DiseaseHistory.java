@@ -4,7 +4,6 @@ import com.jupiter.asclepi.core.model.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.Diagnosis;
 import com.jupiter.asclepi.core.model.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -12,36 +11,34 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "disease_history")
+@Entity
+@Table(name = "disease_history")
 @IdClass(DiseaseHistoryId.class)
-public class DiseaseHistory extends AbstractCreationAware<Employee> implements Serializable {
+public class DiseaseHistory extends AbstractCreationAware<Employee> {
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @Column(name = "client_id")
+    private BigInteger clientId;
 
     @Id
     @GeneratedValue
     @Column(name = "number")
     private Integer number;
 
-    @NotNull
     @ManyToOne
+    @MapsId("clientId")
+    private Client client;
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "doctor_id")
     private Employee doctor;
 
-
-    @Setter(AccessLevel.PRIVATE)
-    @NotNull
     @OneToMany
     private List<Diagnosis> diagnoses;
 
@@ -54,7 +51,8 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> implements S
     }
 
     public void setId(DiseaseHistoryId id) {
-        client = new Client(id.getClient());
+        client = new Client();
+        client.setId(id.getClientId());
         number = id.getNumber();
     }
 
@@ -62,6 +60,10 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> implements S
     @Deprecated
     public Integer getNumber() {
         return number;
+    }
+
+    protected void setDiagnoses(List<Diagnosis> diagnoses) {
+        this.diagnoses = diagnoses;
     }
 
     @Override
@@ -73,16 +75,12 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> implements S
             return false;
         }
         DiseaseHistory that = (DiseaseHistory) o;
-        return new EqualsBuilder()
-                .append(getId(), that.getId())
-                .isEquals();
+        return new EqualsBuilder().append(getId(), that.getId()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(getId())
-                .toHashCode();
+        return new HashCodeBuilder(17, 37).append(getId()).toHashCode();
     }
 
     @Override

@@ -19,7 +19,7 @@ public class VisitId implements Serializable {
     @Default
     @ConstructorProperties
     public VisitId(DiseaseHistoryId diseaseHistory, Integer number) {
-        clientId = diseaseHistory.getClient();
+        clientId = diseaseHistory.getClientId();
         diseaseHistoryNumber = diseaseHistory.getNumber();
         this.number = number;
     }

@@ -61,7 +61,7 @@ public class Visit extends AbstractCreationAware<Employee> {
 
     public void setDiseaseHistory(DiseaseHistory diseaseHistory) {
         this.diseaseHistory = diseaseHistory;
-        clientId = diseaseHistory.getId().getClient();
+        clientId = diseaseHistory.getId().getClientId();
         diseaseHistoryNumber = diseaseHistory.getNumber();
     }
 

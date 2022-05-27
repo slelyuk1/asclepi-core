@@ -20,7 +20,6 @@ public interface CreateRequestToDiseaseHistoryConverter extends Converter<Create
     @Mapping(target = "creator", ignore = true)
     DiseaseHistory convert(CreateDiseaseHistoryRequest source);
 
-    @Mapping(target = "client", source = "clientId")
     @Mapping(target = "number", ignore = true)
     DiseaseHistoryId convertToDiseaseHistoryId(CreateDiseaseHistoryRequest source);
 

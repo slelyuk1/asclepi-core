@@ -20,7 +20,7 @@ public class DiagnosisId implements Serializable {
     @Default
     @ConstructorProperties
     public DiagnosisId(DiseaseHistoryId diseaseHistory, Integer number) {
-        clientId = diseaseHistory.getClient();
+        clientId = diseaseHistory.getClientId();
         diseaseHistoryNumber = diseaseHistory.getNumber();
         this.number = number;
     }
