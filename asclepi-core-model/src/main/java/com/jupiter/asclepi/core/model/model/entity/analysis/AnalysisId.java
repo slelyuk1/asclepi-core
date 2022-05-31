@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.model.model.entity.analysis;
 
+import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.support.mapstruct.ConstructorProperties;
 import com.jupiter.asclepi.core.model.support.mapstruct.Default;
@@ -21,8 +22,9 @@ public class AnalysisId implements Serializable {
     @Default
     @ConstructorProperties
     public AnalysisId(VisitId visitId, Integer number) {
-        clientId = visitId.getClientId();
-        diseaseHistoryNumber = visitId.getDiseaseHistoryNumber();
+        DiseaseHistoryId diseaseHistoryId = visitId.getDiseaseHistory();
+        clientId = diseaseHistoryId.getClient();
+        diseaseHistoryNumber = diseaseHistoryId.getNumber();
         visitNumber = visitId.getNumber();
         this.number = number;
     }

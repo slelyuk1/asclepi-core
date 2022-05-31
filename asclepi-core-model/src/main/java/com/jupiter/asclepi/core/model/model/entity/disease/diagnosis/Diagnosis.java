@@ -13,7 +13,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
-@Entity(name = "diagnosis")
+@Entity
+@Table(name = "diagnosis")
 @IdClass(DiagnosisId.class)
 public class Diagnosis {
 
