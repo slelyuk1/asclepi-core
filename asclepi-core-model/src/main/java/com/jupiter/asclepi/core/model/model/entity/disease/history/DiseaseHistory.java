@@ -11,7 +11,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +22,14 @@ import java.util.List;
 public class DiseaseHistory extends AbstractCreationAware<Employee> {
 
     @Id
-    @Column(name = "client_id")
-    private BigInteger clientId;
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
     @Id
     @GeneratedValue
     @Column(name = "number")
     private Integer number;
-
-    @ManyToOne
-    @MapsId("clientId")
-    private Client client;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "doctor_id")
@@ -52,7 +48,7 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
 
     public void setId(DiseaseHistoryId id) {
         client = new Client();
-        client.setId(id.getClientId());
+        client.setId(id.getClient());
         number = id.getNumber();
     }
 

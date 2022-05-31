@@ -73,7 +73,7 @@ public class Diagnosis {
 
     public void setDiseaseHistory(DiseaseHistory diseaseHistory) {
         this.diseaseHistory = diseaseHistory;
-        clientId = diseaseHistory.getId().getClientId();
+        clientId = diseaseHistory.getId().getClient();
         diseaseHistoryNumber = diseaseHistory.getNumber();
     }
 

@@ -11,6 +11,6 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DiseaseHistoryId implements Serializable {
-    private BigInteger clientId;
+    private BigInteger client;
     private Integer number;
 }
