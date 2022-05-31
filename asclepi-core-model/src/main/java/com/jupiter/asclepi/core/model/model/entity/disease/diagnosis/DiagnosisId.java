@@ -7,21 +7,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 @Data
 @NoArgsConstructor
 public class DiagnosisId implements Serializable {
 
-    private BigInteger clientId;
-    private Integer diseaseHistoryNumber;
+    private DiseaseHistoryId diseaseHistory;
     private Integer number;
 
     @Default
     @ConstructorProperties
     public DiagnosisId(DiseaseHistoryId diseaseHistory, Integer number) {
-        clientId = diseaseHistory.getClient();
-        diseaseHistoryNumber = diseaseHistory.getNumber();
+        this.diseaseHistory = diseaseHistory;
         this.number = number;
     }
 
