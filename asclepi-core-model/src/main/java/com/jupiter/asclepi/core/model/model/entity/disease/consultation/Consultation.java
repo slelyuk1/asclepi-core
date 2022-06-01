@@ -2,9 +2,7 @@ package com.jupiter.asclepi.core.model.model.entity.disease.consultation;
 
 import com.jupiter.asclepi.core.model.helper.api.object.AbstractCreationAware;
 import com.jupiter.asclepi.core.model.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
-import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,36 +13,18 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 
 @Getter
 @Setter
 @ToString
 @Entity(name = "consultation")
-@IdClass(ConsultationId.class)
 public class Consultation extends AbstractCreationAware<Employee> {
 
-    @Id
-    @Column(name = "client_id")
-    private BigInteger clientId;
+    @EmbeddedId
+    private ConsultationId id;
 
-    @Id
-    @Column(name = "disease_history_number")
-    private Integer diseaseHistoryNumber;
-
-    @Id
-    @Column(name = "visit_number")
-    private Integer visitNumber;
-
-    @Id
-    @Column(name = "number")
-    private Integer number;
-
-    @NotNull
     @ManyToOne
-    @JoinColumn(name = "client_id", updatable = false, insertable = false)
-    @JoinColumn(name = "disease_history_number", updatable = false, insertable = false)
-    @JoinColumn(name = "visit_number", updatable = false, insertable = false)
+    @MapsId("visitId")
     private Visit visit;
 
     @NotNull
@@ -64,19 +44,33 @@ public class Consultation extends AbstractCreationAware<Employee> {
     }
 
     public final void setId(ConsultationId id) {
-        clientId = id.getClientId();
-        diseaseHistoryNumber = id.getDiseaseHistoryNumber();
-        visitNumber = id.getVisitNumber();
-        number = id.getNumber();
+        this.id = id;
         visit = new Visit();
-        visit.setId(new VisitId(new DiseaseHistoryId(clientId, diseaseHistoryNumber), visitNumber));
+        visit.setId(id.getVisitId());
+    }
+
+    @Deprecated
+    public Integer getNumber(){
+        if(id == null){
+            return null;
+        }
+        return id.getNumber();
+    }
+
+    @Deprecated
+    public void setNumber(Integer number){
+        if(id == null){
+            id = new ConsultationId();
+        }
+        id.setNumber(number);
     }
 
     public void setVisit(@NotNull Visit visit) {
         this.visit = visit;
-        clientId = visit.getDiseaseHistory().getId().getClient();
-        diseaseHistoryNumber = visit.getDiseaseHistory().getNumber();
-        visitNumber = visit.getNumber();
+        if (id == null) {
+            id = new ConsultationId();
+        }
+        id.setVisitId(visit.getId());
     }
 
     @Override
@@ -88,22 +82,12 @@ public class Consultation extends AbstractCreationAware<Employee> {
             return false;
         }
         Consultation that = (Consultation) o;
-        return new EqualsBuilder()
-                .append(getClientId(), that.getClientId())
-                .append(getDiseaseHistoryNumber(), that.getDiseaseHistoryNumber())
-                .append(getVisitNumber(), that.getVisitNumber())
-                .append(getNumber(), that.getNumber())
-                .isEquals();
+        return new EqualsBuilder().append(getId(), that.getId()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(getClientId())
-                .append(getDiseaseHistoryNumber())
-                .append(getVisitNumber())
-                .append(getNumber())
-                .toHashCode();
+        return new HashCodeBuilder(17, 37).append(getId()).toHashCode();
     }
 
 }

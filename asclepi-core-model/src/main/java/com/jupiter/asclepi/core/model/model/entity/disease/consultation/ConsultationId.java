@@ -7,24 +7,22 @@ import com.jupiter.asclepi.core.model.support.mapstruct.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import java.io.Serializable;
-import java.math.BigInteger;
 
 @Data
 @NoArgsConstructor
+@Embeddable
 public class ConsultationId implements Serializable {
-    private BigInteger clientId;
-    private Integer diseaseHistoryNumber;
-    private Integer visitNumber;
+    @Embedded
+    private VisitId visitId;
     private Integer number;
 
     @Default
     @ConstructorProperties
     public ConsultationId(VisitId visitId, Integer number) {
-        DiseaseHistoryId diseaseHistoryId = visitId.getDiseaseHistory();
-        clientId = diseaseHistoryId.getClient();
-        diseaseHistoryNumber = diseaseHistoryId.getNumber();
-        visitNumber = visitId.getNumber();
+        this.visitId = visitId;
         this.number = number;
     }
 }
