@@ -18,17 +18,14 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "disease_history")
-@IdClass(DiseaseHistoryId.class)
 public class DiseaseHistory extends AbstractCreationAware<Employee> {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @EmbeddedId
+    private DiseaseHistoryId id;
 
-    @Id
-    @Column(name = "number")
-    private Integer number;
+    @ManyToOne
+    @MapsId("client")
+    private Client client;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "doctor_id")
@@ -41,20 +38,23 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
         diagnoses = new ArrayList<>();
     }
 
-    public DiseaseHistoryId getId() {
-        return new DiseaseHistoryId(getClient().getId(), getNumber());
-    }
-
     public void setId(DiseaseHistoryId id) {
-        client = new Client();
-        client.setId(id.getClient());
-        number = id.getNumber();
+        this.id = id;
+        if (id.getClient() != null) {
+            client = new Client();
+            client.setId(id.getClient());
+        }
     }
 
     // todo add javadoc
     @Deprecated
     public Integer getNumber() {
-        return number;
+        return id.getNumber();
+    }
+
+    @Deprecated
+    public void setNumber(int number) {
+        getId().setNumber(number);
     }
 
     protected void setDiagnoses(List<Diagnosis> diagnoses) {
