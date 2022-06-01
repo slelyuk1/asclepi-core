@@ -27,7 +27,6 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
     private Client client;
 
     @Id
-    @GeneratedValue
     @Column(name = "number")
     private Integer number;
 

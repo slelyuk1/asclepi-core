@@ -22,7 +22,6 @@ import javax.validation.constraints.NotNull;
 public class Employee extends AbstractCreationAware<Employee> {
 
     @Id
-    @GeneratedValue
     @Column(name = "id")
     private Integer id;
 

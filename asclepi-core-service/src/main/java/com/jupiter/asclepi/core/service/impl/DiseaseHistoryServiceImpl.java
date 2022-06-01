@@ -13,6 +13,7 @@ import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
+import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -45,6 +46,7 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
                     .orElseThrow(() -> new NonExistentIdException("Employee", createRequest.getClientId()));
             toCreate.setClient(client);
             toCreate.setDoctor(doctor);
+            toCreate.setNumber(IdGeneratorUtils.generateId().intValue());
             return repository.save(toCreate);
         });
     }

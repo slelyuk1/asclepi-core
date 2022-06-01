@@ -25,7 +25,6 @@ public class Diagnosis {
     private DiseaseHistory diseaseHistory;
 
     @Id
-    @GeneratedValue
     @NotNull
     @Column(name = "number")
     private Integer number;

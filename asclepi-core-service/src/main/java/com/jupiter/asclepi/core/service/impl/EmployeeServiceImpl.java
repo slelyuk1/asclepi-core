@@ -8,6 +8,7 @@ import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
+import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -41,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 throw new LoginNotUniqueException(createRequest.getLogin());
             }
             toCreate.setPassword(passwordEncoder.encode(toCreate.getPassword()));
+            toCreate.setId(IdGeneratorUtils.generateId().intValue());
             return repository.save(Objects.requireNonNull(toCreate));
         });
     }

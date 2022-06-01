@@ -19,7 +19,6 @@ import java.math.BigInteger;
 public class Anamnesis {
 
     @Id
-    @GeneratedValue
     @Column(name = "id")
     private BigInteger id;
 

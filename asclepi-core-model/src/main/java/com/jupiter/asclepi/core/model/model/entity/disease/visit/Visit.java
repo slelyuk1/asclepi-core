@@ -28,7 +28,6 @@ public class Visit extends AbstractCreationAware<Employee> {
     private DiseaseHistory diseaseHistory;
 
     @Id
-    @GeneratedValue
     @Column(name = "number")
     private Integer number;
 

@@ -14,6 +14,7 @@ import com.jupiter.asclepi.core.service.api.ConsultationService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
+import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -49,6 +50,7 @@ public class ConsultationServiceImpl implements ConsultationService {
             // todo may be better to set in another place
             toCreate.setVisit(visit);
             toCreate.setAnamnesis(anamnesis);
+            toCreate.setNumber(IdGeneratorUtils.generateId().intValue());
             return repository.save(toCreate);
         });
     }

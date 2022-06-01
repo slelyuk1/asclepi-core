@@ -37,7 +37,6 @@ public class Consultation extends AbstractCreationAware<Employee> {
     private Integer visitNumber;
 
     @Id
-    @GeneratedValue
     @Column(name = "number")
     private Integer number;
 

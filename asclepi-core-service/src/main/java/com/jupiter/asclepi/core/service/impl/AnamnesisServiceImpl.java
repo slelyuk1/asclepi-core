@@ -8,6 +8,7 @@ import com.jupiter.asclepi.core.repository.AnamnesisRepository;
 import com.jupiter.asclepi.core.service.api.AnamnesisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
+import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -37,6 +38,7 @@ public class AnamnesisServiceImpl implements AnamnesisService {
                     .orElseThrow(() -> new NonExistentIdException("Disease history", historyGetter));
             Anamnesis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Anamnesis.class));
             toCreate.setDiseaseHistory(linkedHistory);
+            toCreate.setId(IdGeneratorUtils.generateId());
             return repository.save(toCreate);
         });
     }

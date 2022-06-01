@@ -21,7 +21,6 @@ import java.math.BigInteger;
 public class Client extends AbstractCreationAware<Employee> {
 
     @Id
-    @GeneratedValue
     @Column(name = "id")
     private BigInteger id;
 

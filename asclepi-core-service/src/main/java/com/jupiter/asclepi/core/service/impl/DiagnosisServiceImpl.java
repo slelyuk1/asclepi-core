@@ -12,6 +12,7 @@ import com.jupiter.asclepi.core.repository.DiagnosisRepository;
 import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
+import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -42,6 +43,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             diseaseHistoryService.getOne(diseaseHistoryGetter)
                     .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
             Diagnosis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Diagnosis.class));
+            toCreate.setNumber(IdGeneratorUtils.generateId().intValue());
             return repository.save(toCreate);
         });
     }
