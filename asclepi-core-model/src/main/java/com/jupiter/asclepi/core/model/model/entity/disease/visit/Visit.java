@@ -18,36 +18,49 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @Table(name = "visit")
-@IdClass(VisitId.class)
 public class Visit extends AbstractCreationAware<Employee> {
 
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    @JoinColumn(name = "disease_history_number")
-    private DiseaseHistory diseaseHistory;
+    @EmbeddedId
+    private VisitId id;
 
-    @Id
-    @Column(name = "number")
-    private Integer number;
+    @ManyToOne
+    @MapsId("diseaseHistory")
+    private DiseaseHistory diseaseHistory;
 
     @NotNull
     @Column(name = "when")
     private LocalDateTime when;
 
-    public VisitId getId() {
-        DiseaseHistory diseaseHistoryToExtractId = getDiseaseHistory();
-        return new VisitId(
-                diseaseHistoryToExtractId != null ? diseaseHistoryToExtractId.getId() : null,
-                getNumber()
-        );
+    public void setId(VisitId id) {
+        this.id = id;
+        if (id.getDiseaseHistory() != null) {
+            diseaseHistory = new DiseaseHistory();
+            diseaseHistory.setId(id.getDiseaseHistory());
+        }
     }
 
-    public void setId(VisitId id) {
-        DiseaseHistory diseaseHistoryToSet = new DiseaseHistory();
-        diseaseHistoryToSet.setId(id.getDiseaseHistory());
-        setDiseaseHistory(diseaseHistoryToSet);
-        setNumber(id.getNumber());
+    public void setDiseaseHistory(DiseaseHistory diseaseHistory) {
+        this.diseaseHistory = diseaseHistory;
+        if (id == null) {
+            id = new VisitId();
+        }
+        id.setDiseaseHistory(diseaseHistory.getId());
+    }
+
+    @Deprecated
+    public void setNumber(int number) {
+        if (id == null) {
+            id = new VisitId();
+        }
+        id.setNumber(number);
+    }
+
+    @Deprecated
+    public Integer getNumber() {
+        if (id == null) {
+            return null;
+        }
+        return id.getNumber();
     }
 
     @Override
