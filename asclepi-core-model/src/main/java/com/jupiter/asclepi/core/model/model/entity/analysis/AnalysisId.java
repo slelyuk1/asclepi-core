@@ -23,7 +23,7 @@ public class AnalysisId implements Serializable {
     @ConstructorProperties
     public AnalysisId(VisitId visitId, Integer number) {
         DiseaseHistoryId diseaseHistoryId = visitId.getDiseaseHistory();
-        clientId = diseaseHistoryId.getClient();
+        clientId = diseaseHistoryId.getClientId();
         diseaseHistoryNumber = diseaseHistoryId.getNumber();
         visitNumber = visitId.getNumber();
         this.number = number;

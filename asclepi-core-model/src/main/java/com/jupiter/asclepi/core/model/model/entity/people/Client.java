@@ -17,31 +17,24 @@ import java.math.BigInteger;
 @Setter
 @ToString
 @Entity
-@Table(name = "client")
 public class Client extends AbstractCreationAware<Employee> {
 
     @Id
-    @Column(name = "id")
     private BigInteger id;
 
     @NotBlank
-    @Column(name = "client_name")
     private String name;
 
     @NotBlank
-    @Column(name = "surname")
     private String surname;
 
-    @Column(name = "middle_name")
     private String middleName;
 
     @NotBlank
-    @Column(name = "residence")
     private String residence;
 
     // todo verify all notnull annotations
     @NotNull
-    @Column(name = "gender")
     private Boolean gender;
 
     @Embedded
@@ -56,16 +49,12 @@ public class Client extends AbstractCreationAware<Employee> {
             return false;
         }
         Client client = (Client) o;
-        return new EqualsBuilder()
-                .append(getId(), client.getId())
-                .isEquals();
+        return new EqualsBuilder().append(getId(), client.getId()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(getId())
-                .toHashCode();
+        return new HashCodeBuilder(17, 37).append(getId()).toHashCode();
     }
 
 }

@@ -6,6 +6,7 @@ import com.jupiter.asclepi.core.model.model.entity.people.Client;
 import com.jupiter.asclepi.core.model.model.entity.people.Employee;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -13,48 +14,49 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
+@ToString
 @Entity
-@Table(name = "disease_history")
 public class DiseaseHistory extends AbstractCreationAware<Employee> {
 
     @EmbeddedId
     private DiseaseHistoryId id;
 
     @ManyToOne
-    @MapsId("client")
+    @MapsId("clientId")
     private Client client;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "doctor_id")
     private Employee doctor;
 
     @OneToMany
     private List<Diagnosis> diagnoses;
 
     public DiseaseHistory() {
+        id = new DiseaseHistoryId();
         diagnoses = new ArrayList<>();
     }
 
     public void setId(DiseaseHistoryId id) {
         this.id = id;
-        if (id.getClient() != null) {
-            client = new Client();
-            client.setId(id.getClient());
+        if (id.getClientId() != null) {
+            Client clientToSet = new Client();
+            clientToSet.setId(id.getClientId());
+            setClient(clientToSet);
         }
     }
 
-    // todo add javadoc
-    @Deprecated
-    public Integer getNumber() {
-        return id.getNumber();
+    public void setClient(Client client) {
+        this.client = client;
+        getId().setClientId(client.getId());
     }
 
     @Deprecated
-    public void setNumber(int number) {
-        getId().setNumber(number);
+    public Integer getNumber() {
+        return id.getNumber();
     }
 
     protected void setDiagnoses(List<Diagnosis> diagnoses) {
@@ -76,15 +78,6 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37).append(getId()).toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("id", getId())
-                .append("client", getClient())
-                .append("doctor", getDoctor())
-                .toString();
     }
 
 }

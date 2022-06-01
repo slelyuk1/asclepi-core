@@ -44,9 +44,8 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
                     .orElseThrow(() -> new NonExistentIdException("Client", createRequest.getClientId()));
             Employee doctor = employeeService.getOne(createRequest.getDoctorId())
                     .orElseThrow(() -> new NonExistentIdException("Employee", createRequest.getClientId()));
-            toCreate.setClient(client);
             toCreate.setDoctor(doctor);
-            toCreate.setNumber(IdGeneratorUtils.generateId().intValue());
+            toCreate.setId(new DiseaseHistoryId(client.getId(), IdGeneratorUtils.generateId().intValue()));
             return repository.save(toCreate);
         });
     }

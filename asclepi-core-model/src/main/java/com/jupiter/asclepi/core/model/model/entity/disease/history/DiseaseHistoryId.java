@@ -13,6 +13,6 @@ import java.math.BigInteger;
 @AllArgsConstructor
 @Embeddable
 public class DiseaseHistoryId implements Serializable {
-    private BigInteger client;
+    private BigInteger clientId;
     private Integer number;
 }

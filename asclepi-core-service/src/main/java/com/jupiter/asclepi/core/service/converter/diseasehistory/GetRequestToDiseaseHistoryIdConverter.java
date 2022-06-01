@@ -11,7 +11,6 @@ import org.springframework.core.convert.converter.Converter;
 public interface GetRequestToDiseaseHistoryIdConverter extends Converter<GetDiseaseHistoryRequest, DiseaseHistoryId> {
 
     @Override
-    @Mapping(target = "client", source = "clientId")
     DiseaseHistoryId convert(GetDiseaseHistoryRequest source);
 
 }
