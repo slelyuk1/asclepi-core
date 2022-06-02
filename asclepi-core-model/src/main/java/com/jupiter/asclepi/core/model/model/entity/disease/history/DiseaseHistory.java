@@ -9,12 +9,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -35,6 +33,12 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
     @OneToMany
     private List<Diagnosis> diagnoses;
 
+    public static DiseaseHistory fromId(DiseaseHistoryId id) {
+        DiseaseHistory toReturn = new DiseaseHistory();
+        toReturn.setId(id);
+        return toReturn;
+    }
+
     public DiseaseHistory() {
         id = new DiseaseHistoryId();
         diagnoses = new ArrayList<>();
@@ -43,9 +47,7 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
     public void setId(DiseaseHistoryId id) {
         this.id = id;
         if (id.getClientId() != null) {
-            Client clientToSet = new Client();
-            clientToSet.setId(id.getClientId());
-            setClient(clientToSet);
+            setClient(Client.fromId(id.getClientId()));
         }
     }
 

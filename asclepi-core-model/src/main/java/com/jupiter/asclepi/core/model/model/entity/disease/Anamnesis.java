@@ -15,33 +15,23 @@ import java.math.BigInteger;
 @Getter
 @Setter
 @ToString
-@Entity(name = "anamnesis")
+@Entity
 public class Anamnesis {
 
     @Id
-    @Column(name = "id")
     private BigInteger id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "disease_history_client_id")
-    @JoinColumn(name = "disease_history_number")
     private DiseaseHistory diseaseHistory;
 
     @NotEmpty
-    @Column(name = "complaints")
     private String complaints;
 
     @NotEmpty
-    @Column(name = "morbi")
     private String morbi;
 
     @NotEmpty
-    @Column(name = "vitae")
     private String vitae;
-
-    public Anamnesis(@NotNull BigInteger id) {
-        this.id = id;
-    }
 
     public Anamnesis() {
     }

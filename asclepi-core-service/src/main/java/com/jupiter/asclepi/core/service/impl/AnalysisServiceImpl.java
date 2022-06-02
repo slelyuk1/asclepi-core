@@ -4,15 +4,17 @@ import com.jupiter.asclepi.core.model.model.entity.analysis.Analysis;
 import com.jupiter.asclepi.core.model.model.entity.analysis.AnalysisId;
 import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
 import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
+import com.jupiter.asclepi.core.model.model.entity.disease.visit.VisitId;
 import com.jupiter.asclepi.core.model.model.request.disease.analysis.CreateAnalysisRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.analysis.EditAnalysisRequest;
 import com.jupiter.asclepi.core.model.model.request.disease.analysis.GetAnalysisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.AnalysisRepository;
 import com.jupiter.asclepi.core.service.api.AnalysisService;
-import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
+import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
+import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -33,17 +35,17 @@ import java.util.Optional;
 public class AnalysisServiceImpl implements AnalysisService {
 
     private final AnalysisRepository repository;
-    private final DiseaseHistoryService diseaseHistoryService;
+    private final VisitService visitService;
     private final ConversionService conversionService;
 
     @Override
     public Try<Analysis> create(@Valid @NotNull CreateAnalysisRequest createRequest) {
         return Try.of(() -> {
-            GetDiseaseHistoryRequest diseaseHistoryGetter = createRequest.getVisit().getDiseaseHistory();
+            GetVisitRequest visitGetter = createRequest.getVisit();
             Analysis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Analysis.class));
-            DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
-            toCreate.setDiseaseHistoryNumber(diseaseHistory.getNumber());
+            Visit visit = visitService.getOne(visitGetter)
+                    .orElseThrow(() -> new NonExistentIdException("Visit", visitGetter));
+            toCreate.setId(new AnalysisId(visit.getId(), IdGeneratorUtils.generateId().intValue()));
             return repository.save(toCreate);
         });
     }
@@ -84,14 +86,15 @@ public class AnalysisServiceImpl implements AnalysisService {
     @Override
     public List<Analysis> getForVisit(@NotNull Visit getRequest) {
         Analysis toFind = new Analysis();
-        toFind.setVisitNumber(getRequest.getNumber());
+        toFind.setVisit(getRequest);
         return repository.findAll(Example.of(toFind));
     }
 
     @Override
     public List<Analysis> getForDiseaseHistory(@NotNull DiseaseHistory history) {
         Analysis toFind = new Analysis();
-        toFind.setDiseaseHistoryNumber(history.getNumber());
+        Visit visitToSearchBy = Visit.fromId(new VisitId(history.getId(), null));
+        toFind.setVisit(visitToSearchBy);
         return repository.findAll(Example.of(toFind));
     }
 }

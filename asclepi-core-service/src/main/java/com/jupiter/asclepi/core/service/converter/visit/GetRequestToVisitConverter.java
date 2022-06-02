@@ -7,12 +7,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
 
-@SuppressWarnings("UnmappedTargetProperties")
 @Mapper(config = MappingConfiguration.class)
 public interface GetRequestToVisitConverter extends Converter<GetVisitRequest, VisitId> {
 
     @Override
-    @Mapping(target = "diseaseHistory")
+    @Mapping(target = "diseaseHistoryId", source = "diseaseHistory")
     VisitId convert(GetVisitRequest source);
 
 }

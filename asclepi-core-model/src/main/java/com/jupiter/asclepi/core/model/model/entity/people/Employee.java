@@ -18,37 +18,30 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
-@Entity(name = "employee")
+@Entity
 public class Employee extends AbstractCreationAware<Employee> {
 
     @Id
-    @Column(name = "id")
     private Integer id;
 
     @NotBlank
-    @Column(name = "login", unique = true)
+    @Column(unique = true)
     private String login;
 
     @NotBlank
-    @Column(name = "password")
     private String password;
 
     @NotNull
-    @Column(name = "role")
     private Role role;
 
     @NotBlank
-    @Column(name = "name")
     private String name;
 
     @NotBlank
-    @Column(name = "surname")
     private String surname;
 
-    @Column(name = "middle_name")
     private String middleName;
 
-    @Column(name = "additional_info")
     private String additionalInfo;
 
     @Override
@@ -60,16 +53,12 @@ public class Employee extends AbstractCreationAware<Employee> {
             return false;
         }
         Employee employee = (Employee) o;
-        return new EqualsBuilder()
-                .append(getId(), employee.getId())
-                .isEquals();
+        return new EqualsBuilder().append(getId(), employee.getId()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(getId())
-                .toHashCode();
+        return new HashCodeBuilder(17, 37).append(getId()).toHashCode();
     }
 
 }

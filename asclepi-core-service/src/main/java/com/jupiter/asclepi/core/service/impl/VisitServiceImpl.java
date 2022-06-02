@@ -42,8 +42,7 @@ public class VisitServiceImpl implements VisitService {
             Visit toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Visit.class));
             DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
                     .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
-            toCreate.setDiseaseHistory(diseaseHistory);
-            toCreate.setNumber(IdGeneratorUtils.generateId().intValue());
+            toCreate.setId(new VisitId(diseaseHistory.getId(), IdGeneratorUtils.generateId().intValue()));
             return repository.save(toCreate);
         });
     }

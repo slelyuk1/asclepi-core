@@ -8,7 +8,9 @@ import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
@@ -39,6 +41,12 @@ public class Client extends AbstractCreationAware<Employee> {
 
     @Embedded
     private Job job;
+
+    public static Client fromId(BigInteger id) {
+        Client toReturn = new Client();
+        toReturn.setId(id);
+        return toReturn;
+    }
 
     @Override
     public boolean equals(Object o) {

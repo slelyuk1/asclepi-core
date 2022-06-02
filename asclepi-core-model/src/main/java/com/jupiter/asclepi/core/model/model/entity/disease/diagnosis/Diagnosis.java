@@ -7,58 +7,54 @@ import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name = "diagnosis")
-@IdClass(DiagnosisId.class)
 public class Diagnosis {
 
-    @Id
+    @EmbeddedId
+    private DiagnosisId id;
+
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    @JoinColumn(name = "disease_history_number")
+    @MapsId("diseaseHistoryId")
     private DiseaseHistory diseaseHistory;
 
-    @Id
     @NotNull
-    @Column(name = "number")
-    private Integer number;
-
-    @NotNull
-    @Column(name = "disease")
     private String disease;
 
-    @Column(name = "complications")
     private String complications;
 
-    @Column(name = "etiology_and_pathogenesis")
     private String etiologyAndPathogenesis;
 
-    @Column(name = "speciality_of_course")
     private String specialityOfCourse;
 
     @NotNull
-    @Column(name = "is_final")
     private Boolean isFinal;
 
-    public DiagnosisId getId() {
-        final DiseaseHistory diseaseHistoryToExtractId = getDiseaseHistory();
-        return new DiagnosisId(
-                diseaseHistoryToExtractId != null ? diseaseHistoryToExtractId.getId() : null,
-                getNumber()
-        );
+    public Diagnosis() {
+        id = new DiagnosisId();
     }
 
     public void setId(DiagnosisId id) {
-        DiseaseHistory diseaseHistoryToSet = new DiseaseHistory();
-        diseaseHistoryToSet.setId(id.getDiseaseHistory());
-        setDiseaseHistory(diseaseHistoryToSet);
-        setNumber(id.getNumber());
+        this.id = id;
+        setDiseaseHistory(DiseaseHistory.fromId(id.getDiseaseHistoryId()));
+    }
+
+    public void setDiseaseHistory(DiseaseHistory diseaseHistory) {
+        this.diseaseHistory = diseaseHistory;
+        getId().setDiseaseHistoryId(diseaseHistory.getId());
+    }
+
+    @Deprecated
+    public Integer getNumber() {
+        return getId().getNumber();
     }
 
     @Override

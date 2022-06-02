@@ -15,13 +15,13 @@ import java.io.Serializable;
 @Embeddable
 public class VisitId implements Serializable {
     @Embedded
-    private DiseaseHistoryId diseaseHistory;
+    private DiseaseHistoryId diseaseHistoryId;
     private Integer number;
 
     @Default
     @ConstructorProperties
-    public VisitId(DiseaseHistoryId diseaseHistory, Integer number) {
-        this.diseaseHistory = diseaseHistory;
+    public VisitId(DiseaseHistoryId diseaseHistoryId, Integer number) {
+        this.diseaseHistoryId = diseaseHistoryId;
         this.number = number;
     }
 }

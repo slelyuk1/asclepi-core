@@ -36,33 +36,29 @@ public class Consultation extends AbstractCreationAware<Employee> {
     @Column(name = "inspection")
     private String inspection;
 
-    public Consultation(ConsultationId id) {
-        setId(id);
+    public static Consultation fromId(ConsultationId id) {
+        Consultation toReturn = new Consultation();
+        toReturn.setId(id);
+        return toReturn;
     }
 
     public Consultation() {
+        id = new ConsultationId();
     }
 
-    public final void setId(ConsultationId id) {
+    public void setId(ConsultationId id) {
         this.id = id;
-        visit = new Visit();
-        visit.setId(id.getVisitId());
+        if (id.getVisitId() != null) {
+            setVisit(Visit.fromId(id.getVisitId()));
+        }
     }
 
     @Deprecated
-    public Integer getNumber(){
-        if(id == null){
+    public Integer getNumber() {
+        if (id == null) {
             return null;
         }
         return id.getNumber();
-    }
-
-    @Deprecated
-    public void setNumber(Integer number){
-        if(id == null){
-            id = new ConsultationId();
-        }
-        id.setNumber(number);
     }
 
     public void setVisit(@NotNull Visit visit) {

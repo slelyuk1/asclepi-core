@@ -40,10 +40,10 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public Try<Diagnosis> create(@Valid @NotNull CreateDiagnosisRequest createRequest) {
         return Try.of(() -> {
             GetDiseaseHistoryRequest diseaseHistoryGetter = createRequest.getDiseaseHistory();
-            diseaseHistoryService.getOne(diseaseHistoryGetter)
+            DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
                     .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
             Diagnosis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Diagnosis.class));
-            toCreate.setNumber(IdGeneratorUtils.generateId().intValue());
+            toCreate.setId(new DiagnosisId(diseaseHistory.getId(), IdGeneratorUtils.generateId().intValue()));
             return repository.save(toCreate);
         });
     }

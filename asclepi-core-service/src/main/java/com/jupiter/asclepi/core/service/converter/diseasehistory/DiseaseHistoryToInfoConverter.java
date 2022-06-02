@@ -21,7 +21,7 @@ public interface DiseaseHistoryToInfoConverter extends Converter<DiseaseHistory,
 
     @Nullable
     default Integer convertDiagnosisToId(@Nullable Diagnosis diagnosis) {
-        return diagnosis != null ? diagnosis.getNumber() : null;
+        return diagnosis != null ? diagnosis.getId().getNumber() : null;
     }
 
     @Nullable

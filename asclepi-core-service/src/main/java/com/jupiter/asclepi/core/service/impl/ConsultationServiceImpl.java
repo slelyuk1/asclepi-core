@@ -47,10 +47,9 @@ public class ConsultationServiceImpl implements ConsultationService {
             Anamnesis anamnesis = anamnesisService.getOne(createRequest.getAnamnesisId())
                     .orElseThrow(() -> new NonExistentIdException("Anamnesis", createRequest.getAnamnesisId()));
             Consultation toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Consultation.class));
-            // todo may be better to set in another place
-            toCreate.setVisit(visit);
             toCreate.setAnamnesis(anamnesis);
-            toCreate.setNumber(IdGeneratorUtils.generateId().intValue());
+            // todo may be better to set in another place
+            toCreate.setId(new ConsultationId(visit.getId(), IdGeneratorUtils.generateId().intValue()));
             return repository.save(toCreate);
         });
     }
