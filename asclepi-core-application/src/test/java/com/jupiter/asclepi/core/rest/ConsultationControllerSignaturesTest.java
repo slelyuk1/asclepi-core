@@ -46,8 +46,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-// todo enable when conversion to info is fixed
-@Disabled
 class ConsultationControllerSignaturesTest {
     @Autowired
     private EmployeeTestHelper employeeHelper;
