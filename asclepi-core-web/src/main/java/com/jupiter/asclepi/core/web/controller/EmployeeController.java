@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.web.controller;
 
-import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
-import com.jupiter.asclepi.core.model.model.request.people.EditEmployeeRequest;
-import com.jupiter.asclepi.core.model.model.response.people.EmployeeInfo;
+import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
+import com.jupiter.asclepi.core.model.response.people.EmployeeInfo;
 import com.jupiter.asclepi.core.web.helper.api.CrudController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

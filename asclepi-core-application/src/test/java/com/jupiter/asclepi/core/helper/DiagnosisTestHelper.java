@@ -2,12 +2,12 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.Diagnosis;
-import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.CreateDiagnosisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.EditDiagnosisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.GetDiagnosisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.Diagnosis;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisRequest;
+import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
+import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
+import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;

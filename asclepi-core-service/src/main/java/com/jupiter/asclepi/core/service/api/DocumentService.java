@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.service.api;
 
-import com.jupiter.asclepi.core.model.model.entity.document.Document;
-import com.jupiter.asclepi.core.model.model.request.disease.document.CreateDocumentRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.document.EditDocumentRequest;
+import com.jupiter.asclepi.core.repository.entity.Document;
+import com.jupiter.asclepi.core.model.request.disease.document.CreateDocumentRequest;
+import com.jupiter.asclepi.core.model.request.disease.document.EditDocumentRequest;
 import com.jupiter.asclepi.core.service.helper.api.CrudService;
 
 import java.math.BigInteger;

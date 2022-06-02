@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.service.impl;
 
-import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
-import com.jupiter.asclepi.core.model.model.request.people.EditEmployeeRequest;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.EmployeeRepository;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
@@ -20,7 +20,6 @@ import org.springframework.validation.annotation.Validated;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

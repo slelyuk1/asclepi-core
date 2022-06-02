@@ -1,13 +1,13 @@
 package com.jupiter.asclepi.core.service.impl;
 
 
-import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.Diagnosis;
-import com.jupiter.asclepi.core.model.model.entity.disease.diagnosis.DiagnosisId;
-import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.CreateDiagnosisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.EditDiagnosisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.diagnosis.GetDiagnosisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.Diagnosis;
+import com.jupiter.asclepi.core.repository.entity.id.DiagnosisId;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisRequest;
+import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
+import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
+import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.DiagnosisRepository;
 import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;

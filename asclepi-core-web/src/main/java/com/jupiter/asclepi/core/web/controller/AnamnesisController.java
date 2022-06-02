@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.web.controller;
 
-import com.jupiter.asclepi.core.model.model.request.disease.anamnesis.CreateAnamnesisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.model.response.disease.AnamnesisInfo;
+import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
+import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.response.disease.AnamnesisInfo;
 import com.jupiter.asclepi.core.web.helper.api.CreateController;
 import com.jupiter.asclepi.core.web.helper.api.DeleteController;
 import com.jupiter.asclepi.core.web.helper.api.GetController;

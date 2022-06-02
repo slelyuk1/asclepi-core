@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.helper.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.model.model.entity.document.Document;
+import com.jupiter.asclepi.core.repository.entity.Document;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

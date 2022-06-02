@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.web.controller;
 
-import com.jupiter.asclepi.core.model.model.request.disease.document.CreateDocumentRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.document.EditDocumentRequest;
-import com.jupiter.asclepi.core.model.model.response.disease.DocumentInfo;
+import com.jupiter.asclepi.core.model.request.disease.document.CreateDocumentRequest;
+import com.jupiter.asclepi.core.model.request.disease.document.EditDocumentRequest;
+import com.jupiter.asclepi.core.model.response.disease.DocumentInfo;
 import com.jupiter.asclepi.core.web.helper.api.CrudController;
 
 import java.math.BigInteger;

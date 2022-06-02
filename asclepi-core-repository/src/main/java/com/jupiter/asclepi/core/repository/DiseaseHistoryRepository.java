@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.repository;
 
-import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistoryId;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.id.DiseaseHistoryId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @SuppressWarnings("unused")

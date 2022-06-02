@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.converter.client;
 
-import com.jupiter.asclepi.core.model.model.entity.people.Client;
-import com.jupiter.asclepi.core.model.model.request.people.CreateClientRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

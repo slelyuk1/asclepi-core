@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.service.api;
 
-import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
-import com.jupiter.asclepi.core.model.model.request.people.EditEmployeeRequest;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import com.jupiter.asclepi.core.service.helper.api.CrudService;
 
 import javax.validation.constraints.NotNull;

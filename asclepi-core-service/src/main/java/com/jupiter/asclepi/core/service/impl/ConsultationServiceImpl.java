@@ -1,13 +1,13 @@
 package com.jupiter.asclepi.core.service.impl;
 
-import com.jupiter.asclepi.core.model.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.model.entity.disease.consultation.Consultation;
-import com.jupiter.asclepi.core.model.model.entity.disease.consultation.ConsultationId;
-import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
-import com.jupiter.asclepi.core.model.model.request.disease.consultation.CreateConsultationRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.consultation.EditConsultationRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.consultation.GetConsultationRequest;
+import com.jupiter.asclepi.core.repository.entity.Anamnesis;
+import com.jupiter.asclepi.core.repository.entity.Consultation;
+import com.jupiter.asclepi.core.repository.entity.id.ConsultationId;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Visit;
+import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
+import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
+import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.repository.ConsultationRepository;
 import com.jupiter.asclepi.core.service.api.AnamnesisService;
 import com.jupiter.asclepi.core.service.api.ConsultationService;

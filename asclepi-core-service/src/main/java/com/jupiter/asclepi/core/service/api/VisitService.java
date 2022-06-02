@@ -1,10 +1,10 @@
 package com.jupiter.asclepi.core.service.api;
 
-import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.model.entity.disease.visit.Visit;
-import com.jupiter.asclepi.core.model.model.request.disease.visit.CreateVisitRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.visit.EditVisitRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Visit;
+import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
+import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
+import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.service.helper.api.CreateService;
 import com.jupiter.asclepi.core.service.helper.api.EditService;
 import com.jupiter.asclepi.core.service.helper.api.GetAllService;

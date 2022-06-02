@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.converter.employee;
 
-import com.jupiter.asclepi.core.model.model.entity.people.Employee;
-import com.jupiter.asclepi.core.model.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

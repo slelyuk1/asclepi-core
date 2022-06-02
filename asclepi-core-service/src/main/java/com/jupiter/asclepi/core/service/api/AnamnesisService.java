@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.service.api;
 
-import com.jupiter.asclepi.core.model.model.entity.disease.Anamnesis;
-import com.jupiter.asclepi.core.model.model.entity.disease.history.DiseaseHistory;
-import com.jupiter.asclepi.core.model.model.request.disease.anamnesis.CreateAnamnesisRequest;
+import com.jupiter.asclepi.core.repository.entity.Anamnesis;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.service.helper.api.CreateService;
 import com.jupiter.asclepi.core.service.helper.api.DeleteService;
 import com.jupiter.asclepi.core.service.helper.api.GetService;

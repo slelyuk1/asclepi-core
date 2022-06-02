@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.web.exception;
 
-import com.jupiter.asclepi.core.model.model.response.error.ErrorInfo;
+import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;

@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.converter.analysis;
 
-import com.jupiter.asclepi.core.model.model.entity.analysis.AnalysisId;
-import com.jupiter.asclepi.core.model.model.request.disease.analysis.GetAnalysisRequest;
+import com.jupiter.asclepi.core.repository.entity.id.AnalysisId;
+import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

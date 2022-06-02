@@ -1,11 +1,11 @@
 package com.jupiter.asclepi.core.web.controller;
 
-import com.jupiter.asclepi.core.model.model.request.disease.analysis.CreateAnalysisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.analysis.EditAnalysisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.analysis.GetAnalysisRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.model.response.disease.AnalysisInfo;
+import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.response.disease.AnalysisInfo;
 import com.jupiter.asclepi.core.web.helper.api.CrudController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
