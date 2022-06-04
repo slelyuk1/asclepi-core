@@ -11,7 +11,7 @@ import org.springframework.core.convert.converter.Converter;
 public interface VisitToInfoConverter extends Converter<Visit, VisitInfo> {
 
     @Override
-    @Mapping(target = "visit", source = ".")
+    @Mapping(target = "visit", source = "id")
     VisitInfo convert(Visit source);
 
 }

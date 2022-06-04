@@ -11,7 +11,7 @@ import org.springframework.core.convert.converter.Converter;
 public interface ConsultationToInfoConverter extends Converter<Consultation, ConsultationInfo> {
 
     @Override
-    @Mapping(target = "consultation", source = ".")
+    @Mapping(target = "consultation", source = "id")
     @Mapping(target = "anamnesisId", source = "anamnesis.id")
     ConsultationInfo convert(Consultation source);
 

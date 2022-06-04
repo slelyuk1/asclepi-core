@@ -12,6 +12,7 @@ public interface EditRequestToAnalysisConverter extends Converter<EditAnalysisRe
 
     @Override
     @Mapping(target = "id", source = "analysis")
+    @Mapping(target = "visit", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
     Analysis convert(EditAnalysisRequest source);

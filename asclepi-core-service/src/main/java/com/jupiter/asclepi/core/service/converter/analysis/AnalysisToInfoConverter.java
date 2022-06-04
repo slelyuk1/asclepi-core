@@ -11,7 +11,7 @@ import org.springframework.core.convert.converter.Converter;
 public interface AnalysisToInfoConverter extends Converter<Analysis, AnalysisInfo> {
 
     @Override
-    @Mapping(target = "analysis", source = ".")
+    @Mapping(target = "analysis", source = "id")
     @Mapping(target = "title")
     @Mapping(target = "summary")
     AnalysisInfo convert(Analysis source);

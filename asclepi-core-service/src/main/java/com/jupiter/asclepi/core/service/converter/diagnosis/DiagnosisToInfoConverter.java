@@ -11,7 +11,7 @@ import org.springframework.core.convert.converter.Converter;
 public interface DiagnosisToInfoConverter extends Converter<Diagnosis, DiagnosisInfo> {
 
     @Override
-    @Mapping(target = "diagnosis", source = ".")
+    @Mapping(target = "diagnosis", source = "id")
     DiagnosisInfo convert(Diagnosis source);
 
 }

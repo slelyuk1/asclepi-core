@@ -1,35 +1,22 @@
 package com.jupiter.asclepi.core.service.converter.consultation;
 
 import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
-import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.repository.entity.Consultation;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
-
-import java.math.BigInteger;
 
 @Mapper(config = MappingConfiguration.class)
 public interface EditRequestToConsultationConverter extends Converter<EditConsultationRequest, Consultation> {
 
     @Override
     @Mapping(target = "id", source = "consultation")
-    @Mapping(target = "anamnesis", source = "anamnesisId")
+    @Mapping(target = "anamnesis.id", source = "anamnesisId")
+    @Mapping(target = "anamnesis", ignore = true)
+    @Mapping(target = "visit", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
     Consultation convert(EditConsultationRequest source);
-
-    @Nullable
-    default Anamnesis convertToAnamnesis(@Nullable BigInteger anamnesisId) {
-        if (anamnesisId == null) {
-            return null;
-        }
-
-        Anamnesis anamnesis = new Anamnesis();
-        anamnesis.setId(anamnesisId);
-        return anamnesis;
-    }
 
 }

@@ -12,6 +12,7 @@ public interface EditRequestToVisitConverter extends Converter<EditVisitRequest,
 
     @Override
     @Mapping(target = "id", source = "visit")
+    @Mapping(target = "diseaseHistory", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
     Visit convert(EditVisitRequest source);

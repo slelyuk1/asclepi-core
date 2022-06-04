@@ -13,6 +13,7 @@ public interface EditRequestToDiagnosisConverter extends Converter<EditDiagnosis
 
     @Override
     @Mapping(target = "id", source = "diagnosis")
+    @Mapping(target = "diseaseHistory", ignore = true)
     Diagnosis convert(EditDiagnosisRequest source);
 
 }

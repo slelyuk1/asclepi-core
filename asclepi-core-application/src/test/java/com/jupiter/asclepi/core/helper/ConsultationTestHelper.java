@@ -57,6 +57,7 @@ public class ConsultationTestHelper {
                 consultation.getId().getNumber()
         );
         request.setConsultation(getter);
+        request.setAnamnesisId(consultation.getAnamnesis().getId());
         request.setInspection(consultation.getInspection() + "Other");
         return request;
     }

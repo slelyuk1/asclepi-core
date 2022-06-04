@@ -3,7 +3,6 @@ package com.jupiter.asclepi.core.service.converter.diseasehistory;
 import com.jupiter.asclepi.core.model.response.DiseaseHistoryInfo;
 import com.jupiter.asclepi.core.repository.entity.Diagnosis;
 import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Employee;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,19 +13,14 @@ import org.springframework.lang.Nullable;
 public interface DiseaseHistoryToInfoConverter extends Converter<DiseaseHistory, DiseaseHistoryInfo> {
 
     @Override
-    @Mapping(target = "diseaseHistory", source = ".")
+    @Mapping(target = "diseaseHistory", source = "id")
     @Mapping(target = "diagnosisIds", source = "diagnoses")
-    @Mapping(target = "doctorId", source = "doctor")
+    @Mapping(target = "doctorId", source = "doctor.id")
     DiseaseHistoryInfo convert(DiseaseHistory source);
 
     @Nullable
     default Integer convertDiagnosisToId(@Nullable Diagnosis diagnosis) {
         return diagnosis != null ? diagnosis.getId().getNumber() : null;
-    }
-
-    @Nullable
-    default Integer convertDoctorToId(@Nullable Employee doctor) {
-        return doctor != null ? doctor.getId() : null;
     }
 
 }

@@ -12,14 +12,11 @@ import org.springframework.core.convert.converter.Converter;
 public interface CreateRequestToConsultationConverter extends Converter<CreateConsultationRequest, Consultation> {
 
     @Override
-    @Mapping(target = "anamnesis", source = ".")
+    @Mapping(target = "anamnesis.id", source = "anamnesisId")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "anamnesis", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
     Consultation convert(CreateConsultationRequest source);
-
-    @SuppressWarnings("UnmappedTargetProperties")
-    @Mapping(target = "id", source = "anamnesisId")
-    Anamnesis convertToAnamnesis(CreateConsultationRequest id);
 
 }
