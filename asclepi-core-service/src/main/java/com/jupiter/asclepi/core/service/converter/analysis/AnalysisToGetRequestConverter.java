@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.service.converter.analysis;
 
 
-import com.jupiter.asclepi.core.repository.entity.Analysis;
 import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
+import com.jupiter.asclepi.core.repository.entity.Analysis;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,8 +12,7 @@ import org.springframework.core.convert.converter.Converter;
 public interface AnalysisToGetRequestConverter extends Converter<Analysis, GetAnalysisRequest> {
 
     @Override
-    @Mapping(target = "number")
-    @Mapping(target = "visit")
+    @Mapping(target = "number", source = "id.number")
     GetAnalysisRequest convert(Analysis source);
 
 }

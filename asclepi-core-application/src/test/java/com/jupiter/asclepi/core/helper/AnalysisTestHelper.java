@@ -2,14 +2,14 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.repository.entity.Analysis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
 import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.Analysis;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Visit;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
@@ -31,8 +31,8 @@ public class AnalysisTestHelper {
     public CreateAnalysisRequest generateCreateRequest(Visit visit) {
         CreateAnalysisRequest request = new CreateAnalysisRequest();
         GetVisitRequest visitGetter = new GetVisitRequest(
-                new GetDiseaseHistoryRequest(visit.getDiseaseHistory().getClient().getId(), visit.getDiseaseHistory().getNumber()),
-                visit.getNumber()
+                new GetDiseaseHistoryRequest(visit.getDiseaseHistory().getClient().getId(), visit.getDiseaseHistory().getId().getNumber()),
+                visit.getId().getNumber()
         );
         request.setVisit(visitGetter);
         request.setTitle(TEST_TITLE);
@@ -53,10 +53,10 @@ public class AnalysisTestHelper {
 
         GetAnalysisRequest analysisGetter = new GetAnalysisRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        analysis.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        analysis.getVisit().getId().getNumber()
                 ),
-                analysis.getNumber()
+                analysis.getId().getNumber()
         );
         request.setAnalysis(analysisGetter);
         request.setTitle(analysis.getTitle() + "Other");
@@ -108,9 +108,9 @@ public class AnalysisTestHelper {
         GetVisitRequest toCompare = new GetVisitRequest(
                 new GetDiseaseHistoryRequest(
                         entity.getVisit().getDiseaseHistory().getClient().getId(),
-                        entity.getVisit().getDiseaseHistory().getNumber()
+                        entity.getVisit().getDiseaseHistory().getId().getNumber()
                 ),
-                entity.getVisit().getNumber()
+                entity.getVisit().getId().getNumber()
         );
         Assertions.assertEquals(request.getVisit(), toCompare);
         Assertions.assertEquals(request.getSummary(), entity.getSummary());
@@ -121,10 +121,10 @@ public class AnalysisTestHelper {
         DiseaseHistory history = entity.getVisit().getDiseaseHistory();
         GetAnalysisRequest toCompare = new GetAnalysisRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        entity.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        entity.getVisit().getId().getNumber()
                 ),
-                entity.getNumber()
+                entity.getId().getNumber()
         );
         Assertions.assertEquals(request.getAnalysis(), toCompare);
         if (Objects.nonNull(request.getTitle())) {
@@ -138,7 +138,7 @@ public class AnalysisTestHelper {
     @SuppressWarnings("SameParameterValue")
     public void assertEntitiesAreFullyEqual(Analysis expected, Analysis actual) {
         Assertions.assertEquals(expected.getVisit(), actual.getVisit());
-        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
+        Assertions.assertEquals(expected.getId().getNumber(), actual.getId().getNumber());
         Assertions.assertEquals(expected.getTitle(), actual.getTitle());
         Assertions.assertEquals(expected.getSummary(), actual.getSummary());
     }

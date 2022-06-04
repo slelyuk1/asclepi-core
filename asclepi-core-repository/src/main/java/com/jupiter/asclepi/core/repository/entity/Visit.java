@@ -53,11 +53,6 @@ public class Visit extends AbstractCreationAware<Employee> {
         id.setDiseaseHistoryId(diseaseHistory.getId());
     }
 
-    @Deprecated
-    public Integer getNumber() {
-        return id.getNumber();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

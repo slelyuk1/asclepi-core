@@ -2,11 +2,11 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.repository.entity.Anamnesis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.EditAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.Anamnesis;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -31,7 +31,7 @@ public class AnamnesisTestHelper {
 
     public CreateAnamnesisRequest generateCreateRequest(DiseaseHistory diseaseHistory) {
         CreateAnamnesisRequest request = new CreateAnamnesisRequest();
-        GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest(diseaseHistory.getClient().getId(), diseaseHistory.getNumber());
+        GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest(diseaseHistory.getClient().getId(), diseaseHistory.getId().getNumber());
         request.setDiseaseHistory(getter);
         request.setComplaints(TEST_COMPLAINTS);
         request.setMorbi(TEST_MORBI);
@@ -82,7 +82,7 @@ public class AnamnesisTestHelper {
 
     public void assertEntityIsValidAfterCreation(CreateAnamnesisRequest request, Anamnesis entity) {
         DiseaseHistory history = entity.getDiseaseHistory();
-        GetDiseaseHistoryRequest toCompare = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber());
+        GetDiseaseHistoryRequest toCompare = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber());
         Assertions.assertEquals(request.getDiseaseHistory(), toCompare);
         Assertions.assertEquals(request.getComplaints(), entity.getComplaints());
         Assertions.assertEquals(request.getMorbi(), entity.getMorbi());

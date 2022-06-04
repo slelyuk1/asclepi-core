@@ -2,18 +2,13 @@ package com.jupiter.asclepi.core.web.controller.impl;
 
 import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.*;
-import com.jupiter.asclepi.core.repository.entity.Anamnesis;
-import com.jupiter.asclepi.core.repository.entity.Consultation;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.*;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.*;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
@@ -136,10 +131,10 @@ class ConsultationControllerTest {
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetConsultationRequest request = new GetConsultationRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        created.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        created.getVisit().getId().getNumber()
                 ),
-                created.getNumber()
+                created.getId().getNumber()
         );
         this.mockMvc.perform(consultationHelper.createMockedGetRequest(request))
                 .andExpect(status().isOk())
@@ -171,10 +166,10 @@ class ConsultationControllerTest {
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetConsultationRequest request = new GetConsultationRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        created.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        created.getVisit().getId().getNumber()
                 ),
-                created.getNumber()
+                created.getId().getNumber()
         );
         this.mockMvc.perform(consultationHelper.createMockedDeleteRequest(request))
                 .andExpect(status().isOk())
@@ -203,8 +198,8 @@ class ConsultationControllerTest {
         Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetVisitRequest request = new GetVisitRequest(
-                new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                created.getVisit().getNumber()
+                new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                created.getVisit().getId().getNumber()
         );
         this.mockMvc.perform(consultationHelper.createMockedGetForVisit(request))
                 .andExpect(status().isOk())
@@ -223,7 +218,7 @@ class ConsultationControllerTest {
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
         Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
-        GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber());
+        GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber());
         this.mockMvc.perform(consultationHelper.createMockedGetForDiseaseHistory(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

@@ -2,9 +2,9 @@ package com.jupiter.asclepi.core.web.controller.impl;
 
 import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
-import com.jupiter.asclepi.core.repository.entity.Client;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;

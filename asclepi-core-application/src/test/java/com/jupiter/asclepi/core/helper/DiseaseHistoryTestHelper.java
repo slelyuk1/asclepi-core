@@ -2,10 +2,10 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
 import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
@@ -32,7 +32,7 @@ public class DiseaseHistoryTestHelper {
         EditDiseaseHistoryRequest request = new EditDiseaseHistoryRequest();
         GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest();
         getter.setClientId(diseaseHistory.getClient().getId());
-        getter.setNumber(diseaseHistory.getNumber());
+        getter.setNumber(diseaseHistory.getId().getNumber());
         request.setDoctorId(doctorId);
         request.setDiseaseHistory(getter);
         return request;
@@ -69,7 +69,7 @@ public class DiseaseHistoryTestHelper {
 
     public void assertEntityIsValidAfterEdition(EditDiseaseHistoryRequest request, DiseaseHistory entity) {
         Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getClient().getId());
-        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getNumber());
+        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getId().getNumber());
         if (Objects.nonNull(request.getDoctorId())) {
             Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
         }
@@ -78,7 +78,7 @@ public class DiseaseHistoryTestHelper {
     @SuppressWarnings("SameParameterValue")
     public void assertEntitiesAreFullyEqual(DiseaseHistory expected, DiseaseHistory actual) {
         Assertions.assertEquals(expected.getClient(), actual.getClient());
-        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
+        Assertions.assertEquals(expected.getId().getNumber(), actual.getId().getNumber());
         Assertions.assertEquals(expected.getDoctor(), actual.getDoctor());
         Assertions.assertIterableEquals(expected.getDiagnoses(), actual.getDiagnoses());
     }

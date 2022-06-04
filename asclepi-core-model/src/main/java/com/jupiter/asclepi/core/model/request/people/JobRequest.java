@@ -2,8 +2,6 @@ package com.jupiter.asclepi.core.model.request.people;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
 public class JobRequest implements Cloneable {
 

@@ -8,7 +8,10 @@ import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -27,18 +30,10 @@ public class Consultation extends AbstractCreationAware<Employee> {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "anamnesis_id")
     private Anamnesis anamnesis;
 
     @NotEmpty
-    @Column(name = "inspection")
     private String inspection;
-
-    public static Consultation fromId(ConsultationId id) {
-        Consultation toReturn = new Consultation();
-        toReturn.setId(id);
-        return toReturn;
-    }
 
     public Consultation() {
         id = new ConsultationId();
@@ -49,14 +44,6 @@ public class Consultation extends AbstractCreationAware<Employee> {
         if (id.getVisitId() != null) {
             setVisit(Visit.fromId(id.getVisitId()));
         }
-    }
-
-    @Deprecated
-    public Integer getNumber() {
-        if (id == null) {
-            return null;
-        }
-        return id.getNumber();
     }
 
     public void setVisit(@NotNull Visit visit) {

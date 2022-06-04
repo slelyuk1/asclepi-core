@@ -2,18 +2,13 @@ package com.jupiter.asclepi.core.service.impl;
 
 import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.*;
-import com.jupiter.asclepi.core.repository.entity.Anamnesis;
-import com.jupiter.asclepi.core.repository.entity.Consultation;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.*;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -104,10 +99,10 @@ class ConsultationServiceTest {
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetConsultationRequest getRequest = new GetConsultationRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        created.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        created.getVisit().getId().getNumber()
                 ),
-                created.getNumber()
+                created.getId().getNumber()
         );
         Consultation found = consultationService.getOne(getRequest).get();
         consultationHelper.assertEntitiesAreFullyEqual(created, found);
@@ -123,10 +118,10 @@ class ConsultationServiceTest {
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetConsultationRequest getRequest = new GetConsultationRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        created.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        created.getVisit().getId().getNumber()
                 ),
-                created.getNumber()
+                created.getId().getNumber()
         );
         boolean isDeleted = consultationService.delete(getRequest);
         Assertions.assertTrue(isDeleted);

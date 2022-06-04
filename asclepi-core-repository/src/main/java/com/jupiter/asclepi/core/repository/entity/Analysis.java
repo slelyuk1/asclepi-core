@@ -8,7 +8,10 @@ import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -32,12 +35,6 @@ public class Analysis extends AbstractCreationAware<Employee> {
     // todo when documents functionality is implemented
     // private List<Document> documents;
 
-    public static Analysis fromId(AnalysisId id) {
-        Analysis toReturn = new Analysis();
-        toReturn.setId(id);
-        return toReturn;
-    }
-
     public Analysis() {
         id = new AnalysisId();
     }
@@ -52,11 +49,6 @@ public class Analysis extends AbstractCreationAware<Employee> {
     public void setVisit(Visit visit) {
         this.visit = visit;
         getId().setVisitId(visit.getId());
-    }
-
-    @Deprecated
-    public Integer getNumber(){
-        return getId().getNumber();
     }
 
     @Override

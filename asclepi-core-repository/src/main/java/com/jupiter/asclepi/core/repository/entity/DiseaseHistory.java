@@ -54,11 +54,7 @@ public class DiseaseHistory extends AbstractCreationAware<Employee> {
         getId().setClientId(client.getId());
     }
 
-    @Deprecated
-    public Integer getNumber() {
-        return id.getNumber();
-    }
-
+    @SuppressWarnings("unused")
     protected void setDiagnoses(List<Diagnosis> diagnoses) {
         this.diagnoses = diagnoses;
     }

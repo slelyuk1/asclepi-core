@@ -2,17 +2,13 @@ package com.jupiter.asclepi.core.web.controller.impl;
 
 import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.*;
-import com.jupiter.asclepi.core.repository.entity.Analysis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.*;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.*;
 import com.jupiter.asclepi.core.utils.ConstraintDocumentationHelper;
 import com.jupiter.asclepi.core.utils.TestUtils;
@@ -129,10 +125,10 @@ class AnalysisControllerTest {
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetAnalysisRequest request = new GetAnalysisRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        created.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        created.getVisit().getId().getNumber()
                 ),
-                created.getNumber()
+                created.getId().getNumber()
         );
         this.mockMvc.perform(analysisHelper.createMockedGetRequest(request))
                 .andExpect(status().isOk())
@@ -164,10 +160,10 @@ class AnalysisControllerTest {
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetAnalysisRequest request = new GetAnalysisRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        created.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        created.getVisit().getId().getNumber()
                 ),
-                created.getNumber()
+                created.getId().getNumber()
         );
         this.mockMvc.perform(analysisHelper.createMockedDeleteRequest(request))
                 .andExpect(status().isOk())
@@ -196,8 +192,8 @@ class AnalysisControllerTest {
         Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetVisitRequest request = new GetVisitRequest(
-                new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                created.getVisit().getNumber()
+                new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                created.getVisit().getId().getNumber()
         );
         this.mockMvc.perform(analysisHelper.createMockedGetForVisit(request))
                 .andExpect(status().isOk())
@@ -216,7 +212,7 @@ class AnalysisControllerTest {
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
         Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
-        GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber());
+        GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber());
         this.mockMvc.perform(analysisHelper.createMockedGetForDiseaseHistory(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

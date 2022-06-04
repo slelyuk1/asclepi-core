@@ -2,15 +2,15 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.repository.entity.Anamnesis;
-import com.jupiter.asclepi.core.repository.entity.Consultation;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
 import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.Anamnesis;
+import com.jupiter.asclepi.core.repository.entity.Consultation;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Visit;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
@@ -31,8 +31,8 @@ public class ConsultationTestHelper {
     public CreateConsultationRequest generateCreateRequest(Visit visit, Anamnesis anamnesis) {
         CreateConsultationRequest request = new CreateConsultationRequest();
         GetVisitRequest visitGetter = new GetVisitRequest(
-                new GetDiseaseHistoryRequest(visit.getDiseaseHistory().getClient().getId(), visit.getDiseaseHistory().getNumber()),
-                visit.getNumber()
+                new GetDiseaseHistoryRequest(visit.getDiseaseHistory().getClient().getId(), visit.getDiseaseHistory().getId().getNumber()),
+                visit.getId().getNumber()
         );
         request.setVisit(visitGetter);
         request.setAnamnesisId(anamnesis.getId());
@@ -51,10 +51,10 @@ public class ConsultationTestHelper {
         EditConsultationRequest request = new EditConsultationRequest();
         GetConsultationRequest getter = new GetConsultationRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        consultation.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        consultation.getVisit().getId().getNumber()
                 ),
-                consultation.getNumber()
+                consultation.getId().getNumber()
         );
         request.setConsultation(getter);
         request.setInspection(consultation.getInspection() + "Other");
@@ -105,9 +105,9 @@ public class ConsultationTestHelper {
         GetVisitRequest toCompare = new GetVisitRequest(
                 new GetDiseaseHistoryRequest(
                         entity.getVisit().getDiseaseHistory().getClient().getId(),
-                        entity.getVisit().getDiseaseHistory().getNumber()
+                        entity.getVisit().getDiseaseHistory().getId().getNumber()
                 ),
-                entity.getVisit().getNumber()
+                entity.getVisit().getId().getNumber()
         );
         Assertions.assertEquals(request.getVisit(), toCompare);
         Assertions.assertEquals(request.getAnamnesisId(), entity.getAnamnesis().getId());
@@ -118,10 +118,10 @@ public class ConsultationTestHelper {
         DiseaseHistory history = entity.getVisit().getDiseaseHistory();
         GetConsultationRequest toCompare = new GetConsultationRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        entity.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        entity.getVisit().getId().getNumber()
                 ),
-                entity.getNumber()
+                entity.getId().getNumber()
         );
         Assertions.assertEquals(request.getConsultation(), toCompare);
         if (Objects.nonNull(request.getAnamnesisId())) {
@@ -135,7 +135,7 @@ public class ConsultationTestHelper {
     @SuppressWarnings("SameParameterValue")
     public void assertEntitiesAreFullyEqual(Consultation expected, Consultation actual) {
         Assertions.assertEquals(expected.getVisit(), actual.getVisit());
-        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
+        Assertions.assertEquals(expected.getId().getNumber(), actual.getId().getNumber());
         Assertions.assertEquals(expected.getAnamnesis(), actual.getAnamnesis());
         Assertions.assertEquals(expected.getInspection(), actual.getInspection());
     }

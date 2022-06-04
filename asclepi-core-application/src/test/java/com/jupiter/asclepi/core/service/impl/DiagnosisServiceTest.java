@@ -5,15 +5,15 @@ import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiagnosisTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
-import com.jupiter.asclepi.core.repository.entity.Diagnosis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.Diagnosis;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
@@ -94,8 +94,8 @@ public class DiagnosisServiceTest {
         entityManager.detach(created);
 
         GetDiagnosisRequest getRequest = new GetDiagnosisRequest(
-                new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getNumber()),
-                created.getNumber()
+                new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getId().getNumber()),
+                created.getId().getNumber()
         );
         Diagnosis found = diagnosisService.getOne(getRequest).get();
         diagnosisHelper.assertEntitiesAreFullyEqual(created, found);

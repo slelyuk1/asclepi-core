@@ -2,12 +2,12 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Visit;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
@@ -30,7 +30,7 @@ public class VisitTestHelper {
         CreateVisitRequest request = new CreateVisitRequest();
         GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest();
         getter.setClientId(history.getClient().getId());
-        getter.setNumber(history.getNumber());
+        getter.setNumber(history.getId().getNumber());
         request.setDiseaseHistory(getter);
         request.setWhen(TEST_WHEN);
         return request;
@@ -47,9 +47,9 @@ public class VisitTestHelper {
         GetVisitRequest getter = new GetVisitRequest();
         GetDiseaseHistoryRequest diseaseHistoryGetter = new GetDiseaseHistoryRequest();
         diseaseHistoryGetter.setClientId(visit.getDiseaseHistory().getClient().getId());
-        diseaseHistoryGetter.setNumber(visit.getDiseaseHistory().getNumber());
+        diseaseHistoryGetter.setNumber(visit.getDiseaseHistory().getId().getNumber());
         getter.setDiseaseHistory(diseaseHistoryGetter);
-        getter.setNumber(visit.getNumber());
+        getter.setNumber(visit.getId().getNumber());
         request.setVisit(getter);
         request.setWhen(when);
         return request;
@@ -84,14 +84,14 @@ public class VisitTestHelper {
 
     public void assertEntityIsValidAfterCreation(CreateVisitRequest request, Visit entity) {
         Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getDiseaseHistory().getClient().getId());
-        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getDiseaseHistory().getNumber());
+        Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getDiseaseHistory().getId().getNumber());
         Assertions.assertEquals(request.getWhen(), entity.getWhen());
     }
 
     public void assertEntityIsValidAfterEdition(EditVisitRequest request, Visit entity) {
         Assertions.assertEquals(request.getVisit().getDiseaseHistory().getClientId(), entity.getDiseaseHistory().getClient().getId());
-        Assertions.assertEquals(request.getVisit().getDiseaseHistory().getNumber(), entity.getDiseaseHistory().getNumber());
-        Assertions.assertEquals(request.getVisit().getNumber(), entity.getNumber());
+        Assertions.assertEquals(request.getVisit().getDiseaseHistory().getNumber(), entity.getDiseaseHistory().getId().getNumber());
+        Assertions.assertEquals(request.getVisit().getNumber(), entity.getId().getNumber());
         if (Objects.nonNull(request.getWhen())) {
             Assertions.assertEquals(request.getWhen(), entity.getWhen());
         }
@@ -100,7 +100,7 @@ public class VisitTestHelper {
     @SuppressWarnings("SameParameterValue")
     public void assertEntitiesAreFullyEqual(Visit expected, Visit actual) {
         Assertions.assertEquals(expected.getDiseaseHistory(), actual.getDiseaseHistory());
-        Assertions.assertEquals(expected.getNumber(), actual.getNumber());
+        Assertions.assertEquals(expected.getId().getNumber(), actual.getId().getNumber());
         Assertions.assertEquals(expected.getWhen(), actual.getWhen());
     }
 }

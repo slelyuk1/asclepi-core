@@ -1,13 +1,13 @@
 package com.jupiter.asclepi.core.service.impl;
 
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.id.DiseaseHistoryId;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
 import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.DiseaseHistoryRepository;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.id.DiseaseHistoryId;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;

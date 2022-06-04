@@ -1,15 +1,14 @@
 package com.jupiter.asclepi.core.service.converter.diseasehistory;
 
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Employee;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.lang.Nullable;
 
 @Mapper(config = MappingConfiguration.class)
 public interface EditRequestToDiseaseHistoryConverter extends Converter<EditDiseaseHistoryRequest, DiseaseHistory> {
@@ -27,10 +26,5 @@ public interface EditRequestToDiseaseHistoryConverter extends Converter<EditDise
 
     @Mapping(target = "id", source = "doctorId")
     Employee convertToDoctor(EditDiseaseHistoryRequest source);
-
-    @Nullable
-    default Integer getNumberFromDiseaseHistory(@Nullable GetDiseaseHistoryRequest diseaseHistory) {
-        return diseaseHistory != null ? diseaseHistory.getNumber() : null;
-    }
 
 }

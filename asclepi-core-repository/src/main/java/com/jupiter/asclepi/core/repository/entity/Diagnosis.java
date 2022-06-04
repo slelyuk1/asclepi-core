@@ -52,11 +52,6 @@ public class Diagnosis {
         getId().setDiseaseHistoryId(diseaseHistory.getId());
     }
 
-    @Deprecated
-    public Integer getNumber() {
-        return getId().getNumber();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

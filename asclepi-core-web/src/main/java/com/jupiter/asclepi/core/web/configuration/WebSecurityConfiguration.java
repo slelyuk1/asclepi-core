@@ -88,6 +88,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return source;
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {

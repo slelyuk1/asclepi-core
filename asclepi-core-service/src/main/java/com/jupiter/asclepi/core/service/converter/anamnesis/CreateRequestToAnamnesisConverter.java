@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.converter.anamnesis;
 
-import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.model.request.disease.anamnesis.CreateAnamnesisRequest;
+import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

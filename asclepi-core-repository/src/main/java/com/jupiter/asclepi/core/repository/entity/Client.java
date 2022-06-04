@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.repository.entity;
 
-import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
 import com.jupiter.asclepi.core.repository.entity.other.Job;
+import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

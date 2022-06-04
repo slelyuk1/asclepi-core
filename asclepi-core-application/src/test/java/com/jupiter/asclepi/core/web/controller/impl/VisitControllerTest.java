@@ -5,16 +5,16 @@ import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.helper.VisitTestHelper;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.Visit;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
@@ -130,10 +130,10 @@ public class VisitControllerTest {
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory)).get();
         GetVisitRequest getter = new GetVisitRequest();
-        getter.setNumber(created.getNumber());
+        getter.setNumber(created.getId().getNumber());
         GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
         historyGetter.setClientId(created.getDiseaseHistory().getClient().getId());
-        historyGetter.setNumber(created.getDiseaseHistory().getNumber());
+        historyGetter.setNumber(created.getDiseaseHistory().getId().getNumber());
         getter.setDiseaseHistory(historyGetter);
         this.mockMvc.perform(visitHelper.createMockedGetRequest(getter))
                 .andExpect(status().isOk())
@@ -188,7 +188,7 @@ public class VisitControllerTest {
         Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory)).get();
         GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest();
         request.setClientId(created.getDiseaseHistory().getClient().getId());
-        request.setNumber(created.getDiseaseHistory().getNumber());
+        request.setNumber(created.getDiseaseHistory().getId().getNumber());
         this.mockMvc.perform(visitHelper.createMockedGetForDiseaseHistory(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

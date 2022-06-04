@@ -2,17 +2,13 @@ package com.jupiter.asclepi.core.service.impl;
 
 import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.*;
-import com.jupiter.asclepi.core.repository.entity.Analysis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.*;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,10 +93,10 @@ class AnalysisServiceTest {
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetAnalysisRequest getRequest = new GetAnalysisRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        created.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        created.getVisit().getId().getNumber()
                 ),
-                created.getNumber()
+                created.getId().getNumber()
         );
         Analysis found = analysisService.getOne(getRequest).get();
         analysisHelper.assertEntitiesAreFullyEqual(created, found);
@@ -116,10 +112,10 @@ class AnalysisServiceTest {
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetAnalysisRequest getRequest = new GetAnalysisRequest(
                 new GetVisitRequest(
-                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                        created.getVisit().getNumber()
+                        new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                        created.getVisit().getId().getNumber()
                 ),
-                created.getNumber()
+                created.getId().getNumber()
         );
         boolean isDeleted = analysisService.delete(getRequest);
         Assertions.assertTrue(isDeleted);
@@ -139,12 +135,12 @@ class AnalysisServiceTest {
         Assertions.assertEquals(2, all.size());
         Analysis foundOne = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), one.getVisit()))
-                .filter(analysis -> Objects.equals(analysis.getNumber(), one.getNumber()))
+                .filter(analysis -> Objects.equals(analysis.getId().getNumber(), one.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Analysis foundAnother = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), another.getVisit()))
-                .filter(analysis -> Objects.equals(analysis.getNumber(), another.getNumber()))
+                .filter(analysis -> Objects.equals(analysis.getId().getNumber(), another.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         analysisHelper.assertEntitiesAreFullyEqual(one, foundOne);
@@ -164,12 +160,12 @@ class AnalysisServiceTest {
         Assertions.assertEquals(2, all.size());
         Analysis foundOne = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), one.getVisit()))
-                .filter(analysis -> Objects.equals(analysis.getNumber(), one.getNumber()))
+                .filter(analysis -> Objects.equals(analysis.getId().getNumber(), one.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Analysis foundAnother = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), another.getVisit()))
-                .filter(analysis -> Objects.equals(analysis.getNumber(), another.getNumber()))
+                .filter(analysis -> Objects.equals(analysis.getId().getNumber(), another.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         analysisHelper.assertEntitiesAreFullyEqual(one, foundOne);
@@ -189,12 +185,12 @@ class AnalysisServiceTest {
         Assertions.assertEquals(2, all.size());
         Analysis foundOne = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), one.getVisit()))
-                .filter(analysis -> Objects.equals(analysis.getNumber(), one.getNumber()))
+                .filter(analysis -> Objects.equals(analysis.getId().getNumber(), one.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Analysis foundAnother = all.stream()
                 .filter(analysis -> Objects.equals(analysis.getVisit(), another.getVisit()))
-                .filter(analysis -> Objects.equals(analysis.getNumber(), another.getNumber()))
+                .filter(analysis -> Objects.equals(analysis.getId().getNumber(), another.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         analysisHelper.assertEntitiesAreFullyEqual(one, foundOne);

@@ -5,15 +5,15 @@ import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
 import com.jupiter.asclepi.core.helper.VisitTestHelper;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.Visit;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
@@ -94,9 +94,9 @@ public class VisitServiceTest {
         entityManager.detach(created);
 
         GetVisitRequest getRequest = new GetVisitRequest();
-        getRequest.setNumber(created.getNumber());
+        getRequest.setNumber(created.getId().getNumber());
         GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
-        historyGetter.setNumber(created.getDiseaseHistory().getNumber());
+        historyGetter.setNumber(created.getDiseaseHistory().getId().getNumber());
         historyGetter.setClientId(created.getDiseaseHistory().getClient().getId());
         getRequest.setDiseaseHistory(historyGetter);
         Visit found = visitService.getOne(getRequest).get();
@@ -116,12 +116,12 @@ public class VisitServiceTest {
         Assertions.assertEquals(2, all.size());
         Visit foundOne = all.stream()
                 .filter(visit -> Objects.equals(visit.getDiseaseHistory(), one.getDiseaseHistory()))
-                .filter(visit -> Objects.equals(visit.getNumber(), one.getNumber()))
+                .filter(visit -> Objects.equals(visit.getId().getNumber(), one.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         Visit foundAnother = all.stream()
                 .filter(visit -> Objects.equals(visit.getDiseaseHistory(), another.getDiseaseHistory()))
-                .filter(visit -> Objects.equals(visit.getNumber(), another.getNumber()))
+                .filter(visit -> Objects.equals(visit.getId().getNumber(), another.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         visitHelper.assertEntitiesAreFullyEqual(one, foundOne);

@@ -2,12 +2,12 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jupiter.asclepi.core.repository.entity.Diagnosis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.Diagnosis;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
@@ -31,7 +31,7 @@ public class DiagnosisTestHelper {
 
     public CreateDiagnosisRequest generateCreateRequest(DiseaseHistory history, boolean withOptional) {
         CreateDiagnosisRequest request = new CreateDiagnosisRequest();
-        GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber());
+        GetDiseaseHistoryRequest getter = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber());
         request.setDiseaseHistory(getter);
         request.setDisease(TEST_DISEASE);
         request.setIsFinal(false);
@@ -59,8 +59,8 @@ public class DiagnosisTestHelper {
         EditDiagnosisRequest request = new EditDiagnosisRequest();
         DiseaseHistory history = diagnosis.getDiseaseHistory();
         GetDiagnosisRequest getter = new GetDiagnosisRequest(
-                new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                diagnosis.getNumber()
+                new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                diagnosis.getId().getNumber()
         );
         request.setDiagnosis(getter);
         request.setDisease(diagnosis.getDisease() + "Other");
@@ -109,7 +109,7 @@ public class DiagnosisTestHelper {
 
     public void assertEntityIsValidAfterCreation(CreateDiagnosisRequest request, Diagnosis entity) {
         DiseaseHistory history = entity.getDiseaseHistory();
-        GetDiseaseHistoryRequest toCompare = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber());
+        GetDiseaseHistoryRequest toCompare = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber());
         Assertions.assertEquals(request.getDiseaseHistory(), toCompare);
         Assertions.assertEquals(request.getDisease(), entity.getDisease());
         Assertions.assertEquals(request.getIsFinal(), entity.getIsFinal());
@@ -121,8 +121,8 @@ public class DiagnosisTestHelper {
     public void assertEntityIsValidAfterEdition(EditDiagnosisRequest request, Diagnosis entity) {
         DiseaseHistory history = entity.getDiseaseHistory();
         GetDiagnosisRequest toCompare = new GetDiagnosisRequest(
-                new GetDiseaseHistoryRequest(history.getClient().getId(), history.getNumber()),
-                entity.getNumber()
+                new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
+                entity.getId().getNumber()
         );
         Assertions.assertEquals(request.getDiagnosis(), toCompare);
         Assertions.assertEquals(request.getDisease(), entity.getDisease());

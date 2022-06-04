@@ -4,14 +4,14 @@ import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
@@ -125,7 +125,7 @@ public class DiseaseHistoryControllerTest {
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         DiseaseHistory created = diseaseHistoryService
                 .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
-        this.mockMvc.perform(diseaseHistoryHelper.createMockedGetRequest(created.getClient().getId(), created.getNumber()))
+        this.mockMvc.perform(diseaseHistoryHelper.createMockedGetRequest(created.getClient().getId(), created.getId().getNumber()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("diseaseHistorySuccessfulGetting",

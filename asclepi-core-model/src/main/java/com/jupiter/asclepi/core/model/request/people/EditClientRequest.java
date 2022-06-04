@@ -1,6 +1,5 @@
 package com.jupiter.asclepi.core.model.request.people;
 
-import com.jupiter.asclepi.core.model.response.JobInfo;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

@@ -4,14 +4,14 @@ import com.jupiter.asclepi.core.configuration.TestHelperConfiguration;
 import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
@@ -111,7 +111,7 @@ class DiseaseHistoryServiceTest {
 
         GetDiseaseHistoryRequest getRequest = new GetDiseaseHistoryRequest();
         getRequest.setClientId(created.getClient().getId());
-        getRequest.setNumber(created.getNumber());
+        getRequest.setNumber(created.getId().getNumber());
         DiseaseHistory found = diseaseHistoryService.getOne(getRequest).get();
         historyHelper.assertEntitiesAreFullyEqual(created, found);
     }
@@ -133,12 +133,12 @@ class DiseaseHistoryServiceTest {
         Assertions.assertEquals(2, all.size());
         DiseaseHistory foundOne = all.stream()
                 .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
-                .filter(history -> Objects.equals(history.getNumber(), one.getNumber()))
+                .filter(history -> Objects.equals(history.getId().getNumber(), one.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         DiseaseHistory foundAnother = all.stream()
                 .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
-                .filter(history -> Objects.equals(history.getNumber(), another.getNumber()))
+                .filter(history -> Objects.equals(history.getId().getNumber(), another.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         historyHelper.assertEntitiesAreFullyEqual(one, foundOne);
@@ -162,12 +162,12 @@ class DiseaseHistoryServiceTest {
         Assertions.assertEquals(2, all.size());
         DiseaseHistory foundOne = all.stream()
                 .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
-                .filter(history -> Objects.equals(history.getNumber(), one.getNumber()))
+                .filter(history -> Objects.equals(history.getId().getNumber(), one.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         DiseaseHistory foundAnother = all.stream()
                 .filter(history -> Objects.equals(history.getClient().getId(), one.getClient().getId()))
-                .filter(history -> Objects.equals(history.getNumber(), another.getNumber()))
+                .filter(history -> Objects.equals(history.getId().getNumber(), another.getId().getNumber()))
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
         historyHelper.assertEntitiesAreFullyEqual(one, foundOne);

@@ -5,15 +5,15 @@ import com.jupiter.asclepi.core.helper.ClientTestHelper;
 import com.jupiter.asclepi.core.helper.DiagnosisTestHelper;
 import com.jupiter.asclepi.core.helper.DiseaseHistoryTestHelper;
 import com.jupiter.asclepi.core.helper.EmployeeTestHelper;
-import com.jupiter.asclepi.core.repository.entity.Diagnosis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.Diagnosis;
+import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
@@ -124,8 +124,8 @@ public class DiagnosisControllerTest {
     void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
         Diagnosis created = diagnosisService.create(diagnosisHelper.generateCreateRequest(existingHistory, false)).get();
         GetDiagnosisRequest getter = new GetDiagnosisRequest(
-                new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getNumber()),
-                created.getNumber()
+                new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getId().getNumber()),
+                created.getId().getNumber()
         );
         this.mockMvc.perform(diagnosisHelper.createMockedDeleteRequest(getter))
                 .andExpect(status().isOk())
@@ -138,8 +138,8 @@ public class DiagnosisControllerTest {
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         Diagnosis created = diagnosisService.create(diagnosisHelper.generateCreateRequest(existingHistory, true)).get();
         GetDiagnosisRequest request = new GetDiagnosisRequest(
-                new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getNumber()),
-                created.getNumber()
+                new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getId().getNumber()),
+                created.getId().getNumber()
         );
         this.mockMvc.perform(diagnosisHelper.createMockedGetRequest(request))
                 .andExpect(status().isOk())
@@ -179,7 +179,7 @@ public class DiagnosisControllerTest {
     @Test
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
         diagnosisService.create(diagnosisHelper.generateCreateRequest(existingHistory, false)).get();
-        GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getNumber());
+        GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(existingHistory.getClient().getId(), existingHistory.getId().getNumber());
         this.mockMvc.perform(diagnosisHelper.createMockedGetForDiseaseHistory(request))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
