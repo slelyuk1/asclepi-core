@@ -79,11 +79,11 @@ class ConsultationControllerTest {
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
-        existingVisit = visitService.create(visitHelper.generateCreateRequest(history)).get();
-        existingAnamnesis = anamnesisService.create(anamnesisHelper.generateCreateRequest(history)).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
+        existingVisit = visitService.create(visitHelper.generateCreateRequest(history));
+        existingAnamnesis = anamnesisService.create(anamnesisHelper.generateCreateRequest(history));
     }
 
     @Test
@@ -100,7 +100,7 @@ class ConsultationControllerTest {
 
     @Test
     void testSuccessfulEditingRequestResponseSignatures() throws Exception {
-        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis));
         EditConsultationRequest request = consultationHelper.generateEditRequest(created);
         this.mockMvc.perform(consultationHelper.createMockedEditRequest(request))
                 .andExpect(status().isOk())
@@ -132,7 +132,7 @@ class ConsultationControllerTest {
 
     @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
-        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis));
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetConsultationRequest request = new GetConsultationRequest(
                 new GetVisitRequest(
@@ -167,7 +167,7 @@ class ConsultationControllerTest {
 
     @Test
     void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
-        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis));
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetConsultationRequest request = new GetConsultationRequest(
                 new GetVisitRequest(
@@ -185,7 +185,7 @@ class ConsultationControllerTest {
 
     @Test
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
-        consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
+        consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis));
         this.mockMvc.perform(consultationHelper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -200,7 +200,7 @@ class ConsultationControllerTest {
 
     @Test
     void testSuccessfulGettingForVisitRequestResponseSignatures() throws Exception {
-        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis));
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetVisitRequest request = new GetVisitRequest(
                 new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
@@ -221,7 +221,7 @@ class ConsultationControllerTest {
 
     @Test
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
-        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis)).get();
+        Consultation created = consultationService.create(consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis));
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber());
         this.mockMvc.perform(consultationHelper.createMockedGetForDiseaseHistory(request))

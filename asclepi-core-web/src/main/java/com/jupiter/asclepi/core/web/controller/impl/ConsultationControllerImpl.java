@@ -6,6 +6,7 @@ import com.jupiter.asclepi.core.model.request.consultation.GetConsultationReques
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.response.ConsultationInfo;
+import com.jupiter.asclepi.core.repository.entity.consultation.Consultation;
 import com.jupiter.asclepi.core.service.api.ConsultationService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
@@ -41,14 +42,9 @@ public class ConsultationControllerImpl implements ConsultationController {
 
     @Override
     public ResponseEntity<?> create(@NotNull CreateConsultationRequest createRequest) {
-        Try<ResponseEntity<?>> creationTry = consultationService.create(createRequest).map(consultation -> {
-            ConsultationInfo consultationInfo = conversionService.convert(consultation, ConsultationInfo.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(consultationInfo);
-        });
-        return creationTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during consultation creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Consultation consultation = consultationService.create(createRequest);
+        ConsultationInfo consultationInfo = conversionService.convert(consultation, ConsultationInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(consultationInfo);
     }
 
     @Override

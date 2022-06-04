@@ -39,15 +39,13 @@ public class AnalysisServiceImpl implements AnalysisService {
     private final ConversionService conversionService;
 
     @Override
-    public Try<Analysis> create(@Valid @NotNull CreateAnalysisRequest createRequest) {
-        return Try.of(() -> {
-            GetVisitRequest visitGetter = createRequest.getVisit();
-            Analysis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Analysis.class));
-            Visit visit = visitService.getOne(visitGetter)
-                    .orElseThrow(() -> new NonExistentIdException("Visit", visitGetter));
-            toCreate.setId(new AnalysisId(visit.getId(), IdGeneratorUtils.generateId().intValue()));
-            return repository.save(toCreate);
-        });
+    public Analysis create(@Valid @NotNull CreateAnalysisRequest createRequest) {
+        GetVisitRequest visitGetter = createRequest.getVisit();
+        Analysis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Analysis.class));
+        Visit visit = visitService.getOne(visitGetter)
+                .orElseThrow(() -> new NonExistentIdException("Visit", visitGetter));
+        toCreate.setId(new AnalysisId(visit.getId(), IdGeneratorUtils.generateId().intValue()));
+        return repository.save(toCreate);
     }
 
     @Override

@@ -76,9 +76,9 @@ public class VisitControllerTest {
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class VisitControllerTest {
 
     @Test
     void testSuccessfulEditingRequestResponseSignatures() throws Exception {
-        Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory)).get();
+        Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory));
         EditVisitRequest request = visitHelper.generateEditRequest(created, created.getWhen().plusDays(1));
         this.mockMvc.perform(visitHelper.createMockedEditRequest(request))
                 .andExpect(status().isOk())
@@ -128,7 +128,7 @@ public class VisitControllerTest {
 
     @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
-        Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory)).get();
+        Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory));
         GetVisitRequest getter = new GetVisitRequest();
         getter.setNumber(created.getId().getNumber());
         GetDiseaseHistoryRequest historyGetter = new GetDiseaseHistoryRequest();
@@ -171,7 +171,7 @@ public class VisitControllerTest {
 
     @Test
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
-        visitService.create(visitHelper.generateCreateRequest(existingHistory)).get();
+        visitService.create(visitHelper.generateCreateRequest(existingHistory));
         this.mockMvc.perform(visitHelper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -185,7 +185,7 @@ public class VisitControllerTest {
 
     @Test
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
-        Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory)).get();
+        Visit created = visitService.create(visitHelper.generateCreateRequest(existingHistory));
         GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest();
         request.setClientId(created.getDiseaseHistory().getClient().getId());
         request.setNumber(created.getDiseaseHistory().getId().getNumber());

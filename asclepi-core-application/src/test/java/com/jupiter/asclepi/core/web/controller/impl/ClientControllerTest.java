@@ -111,7 +111,7 @@ class ClientControllerTest {
     @Test
     void testSuccessfulEditingRequestResponseSignatures() throws Exception {
         CreateClientRequest request = helper.generateCreateRequest(false);
-        Client created = service.create(request).get();
+        Client created = service.create(request);
         this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(created.getId(), false)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -135,7 +135,7 @@ class ClientControllerTest {
     @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         CreateClientRequest request = helper.generateCreateRequest(false);
-        Client created = service.create(request).get();
+        Client created = service.create(request);
         this.mockMvc.perform(helper.createMockedGetRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -159,7 +159,7 @@ class ClientControllerTest {
     @Test
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
         CreateClientRequest request = helper.generateCreateRequest(false);
-        service.create(request).get();
+        service.create(request);
         this.mockMvc.perform(helper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

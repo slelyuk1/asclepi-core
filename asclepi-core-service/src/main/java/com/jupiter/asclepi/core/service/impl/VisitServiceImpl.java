@@ -36,15 +36,13 @@ public class VisitServiceImpl implements VisitService {
     private final ConversionService conversionService;
 
     @Override
-    public Try<Visit> create(@Valid @NotNull CreateVisitRequest createRequest) {
-        return Try.of(() -> {
-            GetDiseaseHistoryRequest diseaseHistoryGetter = createRequest.getDiseaseHistory();
-            Visit toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Visit.class));
-            DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
-            toCreate.setId(new VisitId(diseaseHistory.getId(), IdGeneratorUtils.generateId().intValue()));
-            return repository.save(toCreate);
-        });
+    public Visit create(@Valid @NotNull CreateVisitRequest createRequest) {
+        GetDiseaseHistoryRequest diseaseHistoryGetter = createRequest.getDiseaseHistory();
+        Visit toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Visit.class));
+        DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
+                .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
+        toCreate.setId(new VisitId(diseaseHistory.getId(), IdGeneratorUtils.generateId().intValue()));
+        return repository.save(toCreate);
     }
 
     @Override

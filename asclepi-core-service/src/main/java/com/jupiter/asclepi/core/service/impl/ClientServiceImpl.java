@@ -33,10 +33,10 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public Try<Client> create(@Valid @NotNull CreateClientRequest createRequest) {
+    public Client create(@Valid @NotNull CreateClientRequest createRequest) {
         Client toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Client.class));
         toCreate.setId(IdGeneratorUtils.generateId());
-        return Try.of(() -> repository.save(toCreate));
+        return repository.save(toCreate);
     }
 
     @Override

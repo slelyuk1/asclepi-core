@@ -31,16 +31,14 @@ public class AnamnesisServiceImpl implements AnamnesisService {
     private final ConversionService conversionService;
 
     @Override
-    public Try<Anamnesis> create(@Valid @NotNull CreateAnamnesisRequest createRequest) {
-        return Try.of(() -> {
-            GetDiseaseHistoryRequest historyGetter = createRequest.getDiseaseHistory();
-            DiseaseHistory linkedHistory = diseaseHistoryService.getOne(historyGetter)
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", historyGetter));
-            Anamnesis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Anamnesis.class));
-            toCreate.setDiseaseHistory(linkedHistory);
-            toCreate.setId(IdGeneratorUtils.generateId());
-            return repository.save(toCreate);
-        });
+    public Anamnesis create(@Valid @NotNull CreateAnamnesisRequest createRequest) {
+        GetDiseaseHistoryRequest historyGetter = createRequest.getDiseaseHistory();
+        DiseaseHistory linkedHistory = diseaseHistoryService.getOne(historyGetter)
+                .orElseThrow(() -> new NonExistentIdException("Disease history", historyGetter));
+        Anamnesis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Anamnesis.class));
+        toCreate.setDiseaseHistory(linkedHistory);
+        toCreate.setId(IdGeneratorUtils.generateId());
+        return repository.save(toCreate);
     }
 
     @Override

@@ -64,18 +64,18 @@ class ConsultationServiceTest {
 
     @BeforeEach
     void setUp() {
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
-        existingVisit = visitService.create(visitHelper.generateCreateRequest(history)).get();
-        existingAnamnesis = anamnesisService.create(anamnesisHelper.generateCreateRequest(history)).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
+        existingVisit = visitService.create(visitHelper.generateCreateRequest(history));
+        existingAnamnesis = anamnesisService.create(anamnesisHelper.generateCreateRequest(history));
     }
 
 
     @Test
     void testSuccessfulCreation() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
-        Consultation created = consultationService.create(request).get();
+        Consultation created = consultationService.create(request);
         entityManager.flush();
         entityManager.detach(created);
         consultationHelper.assertEntityIsValidAfterCreation(request, created);
@@ -84,7 +84,7 @@ class ConsultationServiceTest {
     @Test
     void testSuccessfulEditing() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
-        Consultation created = consultationService.create(request).get();
+        Consultation created = consultationService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -97,7 +97,7 @@ class ConsultationServiceTest {
     @Test
     void testSuccessfulGetting() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
-        Consultation created = consultationService.create(request).get();
+        Consultation created = consultationService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -116,7 +116,7 @@ class ConsultationServiceTest {
     @Test
     void testSuccessfulDeletion() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
-        Consultation created = consultationService.create(request).get();
+        Consultation created = consultationService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -136,8 +136,8 @@ class ConsultationServiceTest {
     @Test
     void testSuccessfulGettingAll() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
-        Consultation one = consultationService.create(request).get();
-        Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request)).get();
+        Consultation one = consultationService.create(request);
+        Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);
@@ -159,8 +159,8 @@ class ConsultationServiceTest {
     @Test
     void testSuccessfulGettingForVisit() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
-        Consultation one = consultationService.create(request).get();
-        Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request)).get();
+        Consultation one = consultationService.create(request);
+        Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);
@@ -182,8 +182,8 @@ class ConsultationServiceTest {
     @Test
     void testSuccessfulGettingForDiseaseHistory() {
         CreateConsultationRequest request = consultationHelper.generateCreateRequest(existingVisit, existingAnamnesis);
-        Consultation one = consultationService.create(request).get();
-        Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request)).get();
+        Consultation one = consultationService.create(request);
+        Consultation another = consultationService.create(consultationHelper.generateAnotherCreateRequest(request));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);

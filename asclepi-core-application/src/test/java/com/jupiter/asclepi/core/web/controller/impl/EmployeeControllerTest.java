@@ -82,7 +82,7 @@ class EmployeeControllerTest {
     @Test
     void testFailedDueToExistingLoginEmployeeCreationRequestResponseSignature() throws Exception {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
-        service.create(request).get();
+        service.create(request);
         this.mockMvc.perform(helper.createMockedCreateRequest(request))
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -95,7 +95,7 @@ class EmployeeControllerTest {
     @Test
     void testSuccessfulEmployeeEditingRequestResponseSignatures() throws Exception {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
-        Employee created = service.create(request).get();
+        Employee created = service.create(request);
         this.mockMvc.perform(helper.createMockedEditRequest(helper.generateEditRequest(created.getId(), true)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -119,8 +119,8 @@ class EmployeeControllerTest {
     @Test
     void testFailedDueToExistingLoginEmployeeEditingRequestResponseSignatures() throws Exception {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
-        Employee one = service.create(request).get();
-        Employee another = service.create(helper.generateAnotherCreateRequest(request)).get();
+        Employee one = service.create(request);
+        Employee another = service.create(helper.generateAnotherCreateRequest(request));
         EditEmployeeRequest editRequest = helper.generateEditRequest(one.getId(), true);
         editRequest.setLogin(another.getLogin());
         this.mockMvc.perform(helper.createMockedEditRequest(editRequest))
@@ -135,7 +135,7 @@ class EmployeeControllerTest {
     @Test
     void testSuccessfulEmployeeGettingRequestResponseSignatures() throws Exception {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
-        Employee created = service.create(request).get();
+        Employee created = service.create(request);
         this.mockMvc.perform(helper.createMockedGetRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -159,7 +159,7 @@ class EmployeeControllerTest {
     @Test
     void testSuccessfulAllEmployeesGettingRequestResponseSignatures() throws Exception {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
-        service.create(request).get();
+        service.create(request);
         this.mockMvc.perform(helper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -172,7 +172,7 @@ class EmployeeControllerTest {
     @Test
     void testSuccessfulEmployeeDeletionRequestResponseSignatures() throws Exception {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
-        Employee created = service.create(request).get();
+        Employee created = service.create(request);
         this.mockMvc.perform(helper.createMockedDeleteRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist())

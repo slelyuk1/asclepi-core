@@ -4,6 +4,7 @@ import com.jupiter.asclepi.core.model.request.employee.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.employee.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.EmployeeInfo;
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
+import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
@@ -35,14 +36,9 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     @Override
     public ResponseEntity<?> create(CreateEmployeeRequest createRequest) {
-        Try<ResponseEntity<?>> creationTry = employeeService.create(createRequest).map(employee -> {
-            EmployeeInfo employeeInfo = conversionService.convert(employee, EmployeeInfo.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(employeeInfo);
-        });
-        return creationTry
-                .recover(LoginNotUniqueException.class, e -> ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage())))
-                .onFailure(e -> log.error("An error occurred during employee creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Employee employee = employeeService.create(createRequest);
+        EmployeeInfo employeeInfo = conversionService.convert(employee, EmployeeInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeInfo);
     }
 
     @Override

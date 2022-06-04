@@ -58,16 +58,16 @@ public class DiagnosisServiceTest {
 
     @BeforeEach
     void setUp() {
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
     }
 
 
     @Test
     void testSuccessfulCreation() {
         CreateDiagnosisRequest request = diagnosisHelper.generateCreateRequest(existingHistory, false);
-        Diagnosis created = diagnosisService.create(request).get();
+        Diagnosis created = diagnosisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
         diagnosisHelper.assertEntityIsValidAfterCreation(request, created);
@@ -76,7 +76,7 @@ public class DiagnosisServiceTest {
     @Test
     void testSuccessfulEditing() {
         CreateDiagnosisRequest request = diagnosisHelper.generateCreateRequest(existingHistory, false);
-        Diagnosis created = diagnosisService.create(request).get();
+        Diagnosis created = diagnosisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -89,7 +89,7 @@ public class DiagnosisServiceTest {
     @Test
     void testSuccessfulGetting() {
         CreateDiagnosisRequest request = diagnosisHelper.generateCreateRequest(existingHistory, true);
-        Diagnosis created = diagnosisService.create(request).get();
+        Diagnosis created = diagnosisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -104,8 +104,8 @@ public class DiagnosisServiceTest {
     @Test
     void testSuccessfulGettingAll() {
         CreateDiagnosisRequest request = diagnosisHelper.generateCreateRequest(existingHistory, false);
-        Diagnosis one = diagnosisService.create(request).get();
-        Diagnosis another = diagnosisService.create(diagnosisHelper.generateAnotherCreateRequest(request, true)).get();
+        Diagnosis one = diagnosisService.create(request);
+        Diagnosis another = diagnosisService.create(diagnosisHelper.generateAnotherCreateRequest(request, true));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);

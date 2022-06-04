@@ -6,9 +6,9 @@ import com.jupiter.asclepi.core.model.request.consultation.GetConsultationReques
 import com.jupiter.asclepi.core.repository.ConsultationRepository;
 import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.repository.entity.consultation.Consultation;
+import com.jupiter.asclepi.core.repository.entity.consultation.ConsultationId;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
-import com.jupiter.asclepi.core.repository.entity.consultation.ConsultationId;
 import com.jupiter.asclepi.core.service.api.AnamnesisService;
 import com.jupiter.asclepi.core.service.api.ConsultationService;
 import com.jupiter.asclepi.core.service.api.VisitService;
@@ -40,18 +40,16 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final ConversionService conversionService;
 
     @Override
-    public Try<Consultation> create(@Valid @NotNull CreateConsultationRequest createRequest) {
-        return Try.of(() -> {
-            Visit visit = visitService.getOne(createRequest.getVisit())
-                    .orElseThrow(() -> new NonExistentIdException("Visit", createRequest.getVisit()));
-            Anamnesis anamnesis = anamnesisService.getOne(createRequest.getAnamnesisId())
-                    .orElseThrow(() -> new NonExistentIdException("Anamnesis", createRequest.getAnamnesisId()));
-            Consultation toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Consultation.class));
-            toCreate.setAnamnesis(anamnesis);
-            // todo may be better to set in another place
-            toCreate.setId(new ConsultationId(visit.getId(), IdGeneratorUtils.generateId().intValue()));
-            return repository.save(toCreate);
-        });
+    public Consultation create(@Valid @NotNull CreateConsultationRequest createRequest) {
+        Visit visit = visitService.getOne(createRequest.getVisit())
+                .orElseThrow(() -> new NonExistentIdException("Visit", createRequest.getVisit()));
+        Anamnesis anamnesis = anamnesisService.getOne(createRequest.getAnamnesisId())
+                .orElseThrow(() -> new NonExistentIdException("Anamnesis", createRequest.getAnamnesisId()));
+        Consultation toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Consultation.class));
+        toCreate.setAnamnesis(anamnesis);
+        // todo may be better to set in another place
+        toCreate.setId(new ConsultationId(visit.getId(), IdGeneratorUtils.generateId().intValue()));
+        return repository.save(toCreate);
     }
 
     @Override

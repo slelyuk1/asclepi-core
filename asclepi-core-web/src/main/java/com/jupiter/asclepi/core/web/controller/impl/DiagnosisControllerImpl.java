@@ -5,6 +5,7 @@ import com.jupiter.asclepi.core.model.request.diagnosis.EditDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.DiagnosisInfo;
+import com.jupiter.asclepi.core.repository.entity.diagnosis.Diagnosis;
 import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
@@ -41,14 +42,9 @@ public class DiagnosisControllerImpl implements DiagnosisController {
 
     @Override
     public ResponseEntity<?> create(@NotNull CreateDiagnosisRequest createRequest) {
-        Try<ResponseEntity<?>> creationTry = diagnosisService.create(createRequest).map(diagnosis -> {
-            DiagnosisInfo diagnosisInfo = conversionService.convert(diagnosis, DiagnosisInfo.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(diagnosisInfo);
-        });
-        return creationTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during disease history creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Diagnosis diagnosis = diagnosisService.create(createRequest);
+        DiagnosisInfo diagnosisInfo = conversionService.convert(diagnosis, DiagnosisInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(diagnosisInfo);
     }
 
     @Override

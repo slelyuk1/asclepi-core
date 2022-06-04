@@ -65,11 +65,11 @@ class DiseaseHistoryServiceTest {
     @BeforeEach
     void setUp() {
         CreateEmployeeRequest createEmployeeRequest = employeeHelper.generateCreateRequest(true, Role.DOCTOR);
-        existingDoctor = employeeService.create(createEmployeeRequest).get();
+        existingDoctor = employeeService.create(createEmployeeRequest);
         CreateEmployeeRequest anotherEmployeeCreateRequest = employeeHelper.generateAnotherCreateRequest(createEmployeeRequest);
         anotherEmployeeCreateRequest.setRoleId(Role.DOCTOR.getId());
-        anotherDoctor = employeeService.create(anotherEmployeeCreateRequest).get();
-        existingClient = clientService.create(clientHelper.generateCreateRequest(true)).get();
+        anotherDoctor = employeeService.create(anotherEmployeeCreateRequest);
+        existingClient = clientService.create(clientHelper.generateCreateRequest(true));
     }
 
 
@@ -78,7 +78,7 @@ class DiseaseHistoryServiceTest {
         CreateDiseaseHistoryRequest request = new CreateDiseaseHistoryRequest();
         request.setDoctorId(existingDoctor.getId());
         request.setClientId(existingClient.getId());
-        DiseaseHistory created = diseaseHistoryService.create(request).get();
+        DiseaseHistory created = diseaseHistoryService.create(request);
 
         entityManager.flush();
         entityManager.detach(created);
@@ -90,7 +90,7 @@ class DiseaseHistoryServiceTest {
         CreateDiseaseHistoryRequest request = new CreateDiseaseHistoryRequest();
         request.setDoctorId(existingDoctor.getId());
         request.setClientId(existingClient.getId());
-        DiseaseHistory created = diseaseHistoryService.create(request).get();
+        DiseaseHistory created = diseaseHistoryService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -105,7 +105,7 @@ class DiseaseHistoryServiceTest {
         CreateDiseaseHistoryRequest request = new CreateDiseaseHistoryRequest();
         request.setDoctorId(existingDoctor.getId());
         request.setClientId(existingClient.getId());
-        DiseaseHistory created = diseaseHistoryService.create(request).get();
+        DiseaseHistory created = diseaseHistoryService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -121,10 +121,10 @@ class DiseaseHistoryServiceTest {
         CreateDiseaseHistoryRequest oneRequest = new CreateDiseaseHistoryRequest();
         oneRequest.setDoctorId(existingDoctor.getId());
         oneRequest.setClientId(existingClient.getId());
-        DiseaseHistory one = diseaseHistoryService.create(oneRequest).get();
+        DiseaseHistory one = diseaseHistoryService.create(oneRequest);
         CreateDiseaseHistoryRequest anotherRequest = oneRequest.clone();
         anotherRequest.setDoctorId(anotherDoctor.getId());
-        DiseaseHistory another = diseaseHistoryService.create(anotherRequest).get();
+        DiseaseHistory another = diseaseHistoryService.create(anotherRequest);
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);
@@ -150,10 +150,10 @@ class DiseaseHistoryServiceTest {
         CreateDiseaseHistoryRequest oneRequest = new CreateDiseaseHistoryRequest();
         oneRequest.setDoctorId(existingDoctor.getId());
         oneRequest.setClientId(existingClient.getId());
-        DiseaseHistory one = diseaseHistoryService.create(oneRequest).get();
+        DiseaseHistory one = diseaseHistoryService.create(oneRequest);
         CreateDiseaseHistoryRequest anotherRequest = oneRequest.clone();
         anotherRequest.setDoctorId(anotherDoctor.getId());
-        DiseaseHistory another = diseaseHistoryService.create(anotherRequest).get();
+        DiseaseHistory another = diseaseHistoryService.create(anotherRequest);
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);

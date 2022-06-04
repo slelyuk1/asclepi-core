@@ -5,6 +5,7 @@ import com.jupiter.asclepi.core.model.request.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.response.VisitInfo;
+import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
@@ -38,14 +39,9 @@ public class VisitControllerImpl implements VisitController {
 
     @Override
     public ResponseEntity<?> create(@NotNull CreateVisitRequest createRequest) {
-        Try<ResponseEntity<?>> creationTry = visitService.create(createRequest).map(visit -> {
-            VisitInfo visitInfo = conversionService.convert(visit, VisitInfo.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(visitInfo);
-        });
-        return creationTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during disease history creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Visit visit = visitService.create(createRequest);
+        VisitInfo visitInfo = conversionService.convert(visit, VisitInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(visitInfo);
     }
 
     @Override

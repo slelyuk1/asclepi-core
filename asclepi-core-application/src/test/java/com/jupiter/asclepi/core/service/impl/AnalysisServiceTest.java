@@ -58,17 +58,17 @@ class AnalysisServiceTest {
 
     @BeforeEach
     void setUp() {
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
-        existingVisit = visitService.create(visitHelper.generateCreateRequest(history)).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
+        existingVisit = visitService.create(visitHelper.generateCreateRequest(history));
     }
 
 
     @Test
     void testSuccessfulCreation() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
-        Analysis created = analysisService.create(request).get();
+        Analysis created = analysisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
         analysisHelper.assertEntityIsValidAfterCreation(request, created);
@@ -77,7 +77,7 @@ class AnalysisServiceTest {
     @Test
     void testSuccessfulEditing() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
-        Analysis created = analysisService.create(request).get();
+        Analysis created = analysisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -90,7 +90,7 @@ class AnalysisServiceTest {
     @Test
     void testSuccessfulGetting() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
-        Analysis created = analysisService.create(request).get();
+        Analysis created = analysisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -109,7 +109,7 @@ class AnalysisServiceTest {
     @Test
     void testSuccessfulDeletion() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
-        Analysis created = analysisService.create(request).get();
+        Analysis created = analysisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -129,8 +129,8 @@ class AnalysisServiceTest {
     @Test
     void testSuccessfulGettingAll() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
-        Analysis one = analysisService.create(request).get();
-        Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request)).get();
+        Analysis one = analysisService.create(request);
+        Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);
@@ -154,8 +154,8 @@ class AnalysisServiceTest {
     @Test
     void testSuccessfulGettingForVisit() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
-        Analysis one = analysisService.create(request).get();
-        Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request)).get();
+        Analysis one = analysisService.create(request);
+        Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);
@@ -179,8 +179,8 @@ class AnalysisServiceTest {
     @Test
     void testSuccessfulGettingForDiseaseHistory() {
         CreateAnalysisRequest request = analysisHelper.generateCreateRequest(existingVisit);
-        Analysis one = analysisService.create(request).get();
-        Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request)).get();
+        Analysis one = analysisService.create(request);
+        Analysis another = analysisService.create(analysisHelper.generateAnotherCreateRequest(request));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);

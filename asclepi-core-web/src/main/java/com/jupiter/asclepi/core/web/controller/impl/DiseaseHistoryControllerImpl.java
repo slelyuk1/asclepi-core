@@ -4,6 +4,7 @@ import com.jupiter.asclepi.core.model.request.history.CreateDiseaseHistoryReques
 import com.jupiter.asclepi.core.model.request.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.DiseaseHistoryInfo;
+import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
@@ -37,14 +38,9 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
 
     @Override
     public ResponseEntity<?> create(@NotNull CreateDiseaseHistoryRequest createRequest) {
-        Try<ResponseEntity<?>> creationTry = diseaseHistoryService.create(createRequest).map(diseaseHistory -> {
-            DiseaseHistoryInfo historyInfo = conversionService.convert(diseaseHistory, DiseaseHistoryInfo.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(historyInfo);
-        });
-        return creationTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during disease history creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        DiseaseHistory diseaseHistory = diseaseHistoryService.create(createRequest);
+        DiseaseHistoryInfo historyInfo = conversionService.convert(diseaseHistory, DiseaseHistoryInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(historyInfo);
     }
 
     @Override

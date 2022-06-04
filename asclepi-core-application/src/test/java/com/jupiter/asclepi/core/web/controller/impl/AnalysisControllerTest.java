@@ -73,10 +73,10 @@ class AnalysisControllerTest {
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
-        existingVisit = visitService.create(visitHelper.generateCreateRequest(history)).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        DiseaseHistory history = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
+        existingVisit = visitService.create(visitHelper.generateCreateRequest(history));
     }
 
     @Test
@@ -93,7 +93,7 @@ class AnalysisControllerTest {
 
     @Test
     void testSuccessfulEditingRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit));
         EditAnalysisRequest request = analysisHelper.generateEditRequest(created);
         this.mockMvc.perform(analysisHelper.createMockedEditRequest(request))
                 .andExpect(status().isOk())
@@ -125,7 +125,7 @@ class AnalysisControllerTest {
 
     @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit));
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetAnalysisRequest request = new GetAnalysisRequest(
                 new GetVisitRequest(
@@ -160,7 +160,7 @@ class AnalysisControllerTest {
 
     @Test
     void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit));
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetAnalysisRequest request = new GetAnalysisRequest(
                 new GetVisitRequest(
@@ -178,7 +178,7 @@ class AnalysisControllerTest {
 
     @Test
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
-        analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        analysisService.create(analysisHelper.generateCreateRequest(existingVisit));
         this.mockMvc.perform(analysisHelper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -193,7 +193,7 @@ class AnalysisControllerTest {
 
     @Test
     void testSuccessfulGettingForVisitRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit));
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetVisitRequest request = new GetVisitRequest(
                 new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber()),
@@ -214,7 +214,7 @@ class AnalysisControllerTest {
 
     @Test
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
-        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit)).get();
+        Analysis created = analysisService.create(analysisHelper.generateCreateRequest(existingVisit));
         DiseaseHistory history = created.getVisit().getDiseaseHistory();
         GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber());
         this.mockMvc.perform(analysisHelper.createMockedGetForDiseaseHistory(request))

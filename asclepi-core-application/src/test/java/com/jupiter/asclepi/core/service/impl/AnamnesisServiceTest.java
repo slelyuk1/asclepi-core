@@ -55,16 +55,16 @@ class AnamnesisServiceTest {
 
     @BeforeEach
     void setUp() {
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
     }
 
 
     @Test
     void testSuccessfulCreation() {
         CreateAnamnesisRequest request = anamnesisHelper.generateCreateRequest(existingHistory);
-        Anamnesis created = anamnesisService.create(request).get();
+        Anamnesis created = anamnesisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
         anamnesisHelper.assertEntityIsValidAfterCreation(request, created);
@@ -74,7 +74,7 @@ class AnamnesisServiceTest {
     @Test
     void testSuccessfulGetting() {
         CreateAnamnesisRequest request = anamnesisHelper.generateCreateRequest(existingHistory);
-        Anamnesis created = anamnesisService.create(request).get();
+        Anamnesis created = anamnesisService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -85,8 +85,8 @@ class AnamnesisServiceTest {
     @Test
     void testSuccessfulGettingForDiseaseHistory() {
         CreateAnamnesisRequest request = anamnesisHelper.generateCreateRequest(existingHistory);
-        Anamnesis one = anamnesisService.create(request).get();
-        Anamnesis another = anamnesisService.create(anamnesisHelper.generateAnotherCreateRequest(request)).get();
+        Anamnesis one = anamnesisService.create(request);
+        Anamnesis another = anamnesisService.create(anamnesisHelper.generateAnotherCreateRequest(request));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);

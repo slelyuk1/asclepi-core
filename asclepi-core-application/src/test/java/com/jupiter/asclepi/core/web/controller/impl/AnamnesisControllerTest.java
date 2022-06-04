@@ -74,9 +74,9 @@ class AnamnesisControllerTest {
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
     }
 
     @Test
@@ -93,7 +93,7 @@ class AnamnesisControllerTest {
 
     @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
-        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
+        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory));
         this.mockMvc.perform(anamnesisHelper.createMockedGetRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -116,7 +116,7 @@ class AnamnesisControllerTest {
 
     @Test
     void testSuccessfulEmployeeDeletionRequestResponseSignatures() throws Exception {
-        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
+        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory));
         this.mockMvc.perform(anamnesisHelper.createMockedDeleteRequest(created.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist())
@@ -127,7 +127,7 @@ class AnamnesisControllerTest {
 
     @Test
     void testSuccessfulGettingForDiseaseHistoryRequestResponseSignatures() throws Exception {
-        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory)).get();
+        Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory));
         DiseaseHistory history = created.getDiseaseHistory();
         GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest(history.getClient().getId(), history.getId().getNumber());
         this.mockMvc.perform(anamnesisHelper.createMockedGetForDiseaseHistory(request))

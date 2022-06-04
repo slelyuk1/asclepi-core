@@ -6,6 +6,7 @@ import com.jupiter.asclepi.core.model.request.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.response.AnalysisInfo;
+import com.jupiter.asclepi.core.repository.entity.analysis.Analysis;
 import com.jupiter.asclepi.core.service.api.AnalysisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
@@ -41,14 +42,9 @@ public class AnalysisControllerImpl implements AnalysisController {
 
     @Override
     public ResponseEntity<?> create(@NotNull CreateAnalysisRequest createRequest) {
-        Try<ResponseEntity<?>> creationTry = analysisService.create(createRequest).map(analysis -> {
-            AnalysisInfo analysisInfo = conversionService.convert(analysis, AnalysisInfo.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(analysisInfo);
-        });
-        return creationTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during disease history creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Analysis analysis = analysisService.create(createRequest);
+        AnalysisInfo analysisInfo = conversionService.convert(analysis, AnalysisInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(analysisInfo);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.web.controller.impl;
 import com.jupiter.asclepi.core.model.request.client.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
 import com.jupiter.asclepi.core.model.response.client.ClientInfo;
+import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
@@ -33,13 +34,9 @@ public class ClientControllerImpl implements ClientController {
 
     @Override
     public ResponseEntity<?> create(CreateClientRequest createRequest) {
-        Try<ResponseEntity<?>> creationTry = clientService.create(createRequest).map(client -> {
-            ClientInfo clientInfo = conversionService.convert(client, ClientInfo.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(clientInfo);
-        });
-        return creationTry
-                .onFailure(e -> log.error("An error occurred during client creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Client client = clientService.create(createRequest);
+        ClientInfo clientInfo = conversionService.convert(client, ClientInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientInfo);
     }
 
     @Override

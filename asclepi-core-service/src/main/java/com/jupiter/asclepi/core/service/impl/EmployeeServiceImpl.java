@@ -35,16 +35,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public Try<Employee> create(@Valid @NotNull CreateEmployeeRequest createRequest) {
+    public Employee create(@Valid @NotNull CreateEmployeeRequest createRequest) {
         Employee toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Employee.class));
-        return Try.of(() -> {
-            if (employeeWithLoginExists(createRequest.getLogin())) {
-                throw new LoginNotUniqueException(createRequest.getLogin());
-            }
-            toCreate.setPassword(passwordEncoder.encode(toCreate.getPassword()));
-            toCreate.setId(IdGeneratorUtils.generateId().intValue());
-            return repository.save(Objects.requireNonNull(toCreate));
-        });
+        if (employeeWithLoginExists(createRequest.getLogin())) {
+            throw new LoginNotUniqueException(createRequest.getLogin());
+        }
+        toCreate.setPassword(passwordEncoder.encode(toCreate.getPassword()));
+        toCreate.setId(IdGeneratorUtils.generateId().intValue());
+        return repository.save(Objects.requireNonNull(toCreate));
     }
 
     @Override

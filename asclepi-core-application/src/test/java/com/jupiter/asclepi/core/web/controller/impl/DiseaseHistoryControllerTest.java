@@ -72,8 +72,8 @@ public class DiseaseHistoryControllerTest {
     @BeforeEach
     void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = TestUtils.createMockMvcDefaultConfiguration(webApplicationContext, restDocumentation);
-        existingDoctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        existingClient = clientService.create(clientHelper.generateCreateRequest(true)).get();
+        existingDoctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        existingClient = clientService.create(clientHelper.generateCreateRequest(true));
     }
 
     @Test
@@ -92,9 +92,9 @@ public class DiseaseHistoryControllerTest {
     void testSuccessfulEditingRequestResponseSignatures() throws Exception {
         CreateEmployeeRequest createEmployeeRequest = employeeHelper.generateAnotherCreateRequest(employeeHelper.generateCreateRequest(false));
         createEmployeeRequest.setRoleId(Role.DOCTOR.getId());
-        Employee anotherDoctor = employeeService.create(createEmployeeRequest).get();
+        Employee anotherDoctor = employeeService.create(createEmployeeRequest);
         DiseaseHistory created = diseaseHistoryService
-                .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
+                .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId()));
         this.mockMvc.perform(diseaseHistoryHelper.createMockedEditRequest(diseaseHistoryHelper.generateEditRequest(created, anotherDoctor.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -124,7 +124,7 @@ public class DiseaseHistoryControllerTest {
     @Test
     void testSuccessfulGettingRequestResponseSignatures() throws Exception {
         DiseaseHistory created = diseaseHistoryService
-                .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
+                .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId()));
         this.mockMvc.perform(diseaseHistoryHelper.createMockedGetRequest(created.getClient().getId(), created.getId().getNumber()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -153,7 +153,7 @@ public class DiseaseHistoryControllerTest {
 
     @Test
     void testSuccessfulAllGettingRequestResponseSignatures() throws Exception {
-        diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
+        diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId()));
         this.mockMvc.perform(diseaseHistoryHelper.createMockedGetAllRequest())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -167,7 +167,7 @@ public class DiseaseHistoryControllerTest {
     @Test
     void testSuccessfulGettingForClientRequestResponseSignatures() throws Exception {
         DiseaseHistory created = diseaseHistoryService
-                .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId())).get();
+                .create(diseaseHistoryHelper.generateCreateRequest(existingClient.getId(), existingDoctor.getId()));
         this.mockMvc.perform(diseaseHistoryHelper.createMockedGetForClientRequest(created.getClient().getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

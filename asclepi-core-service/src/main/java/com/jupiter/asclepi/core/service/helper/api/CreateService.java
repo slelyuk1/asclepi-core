@@ -6,5 +6,5 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public interface CreateService<T, R> {
-    Try<R> create(@Valid @NotNull T createRequest);
+    R create(@Valid @NotNull T createRequest);
 }

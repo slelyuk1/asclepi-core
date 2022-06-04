@@ -37,15 +37,13 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     private final ConversionService conversionService;
 
     @Override
-    public Try<Diagnosis> create(@Valid @NotNull CreateDiagnosisRequest createRequest) {
-        return Try.of(() -> {
-            GetDiseaseHistoryRequest diseaseHistoryGetter = createRequest.getDiseaseHistory();
-            DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
-            Diagnosis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Diagnosis.class));
-            toCreate.setId(new DiagnosisId(diseaseHistory.getId(), IdGeneratorUtils.generateId().intValue()));
-            return repository.save(toCreate);
-        });
+    public Diagnosis create(@Valid @NotNull CreateDiagnosisRequest createRequest) {
+        GetDiseaseHistoryRequest diseaseHistoryGetter = createRequest.getDiseaseHistory();
+        DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
+                .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
+        Diagnosis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Diagnosis.class));
+        toCreate.setId(new DiagnosisId(diseaseHistory.getId(), IdGeneratorUtils.generateId().intValue()));
+        return repository.save(toCreate);
     }
 
     @Override

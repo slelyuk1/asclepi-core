@@ -36,13 +36,13 @@ class EmployeeServiceTest {
     @Test
     void testSuccessfulCreation() {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
-        Employee created = service.create(request).get();
+        Employee created = service.create(request);
         helper.assertEntityIsValidAfterCreation(request, created);
     }
 
     @Test
     void testSuccessfulEdition() {
-        Employee created = service.create(helper.generateCreateRequest(false)).get();
+        Employee created = service.create(helper.generateCreateRequest(false));
         entityManager.flush();
         entityManager.detach(created);
         EditEmployeeRequest request = helper.generateEditRequest(created.getId(), true);
@@ -53,7 +53,7 @@ class EmployeeServiceTest {
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     void testSuccessfulGetting() {
-        Employee created = service.create(helper.generateCreateRequest(false)).get();
+        Employee created = service.create(helper.generateCreateRequest(false));
         entityManager.flush();
         entityManager.detach(created);
         Employee found = service.getOne(created.getId()).get();
@@ -63,8 +63,8 @@ class EmployeeServiceTest {
     @Test
     void testSuccessfulAllEmployeesGettingRequestResponseSignatures() {
         CreateEmployeeRequest createRequest = helper.generateCreateRequest(false);
-        Employee one = service.create(createRequest).get();
-        Employee another = service.create(helper.generateAnotherCreateRequest(createRequest)).get();
+        Employee one = service.create(createRequest);
+        Employee another = service.create(helper.generateAnotherCreateRequest(createRequest));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);
@@ -85,7 +85,7 @@ class EmployeeServiceTest {
 
     @Test
     void testSuccessfulEmployeeDeletionRequestResponseSignatures() {
-        Employee created = service.create(helper.generateCreateRequest(false)).get();
+        Employee created = service.create(helper.generateCreateRequest(false));
         entityManager.flush();
         entityManager.detach(created);
         Assertions.assertTrue(service.delete(created.getId()));

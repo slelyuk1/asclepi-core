@@ -36,7 +36,7 @@ class ClientServiceTest {
     @Test
     void testSuccessfulCreation() {
         CreateClientRequest request = helper.generateCreateRequest(false);
-        Client created = service.create(request).get();
+        Client created = service.create(request);
         entityManager.flush();
         entityManager.detach(created);
         helper.assertEntityIsValidAfterCreation(request, created);
@@ -45,7 +45,7 @@ class ClientServiceTest {
     @Test
     void testSuccessfulEditing() {
         CreateClientRequest createRequest = helper.generateCreateRequest(false);
-        Client created = service.create(createRequest).get();
+        Client created = service.create(createRequest);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -57,7 +57,7 @@ class ClientServiceTest {
     @Test
     void testSuccessfulGetting() {
         CreateClientRequest createRequest = helper.generateCreateRequest(false);
-        Client created = service.create(createRequest).get();
+        Client created = service.create(createRequest);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -69,8 +69,8 @@ class ClientServiceTest {
     @Test
     void testSuccessfulGettingAll() {
         CreateClientRequest createRequest = helper.generateCreateRequest(false);
-        Client one = service.create(createRequest).get();
-        Client another = service.create(helper.generateAnotherCreateRequest(createRequest)).get();
+        Client one = service.create(createRequest);
+        Client another = service.create(helper.generateAnotherCreateRequest(createRequest));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);

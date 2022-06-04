@@ -3,13 +3,11 @@ package com.jupiter.asclepi.core.web.controller.impl;
 import com.jupiter.asclepi.core.model.request.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.AnamnesisInfo;
+import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.service.api.AnamnesisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
-import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
-import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.web.controller.AnamnesisController;
 import com.jupiter.asclepi.core.web.util.ControllerUtils;
-import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -36,14 +34,9 @@ public class AnamnesisControllerImpl implements AnamnesisController {
 
     @Override
     public ResponseEntity<?> create(@NotNull CreateAnamnesisRequest createRequest) {
-        Try<ResponseEntity<?>> creationTry = anamnesisService.create(createRequest).map(anamnesis -> {
-            AnamnesisInfo anamnesisInfo = conversionService.convert(anamnesis, AnamnesisInfo.class);
-            return ResponseEntity.status(HttpStatus.CREATED).body(anamnesisInfo);
-        });
-        return creationTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during anamnesis creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Anamnesis anamnesis = anamnesisService.create(createRequest);
+        AnamnesisInfo anamnesisInfo = conversionService.convert(anamnesis, AnamnesisInfo.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(anamnesisInfo);
     }
 
     @Override

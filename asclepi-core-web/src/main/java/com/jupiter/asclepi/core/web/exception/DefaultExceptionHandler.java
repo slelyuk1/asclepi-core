@@ -2,6 +2,7 @@ package com.jupiter.asclepi.core.web.exception;
 
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
+import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @ControllerAdvice
-public class CustomRestControllerExceptionHandler extends ResponseEntityExceptionHandler {
+public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String SERVICE_UNAVAILABLE_MESSAGE = "Unfortunately, service is unavailable. Please, try later.";
     private static final String FIELD_VALIDATION_MESSAGE_TEMPLATE = "Field '%s' %s";
+
+    @ExceptionHandler(LoginNotUniqueException.class)
+    public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull LoginNotUniqueException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage()));
+    }
 
     @ExceptionHandler(AsclepiRuntimeException.class)
     public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull AsclepiRuntimeException e) {

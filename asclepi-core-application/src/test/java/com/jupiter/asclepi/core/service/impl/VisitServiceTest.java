@@ -58,16 +58,16 @@ public class VisitServiceTest {
 
     @BeforeEach
     void setUp() {
-        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR)).get();
-        Client client = clientService.create(clientHelper.generateCreateRequest(true)).get();
-        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId())).get();
+        Employee doctor = employeeService.create(employeeHelper.generateCreateRequest(true, Role.DOCTOR));
+        Client client = clientService.create(clientHelper.generateCreateRequest(true));
+        existingHistory = diseaseHistoryService.create(diseaseHistoryHelper.generateCreateRequest(client.getId(), doctor.getId()));
     }
 
 
     @Test
     void testSuccessfulCreation() {
         CreateVisitRequest request = visitHelper.generateCreateRequest(existingHistory);
-        Visit created = visitService.create(request).get();
+        Visit created = visitService.create(request);
         entityManager.flush();
         entityManager.detach(created);
         visitHelper.assertEntityIsValidAfterCreation(request, created);
@@ -76,7 +76,7 @@ public class VisitServiceTest {
     @Test
     void testSuccessfulEditing() {
         CreateVisitRequest request = visitHelper.generateCreateRequest(existingHistory);
-        Visit created = visitService.create(request).get();
+        Visit created = visitService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -89,7 +89,7 @@ public class VisitServiceTest {
     @Test
     void testSuccessfulGetting() {
         CreateVisitRequest request = visitHelper.generateCreateRequest(existingHistory);
-        Visit created = visitService.create(request).get();
+        Visit created = visitService.create(request);
         entityManager.flush();
         entityManager.detach(created);
 
@@ -106,8 +106,8 @@ public class VisitServiceTest {
     @Test
     void testSuccessfulGettingAll() {
         CreateVisitRequest request = visitHelper.generateCreateRequest(existingHistory);
-        Visit one = visitService.create(request).get();
-        Visit another = visitService.create(visitHelper.generateAnotherCreateRequest(request)).get();
+        Visit one = visitService.create(request);
+        Visit another = visitService.create(visitHelper.generateAnotherCreateRequest(request));
         entityManager.flush();
         entityManager.detach(one);
         entityManager.detach(another);

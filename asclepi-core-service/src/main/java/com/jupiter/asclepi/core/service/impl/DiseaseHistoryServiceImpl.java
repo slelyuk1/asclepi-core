@@ -37,17 +37,15 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
     private final EmployeeService employeeService;
 
     @Override
-    public Try<DiseaseHistory> create(@Valid @NotNull CreateDiseaseHistoryRequest createRequest) {
-        return Try.of(() -> {
-            DiseaseHistory toCreate = Objects.requireNonNull(conversionService.convert(createRequest, DiseaseHistory.class));
-            Client client = clientService.getOne(createRequest.getClientId())
-                    .orElseThrow(() -> new NonExistentIdException("Client", createRequest.getClientId()));
-            Employee doctor = employeeService.getOne(createRequest.getDoctorId())
-                    .orElseThrow(() -> new NonExistentIdException("Employee", createRequest.getClientId()));
-            toCreate.setDoctor(doctor);
-            toCreate.setId(new DiseaseHistoryId(client.getId(), IdGeneratorUtils.generateId().intValue()));
-            return repository.save(toCreate);
-        });
+    public DiseaseHistory create(@Valid @NotNull CreateDiseaseHistoryRequest createRequest) {
+        DiseaseHistory toCreate = Objects.requireNonNull(conversionService.convert(createRequest, DiseaseHistory.class));
+        Client client = clientService.getOne(createRequest.getClientId())
+                .orElseThrow(() -> new NonExistentIdException("Client", createRequest.getClientId()));
+        Employee doctor = employeeService.getOne(createRequest.getDoctorId())
+                .orElseThrow(() -> new NonExistentIdException("Employee", createRequest.getClientId()));
+        toCreate.setDoctor(doctor);
+        toCreate.setId(new DiseaseHistoryId(client.getId(), IdGeneratorUtils.generateId().intValue()));
+        return repository.save(toCreate);
     }
 
     @Override
