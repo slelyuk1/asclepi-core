@@ -1,10 +1,10 @@
 package com.jupiter.asclepi.core.service.api;
 
-import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisRequest;
-import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
-import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
-import com.jupiter.asclepi.core.repository.entity.Diagnosis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.model.request.diagnosis.CreateDiagnosisRequest;
+import com.jupiter.asclepi.core.model.request.diagnosis.EditDiagnosisRequest;
+import com.jupiter.asclepi.core.model.request.diagnosis.GetDiagnosisRequest;
+import com.jupiter.asclepi.core.repository.entity.diagnosis.Diagnosis;
+import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.service.helper.api.CrudService;
 
 import javax.validation.constraints.NotNull;

@@ -1,9 +1,9 @@
 package com.jupiter.asclepi.core.service.impl;
 
-import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
-import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
+import com.jupiter.asclepi.core.model.request.client.CreateClientRequest;
+import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
 import com.jupiter.asclepi.core.repository.ClientRepository;
-import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;

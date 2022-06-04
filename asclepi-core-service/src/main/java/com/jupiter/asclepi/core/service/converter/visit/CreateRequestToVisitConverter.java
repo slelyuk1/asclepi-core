@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.converter.visit;
 
-import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
-import com.jupiter.asclepi.core.repository.entity.Visit;
+import com.jupiter.asclepi.core.model.request.visit.CreateVisitRequest;
+import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

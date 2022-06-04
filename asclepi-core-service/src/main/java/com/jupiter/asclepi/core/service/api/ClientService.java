@@ -1,8 +1,8 @@
 package com.jupiter.asclepi.core.service.api;
 
-import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
-import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
-import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.model.request.client.CreateClientRequest;
+import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
+import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.service.helper.api.CrudService;
 
 import java.math.BigInteger;

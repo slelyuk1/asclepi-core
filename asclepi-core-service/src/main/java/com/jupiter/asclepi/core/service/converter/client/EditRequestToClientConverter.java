@@ -1,9 +1,10 @@
 package com.jupiter.asclepi.core.service.converter.client;
 
-import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
-import com.jupiter.asclepi.core.repository.entity.Client;
+import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
+import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.core.convert.converter.Converter;
 
@@ -11,6 +12,8 @@ import org.springframework.core.convert.converter.Converter;
 public interface EditRequestToClientConverter extends Converter<EditClientRequest, Client> {
 
     @Override
+    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "createdWhen", ignore = true)
     Client convert(EditClientRequest request);
 
 }

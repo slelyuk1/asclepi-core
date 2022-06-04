@@ -1,15 +1,15 @@
 package com.jupiter.asclepi.core.service.impl;
 
-import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.request.analysis.CreateAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.analysis.EditAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.analysis.GetAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.AnalysisRepository;
-import com.jupiter.asclepi.core.repository.entity.Analysis;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.Visit;
-import com.jupiter.asclepi.core.repository.entity.id.AnalysisId;
-import com.jupiter.asclepi.core.repository.entity.id.VisitId;
+import com.jupiter.asclepi.core.repository.entity.analysis.Analysis;
+import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.entity.visit.Visit;
+import com.jupiter.asclepi.core.repository.entity.analysis.AnalysisId;
+import com.jupiter.asclepi.core.repository.entity.visit.VisitId;
 import com.jupiter.asclepi.core.service.api.AnalysisService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;

@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.service.converter.security;
 
-import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;

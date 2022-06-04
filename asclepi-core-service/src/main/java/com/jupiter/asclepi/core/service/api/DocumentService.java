@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.api;
 
-import com.jupiter.asclepi.core.model.request.disease.document.CreateDocumentRequest;
-import com.jupiter.asclepi.core.model.request.disease.document.EditDocumentRequest;
+import com.jupiter.asclepi.core.model.request.document.CreateDocumentRequest;
+import com.jupiter.asclepi.core.model.request.document.EditDocumentRequest;
 import com.jupiter.asclepi.core.repository.entity.Document;
 import com.jupiter.asclepi.core.service.helper.api.CrudService;
 

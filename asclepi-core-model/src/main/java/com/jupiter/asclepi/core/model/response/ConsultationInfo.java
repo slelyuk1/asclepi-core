@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.response;
 
-import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
+import com.jupiter.asclepi.core.model.request.consultation.GetConsultationRequest;
 import lombok.Value;
 
 import java.math.BigInteger;

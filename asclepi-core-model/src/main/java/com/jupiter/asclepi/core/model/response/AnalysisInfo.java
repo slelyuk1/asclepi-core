@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.response;
 
-import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.analysis.GetAnalysisRequest;
 import lombok.Value;
 
 @Value

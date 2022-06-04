@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.service.converter.employee;
 
-import com.jupiter.asclepi.core.repository.entity.other.Role;
+import com.jupiter.asclepi.core.repository.entity.employee.Role;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.springframework.core.convert.converter.Converter;

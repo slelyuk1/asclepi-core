@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.service.impl.security;
 
-import com.jupiter.asclepi.core.model.request.other.AuthenticationRequest;
+import com.jupiter.asclepi.core.model.request.security.AuthenticationRequest;
 import com.jupiter.asclepi.core.service.api.SecurityService;
 import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;

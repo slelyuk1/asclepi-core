@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.converter.diagnosis;
 
 import com.jupiter.asclepi.core.model.response.DiagnosisInfo;
-import com.jupiter.asclepi.core.repository.entity.Diagnosis;
+import com.jupiter.asclepi.core.repository.entity.diagnosis.Diagnosis;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

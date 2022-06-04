@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.response;
 
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import lombok.Value;
 
 import java.time.LocalDateTime;

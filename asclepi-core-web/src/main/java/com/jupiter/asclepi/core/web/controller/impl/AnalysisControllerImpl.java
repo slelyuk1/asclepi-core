@@ -1,10 +1,10 @@
 package com.jupiter.asclepi.core.web.controller.impl;
 
-import com.jupiter.asclepi.core.model.request.disease.analysis.CreateAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.analysis.EditAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.analysis.GetAnalysisRequest;
-import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
+import com.jupiter.asclepi.core.model.request.analysis.CreateAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.analysis.EditAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.analysis.GetAnalysisRequest;
+import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.response.AnalysisInfo;
 import com.jupiter.asclepi.core.service.api.AnalysisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;

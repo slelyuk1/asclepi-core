@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.repository.entity;
 
+import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

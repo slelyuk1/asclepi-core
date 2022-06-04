@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.repository;
 
-import com.jupiter.asclepi.core.repository.entity.Consultation;
-import com.jupiter.asclepi.core.repository.entity.id.ConsultationId;
+import com.jupiter.asclepi.core.repository.entity.consultation.Consultation;
+import com.jupiter.asclepi.core.repository.entity.consultation.ConsultationId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @SuppressWarnings("unused")

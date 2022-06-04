@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.converter.diseasehistory;
 
-import com.jupiter.asclepi.core.model.request.disease.history.CreateDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
+import com.jupiter.asclepi.core.model.request.history.CreateDiseaseHistoryRequest;
+import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

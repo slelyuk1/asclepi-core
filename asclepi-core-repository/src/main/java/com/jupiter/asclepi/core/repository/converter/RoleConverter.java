@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.repository.converter;
 
-import com.jupiter.asclepi.core.repository.entity.other.Role;
+import com.jupiter.asclepi.core.repository.entity.employee.Role;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

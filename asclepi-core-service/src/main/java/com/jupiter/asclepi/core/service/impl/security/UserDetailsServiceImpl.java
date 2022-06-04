@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.service.impl.security;
 
 import com.jupiter.asclepi.core.repository.EmployeeRepository;
-import com.jupiter.asclepi.core.repository.entity.Employee;
+import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;

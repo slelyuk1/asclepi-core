@@ -1,8 +1,7 @@
 package com.jupiter.asclepi.core.service.converter.consultation;
 
-import com.jupiter.asclepi.core.repository.entity.Anamnesis;
-import com.jupiter.asclepi.core.repository.entity.Consultation;
-import com.jupiter.asclepi.core.model.request.disease.consultation.CreateConsultationRequest;
+import com.jupiter.asclepi.core.model.request.consultation.CreateConsultationRequest;
+import com.jupiter.asclepi.core.repository.entity.consultation.Consultation;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
