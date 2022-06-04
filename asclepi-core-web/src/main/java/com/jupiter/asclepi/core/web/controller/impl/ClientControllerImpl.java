@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.web.controller.impl;
 
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
-import com.jupiter.asclepi.core.model.response.people.ClientInfo;
+import com.jupiter.asclepi.core.model.response.ClientInfo;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;

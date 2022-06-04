@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.request.people;
 
-import com.jupiter.asclepi.core.model.other.Job;
+import com.jupiter.asclepi.core.model.response.JobInfo;
 import lombok.Data;
 import lombok.SneakyThrows;
 
@@ -19,7 +19,7 @@ public class CreateClientRequest implements Cloneable {
     @NotNull
     private Boolean gender;
     @NotNull
-    private Job job;
+    private JobRequest job;
 
     @SneakyThrows
     @Override

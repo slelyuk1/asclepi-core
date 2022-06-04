@@ -4,7 +4,7 @@ import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisR
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.response.disease.DiagnosisInfo;
+import com.jupiter.asclepi.core.model.response.DiagnosisInfo;
 import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;

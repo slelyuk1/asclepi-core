@@ -5,7 +5,7 @@ import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultat
 import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.response.disease.ConsultationInfo;
+import com.jupiter.asclepi.core.model.response.ConsultationInfo;
 import com.jupiter.asclepi.core.web.helper.api.CrudController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

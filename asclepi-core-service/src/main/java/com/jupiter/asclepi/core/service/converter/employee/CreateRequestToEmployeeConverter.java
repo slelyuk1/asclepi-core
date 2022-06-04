@@ -11,6 +11,7 @@ import org.springframework.core.convert.converter.Converter;
 public interface CreateRequestToEmployeeConverter extends Converter<CreateEmployeeRequest, Employee> {
 
     @Override
+    @Mapping(target = "role", source = "roleId")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)

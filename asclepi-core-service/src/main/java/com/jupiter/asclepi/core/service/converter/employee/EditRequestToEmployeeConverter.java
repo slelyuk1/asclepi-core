@@ -11,6 +11,7 @@ import org.springframework.core.convert.converter.Converter;
 public interface EditRequestToEmployeeConverter extends Converter<EditEmployeeRequest, Employee> {
 
     @Override
+    @Mapping(target = "role", source = "roleId")
     @Mapping(target = "createdWhen", ignore = true)
     @Mapping(target = "creator", ignore = true)
     Employee convert(EditEmployeeRequest request);

@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.web.controller;
 
 import com.jupiter.asclepi.core.model.request.disease.visit.CreateVisitRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.EditVisitRequest;
-import com.jupiter.asclepi.core.model.response.disease.VisitInfo;
+import com.jupiter.asclepi.core.model.response.VisitInfo;
 import com.jupiter.asclepi.core.web.helper.api.CreateController;
 import com.jupiter.asclepi.core.web.helper.api.EditController;
 import com.jupiter.asclepi.core.web.helper.api.GetAllController;

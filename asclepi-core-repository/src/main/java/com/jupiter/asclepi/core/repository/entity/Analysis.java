@@ -42,7 +42,7 @@ public class Analysis extends AbstractCreationAware<Employee> {
         id = new AnalysisId();
     }
 
-    public final void setId(AnalysisId id) {
+    public void setId(AnalysisId id) {
         this.id = id;
         if (id.getVisitId() != null) {
             setVisit(Visit.fromId(id.getVisitId()));

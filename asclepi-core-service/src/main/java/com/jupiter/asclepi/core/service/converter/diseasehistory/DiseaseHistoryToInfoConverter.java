@@ -3,7 +3,7 @@ package com.jupiter.asclepi.core.service.converter.diseasehistory;
 import com.jupiter.asclepi.core.repository.entity.Diagnosis;
 import com.jupiter.asclepi.core.repository.entity.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.model.response.disease.DiseaseHistoryInfo;
+import com.jupiter.asclepi.core.model.response.DiseaseHistoryInfo;
 import com.jupiter.asclepi.core.service.configuration.MappingConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

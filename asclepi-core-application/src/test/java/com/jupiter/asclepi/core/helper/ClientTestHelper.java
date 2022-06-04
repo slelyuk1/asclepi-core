@@ -2,8 +2,9 @@ package com.jupiter.asclepi.core.helper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jupiter.asclepi.core.model.request.people.JobRequest;
 import com.jupiter.asclepi.core.repository.entity.Client;
-import com.jupiter.asclepi.core.model.other.Job;
+import com.jupiter.asclepi.core.repository.entity.other.Job;
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ public class ClientTestHelper {
     private final ObjectMapper objectMapper;
 
     public CreateClientRequest generateCreateRequest(boolean withOptional) {
-        Job job = new Job();
+        JobRequest job = new JobRequest();
         job.setName(TEST_JOB_NAME);
         job.setOrganization(TEST_JOB_ORGANIZATION);
 
@@ -56,14 +57,14 @@ public class ClientTestHelper {
         another.setGender(!another.getGender());
         another.setResidence(another.getResidence() + "Other");
 
-        Job job = another.getJob();
+        JobRequest job = another.getJob();
         job.setName(job.getName() + "Other");
         job.setOrganization(job.getOrganization() + "Other");
         return another;
     }
 
     public EditClientRequest generateEditRequest(BigInteger id, boolean withOptional) {
-        Job job = new Job();
+        JobRequest job = new JobRequest();
         job.setName(TEST_JOB_NAME);
         job.setOrganization(TEST_JOB_ORGANIZATION);
 
@@ -106,7 +107,8 @@ public class ClientTestHelper {
         Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
         Assertions.assertEquals(request.getGender(), entity.getGender());
         Assertions.assertEquals(request.getResidence(), entity.getResidence());
-        Assertions.assertEquals(request.getJob(), entity.getJob());
+        Assertions.assertEquals(request.getJob().getName(), entity.getJob().getName());
+        Assertions.assertEquals(request.getJob().getOrganization(), entity.getJob().getOrganization());
     }
 
     public void assertEntityIsValidAfterEdition(EditClientRequest request, Client entity) {
@@ -127,7 +129,8 @@ public class ClientTestHelper {
             Assertions.assertEquals(request.getResidence(), entity.getResidence());
         }
         if (Objects.nonNull(request.getJob())) {
-            Assertions.assertEquals(request.getJob(), entity.getJob());
+            Assertions.assertEquals(request.getJob().getName(), entity.getJob().getName());
+            Assertions.assertEquals(request.getJob().getOrganization(), entity.getJob().getOrganization());
         }
     }
 

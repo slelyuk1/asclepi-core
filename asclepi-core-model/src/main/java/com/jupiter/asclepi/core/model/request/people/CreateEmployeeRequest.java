@@ -1,6 +1,5 @@
 package com.jupiter.asclepi.core.model.request.people;
 
-import com.jupiter.asclepi.core.model.other.Role;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -13,7 +12,7 @@ public class CreateEmployeeRequest implements Cloneable {
     @NotBlank
     private String password;
     @NotNull
-    private Role role;
+    private Integer roleId;
     @NotBlank
     private String name;
     @NotBlank

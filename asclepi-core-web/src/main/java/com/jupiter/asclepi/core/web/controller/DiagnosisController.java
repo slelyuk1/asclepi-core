@@ -4,7 +4,7 @@ import com.jupiter.asclepi.core.model.request.disease.diagnosis.CreateDiagnosisR
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.EditDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
-import com.jupiter.asclepi.core.model.response.disease.DiagnosisInfo;
+import com.jupiter.asclepi.core.model.response.DiagnosisInfo;
 import com.jupiter.asclepi.core.web.helper.api.CrudController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

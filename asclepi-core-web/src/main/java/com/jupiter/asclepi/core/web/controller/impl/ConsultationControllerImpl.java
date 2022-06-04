@@ -5,7 +5,7 @@ import com.jupiter.asclepi.core.model.request.disease.consultation.EditConsultat
 import com.jupiter.asclepi.core.model.request.disease.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.model.request.disease.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.disease.visit.GetVisitRequest;
-import com.jupiter.asclepi.core.model.response.disease.ConsultationInfo;
+import com.jupiter.asclepi.core.model.response.ConsultationInfo;
 import com.jupiter.asclepi.core.service.api.ConsultationService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;

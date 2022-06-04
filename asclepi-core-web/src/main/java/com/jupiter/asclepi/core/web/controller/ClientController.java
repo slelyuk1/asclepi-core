@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.web.controller;
 
 import com.jupiter.asclepi.core.model.request.people.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.people.EditClientRequest;
-import com.jupiter.asclepi.core.model.response.people.ClientInfo;
+import com.jupiter.asclepi.core.model.response.ClientInfo;
 import com.jupiter.asclepi.core.web.helper.api.CreateController;
 import com.jupiter.asclepi.core.web.helper.api.EditController;
 import com.jupiter.asclepi.core.web.helper.api.GetAllController;

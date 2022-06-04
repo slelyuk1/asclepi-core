@@ -3,7 +3,7 @@ package com.jupiter.asclepi.core.helper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jupiter.asclepi.core.repository.entity.Employee;
-import com.jupiter.asclepi.core.model.other.Role;
+import com.jupiter.asclepi.core.repository.entity.other.Role;
 import com.jupiter.asclepi.core.model.request.people.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.people.EditEmployeeRequest;
 import org.junit.jupiter.api.Assertions;
@@ -36,7 +36,7 @@ public class EmployeeTestHelper {
         CreateEmployeeRequest request = new CreateEmployeeRequest();
         request.setLogin(TEST_LOGIN);
         request.setPassword(TEST_PASSWORD);
-        request.setRole(TEST_ROLE);
+        request.setRoleId(TEST_ROLE.getId());
         request.setName(TEST_NAME);
         request.setSurname(TEST_SURNAME);
         if (withOptional) {
@@ -48,7 +48,7 @@ public class EmployeeTestHelper {
 
     public CreateEmployeeRequest generateCreateRequest(boolean withOptional, Role role) {
         CreateEmployeeRequest request = generateCreateRequest(withOptional);
-        request.setRole(role);
+        request.setRoleId(role.getId());
         return request;
     }
 
@@ -66,9 +66,10 @@ public class EmployeeTestHelper {
         }
         request.setLogin(request.getLogin() + "Other");
         request.setPassword(request.getPassword() + "Other");
-        request.setRole(
+        request.setRoleId(
                 Arrays.stream(Role.values())
-                        .filter(r -> !request.getRole().equals(r))
+                        .map(Role::getId)
+                        .filter(r -> !request.getRoleId().equals(r))
                         .findAny()
                         .get()
         );
@@ -80,7 +81,7 @@ public class EmployeeTestHelper {
         request.setId(id);
         request.setLogin(TEST_LOGIN);
         request.setPassword(TEST_PASSWORD);
-        request.setRole(TEST_ROLE);
+        request.setRoleId(TEST_ROLE.getId());
         request.setName(TEST_NAME);
         request.setSurname(TEST_SURNAME);
         if (withOptional) {
@@ -118,7 +119,7 @@ public class EmployeeTestHelper {
         Assertions.assertEquals(request.getName(), entity.getName());
         Assertions.assertEquals(request.getSurname(), entity.getSurname());
         Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
-        Assertions.assertEquals(request.getRole(), entity.getRole());
+        Assertions.assertEquals(request.getRoleId(), entity.getRole().getId());
         Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
     }
 
@@ -127,8 +128,8 @@ public class EmployeeTestHelper {
         if (Objects.nonNull(request.getLogin())) {
             Assertions.assertEquals(request.getLogin(), entity.getLogin());
         }
-        if (Objects.nonNull(request.getRole())) {
-            Assertions.assertEquals(request.getRole(), entity.getRole());
+        if (Objects.nonNull(request.getRoleId())) {
+            Assertions.assertEquals(request.getRoleId(), entity.getRole().getId());
         }
         if (Objects.nonNull(request.getName())) {
             Assertions.assertEquals(request.getName(), entity.getName());

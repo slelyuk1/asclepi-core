@@ -1,6 +1,5 @@
 package com.jupiter.asclepi.core.model.request.people;
 
-import com.jupiter.asclepi.core.model.other.Role;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,7 @@ public class EditEmployeeRequest {
     private Integer id;
     private String login;
     private String password;
-    private Role role;
+    private Integer roleId;
     private String name;
     private String surname;
     private String middleName;

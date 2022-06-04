@@ -1,6 +1,6 @@
 package com.jupiter.asclepi.core.model.request.people;
 
-import com.jupiter.asclepi.core.model.other.Job;
+import com.jupiter.asclepi.core.model.response.JobInfo;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -15,5 +15,5 @@ public class EditClientRequest {
     private String middleName;
     private String residence;
     private Boolean gender;
-    private Job job;
+    private JobRequest job;
 }
