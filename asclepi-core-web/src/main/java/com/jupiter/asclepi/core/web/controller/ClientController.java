@@ -24,8 +24,4 @@ public interface ClientController extends
         CreateController<CreateClientRequest, ClientInfo>,
         EditController<EditClientRequest, ClientInfo> {
 
-    @Override
-    @GetMapping("/all")
-    List<ClientInfo> getAll();
-
 }

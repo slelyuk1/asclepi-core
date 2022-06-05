@@ -16,10 +16,6 @@ import java.util.List;
 
 public interface DiagnosisController extends CrudUsingRequestBodyController<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, DiagnosisInfo> {
 
-    @GetMapping("/all")
-    @Override
-    List<DiagnosisInfo> getAll();
-
     @GetMapping("/getForDiseaseHistory")
     List<DiagnosisInfo> getForDiseaseHistory(@NotNull @RequestBody GetDiseaseHistoryRequest request);
 }

@@ -18,10 +18,6 @@ import java.util.List;
 public interface ConsultationController
         extends CrudUsingRequestBodyController<GetConsultationRequest, CreateConsultationRequest, EditConsultationRequest, ConsultationInfo> {
 
-    @GetMapping("/all")
-    @Override
-    List<ConsultationInfo> getAll();
-
     @GetMapping("/getForVisit")
     List<ConsultationInfo> getForVisit(@NotNull @RequestBody GetVisitRequest request);
 

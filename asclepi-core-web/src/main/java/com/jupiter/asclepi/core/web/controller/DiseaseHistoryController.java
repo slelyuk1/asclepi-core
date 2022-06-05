@@ -24,10 +24,6 @@ public interface DiseaseHistoryController extends
         CreateController<CreateDiseaseHistoryRequest, DiseaseHistoryInfo>,
         EditController<EditDiseaseHistoryRequest, DiseaseHistoryInfo> {
 
-    @GetMapping("/all")
-    @Override
-    List<DiseaseHistoryInfo> getAll();
-
     @GetMapping("/{clientId}")
     List<DiseaseHistoryInfo> getForClient(@PathVariable("clientId") BigInteger clientId);
 

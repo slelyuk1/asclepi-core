@@ -15,10 +15,6 @@ import java.util.List;
 
 public interface EmployeeController extends CrudUsingPathVariableController<Integer, CreateEmployeeRequest, EditEmployeeRequest, EmployeeInfo> {
 
-    @Override
-    @GetMapping("/all")
-    List<EmployeeInfo> getAll();
-
     @GetMapping("/")
     ResponseEntity<EmployeeInfo> getOne();
 }

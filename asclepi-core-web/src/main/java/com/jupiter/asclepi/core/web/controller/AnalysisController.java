@@ -17,10 +17,6 @@ import java.util.List;
 
 public interface AnalysisController extends CrudUsingRequestBodyController<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, AnalysisInfo> {
 
-    @GetMapping("/all")
-    @Override
-    List<AnalysisInfo> getAll();
-
     @GetMapping("/getForVisit")
     List<AnalysisInfo> getAnalysisForVisit(@NotNull @RequestBody GetVisitRequest visitGetter);
 

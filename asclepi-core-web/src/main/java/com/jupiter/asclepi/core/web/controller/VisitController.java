@@ -21,10 +21,6 @@ public interface VisitController extends
         CreateController<CreateVisitRequest, VisitInfo>,
         EditController<EditVisitRequest, VisitInfo> {
 
-    @GetMapping("/all")
-    @Override
-    List<VisitInfo> getAll();
-
     @GetMapping("/{clientId}/{diseaseHistoryNumber}")
     List<VisitInfo> getForDiseaseHistory(@NotNull @PathVariable("clientId") BigInteger clientId,
                                          @NotNull @PathVariable("diseaseHistoryNumber") Integer diseaseHistoryNumber);
