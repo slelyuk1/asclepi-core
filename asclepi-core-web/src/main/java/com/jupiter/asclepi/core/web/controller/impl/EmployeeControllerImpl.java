@@ -37,7 +37,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     }
 
     @Override
-    public ResponseEntity<?> delete(Integer toDeleteId) {
+    public ResponseEntity<Void> delete(Integer toDeleteId) {
         boolean result = employeeService.delete(toDeleteId);
         return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
     }

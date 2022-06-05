@@ -4,8 +4,9 @@ import com.jupiter.asclepi.core.model.request.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.AnamnesisInfo;
 import com.jupiter.asclepi.core.web.helper.api.CreateController;
-import com.jupiter.asclepi.core.web.helper.api.DeleteController;
+import com.jupiter.asclepi.core.web.helper.api.delete.DeleteUsingBodyController;
 import com.jupiter.asclepi.core.web.helper.api.GetController;
+import com.jupiter.asclepi.core.web.helper.api.delete.DeleteUsingPathVariableController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,7 @@ import java.util.List;
 public interface AnamnesisController extends
         GetController<BigInteger, AnamnesisInfo>,
         CreateController<CreateAnamnesisRequest, AnamnesisInfo>,
-        DeleteController<BigInteger> {
-
-    @Override
-    @DeleteMapping("/{anamnesisId}/delete")
-    ResponseEntity<?> delete(@NotNull @PathVariable("anamnesisId") BigInteger anamnesisId);
+        DeleteUsingPathVariableController<BigInteger> {
 
     @Override
     @GetMapping("/{anamnesisId}")

@@ -40,7 +40,7 @@ public class AnamnesisControllerImpl implements AnamnesisController {
     }
 
     @Override
-    public ResponseEntity<?> delete(@NotNull BigInteger anamnesisId) {
+    public ResponseEntity<Void> delete(@NotNull BigInteger anamnesisId) {
         boolean result = anamnesisService.delete(anamnesisId);
         return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
     }

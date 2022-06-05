@@ -81,7 +81,7 @@ public class ConsultationTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedDeleteRequest(GetConsultationRequest request) throws JsonProcessingException {
-        return delete("/api/v1/consultation/delete")
+        return delete("/api/v1/consultation/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

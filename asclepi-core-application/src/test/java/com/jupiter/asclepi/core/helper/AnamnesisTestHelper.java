@@ -67,7 +67,7 @@ public class AnamnesisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedDeleteRequest(BigInteger id) {
-        return delete("/api/v1/anamnesis/{anamnesisId}/delete", id);
+        return delete("/api/v1/anamnesis/{anamnesisId}", id);
     }
 
     public MockHttpServletRequestBuilder createMockedGetAllRequest() {

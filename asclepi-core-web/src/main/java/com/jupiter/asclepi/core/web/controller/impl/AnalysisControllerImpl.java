@@ -88,7 +88,7 @@ public class AnalysisControllerImpl implements AnalysisController {
 
 
     @Override
-    public ResponseEntity<?> delete(@NotNull GetAnalysisRequest deleteRequest) {
+    public ResponseEntity<Void> delete(@NotNull GetAnalysisRequest deleteRequest) {
         boolean result = analysisService.delete(deleteRequest);
         return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
     }

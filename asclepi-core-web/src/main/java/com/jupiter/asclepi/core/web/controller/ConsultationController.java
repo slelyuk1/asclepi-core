@@ -6,7 +6,7 @@ import com.jupiter.asclepi.core.model.request.consultation.GetConsultationReques
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.response.ConsultationInfo;
-import com.jupiter.asclepi.core.web.helper.api.CrudController;
+import com.jupiter.asclepi.core.web.helper.api.crud.CrudUsingBodyController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface ConsultationController
-        extends CrudController<GetConsultationRequest, CreateConsultationRequest, EditConsultationRequest, ConsultationInfo> {
-
-    @DeleteMapping("/delete")
-    @Override
-    ResponseEntity<?> delete(@NotNull @RequestBody GetConsultationRequest deleteRequest);
+        extends CrudUsingBodyController<GetConsultationRequest, CreateConsultationRequest, EditConsultationRequest, ConsultationInfo> {
 
     @PostMapping("/edit")
     @Override

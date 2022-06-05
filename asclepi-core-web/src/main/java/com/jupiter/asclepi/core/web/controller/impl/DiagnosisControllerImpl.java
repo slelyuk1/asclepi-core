@@ -45,7 +45,7 @@ public class DiagnosisControllerImpl implements DiagnosisController {
     }
 
     @Override
-    public ResponseEntity<?> delete(@NotNull GetDiagnosisRequest deleteRequest) {
+    public ResponseEntity<Void> delete(@NotNull GetDiagnosisRequest deleteRequest) {
         boolean result = diagnosisService.delete(deleteRequest);
         return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
     }

@@ -86,7 +86,7 @@ public class DiagnosisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedDeleteRequest(GetDiagnosisRequest request) throws JsonProcessingException {
-        return delete("/api/v1/diagnosis/delete")
+        return delete("/api/v1/diagnosis/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

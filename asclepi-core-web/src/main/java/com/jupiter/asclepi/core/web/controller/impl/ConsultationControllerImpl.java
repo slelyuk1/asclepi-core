@@ -45,7 +45,7 @@ public class ConsultationControllerImpl implements ConsultationController {
     }
 
     @Override
-    public ResponseEntity<?> delete(@NotNull GetConsultationRequest deleteRequest) {
+    public ResponseEntity<Void> delete(@NotNull GetConsultationRequest deleteRequest) {
         boolean result = consultationService.delete(deleteRequest);
         return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
     }

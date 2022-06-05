@@ -115,7 +115,7 @@ class AnamnesisControllerTest {
     }
 
     @Test
-    void testSuccessfulEmployeeDeletionRequestResponseSignatures() throws Exception {
+    void testSuccessfulDeletionRequestResponseSignatures() throws Exception {
         Anamnesis created = anamnesisService.create(anamnesisHelper.generateCreateRequest(existingHistory));
         this.mockMvc.perform(anamnesisHelper.createMockedDeleteRequest(created.getId()))
                 .andExpect(status().isOk())
