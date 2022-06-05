@@ -51,7 +51,7 @@ class DocumentServiceTest extends AbstractDocumentTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> {
                     DocumentInfo info = getObjectMapper().readValue(result.getResponse().getContentAsString(), DocumentInfo.class);
-                    Document created = getEntityManager().find(Document.class, info.getId());
+                    Document created = getEntityManager().find(Document.class, info.id());
                     assertEntityIsEqualToInfo(created, info);
                 });
     }
@@ -96,11 +96,11 @@ class DocumentServiceTest extends AbstractDocumentTest {
                     DocumentInfo[] infos = getObjectMapper().readValue(result.getResponse().getContentAsString(), DocumentInfo[].class);
                     Assertions.assertEquals(2, infos.length);
                     DocumentInfo oneInfo = Arrays.stream(infos)
-                            .filter(info -> Objects.equals(info.getId(), one.getId()))
+                            .filter(info -> Objects.equals(info.id(), one.getId()))
                             .findAny()
                             .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
                     DocumentInfo anotherInfo = Arrays.stream(infos)
-                            .filter(info -> Objects.equals(info.getId(), another.getId()))
+                            .filter(info -> Objects.equals(info.id(), another.getId()))
                             .findAny()
                             .orElseThrow(() -> new IllegalStateException("List doesn't contain persisted element!"));
                     assertEntityIsEqualToInfo(one, oneInfo);
@@ -132,7 +132,7 @@ class DocumentServiceTest extends AbstractDocumentTest {
     }
 
     private void assertEntityIsEqualToInfo(Document entity, DocumentInfo info) {
-        Assertions.assertEquals(entity.getId(), info.getId());
+        Assertions.assertEquals(entity.getId(), info.id());
         // todo add when analysis and disease history functionality is implemented
 //        if (entity.getAnalysis() != null) {
 //            Assertions.assertEquals(entity.getAnalysis().getId(), info.getAnalysisId());
@@ -140,6 +140,6 @@ class DocumentServiceTest extends AbstractDocumentTest {
 //        if (entity.getDiseaseHistory() != null) {
 //            Assertions.assertEquals(BigInteger.valueOf(entity.getDiseaseHistory().getNumber()), info.getDiseaseHistoryId());
 //        }
-        Assertions.assertEquals(entity.getDescription(), info.getDescription());
+        Assertions.assertEquals(entity.getDescription(), info.description());
     }
 }
