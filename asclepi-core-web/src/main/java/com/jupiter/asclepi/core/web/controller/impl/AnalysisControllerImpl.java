@@ -45,7 +45,7 @@ public class AnalysisControllerImpl implements AnalysisController {
     }
 
     @Override
-    public ResponseEntity<?> edit(@NotNull EditAnalysisRequest editRequest) {
+    public ResponseEntity<AnalysisInfo> edit(@NotNull EditAnalysisRequest editRequest) {
         Analysis edited = analysisService.edit(editRequest);
         AnalysisInfo info = conversionService.convert(edited, AnalysisInfo.class);
         return ResponseEntity.ok().body(info);

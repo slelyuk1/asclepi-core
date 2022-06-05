@@ -37,7 +37,7 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public ResponseEntity<?> edit(@NotNull EditClientRequest editRequest) {
+    public ResponseEntity<ClientInfo> edit(@NotNull EditClientRequest editRequest) {
         Client edited = clientService.edit(editRequest);
         ClientInfo clientInfo = conversionService.convert(edited, ClientInfo.class);
         return ResponseEntity.ok().body(clientInfo);

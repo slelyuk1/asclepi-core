@@ -18,8 +18,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import java.util.Objects;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 @RequiredArgsConstructor
 public class AnalysisTestHelper {
@@ -71,7 +70,7 @@ public class AnalysisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedEditRequest(EditAnalysisRequest request) throws JsonProcessingException {
-        return post("/api/v1/analysis/edit")
+        return patch("/api/v1/analysis/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

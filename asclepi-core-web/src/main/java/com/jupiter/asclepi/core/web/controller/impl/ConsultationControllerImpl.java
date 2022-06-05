@@ -51,7 +51,7 @@ public class ConsultationControllerImpl implements ConsultationController {
     }
 
     @Override
-    public ResponseEntity<?> edit(@NotNull EditConsultationRequest editRequest) {
+    public ResponseEntity<ConsultationInfo> edit(@NotNull EditConsultationRequest editRequest) {
         Consultation edited = consultationService.edit(editRequest);
         ConsultationInfo consultationInfo = conversionService.convert(edited, ConsultationInfo.class);
         return ResponseEntity.ok().body(consultationInfo);

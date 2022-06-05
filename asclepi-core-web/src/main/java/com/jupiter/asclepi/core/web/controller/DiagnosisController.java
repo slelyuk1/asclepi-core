@@ -16,10 +16,6 @@ import java.util.List;
 
 public interface DiagnosisController extends CrudUsingRequestBodyController<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, DiagnosisInfo> {
 
-    @PostMapping("/edit")
-    @Override
-    ResponseEntity<?> edit(@NotNull @RequestBody EditDiagnosisRequest editRequest);
-
     @GetMapping("/all")
     @Override
     List<DiagnosisInfo> getAll();

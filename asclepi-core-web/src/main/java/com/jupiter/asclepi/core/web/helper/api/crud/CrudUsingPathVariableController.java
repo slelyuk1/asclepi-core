@@ -11,6 +11,6 @@ public interface CrudUsingPathVariableController<GetRequestType, CreateRequestTy
         GetUsingPathVariableController<GetRequestType, ResponseType>,
         GetAllController<ResponseType>,
         CreateController<CreateRequestType, ResponseType>,
-        EditController<EditRequestType>,
+        EditController<EditRequestType, ResponseType>,
         DeleteUsingPathVariableController<GetRequestType> {
 }

@@ -22,11 +22,7 @@ public interface ClientController extends
         GetUsingPathVariableController<BigInteger, ClientInfo>,
         GetAllController<ClientInfo>,
         CreateController<CreateClientRequest, ClientInfo>,
-        EditController<EditClientRequest> {
-
-    @Override
-    @PostMapping("/edit")
-    ResponseEntity<?> edit(@NotNull @RequestBody EditClientRequest editRequest);
+        EditController<EditClientRequest, ClientInfo> {
 
     @Override
     @GetMapping("/all")

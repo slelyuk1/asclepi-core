@@ -22,11 +22,7 @@ public interface DiseaseHistoryController extends
         GetUsingRequestBodyController<GetDiseaseHistoryRequest, DiseaseHistoryInfo>,
         GetAllController<DiseaseHistoryInfo>,
         CreateController<CreateDiseaseHistoryRequest, DiseaseHistoryInfo>,
-        EditController<EditDiseaseHistoryRequest> {
-
-    @PostMapping("/edit")
-    @Override
-    ResponseEntity<?> edit(@NotNull @RequestBody EditDiseaseHistoryRequest editRequest);
+        EditController<EditDiseaseHistoryRequest, DiseaseHistoryInfo> {
 
     @GetMapping("/all")
     @Override

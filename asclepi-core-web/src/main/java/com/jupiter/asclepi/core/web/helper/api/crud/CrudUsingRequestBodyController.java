@@ -10,6 +10,6 @@ public interface CrudUsingRequestBodyController<GetRequestType, CreateRequestTyp
         GetUsingRequestBodyController<GetRequestType, ResponseType>,
         GetAllController<ResponseType>,
         CreateController<CreateRequestType, ResponseType>,
-        EditController<EditRequestType>,
+        EditController<EditRequestType, ResponseType>,
         DeleteUsingRequestBodyController<GetRequestType> {
 }

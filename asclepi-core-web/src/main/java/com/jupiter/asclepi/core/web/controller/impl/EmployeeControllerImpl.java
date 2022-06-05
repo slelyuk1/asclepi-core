@@ -43,7 +43,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     }
 
     @Override
-    public ResponseEntity<?> edit(EditEmployeeRequest editRequest) {
+    public ResponseEntity<EmployeeInfo> edit(EditEmployeeRequest editRequest) {
         Employee edited = employeeService.edit(editRequest);
         EmployeeInfo employeeInfo = conversionService.convert(edited, EmployeeInfo.class);
         return ResponseEntity.ok().body(employeeInfo);

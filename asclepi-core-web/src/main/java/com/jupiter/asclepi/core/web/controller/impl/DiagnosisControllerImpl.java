@@ -51,7 +51,7 @@ public class DiagnosisControllerImpl implements DiagnosisController {
     }
 
     @Override
-    public ResponseEntity<?> edit(@NotNull EditDiagnosisRequest editRequest) {
+    public ResponseEntity<DiagnosisInfo> edit(@NotNull EditDiagnosisRequest editRequest) {
         Diagnosis edited = diagnosisService.edit(editRequest);
         DiagnosisInfo info = conversionService.convert(edited, DiagnosisInfo.class);
         return ResponseEntity.ok().body(info);

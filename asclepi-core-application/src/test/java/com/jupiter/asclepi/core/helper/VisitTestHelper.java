@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RequiredArgsConstructor
@@ -62,7 +63,7 @@ public class VisitTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedEditRequest(EditVisitRequest request) throws JsonProcessingException {
-        return post("/api/v1/visit/edit")
+        return patch("/api/v1/visit/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

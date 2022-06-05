@@ -42,7 +42,7 @@ public class VisitControllerImpl implements VisitController {
     }
 
     @Override
-    public ResponseEntity<?> edit(@NotNull EditVisitRequest editRequest) {
+    public ResponseEntity<VisitInfo> edit(@NotNull EditVisitRequest editRequest) {
         Visit edited = visitService.edit(editRequest);
         VisitInfo info = conversionService.convert(edited, VisitInfo.class);
         return ResponseEntity.ok().body(info);

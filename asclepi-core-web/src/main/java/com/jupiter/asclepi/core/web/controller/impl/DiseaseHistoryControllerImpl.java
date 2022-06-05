@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.web.controller.impl;
 
+import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
 import com.jupiter.asclepi.core.model.request.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
@@ -41,7 +42,7 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
     }
 
     @Override
-    public ResponseEntity<?> edit(@NotNull EditDiseaseHistoryRequest editRequest) {
+    public ResponseEntity<DiseaseHistoryInfo> edit(@NotNull EditDiseaseHistoryRequest editRequest) {
         DiseaseHistory edited = diseaseHistoryService.edit(editRequest);
         DiseaseHistoryInfo historyInfo = conversionService.convert(edited, DiseaseHistoryInfo.class);
         return ResponseEntity.ok().body(historyInfo);
@@ -71,4 +72,5 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
     }
+
 }

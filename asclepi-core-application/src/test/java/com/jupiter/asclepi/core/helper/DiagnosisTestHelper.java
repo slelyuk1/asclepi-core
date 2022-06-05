@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @RequiredArgsConstructor
@@ -80,7 +81,7 @@ public class DiagnosisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedEditRequest(EditDiagnosisRequest request) throws JsonProcessingException {
-        return post("/api/v1/diagnosis/edit")
+        return patch("/api/v1/diagnosis/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }
