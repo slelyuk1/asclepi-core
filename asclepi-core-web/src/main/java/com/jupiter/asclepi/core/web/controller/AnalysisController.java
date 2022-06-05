@@ -6,9 +6,8 @@ import com.jupiter.asclepi.core.model.request.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.model.response.AnalysisInfo;
-import com.jupiter.asclepi.core.web.helper.api.crud.CrudUsingBodyController;
+import com.jupiter.asclepi.core.web.helper.api.crud.CrudUsingRequestBodyController;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public interface AnalysisController extends CrudUsingBodyController<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, AnalysisInfo> {
+public interface AnalysisController extends CrudUsingRequestBodyController<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, AnalysisInfo> {
 
     @PostMapping("/edit")
     @Override
@@ -25,10 +24,6 @@ public interface AnalysisController extends CrudUsingBodyController<GetAnalysisR
     @GetMapping("/all")
     @Override
     List<AnalysisInfo> getAll();
-
-    @GetMapping("/get")
-    @Override
-    ResponseEntity<AnalysisInfo> getOne(@NotNull @RequestBody GetAnalysisRequest getRequest);
 
     @GetMapping("/getForVisit")
     List<AnalysisInfo> getAnalysisForVisit(@NotNull @RequestBody GetVisitRequest visitGetter);

@@ -77,7 +77,7 @@ public class AnalysisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedGetRequest(GetAnalysisRequest request) throws JsonProcessingException {
-        return get("/api/v1/analysis/get")
+        return get("/api/v1/analysis/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

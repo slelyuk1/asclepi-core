@@ -50,8 +50,10 @@ public class DiseaseHistoryTestHelper {
                 .content(objectMapper.writeValueAsString(request));
     }
 
-    public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger clientId, int number) {
-        return get("/api/v1/diseaseHistory/{clientId}/{number}", clientId, number);
+    public MockHttpServletRequestBuilder createMockedGetRequest(BigInteger clientId, int number) throws JsonProcessingException {
+        return get("/api/v1/diseaseHistory/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(new GetDiseaseHistoryRequest(clientId, number)));
     }
 
     public MockHttpServletRequestBuilder createMockedGetAllRequest() {

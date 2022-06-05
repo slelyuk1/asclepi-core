@@ -55,10 +55,7 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
     }
 
     @Override
-    public ResponseEntity<DiseaseHistoryInfo> getOne(@NotNull BigInteger clientId, @NotNull Integer historyNumber) {
-        GetDiseaseHistoryRequest request = new GetDiseaseHistoryRequest();
-        request.setClientId(clientId);
-        request.setNumber(historyNumber);
+    public ResponseEntity<DiseaseHistoryInfo> getOne(@NotNull GetDiseaseHistoryRequest request) {
         return diseaseHistoryService.getOne(request)
                 .map(history -> conversionService.convert(history, DiseaseHistoryInfo.class))
                 .map(ResponseEntity::ok)

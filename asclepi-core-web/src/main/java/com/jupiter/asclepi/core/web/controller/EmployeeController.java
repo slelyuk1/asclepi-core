@@ -20,10 +20,6 @@ public interface EmployeeController extends CrudUsingPathVariableController<Inte
     ResponseEntity<?> edit(@NotNull @RequestBody EditEmployeeRequest editRequest);
 
     @Override
-    @GetMapping("/{employeeId}")
-    ResponseEntity<EmployeeInfo> getOne(@NotNull @PathVariable("employeeId") Integer employeeId);
-
-    @Override
     @GetMapping("/all")
     List<EmployeeInfo> getAll();
 

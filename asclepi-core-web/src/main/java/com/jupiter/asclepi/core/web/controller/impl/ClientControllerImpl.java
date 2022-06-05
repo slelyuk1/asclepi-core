@@ -6,17 +6,12 @@ import com.jupiter.asclepi.core.model.response.client.ClientInfo;
 import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.web.controller.ClientController;
-import com.jupiter.asclepi.core.web.helper.api.CreateController;
-import com.jupiter.asclepi.core.web.helper.api.EditController;
-import com.jupiter.asclepi.core.web.helper.api.GetAllController;
-import com.jupiter.asclepi.core.web.helper.api.GetController;
 import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -129,10 +129,7 @@ public class DiseaseHistoryControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("diseaseHistorySuccessfulGetting",
-                        pathParameters(
-                                parameterWithName("clientId").description("ID of the existing client"),
-                                parameterWithName("number").description("Number of the disease history")
-                        ),
+                        generateGetRequest(),
                         generateInfoResponse()
                 ));
     }
@@ -144,10 +141,7 @@ public class DiseaseHistoryControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("diseaseHistoryNonExistentGetting",
-                        pathParameters(
-                                parameterWithName("clientId").description("ID of the existing client"),
-                                parameterWithName("number").description("Number of the disease history")
-                        )
+                        generateGetRequest()
                 ));
     }
 

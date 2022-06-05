@@ -56,8 +56,7 @@ public class VisitControllerImpl implements VisitController {
     }
 
     @Override
-    public ResponseEntity<VisitInfo> getOne(@NotNull BigInteger clientId, @NotNull Integer diseaseHistoryNumber, @NotNull Integer number) {
-        GetVisitRequest request = new GetVisitRequest(new GetDiseaseHistoryRequest(clientId, diseaseHistoryNumber), number);
+    public ResponseEntity<VisitInfo> getOne(@NotNull GetVisitRequest request) {
         return visitService.getOne(request)
                 .map(visit -> conversionService.convert(visit, VisitInfo.class))
                 .map(ResponseEntity::ok)

@@ -92,7 +92,7 @@ public class DiagnosisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedGetRequest(GetDiagnosisRequest request) throws JsonProcessingException {
-        return get("/api/v1/diagnosis/get")
+        return get("/api/v1/diagnosis/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

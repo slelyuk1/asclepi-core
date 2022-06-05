@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("unused")
-public interface DeleteUsingBodyController<RequestType> {
+public interface DeleteUsingRequestBodyController<RequestType> {
 
     @DeleteMapping("/")
     ResponseEntity<Void> delete(@NotNull @RequestBody RequestType deleteRequest);

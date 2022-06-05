@@ -67,11 +67,10 @@ public class VisitTestHelper {
                 .content(objectMapper.writeValueAsString(request));
     }
 
-    public MockHttpServletRequestBuilder createMockedGetRequest(GetVisitRequest request) {
-        return get("/api/v1/visit/{clientId}/{diseaseHistoryNumber}/{number}/",
-                request.getDiseaseHistory().getClientId(),
-                request.getDiseaseHistory().getNumber(),
-                request.getNumber());
+    public MockHttpServletRequestBuilder createMockedGetRequest(GetVisitRequest request) throws JsonProcessingException {
+        return get("/api/v1/visit/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request));
     }
 
     public MockHttpServletRequestBuilder createMockedGetAllRequest() {
