@@ -2,7 +2,6 @@ package com.jupiter.asclepi.core.model.request.visit;
 
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import lombok.Data;
-import lombok.SneakyThrows;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Future;

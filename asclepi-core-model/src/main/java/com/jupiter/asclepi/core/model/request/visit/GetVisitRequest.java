@@ -4,7 +4,6 @@ import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

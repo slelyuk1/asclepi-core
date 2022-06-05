@@ -12,8 +12,6 @@
     <artifactId>asclepi-core-service</artifactId>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <mapstruct.extension.version>0.1.1</mapstruct.extension.version>
     </properties>

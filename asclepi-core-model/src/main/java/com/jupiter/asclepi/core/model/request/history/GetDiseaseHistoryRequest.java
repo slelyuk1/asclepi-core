@@ -3,7 +3,6 @@ package com.jupiter.asclepi.core.model.request.history;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;

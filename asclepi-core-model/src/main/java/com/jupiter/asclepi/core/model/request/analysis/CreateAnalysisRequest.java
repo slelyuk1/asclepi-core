@@ -2,7 +2,6 @@ package com.jupiter.asclepi.core.model.request.analysis;
 
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import lombok.Data;
-import lombok.SneakyThrows;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;

@@ -1,7 +1,6 @@
 package com.jupiter.asclepi.core.model.request.client;
 
 import lombok.Data;
-import lombok.SneakyThrows;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

@@ -34,9 +34,6 @@ public class Anamnesis {
     @NotEmpty
     private String vitae;
 
-    public Anamnesis() {
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
