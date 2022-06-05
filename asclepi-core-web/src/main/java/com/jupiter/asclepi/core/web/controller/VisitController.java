@@ -18,12 +18,8 @@ import java.util.List;
 
 public interface VisitController extends
         GetAllController<VisitInfo>,
-        CreateController<CreateVisitRequest>,
+        CreateController<CreateVisitRequest, VisitInfo>,
         EditController<EditVisitRequest> {
-
-    @PostMapping("/create")
-    @Override
-    ResponseEntity<?> create(@NotNull @RequestBody CreateVisitRequest createRequest);
 
     @PostMapping("/edit")
     @Override

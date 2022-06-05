@@ -13,10 +13,6 @@ import java.util.List;
 public interface EmployeeController extends CrudController<Integer, CreateEmployeeRequest, EditEmployeeRequest, EmployeeInfo> {
 
     @Override
-    @PostMapping("/create")
-    ResponseEntity<?> create(@NotNull @RequestBody CreateEmployeeRequest createRequest);
-
-    @Override
     @DeleteMapping("/{employeeId}")
     ResponseEntity<?> delete(@NotNull @PathVariable("employeeId") Integer id);
 

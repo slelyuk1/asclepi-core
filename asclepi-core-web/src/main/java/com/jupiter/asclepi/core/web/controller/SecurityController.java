@@ -10,5 +10,5 @@ import javax.validation.Valid;
 
 public interface SecurityController {
     @PostMapping(WebSecurityConfiguration.AUTHENTICATION_ENDPOINT_SUFFIX)
-    ResponseEntity<?> authenticate(@Valid @RequestBody AuthenticationRequest request);
+    ResponseEntity<Void> authenticate(@Valid @RequestBody AuthenticationRequest request);
 }

@@ -34,7 +34,7 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
     private final ConversionService conversionService;
 
     @Override
-    public ResponseEntity<?> create(@NotNull CreateDiseaseHistoryRequest createRequest) {
+    public ResponseEntity<DiseaseHistoryInfo> create(@NotNull CreateDiseaseHistoryRequest createRequest) {
         DiseaseHistory diseaseHistory = diseaseHistoryService.create(createRequest);
         DiseaseHistoryInfo historyInfo = conversionService.convert(diseaseHistory, DiseaseHistoryInfo.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(historyInfo);

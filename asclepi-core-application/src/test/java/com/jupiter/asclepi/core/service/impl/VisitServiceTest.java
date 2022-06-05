@@ -33,7 +33,7 @@ import java.util.Objects;
 @Transactional
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
-public class VisitServiceTest {
+class VisitServiceTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired

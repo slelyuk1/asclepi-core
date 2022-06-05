@@ -33,7 +33,7 @@ public class AnamnesisControllerImpl implements AnamnesisController {
     private final ConversionService conversionService;
 
     @Override
-    public ResponseEntity<?> create(@NotNull CreateAnamnesisRequest createRequest) {
+    public ResponseEntity<AnamnesisInfo> create(@NotNull CreateAnamnesisRequest createRequest) {
         Anamnesis anamnesis = anamnesisService.create(createRequest);
         AnamnesisInfo anamnesisInfo = conversionService.convert(anamnesis, AnamnesisInfo.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(anamnesisInfo);

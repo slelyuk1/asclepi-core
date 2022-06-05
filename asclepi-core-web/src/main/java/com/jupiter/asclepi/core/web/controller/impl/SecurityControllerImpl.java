@@ -26,7 +26,7 @@ public class SecurityControllerImpl implements SecurityController {
     private final ConversionService conversionService;
 
     @Override
-    public ResponseEntity<?> authenticate(AuthenticationRequest request) {
+    public ResponseEntity<Void> authenticate(AuthenticationRequest request) {
         Authentication authentication = securityService.generateAuthentication(request);
         String serializedAuthentication = conversionService.convert(authentication, String.class);
         Token token = tokenService.allocateToken(serializedAuthentication);

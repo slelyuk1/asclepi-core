@@ -18,10 +18,6 @@ import java.util.List;
 
 public interface AnalysisController extends CrudController<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, AnalysisInfo> {
 
-    @PostMapping("/create")
-    @Override
-    ResponseEntity<?> create(@NotNull @RequestBody CreateAnalysisRequest createRequest);
-
     @DeleteMapping("/delete")
     @Override
     ResponseEntity<?> delete(@NotNull @RequestBody GetAnalysisRequest deleteRequest);

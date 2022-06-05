@@ -30,7 +30,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     private final ConversionService conversionService;
 
     @Override
-    public ResponseEntity<?> create(CreateEmployeeRequest createRequest) {
+    public ResponseEntity<EmployeeInfo> create(CreateEmployeeRequest createRequest) {
         Employee employee = employeeService.create(createRequest);
         EmployeeInfo employeeInfo = conversionService.convert(employee, EmployeeInfo.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeInfo);

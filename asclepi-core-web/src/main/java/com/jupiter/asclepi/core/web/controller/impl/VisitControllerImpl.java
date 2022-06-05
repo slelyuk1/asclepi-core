@@ -35,7 +35,7 @@ public class VisitControllerImpl implements VisitController {
     private final ConversionService conversionService;
 
     @Override
-    public ResponseEntity<?> create(@NotNull CreateVisitRequest createRequest) {
+    public ResponseEntity<VisitInfo> create(@NotNull CreateVisitRequest createRequest) {
         Visit visit = visitService.create(createRequest);
         VisitInfo visitInfo = conversionService.convert(visit, VisitInfo.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(visitInfo);

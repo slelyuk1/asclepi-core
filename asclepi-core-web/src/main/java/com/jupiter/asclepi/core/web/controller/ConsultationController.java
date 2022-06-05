@@ -19,10 +19,6 @@ import java.util.List;
 public interface ConsultationController
         extends CrudController<GetConsultationRequest, CreateConsultationRequest, EditConsultationRequest, ConsultationInfo> {
 
-    @PostMapping("/create")
-    @Override
-    ResponseEntity<?> create(@NotNull @RequestBody CreateConsultationRequest createRequest);
-
     @DeleteMapping("/delete")
     @Override
     ResponseEntity<?> delete(@NotNull @RequestBody GetConsultationRequest deleteRequest);

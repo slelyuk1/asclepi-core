@@ -17,10 +17,6 @@ import java.util.List;
 
 public interface DiagnosisController extends CrudController<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, DiagnosisInfo> {
 
-    @Override
-    @PostMapping("/create")
-    ResponseEntity<?> create(@NotNull @RequestBody CreateDiagnosisRequest createRequest);
-
     @DeleteMapping("/delete")
     @Override
     ResponseEntity<?> delete(@NotNull @RequestBody GetDiagnosisRequest deleteRequest);

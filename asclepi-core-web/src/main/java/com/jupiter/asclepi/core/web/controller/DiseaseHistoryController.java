@@ -18,12 +18,8 @@ import java.util.List;
 
 public interface DiseaseHistoryController extends
         GetAllController<DiseaseHistoryInfo>,
-        CreateController<CreateDiseaseHistoryRequest>,
+        CreateController<CreateDiseaseHistoryRequest, DiseaseHistoryInfo>,
         EditController<EditDiseaseHistoryRequest> {
-
-    @PostMapping("/create")
-    @Override
-    ResponseEntity<?> create(@NotNull @RequestBody CreateDiseaseHistoryRequest createRequest);
 
     @PostMapping("/edit")
     @Override

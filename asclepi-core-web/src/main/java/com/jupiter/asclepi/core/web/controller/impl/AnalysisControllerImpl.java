@@ -38,7 +38,7 @@ public class AnalysisControllerImpl implements AnalysisController {
     private final ConversionService conversionService;
 
     @Override
-    public ResponseEntity<?> create(@NotNull CreateAnalysisRequest createRequest) {
+    public ResponseEntity<AnalysisInfo> create(@NotNull CreateAnalysisRequest createRequest) {
         Analysis analysis = analysisService.create(createRequest);
         AnalysisInfo analysisInfo = conversionService.convert(analysis, AnalysisInfo.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(analysisInfo);

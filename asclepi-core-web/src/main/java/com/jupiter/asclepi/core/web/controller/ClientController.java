@@ -20,12 +20,8 @@ import java.util.List;
 public interface ClientController extends
         GetController<BigInteger, ClientInfo>,
         GetAllController<ClientInfo>,
-        CreateController<CreateClientRequest>,
+        CreateController<CreateClientRequest, ClientInfo>,
         EditController<EditClientRequest> {
-
-    @PostMapping("/create")
-    @Override
-    ResponseEntity<?> create(@NotNull @RequestBody CreateClientRequest createRequest);
 
     @Override
     @PostMapping("/edit")

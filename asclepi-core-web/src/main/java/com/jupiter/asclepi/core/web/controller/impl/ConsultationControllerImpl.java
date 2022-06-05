@@ -38,7 +38,7 @@ public class ConsultationControllerImpl implements ConsultationController {
     private final ConversionService conversionService;
 
     @Override
-    public ResponseEntity<?> create(@NotNull CreateConsultationRequest createRequest) {
+    public ResponseEntity<ConsultationInfo> create(@NotNull CreateConsultationRequest createRequest) {
         Consultation consultation = consultationService.create(createRequest);
         ConsultationInfo consultationInfo = conversionService.convert(consultation, ConsultationInfo.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(consultationInfo);

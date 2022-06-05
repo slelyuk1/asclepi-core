@@ -15,12 +15,8 @@ import java.util.List;
 
 public interface AnamnesisController extends
         GetController<BigInteger, AnamnesisInfo>,
-        CreateController<CreateAnamnesisRequest>,
+        CreateController<CreateAnamnesisRequest, AnamnesisInfo>,
         DeleteController<BigInteger> {
-
-    @Override
-    @PostMapping("/create")
-    ResponseEntity<?> create(@NotNull @RequestBody CreateAnamnesisRequest createRequest);
 
     @Override
     @DeleteMapping("/{anamnesisId}/delete")

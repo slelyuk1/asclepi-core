@@ -38,7 +38,7 @@ public class DiagnosisControllerImpl implements DiagnosisController {
 
 
     @Override
-    public ResponseEntity<?> create(@NotNull CreateDiagnosisRequest createRequest) {
+    public ResponseEntity<DiagnosisInfo> create(@NotNull CreateDiagnosisRequest createRequest) {
         Diagnosis diagnosis = diagnosisService.create(createRequest);
         DiagnosisInfo diagnosisInfo = conversionService.convert(diagnosis, DiagnosisInfo.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(diagnosisInfo);
