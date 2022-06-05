@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -59,7 +58,7 @@ public class AnamnesisControllerImpl implements AnamnesisController {
                 .map(anamnesisService::getForDiseaseHistory)
                 .map(anamnesisList -> anamnesisList.stream()
                         .map(anamnesis -> conversionService.convert(anamnesis, AnamnesisInfo.class))
-                        .collect(Collectors.toList()))
+                        .toList())
                 .orElse(Collections.emptyList());
     }
 }

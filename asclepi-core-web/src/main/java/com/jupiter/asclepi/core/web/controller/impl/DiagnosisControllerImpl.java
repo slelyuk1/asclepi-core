@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -71,7 +70,7 @@ public class DiagnosisControllerImpl implements DiagnosisController {
                 .map(diagnosisService::getForDiseaseHistory)
                 .map(diagnoses -> diagnoses.stream()
                         .map(diagnosis -> conversionService.convert(diagnosis, DiagnosisInfo.class))
-                        .collect(Collectors.toList()))
+                        .toList())
                 .orElse(Collections.emptyList());
     }
 
@@ -79,6 +78,6 @@ public class DiagnosisControllerImpl implements DiagnosisController {
     public List<DiagnosisInfo> getAll() {
         return diagnosisService.getAll().stream()
                 .map(diagnosis -> conversionService.convert(diagnosis, DiagnosisInfo.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 }

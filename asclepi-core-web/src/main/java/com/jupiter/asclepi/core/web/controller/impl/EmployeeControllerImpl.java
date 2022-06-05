@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
@@ -61,7 +60,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     public List<EmployeeInfo> getAll() {
         return employeeService.getAll().stream()
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
-                .collect(Collectors.toList());
+                .toList();
 
     }
 

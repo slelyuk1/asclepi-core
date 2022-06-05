@@ -24,7 +24,6 @@ import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -61,7 +60,7 @@ public class ConsultationControllerImpl implements ConsultationController {
     public List<ConsultationInfo> getAll() {
         return consultationService.getAll().stream()
                 .map(consultation -> Objects.requireNonNull(conversionService.convert(consultation, ConsultationInfo.class)))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -77,7 +76,7 @@ public class ConsultationControllerImpl implements ConsultationController {
         return visitService.getOne(request)
                 .map(visit -> consultationService.getForVisit(visit).stream()
                         .map(consultation -> conversionService.convert(consultation, ConsultationInfo.class))
-                        .collect(Collectors.toList())
+                        .toList()
                 ).orElse(Collections.emptyList());
     }
 
@@ -87,7 +86,7 @@ public class ConsultationControllerImpl implements ConsultationController {
                 .map(history ->
                         consultationService.getForDiseaseHistory(history).stream()
                                 .map(consultation -> conversionService.convert(consultation, ConsultationInfo.class))
-                                .collect(Collectors.toList())
+                                .toList()
                 ).orElse(Collections.emptyList());
     }
 }

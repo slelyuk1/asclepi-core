@@ -21,7 +21,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -51,7 +50,7 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
     public List<DiseaseHistoryInfo> getAll() {
         return diseaseHistoryService.getAll().stream()
                 .map(history -> conversionService.convert(history, DiseaseHistoryInfo.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -68,7 +67,7 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
                 .map(diseaseHistoryService::getForClient)
                 .map(histories -> histories.stream()
                         .map(history -> conversionService.convert(history, DiseaseHistoryInfo.class))
-                        .collect(Collectors.toList()))
+                        .toList())
                 .orElse(Collections.emptyList());
     }
 

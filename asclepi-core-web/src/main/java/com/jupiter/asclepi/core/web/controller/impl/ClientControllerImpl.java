@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @AllArgsConstructor
@@ -47,7 +46,7 @@ public class ClientControllerImpl implements ClientController {
     public List<ClientInfo> getAll() {
         return clientService.getAll().stream()
                 .map(client -> conversionService.convert(client, ClientInfo.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

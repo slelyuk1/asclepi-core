@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -55,7 +54,7 @@ public class AnalysisControllerImpl implements AnalysisController {
     public List<AnalysisInfo> getAll() {
         return analysisService.getAll().stream()
                 .map(analysis -> conversionService.convert(analysis, AnalysisInfo.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -72,7 +71,7 @@ public class AnalysisControllerImpl implements AnalysisController {
                 .map(analysisService::getForVisit)
                 .map(analyses -> analyses.stream()
                         .map(analysis -> conversionService.convert(analysis, AnalysisInfo.class))
-                        .collect(Collectors.toList()))
+                        .toList())
                 .orElse(Collections.emptyList());
     }
 
@@ -82,7 +81,7 @@ public class AnalysisControllerImpl implements AnalysisController {
                 .map(analysisService::getForDiseaseHistory)
                 .map(analyses -> analyses.stream()
                         .map(analysis -> conversionService.convert(analysis, AnalysisInfo.class))
-                        .collect(Collectors.toList()))
+                        .toList())
                 .orElse(Collections.emptyList());
     }
 

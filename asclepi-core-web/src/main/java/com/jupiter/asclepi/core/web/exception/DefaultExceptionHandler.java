@@ -27,11 +27,11 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AsclepiRuntimeException.class)
     public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull AsclepiRuntimeException e) {
         Throwable cause = e.getCause();
-        if (cause instanceof TransactionSystemException) {
-            return handleTransactionException((TransactionSystemException) cause);
+        if (cause instanceof TransactionSystemException transactionSystemException) {
+            return handleTransactionException(transactionSystemException);
         }
-        if (cause instanceof AuthenticationException) {
-            businessExceptionHandler.handleAuthenticationException((AuthenticationException) cause);
+        if (cause instanceof AuthenticationException authenticationException) {
+            businessExceptionHandler.handleAuthenticationException(authenticationException);
         }
         log.warn("Not recognized exception wrapped in AsclepiRuntimeException occurred: ", e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(SERVICE_UNAVAILABLE_MESSAGE));
@@ -40,8 +40,9 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(TransactionSystemException.class)
     public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull TransactionSystemException e) {
         Throwable maybeConstraintViolation = e.getOriginalException();
-        if (maybeConstraintViolation != null && maybeConstraintViolation.getCause() instanceof ConstraintViolationException) {
-            return businessExceptionHandler.handleConstraintViolationException((ConstraintViolationException) maybeConstraintViolation.getCause());
+        if (maybeConstraintViolation != null
+                && maybeConstraintViolation.getCause() instanceof ConstraintViolationException constraintViolationException ) {
+            return businessExceptionHandler.handleConstraintViolationException(constraintViolationException);
         }
         log.warn("Not recognized TransactionSystemException exception occurred: ", e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(e.getMessage()));

@@ -22,7 +22,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -52,7 +51,7 @@ public class VisitControllerImpl implements VisitController {
     public List<VisitInfo> getAll() {
         return visitService.getAll().stream()
                 .map(visit -> conversionService.convert(visit, VisitInfo.class))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -70,7 +69,7 @@ public class VisitControllerImpl implements VisitController {
                 .map(visitService::getForDiseaseHistory)
                 .map(visits -> visits.stream()
                         .map(visit -> conversionService.convert(visit, VisitInfo.class))
-                        .collect(Collectors.toList()))
+                        .toList())
                 .orElse(Collections.emptyList());
     }
 }

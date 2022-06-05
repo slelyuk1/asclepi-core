@@ -8,7 +8,6 @@ import com.jupiter.asclepi.core.model.request.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
-import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.BeanUtils;
