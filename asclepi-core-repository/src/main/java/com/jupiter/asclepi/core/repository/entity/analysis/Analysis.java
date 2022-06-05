@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.repository.entity.analysis;
 
-import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
+import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
 import lombok.Getter;
 import lombok.Setter;

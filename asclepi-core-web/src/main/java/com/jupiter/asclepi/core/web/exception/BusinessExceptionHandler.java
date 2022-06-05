@@ -35,6 +35,9 @@ public class BusinessExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorInfo> handleAuthenticationException(@NotNull AuthenticationException exception) {
+        // todo review this case
+//        log.warn("AuthenticationException occurred:", e);
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorInfo(AUTHENTICATION_ERROR_MESSAGE));
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorInfo(exception.getMessage()));
     }
 
