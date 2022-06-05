@@ -1,6 +1,5 @@
 package com.jupiter.asclepi.core.web.controller.impl;
 
-import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
 import com.jupiter.asclepi.core.model.request.history.CreateDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;

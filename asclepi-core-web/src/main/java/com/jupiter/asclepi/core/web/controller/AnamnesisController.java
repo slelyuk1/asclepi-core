@@ -4,11 +4,10 @@ import com.jupiter.asclepi.core.model.request.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.response.AnamnesisInfo;
 import com.jupiter.asclepi.core.web.helper.api.CreateController;
-import com.jupiter.asclepi.core.web.helper.api.get.GetUsingPathVariableController;
-import com.jupiter.asclepi.core.web.helper.api.get.GetUsingRequestBodyController;
 import com.jupiter.asclepi.core.web.helper.api.delete.DeleteUsingPathVariableController;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.jupiter.asclepi.core.web.helper.api.get.GetUsingPathVariableController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
