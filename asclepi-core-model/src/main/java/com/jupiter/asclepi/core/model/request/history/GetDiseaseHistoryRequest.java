@@ -11,15 +11,10 @@ import java.math.BigInteger;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetDiseaseHistoryRequest implements Cloneable {
+public class GetDiseaseHistoryRequest {
     @NotNull
     private BigInteger clientId;
     @NotNull
     private Integer number;
 
-    @SneakyThrows
-    @Override
-    public GetDiseaseHistoryRequest clone() {
-        return (GetDiseaseHistoryRequest) super.clone();
-    }
 }

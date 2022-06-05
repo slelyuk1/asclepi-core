@@ -13,4 +13,8 @@ public class IdGeneratorUtils {
         return generated;
     }
 
+    private IdGeneratorUtils(){
+        throw new IllegalStateException(getClass() + " is not expected to be instantiated");
+    }
+
 }

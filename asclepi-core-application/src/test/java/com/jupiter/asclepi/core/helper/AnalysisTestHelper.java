@@ -12,6 +12,7 @@ import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -40,7 +41,8 @@ public class AnalysisTestHelper {
     }
 
     public CreateAnalysisRequest generateAnotherCreateRequest(CreateAnalysisRequest request) {
-        CreateAnalysisRequest another = request.clone();
+        CreateAnalysisRequest another = new CreateAnalysisRequest();
+        BeanUtils.copyProperties(request, another);
         another.setTitle(another.getTitle() + "Other");
         another.setSummary(another.getSummary() + "Other");
         return another;

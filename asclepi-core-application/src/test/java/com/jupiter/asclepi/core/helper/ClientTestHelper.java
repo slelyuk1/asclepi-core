@@ -8,6 +8,7 @@ import com.jupiter.asclepi.core.model.request.client.JobRequest;
 import com.jupiter.asclepi.core.repository.entity.client.Client;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -48,7 +49,8 @@ public class ClientTestHelper {
     }
 
     public CreateClientRequest generateAnotherCreateRequest(CreateClientRequest request) {
-        CreateClientRequest another = request.clone();
+        CreateClientRequest another = new CreateClientRequest();
+        BeanUtils.copyProperties(request, another);
         another.setName(request.getName() + "Other");
         another.setSurname(another.getSurname() + "Other");
         if (Objects.nonNull(another.getMiddleName())) {

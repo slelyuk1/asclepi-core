@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CreateAnalysisRequest implements Cloneable {
+public class CreateAnalysisRequest {
 
     @Valid
     @NotNull
@@ -19,11 +19,4 @@ public class CreateAnalysisRequest implements Cloneable {
     @NotEmpty
     private String summary;
 
-    @SneakyThrows
-    @Override
-    public CreateAnalysisRequest clone() {
-        CreateAnalysisRequest cloned = (CreateAnalysisRequest) super.clone();
-        cloned.visit = visit.clone();
-        return cloned;
-    }
 }

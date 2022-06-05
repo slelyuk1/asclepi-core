@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
 @Data
-public class CreateConsultationRequest implements Cloneable {
+public class CreateConsultationRequest {
     @Valid
     @NotNull
     private GetVisitRequest visit;
@@ -19,11 +19,4 @@ public class CreateConsultationRequest implements Cloneable {
     @NotEmpty
     private String inspection;
 
-    @SneakyThrows
-    @Override
-    public CreateConsultationRequest clone() {
-        CreateConsultationRequest cloned = (CreateConsultationRequest) super.clone();
-        cloned.visit = visit.clone();
-        return cloned;
-    }
 }

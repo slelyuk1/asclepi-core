@@ -8,19 +8,11 @@ import java.io.Serializable;
 
 @Data
 @Embeddable
-public class Job implements Cloneable, Serializable {
+public class Job implements Serializable {
 
     @Column(name = "job_name")
     private String name;
     @Column(name = "job_organization")
     private String organization;
 
-    @Override
-    public Job clone() {
-        try {
-            return (Job) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new IllegalStateException("CloneNotSupportedException cannot be thrown here", e);
-        }
-    }
 }

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CreateAnamnesisRequest implements Cloneable {
+public class CreateAnamnesisRequest {
     @Valid
     @NotNull
     private GetDiseaseHistoryRequest diseaseHistory;
@@ -23,9 +23,4 @@ public class CreateAnamnesisRequest implements Cloneable {
     @NotEmpty
     private String vitae;
 
-    @SneakyThrows
-    @Override
-    public CreateAnamnesisRequest clone() {
-        return (CreateAnamnesisRequest) super.clone();
-    }
 }

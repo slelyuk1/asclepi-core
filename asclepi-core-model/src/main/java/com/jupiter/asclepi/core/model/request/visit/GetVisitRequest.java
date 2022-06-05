@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetVisitRequest implements Cloneable {
+public class GetVisitRequest {
     @Valid
     @NotNull
     private GetDiseaseHistoryRequest diseaseHistory;
@@ -20,11 +20,4 @@ public class GetVisitRequest implements Cloneable {
     @NotNull
     private Integer number;
 
-    @SneakyThrows
-    @Override
-    public GetVisitRequest clone() {
-        GetVisitRequest cloned = (GetVisitRequest) super.clone();
-        cloned.diseaseHistory = diseaseHistory.clone();
-        return cloned;
-    }
 }

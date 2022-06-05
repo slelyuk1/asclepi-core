@@ -8,6 +8,7 @@ import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -40,7 +41,8 @@ public class AnamnesisTestHelper {
     }
 
     public CreateAnamnesisRequest generateAnotherCreateRequest(CreateAnamnesisRequest request) {
-        CreateAnamnesisRequest another = request.clone();
+        CreateAnamnesisRequest another = new CreateAnamnesisRequest();
+        BeanUtils.copyProperties(request, another);
         another.setComplaints(another.getComplaints() + "Other");
         another.setMorbi(another.getMorbi() + "Other");
         another.setVitae(another.getVitae() + "Other");

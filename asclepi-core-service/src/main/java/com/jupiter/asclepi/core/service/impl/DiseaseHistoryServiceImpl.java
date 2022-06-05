@@ -49,13 +49,14 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
 
     @Override
     public DiseaseHistory edit(@Valid @NotNull EditDiseaseHistoryRequest editRequest) {
+        DiseaseHistory toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, DiseaseHistory.class));
         DiseaseHistory existing = getOne(editRequest.getDiseaseHistory())
                 .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getDiseaseHistory()));
         if (Objects.nonNull(editRequest.getDoctorId())) {
-            employeeService.getOne(editRequest.getDoctorId())
+            Employee doctor = employeeService.getOne(editRequest.getDoctorId())
                     .orElseThrow(() -> new NonExistentIdException("Employee", editRequest.getDoctorId()));
+            toCopyFrom.setDoctor(doctor);
         }
-        DiseaseHistory toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, DiseaseHistory.class));
         CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
         return repository.save(existing);
     }

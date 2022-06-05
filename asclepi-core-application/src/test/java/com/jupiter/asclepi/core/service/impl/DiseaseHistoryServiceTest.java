@@ -18,6 +18,7 @@ import com.jupiter.asclepi.core.service.api.EmployeeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -122,7 +123,8 @@ class DiseaseHistoryServiceTest {
         oneRequest.setDoctorId(existingDoctor.getId());
         oneRequest.setClientId(existingClient.getId());
         DiseaseHistory one = diseaseHistoryService.create(oneRequest);
-        CreateDiseaseHistoryRequest anotherRequest = oneRequest.clone();
+        CreateDiseaseHistoryRequest anotherRequest = new CreateDiseaseHistoryRequest();
+        BeanUtils.copyProperties(oneRequest, anotherRequest);
         anotherRequest.setDoctorId(anotherDoctor.getId());
         DiseaseHistory another = diseaseHistoryService.create(anotherRequest);
         entityManager.flush();
@@ -151,7 +153,8 @@ class DiseaseHistoryServiceTest {
         oneRequest.setDoctorId(existingDoctor.getId());
         oneRequest.setClientId(existingClient.getId());
         DiseaseHistory one = diseaseHistoryService.create(oneRequest);
-        CreateDiseaseHistoryRequest anotherRequest = oneRequest.clone();
+        CreateDiseaseHistoryRequest anotherRequest = new CreateDiseaseHistoryRequest();
+        BeanUtils.copyProperties(oneRequest, anotherRequest);
         anotherRequest.setDoctorId(anotherDoctor.getId());
         DiseaseHistory another = diseaseHistoryService.create(anotherRequest);
         entityManager.flush();

@@ -10,6 +10,7 @@ import com.jupiter.asclepi.core.repository.entity.diagnosis.Diagnosis;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -45,7 +46,8 @@ public class DiagnosisTestHelper {
     }
 
     public CreateDiagnosisRequest generateAnotherCreateRequest(CreateDiagnosisRequest request, boolean withOptional) {
-        CreateDiagnosisRequest another = request.clone();
+        CreateDiagnosisRequest another = new CreateDiagnosisRequest();
+        BeanUtils.copyProperties(request, another);
         request.setDisease(request.getDisease() + "Other");
         request.setIsFinal(!request.getIsFinal());
         if (withOptional) {

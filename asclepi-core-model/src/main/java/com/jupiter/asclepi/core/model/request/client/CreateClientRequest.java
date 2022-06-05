@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CreateClientRequest implements Cloneable {
+public class CreateClientRequest {
     @NotEmpty
     private String name;
     @NotEmpty
@@ -20,11 +20,4 @@ public class CreateClientRequest implements Cloneable {
     @NotNull
     private JobRequest job;
 
-    @SneakyThrows
-    @Override
-    public CreateClientRequest clone() {
-        CreateClientRequest cloned = (CreateClientRequest) super.clone();
-        cloned.job = job.clone();
-        return cloned;
-    }
 }

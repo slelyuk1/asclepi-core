@@ -33,7 +33,7 @@ import java.util.Objects;
 @Transactional
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
-public class DiagnosisServiceTest {
+class DiagnosisServiceTest {
     @Autowired
     private EntityManager entityManager;
     @Autowired
@@ -111,7 +111,7 @@ public class DiagnosisServiceTest {
         entityManager.detach(another);
 
         Collection<Diagnosis> all = diagnosisService.getAll();
-        Assertions.assertEquals(all.size(), 2);
+        Assertions.assertEquals(2, all.size());
         Diagnosis foundOne = all.stream()
                 .filter(visit -> Objects.equals(visit, one))
                 .findAny()

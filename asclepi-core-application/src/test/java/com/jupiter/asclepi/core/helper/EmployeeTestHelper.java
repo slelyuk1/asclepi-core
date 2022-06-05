@@ -7,6 +7,7 @@ import com.jupiter.asclepi.core.model.request.employee.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.entity.employee.Role;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -55,7 +56,8 @@ public class EmployeeTestHelper {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public CreateEmployeeRequest generateAnotherCreateRequest(CreateEmployeeRequest request) {
-        CreateEmployeeRequest another = request.clone();
+        CreateEmployeeRequest another = new CreateEmployeeRequest();
+        BeanUtils.copyProperties(request, another);
         another.setLogin(another.getLogin() + "Other");
         another.setName(request.getName() + "Other");
         another.setSurname(another.getSurname() + "Other");

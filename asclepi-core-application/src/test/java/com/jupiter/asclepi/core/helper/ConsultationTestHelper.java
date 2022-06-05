@@ -13,6 +13,7 @@ import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -40,7 +41,8 @@ public class ConsultationTestHelper {
     }
 
     public CreateConsultationRequest generateAnotherCreateRequest(CreateConsultationRequest request) {
-        CreateConsultationRequest another = request.clone();
+        CreateConsultationRequest another = new CreateConsultationRequest();
+        BeanUtils.copyProperties(request, another);
         another.setInspection(another.getInspection() + "Other");
         return another;
     }

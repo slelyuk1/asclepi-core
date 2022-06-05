@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
-public class CreateVisitRequest implements Cloneable {
+public class CreateVisitRequest {
     @Valid
     @NotNull
     private GetDiseaseHistoryRequest diseaseHistory;
@@ -18,9 +18,4 @@ public class CreateVisitRequest implements Cloneable {
     @Future
     private LocalDateTime when;
 
-    @SneakyThrows
-    @Override
-    public CreateVisitRequest clone() {
-        return (CreateVisitRequest) super.clone();
-    }
 }
