@@ -2,7 +2,7 @@ package com.jupiter.asclepi.core.web.exception;
 
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
-import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,15 +20,13 @@ import javax.validation.constraints.NotNull;
 import java.util.stream.Collectors;
 
 @Slf4j
+@AllArgsConstructor
 @ControllerAdvice
 public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
-    private static final String SERVICE_UNAVAILABLE_MESSAGE = "Unfortunately, service is unavailable. Please, try later.";
-    private static final String FIELD_VALIDATION_MESSAGE_TEMPLATE = "Field '%s' %s";
 
-    @ExceptionHandler(LoginNotUniqueException.class)
-    public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull LoginNotUniqueException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage()));
-    }
+    private static final String SERVICE_UNAVAILABLE_MESSAGE = "Unfortunately, service is unavailable. Please, try later.";
+
+    private final BusinessExceptionHandler businessExceptionHandler;
 
     @ExceptionHandler(AsclepiRuntimeException.class)
     public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull AsclepiRuntimeException e) {
@@ -37,7 +35,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
             return handleTransactionException((TransactionSystemException) cause);
         }
         if (cause instanceof AuthenticationException) {
-            handleAuthenticationException((AuthenticationException) cause);
+            businessExceptionHandler.handleAuthenticationException((AuthenticationException) cause);
         }
         log.warn("Not recognized exception wrapped in AsclepiRuntimeException occurred: ", e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(SERVICE_UNAVAILABLE_MESSAGE));
@@ -47,33 +45,10 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull TransactionSystemException e) {
         Throwable maybeConstraintViolation = e.getOriginalException();
         if (maybeConstraintViolation != null && maybeConstraintViolation.getCause() instanceof ConstraintViolationException) {
-            return handleConstraintViolationException((ConstraintViolationException) maybeConstraintViolation.getCause());
+            return businessExceptionHandler.handleConstraintViolationException((ConstraintViolationException) maybeConstraintViolation.getCause());
         }
         log.warn("Not recognized TransactionSystemException exception occurred: ", e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(e.getMessage()));
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorInfo> handleConstraintViolationException(@NotNull ConstraintViolationException exception) {
-        String message = exception.getConstraintViolations().stream()
-                .map(violation -> String.format(FIELD_VALIDATION_MESSAGE_TEMPLATE, violation.getPropertyPath().toString(), violation.getMessage()))
-                .collect(Collectors.joining(". "));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorInfo(message));
-    }
-
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ErrorInfo> handleAuthenticationException(@NotNull AuthenticationException exception) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorInfo(exception.getMessage()));
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException e,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatus status,
-                                                                  WebRequest request) {
-        String message = e.getBindingResult().getFieldErrors().stream()
-                .map(fieldError -> String.format(FIELD_VALIDATION_MESSAGE_TEMPLATE, fieldError.getField(), fieldError.getDefaultMessage()))
-                .collect(Collectors.joining(". "));
-        return handleExceptionInternal(e, new ErrorInfo(message), headers, status, request);
-    }
 }

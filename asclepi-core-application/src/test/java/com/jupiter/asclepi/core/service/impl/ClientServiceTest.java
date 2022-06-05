@@ -50,7 +50,7 @@ class ClientServiceTest {
         entityManager.detach(created);
 
         EditClientRequest editRequest = helper.generateEditRequest(created.getId(), true);
-        Client edited = service.edit(editRequest).get();
+        Client edited = service.edit(editRequest);
         helper.assertEntityIsValidAfterEdition(editRequest, edited);
     }
 

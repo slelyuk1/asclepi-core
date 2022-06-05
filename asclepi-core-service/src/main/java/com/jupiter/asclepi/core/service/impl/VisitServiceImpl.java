@@ -13,7 +13,6 @@ import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
 import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
-import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
@@ -46,14 +45,12 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
-    public Try<Visit> edit(@Valid @NotNull EditVisitRequest editRequest) {
-        return Try.of(() -> {
-            Visit toCopyTo = getOne(editRequest.getVisit())
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getVisit()));
-            Visit toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Visit.class));
-            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
-            return repository.save(toCopyTo);
-        });
+    public Visit edit(@Valid @NotNull EditVisitRequest editRequest) {
+        Visit toCopyTo = getOne(editRequest.getVisit())
+                .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getVisit()));
+        Visit toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Visit.class));
+        CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
+        return repository.save(toCopyTo);
     }
 
     @Override

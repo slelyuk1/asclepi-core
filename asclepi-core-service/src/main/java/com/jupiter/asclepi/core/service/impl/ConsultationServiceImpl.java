@@ -15,7 +15,6 @@ import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
 import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
-import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
@@ -63,20 +62,18 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Try<Consultation> edit(@Valid @NotNull EditConsultationRequest editRequest) {
-        return Try.of(() -> {
-            Consultation toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Consultation.class));
-            Consultation toCopyTo = getOne(editRequest.getConsultation())
-                    .orElseThrow(() -> new NonExistentIdException("Visit", editRequest.getConsultation()));
-            if (Objects.nonNull(editRequest.getAnamnesisId())) {
-                // todo may be better to set in another place
-                Anamnesis toSet = anamnesisService.getOne(editRequest.getAnamnesisId())
-                        .orElseThrow(() -> new NonExistentIdException("Anamnesis", editRequest.getAnamnesisId()));
-                toCopyFrom.setAnamnesis(toSet);
-            }
-            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
-            return repository.save(toCopyTo);
-        });
+    public Consultation edit(@Valid @NotNull EditConsultationRequest editRequest) {
+        Consultation toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Consultation.class));
+        Consultation toCopyTo = getOne(editRequest.getConsultation())
+                .orElseThrow(() -> new NonExistentIdException("Visit", editRequest.getConsultation()));
+        if (Objects.nonNull(editRequest.getAnamnesisId())) {
+            // todo may be better to set in another place
+            Anamnesis toSet = anamnesisService.getOne(editRequest.getAnamnesisId())
+                    .orElseThrow(() -> new NonExistentIdException("Anamnesis", editRequest.getAnamnesisId()));
+            toCopyFrom.setAnamnesis(toSet);
+        }
+        CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
+        return repository.save(toCopyTo);
     }
 
     @Override

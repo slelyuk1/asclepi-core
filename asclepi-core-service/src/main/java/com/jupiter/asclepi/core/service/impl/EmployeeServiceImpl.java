@@ -9,7 +9,6 @@ import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueExcepti
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
 import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
-import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
@@ -56,18 +55,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Try<Employee> edit(@Valid @NotNull EditEmployeeRequest editRequest) {
-        return Try.of(() -> {
-            Employee existing = repository.findById(editRequest.getId())
-                    .orElseThrow(() -> new NonExistentIdException("Employee", editRequest.getId()));
-            Employee toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Employee.class));
-            String newLogin = toCopyFrom.getLogin();
-            if (!existing.getLogin().equals(newLogin) && employeeWithLoginExists(newLogin)) {
-                throw new LoginNotUniqueException(newLogin);
-            }
-            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
-            return repository.save(existing);
-        });
+    public Employee edit(@Valid @NotNull EditEmployeeRequest editRequest) {
+        Employee existing = repository.findById(editRequest.getId())
+                .orElseThrow(() -> new NonExistentIdException("Employee", editRequest.getId()));
+        Employee toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Employee.class));
+        String newLogin = toCopyFrom.getLogin();
+        if (!existing.getLogin().equals(newLogin) && employeeWithLoginExists(newLogin)) {
+            throw new LoginNotUniqueException(newLogin);
+        }
+        CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
+        return repository.save(existing);
     }
 
     @Override

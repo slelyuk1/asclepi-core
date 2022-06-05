@@ -7,11 +7,8 @@ import com.jupiter.asclepi.core.model.response.DiseaseHistoryInfo;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
-import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
-import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.web.controller.DiseaseHistoryController;
 import com.jupiter.asclepi.core.web.util.ControllerUtils;
-import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -45,14 +42,9 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
 
     @Override
     public ResponseEntity<?> edit(@NotNull EditDiseaseHistoryRequest editRequest) {
-        Try<ResponseEntity<?>> editionTry = diseaseHistoryService.edit(editRequest).map(edited -> {
-            DiseaseHistoryInfo historyInfo = conversionService.convert(edited, DiseaseHistoryInfo.class);
-            return ResponseEntity.ok().body(historyInfo);
-        });
-        return editionTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during disease history creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        DiseaseHistory edited = diseaseHistoryService.edit(editRequest);
+        DiseaseHistoryInfo historyInfo = conversionService.convert(edited, DiseaseHistoryInfo.class);
+        return ResponseEntity.ok().body(historyInfo);
     }
 
     @Override

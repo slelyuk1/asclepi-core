@@ -5,11 +5,8 @@ import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
 import com.jupiter.asclepi.core.model.response.client.ClientInfo;
 import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.service.api.ClientService;
-import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
-import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.web.controller.ClientController;
 import com.jupiter.asclepi.core.web.util.ControllerUtils;
-import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -41,14 +38,9 @@ public class ClientControllerImpl implements ClientController {
 
     @Override
     public ResponseEntity<?> edit(@NotNull EditClientRequest editRequest) {
-        Try<ResponseEntity<?>> editionTry = clientService.edit(editRequest).map(edited -> {
-            ClientInfo clientInfo = conversionService.convert(edited, ClientInfo.class);
-            return ResponseEntity.ok().body(clientInfo);
-        });
-        return editionTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during client creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Client edited = clientService.edit(editRequest);
+        ClientInfo clientInfo = conversionService.convert(edited, ClientInfo.class);
+        return ResponseEntity.ok().body(clientInfo);
     }
 
     @Override

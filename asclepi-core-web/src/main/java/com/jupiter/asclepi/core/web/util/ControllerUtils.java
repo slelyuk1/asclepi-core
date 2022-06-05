@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+// todo remove
 public final class ControllerUtils {
 
     private ControllerUtils() {

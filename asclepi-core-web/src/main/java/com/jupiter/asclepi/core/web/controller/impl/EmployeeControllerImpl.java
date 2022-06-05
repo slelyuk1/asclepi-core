@@ -3,15 +3,10 @@ package com.jupiter.asclepi.core.web.controller.impl;
 import com.jupiter.asclepi.core.model.request.employee.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.employee.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.EmployeeInfo;
-import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
-import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
-import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
-import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.web.controller.EmployeeController;
 import com.jupiter.asclepi.core.web.util.ControllerUtils;
-import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -49,15 +44,9 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     @Override
     public ResponseEntity<?> edit(EditEmployeeRequest editRequest) {
-        Try<ResponseEntity<?>> editionTry = employeeService.edit(editRequest).map(edited -> {
-            EmployeeInfo employeeInfo = conversionService.convert(edited, EmployeeInfo.class);
-            return ResponseEntity.ok().body(employeeInfo);
-        });
-        return editionTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .recover(LoginNotUniqueException.class, e -> ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage())))
-                .onFailure(e -> log.error("An error occurred during employee edition: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Employee edited = employeeService.edit(editRequest);
+        EmployeeInfo employeeInfo = conversionService.convert(edited, EmployeeInfo.class);
+        return ResponseEntity.ok().body(employeeInfo);
     }
 
     @Override

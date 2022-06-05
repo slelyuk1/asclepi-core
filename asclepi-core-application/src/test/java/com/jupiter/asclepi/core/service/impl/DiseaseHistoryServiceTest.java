@@ -95,7 +95,7 @@ class DiseaseHistoryServiceTest {
         entityManager.detach(created);
 
         EditDiseaseHistoryRequest editRequest = historyHelper.generateEditRequest(created, anotherDoctor.getId());
-        DiseaseHistory edited = diseaseHistoryService.edit(editRequest).get();
+        DiseaseHistory edited = diseaseHistoryService.edit(editRequest);
         historyHelper.assertEntityIsValidAfterEdition(editRequest, edited);
     }
 

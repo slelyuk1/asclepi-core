@@ -46,7 +46,7 @@ class EmployeeServiceTest {
         entityManager.flush();
         entityManager.detach(created);
         EditEmployeeRequest request = helper.generateEditRequest(created.getId(), true);
-        Employee edited = service.edit(request).get();
+        Employee edited = service.edit(request);
         helper.assertEntityIsValidAfterEdition(request, edited);
     }
 

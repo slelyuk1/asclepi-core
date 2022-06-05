@@ -6,8 +6,8 @@ import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.DiseaseHistoryRepository;
 import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistoryId;
+import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
@@ -49,18 +49,16 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
     }
 
     @Override
-    public Try<DiseaseHistory> edit(@Valid @NotNull EditDiseaseHistoryRequest editRequest) {
-        return Try.of(() -> {
-            DiseaseHistory existing = getOne(editRequest.getDiseaseHistory())
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getDiseaseHistory()));
-            if (Objects.nonNull(editRequest.getDoctorId())) {
-                employeeService.getOne(editRequest.getDoctorId())
-                        .orElseThrow(() -> new NonExistentIdException("Employee", editRequest.getDoctorId()));
-            }
-            DiseaseHistory toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, DiseaseHistory.class));
-            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
-            return repository.save(existing);
-        });
+    public DiseaseHistory edit(@Valid @NotNull EditDiseaseHistoryRequest editRequest) {
+        DiseaseHistory existing = getOne(editRequest.getDiseaseHistory())
+                .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getDiseaseHistory()));
+        if (Objects.nonNull(editRequest.getDoctorId())) {
+            employeeService.getOne(editRequest.getDoctorId())
+                    .orElseThrow(() -> new NonExistentIdException("Employee", editRequest.getDoctorId()));
+        }
+        DiseaseHistory toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, DiseaseHistory.class));
+        CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
+        return repository.save(existing);
     }
 
     @Override

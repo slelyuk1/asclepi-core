@@ -6,5 +6,5 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 public interface EditService<RequestType, EditedType> {
-    Try<EditedType> edit(@Valid @NotNull RequestType editRequest);
+    EditedType edit(@Valid @NotNull RequestType editRequest);
 }

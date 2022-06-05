@@ -8,11 +8,8 @@ import com.jupiter.asclepi.core.model.response.VisitInfo;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
-import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
-import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.web.controller.VisitController;
 import com.jupiter.asclepi.core.web.util.ControllerUtils;
-import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -46,14 +43,9 @@ public class VisitControllerImpl implements VisitController {
 
     @Override
     public ResponseEntity<?> edit(@NotNull EditVisitRequest editRequest) {
-        Try<ResponseEntity<?>> editionTry = visitService.edit(editRequest).map(edited -> {
-            VisitInfo info = conversionService.convert(edited, VisitInfo.class);
-            return ResponseEntity.ok().body(info);
-        });
-        return editionTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during disease history creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Visit edited = visitService.edit(editRequest);
+        VisitInfo info = conversionService.convert(edited, VisitInfo.class);
+        return ResponseEntity.ok().body(info);
     }
 
     @Override

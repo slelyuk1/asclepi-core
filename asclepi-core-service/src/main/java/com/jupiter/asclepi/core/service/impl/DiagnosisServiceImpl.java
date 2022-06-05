@@ -7,13 +7,12 @@ import com.jupiter.asclepi.core.model.request.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.DiagnosisRepository;
 import com.jupiter.asclepi.core.repository.entity.diagnosis.Diagnosis;
-import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.diagnosis.DiagnosisId;
+import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
-import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
@@ -57,14 +56,12 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     }
 
     @Override
-    public Try<Diagnosis> edit(@Valid @NotNull EditDiagnosisRequest editRequest) {
-        return Try.of(() -> {
-            Diagnosis toCopyTo = getOne(editRequest.getDiagnosis())
-                    .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getDiagnosis()));
-            Diagnosis toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Diagnosis.class));
-            BeanUtils.copyProperties(toCopyFrom, toCopyTo);
-            return repository.save(toCopyTo);
-        });
+    public Diagnosis edit(@Valid @NotNull EditDiagnosisRequest editRequest) {
+        Diagnosis toCopyTo = getOne(editRequest.getDiagnosis())
+                .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getDiagnosis()));
+        Diagnosis toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Diagnosis.class));
+        BeanUtils.copyProperties(toCopyFrom, toCopyTo);
+        return repository.save(toCopyTo);
     }
 
     @Override

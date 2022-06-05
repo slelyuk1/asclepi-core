@@ -50,14 +50,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Try<Client> edit(@Valid @NotNull EditClientRequest editRequest) {
-        return Try.of(() -> {
-            Client existing = repository.findById(editRequest.getId())
-                    .orElseThrow(() -> new NonExistentIdException("Client", editRequest.getId()));
-            Client toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Client.class));
-            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
-            return repository.save(existing);
-        });
+    public Client edit(@Valid @NotNull EditClientRequest editRequest) {
+        Client existing = repository.findById(editRequest.getId())
+                .orElseThrow(() -> new NonExistentIdException("Client", editRequest.getId()));
+        Client toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Client.class));
+        CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
+        return repository.save(existing);
     }
 
     @Override

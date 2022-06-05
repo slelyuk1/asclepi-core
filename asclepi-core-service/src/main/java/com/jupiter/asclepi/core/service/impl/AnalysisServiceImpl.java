@@ -6,16 +6,15 @@ import com.jupiter.asclepi.core.model.request.analysis.GetAnalysisRequest;
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.AnalysisRepository;
 import com.jupiter.asclepi.core.repository.entity.analysis.Analysis;
+import com.jupiter.asclepi.core.repository.entity.analysis.AnalysisId;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
-import com.jupiter.asclepi.core.repository.entity.analysis.AnalysisId;
 import com.jupiter.asclepi.core.repository.entity.visit.VisitId;
 import com.jupiter.asclepi.core.service.api.AnalysisService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
 import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
-import io.vavr.control.Try;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
@@ -59,14 +58,12 @@ public class AnalysisServiceImpl implements AnalysisService {
     }
 
     @Override
-    public Try<Analysis> edit(@Valid @NotNull EditAnalysisRequest editRequest) {
-        return Try.of(() -> {
-            Analysis toCopyTo = getOne(editRequest.getAnalysis())
-                    .orElseThrow(() -> new NonExistentIdException("Analysis", editRequest.getAnalysis()));
-            Analysis toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Analysis.class));
-            CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
-            return repository.save(toCopyTo);
-        });
+    public Analysis edit(@Valid @NotNull EditAnalysisRequest editRequest) {
+        Analysis toCopyTo = getOne(editRequest.getAnalysis())
+                .orElseThrow(() -> new NonExistentIdException("Analysis", editRequest.getAnalysis()));
+        Analysis toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Analysis.class));
+        CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
+        return repository.save(toCopyTo);
     }
 
     @Override

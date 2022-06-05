@@ -82,7 +82,7 @@ class AnalysisServiceTest {
         entityManager.detach(created);
 
         EditAnalysisRequest editRequest = analysisHelper.generateEditRequest(created);
-        Analysis edited = analysisService.edit(editRequest).get();
+        Analysis edited = analysisService.edit(editRequest);
         analysisHelper.assertEntityIsValidAfterEdition(editRequest, edited);
     }
 

@@ -49,14 +49,9 @@ public class AnalysisControllerImpl implements AnalysisController {
 
     @Override
     public ResponseEntity<?> edit(@NotNull EditAnalysisRequest editRequest) {
-        Try<ResponseEntity<?>> editionTry = analysisService.edit(editRequest).map(edited -> {
-            AnalysisInfo info = conversionService.convert(edited, AnalysisInfo.class);
-            return ResponseEntity.ok().body(info);
-        });
-        return editionTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during disease history creation: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Analysis edited = analysisService.edit(editRequest);
+        AnalysisInfo info = conversionService.convert(edited, AnalysisInfo.class);
+        return ResponseEntity.ok().body(info);
     }
 
     @Override

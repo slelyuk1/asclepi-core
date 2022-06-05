@@ -55,14 +55,9 @@ public class ConsultationControllerImpl implements ConsultationController {
 
     @Override
     public ResponseEntity<?> edit(@NotNull EditConsultationRequest editRequest) {
-        Try<ResponseEntity<?>> editionTry = consultationService.edit(editRequest).map(edited -> {
-            ConsultationInfo consultationInfo = conversionService.convert(edited, ConsultationInfo.class);
-            return ResponseEntity.ok().body(consultationInfo);
-        });
-        return editionTry
-                .recover(NonExistentIdException.class, e -> ControllerUtils.notFoundResponse())
-                .onFailure(e -> log.error("An error occurred during consultation edition: ", e))
-                .getOrElseThrow(AsclepiRuntimeException::new);
+        Consultation edited = consultationService.edit(editRequest);
+        ConsultationInfo consultationInfo = conversionService.convert(edited, ConsultationInfo.class);
+        return ResponseEntity.ok().body(consultationInfo);
     }
 
     @Override

@@ -89,7 +89,7 @@ class ConsultationServiceTest {
         entityManager.detach(created);
 
         EditConsultationRequest editRequest = consultationHelper.generateEditRequest(created);
-        Consultation edited = consultationService.edit(editRequest).get();
+        Consultation edited = consultationService.edit(editRequest);
         consultationHelper.assertEntityIsValidAfterEdition(editRequest, edited);
     }
 

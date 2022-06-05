@@ -81,7 +81,7 @@ public class DiagnosisServiceTest {
         entityManager.detach(created);
 
         EditDiagnosisRequest editRequest = diagnosisHelper.generateEditRequest(created, true);
-        Diagnosis edited = diagnosisService.edit(editRequest).get();
+        Diagnosis edited = diagnosisService.edit(editRequest);
         diagnosisHelper.assertEntityIsValidAfterEdition(editRequest, edited);
     }
 

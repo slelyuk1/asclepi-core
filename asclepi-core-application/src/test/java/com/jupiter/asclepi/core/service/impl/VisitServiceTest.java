@@ -81,7 +81,7 @@ public class VisitServiceTest {
         entityManager.detach(created);
 
         EditVisitRequest editRequest = visitHelper.generateEditRequest(created, created.getWhen().plusDays(1));
-        Visit edited = visitService.edit(editRequest).get();
+        Visit edited = visitService.edit(editRequest);
         visitHelper.assertEntityIsValidAfterEdition(editRequest, edited);
     }
 
