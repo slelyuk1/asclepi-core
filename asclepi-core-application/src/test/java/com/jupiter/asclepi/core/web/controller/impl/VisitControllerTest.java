@@ -154,7 +154,6 @@ public class VisitControllerTest {
         request.setDiseaseHistory(historyGetter);
         this.mockMvc.perform(visitHelper.createMockedGetRequest(request))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("visitNonExistentGetting",
                         generateGetRequest()

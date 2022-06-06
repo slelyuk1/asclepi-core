@@ -11,7 +11,6 @@ import com.jupiter.asclepi.core.service.api.ConsultationService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.web.controller.ConsultationController;
-import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -46,7 +45,7 @@ public class ConsultationControllerImpl implements ConsultationController {
     @Override
     public ResponseEntity<Void> delete(@NotNull GetConsultationRequest deleteRequest) {
         boolean result = consultationService.delete(deleteRequest);
-        return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @Override
@@ -68,7 +67,7 @@ public class ConsultationControllerImpl implements ConsultationController {
         return consultationService.getOne(getRequest)
                 .map(consultation -> conversionService.convert(consultation, ConsultationInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override

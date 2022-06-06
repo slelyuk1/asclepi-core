@@ -8,7 +8,6 @@ import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.web.controller.DiseaseHistoryController;
-import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -58,7 +57,7 @@ public class DiseaseHistoryControllerImpl implements DiseaseHistoryController {
         return diseaseHistoryService.getOne(request)
                 .map(history -> conversionService.convert(history, DiseaseHistoryInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override

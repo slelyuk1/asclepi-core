@@ -11,7 +11,6 @@ import com.jupiter.asclepi.core.service.api.AnalysisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.web.controller.AnalysisController;
-import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -62,7 +61,7 @@ public class AnalysisControllerImpl implements AnalysisController {
         return analysisService.getOne(getRequest)
                 .map(analysis -> conversionService.convert(analysis, AnalysisInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override
@@ -89,6 +88,6 @@ public class AnalysisControllerImpl implements AnalysisController {
     @Override
     public ResponseEntity<Void> delete(@NotNull GetAnalysisRequest deleteRequest) {
         boolean result = analysisService.delete(deleteRequest);
-        return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }

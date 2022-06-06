@@ -6,7 +6,6 @@ import com.jupiter.asclepi.core.model.response.EmployeeInfo;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.web.controller.EmployeeController;
-import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -38,7 +37,7 @@ public class EmployeeControllerImpl implements EmployeeController {
     @Override
     public ResponseEntity<Void> delete(Integer toDeleteId) {
         boolean result = employeeService.delete(toDeleteId);
-        return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class EmployeeControllerImpl implements EmployeeController {
         return employeeService.getOne(employeeId)
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override
@@ -70,6 +69,6 @@ public class EmployeeControllerImpl implements EmployeeController {
         return employeeService.findEmployeeByLogin(login)
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 }

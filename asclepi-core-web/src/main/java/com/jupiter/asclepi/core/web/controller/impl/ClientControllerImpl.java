@@ -6,7 +6,6 @@ import com.jupiter.asclepi.core.model.response.client.ClientInfo;
 import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.web.controller.ClientController;
-import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -54,6 +53,6 @@ public class ClientControllerImpl implements ClientController {
         return clientService.getOne(getRequest)
                 .map(client -> conversionService.convert(client, ClientInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 }

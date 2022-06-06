@@ -107,7 +107,6 @@ class AnamnesisControllerTest {
     void testNonExistentGettingRequestResponseSignatures() throws Exception {
         this.mockMvc.perform(anamnesisHelper.createMockedGetRequest(BigInteger.ZERO))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("anamnesisNonExistentGetting",
                         pathParameters(parameterWithName("anamnesisId").description("ID of the existing anamnesis."))

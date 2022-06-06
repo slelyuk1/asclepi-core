@@ -151,7 +151,6 @@ class AnalysisControllerTest {
         );
         this.mockMvc.perform(analysisHelper.createMockedGetRequest(getter))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("analysisNonExistentGetting",
                         generateGetRequest()

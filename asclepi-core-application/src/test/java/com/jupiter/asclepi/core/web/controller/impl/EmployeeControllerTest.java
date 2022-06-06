@@ -149,7 +149,6 @@ class EmployeeControllerTest {
     void testNonExistentEmployeeGettingRequestResponseSignatures() throws Exception {
         this.mockMvc.perform(helper.createMockedGetRequest(0))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("employeeNonExistentGetting",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))
@@ -185,7 +184,6 @@ class EmployeeControllerTest {
     void testNonExistentEmployeeDeletionRequestResponseSignatures() throws Exception {
         this.mockMvc.perform(helper.createMockedDeleteRequest(0))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("employeeNonExistentDeletion",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee"))

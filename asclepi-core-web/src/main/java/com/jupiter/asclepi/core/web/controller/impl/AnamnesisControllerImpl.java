@@ -7,7 +7,6 @@ import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.service.api.AnamnesisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.web.controller.AnamnesisController;
-import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -41,7 +40,7 @@ public class AnamnesisControllerImpl implements AnamnesisController {
     @Override
     public ResponseEntity<Void> delete(@NotNull BigInteger anamnesisId) {
         boolean result = anamnesisService.delete(anamnesisId);
-        return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @Override
@@ -49,7 +48,7 @@ public class AnamnesisControllerImpl implements AnamnesisController {
         return anamnesisService.getOne(anamnesisId)
                 .map(anamnesis -> conversionService.convert(anamnesis, AnamnesisInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override

@@ -158,7 +158,6 @@ class ConsultationControllerTest {
         );
         this.mockMvc.perform(consultationHelper.createMockedGetRequest(getter))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("consultationNonExistentGetting",
                         generateGetRequest()

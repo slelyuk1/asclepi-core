@@ -155,7 +155,6 @@ public class DiagnosisControllerTest {
         GetDiagnosisRequest request = new GetDiagnosisRequest(new GetDiseaseHistoryRequest(BigInteger.ZERO, 0), 0);
         this.mockMvc.perform(diagnosisHelper.createMockedGetRequest(request))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("diagnosisNonExistentGetting",
                         generateGetRequest()

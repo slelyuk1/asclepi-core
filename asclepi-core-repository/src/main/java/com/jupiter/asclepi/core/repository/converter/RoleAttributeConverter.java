@@ -5,9 +5,8 @@ import com.jupiter.asclepi.core.repository.entity.employee.Role;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-// todo move this class
 @Converter(autoApply = true)
-public class RoleConverter implements AttributeConverter<Role, Integer> {
+public class RoleAttributeConverter implements AttributeConverter<Role, Integer> {
 
     @Override
     public Integer convertToDatabaseColumn(Role role) {

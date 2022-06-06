@@ -9,7 +9,6 @@ import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.web.controller.VisitController;
-import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -59,7 +58,7 @@ public class VisitControllerImpl implements VisitController {
         return visitService.getOne(request)
                 .map(visit -> conversionService.convert(visit, VisitInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override

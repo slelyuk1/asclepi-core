@@ -149,7 +149,6 @@ class ClientControllerTest {
     void testNonExistentGettingRequestResponseSignatures() throws Exception {
         this.mockMvc.perform(helper.createMockedGetRequest(BigInteger.ZERO))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("clientNonExistentGetting",
                         pathParameters(parameterWithName("clientId").description("ID of the existing client"))

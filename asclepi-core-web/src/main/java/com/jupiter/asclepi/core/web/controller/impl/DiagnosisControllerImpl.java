@@ -10,7 +10,6 @@ import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.web.controller.DiagnosisController;
-import com.jupiter.asclepi.core.web.util.ControllerUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
@@ -46,7 +45,7 @@ public class DiagnosisControllerImpl implements DiagnosisController {
     @Override
     public ResponseEntity<Void> delete(@NotNull GetDiagnosisRequest deleteRequest) {
         boolean result = diagnosisService.delete(deleteRequest);
-        return result ? ResponseEntity.ok().build() : ControllerUtils.notFoundResponse();
+        return result ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
     @Override
@@ -61,7 +60,7 @@ public class DiagnosisControllerImpl implements DiagnosisController {
         return diagnosisService.getOne(getRequest)
                 .map(diagnosis -> conversionService.convert(diagnosis, DiagnosisInfo.class))
                 .map(ResponseEntity::ok)
-                .orElse(ControllerUtils.notFoundResponse());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @Override

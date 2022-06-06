@@ -136,7 +136,6 @@ public class DiseaseHistoryControllerTest {
     void testNonExistentGettingRequestResponseSignatures() throws Exception {
         this.mockMvc.perform(diseaseHistoryHelper.createMockedGetRequest(BigInteger.ZERO, 0))
                 .andExpect(status().isNotFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").doesNotExist())
                 .andDo(document("diseaseHistoryNonExistentGetting",
                         generateGetRequest()
