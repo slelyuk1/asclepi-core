@@ -10,6 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ import java.math.BigInteger;
 public class Client extends AbstractCreationAware<Employee> {
 
     @Id
+    @GeneratedValue
     private BigInteger id;
 
     @NotBlank

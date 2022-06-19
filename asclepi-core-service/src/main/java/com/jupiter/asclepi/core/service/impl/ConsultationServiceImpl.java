@@ -14,13 +14,13 @@ import com.jupiter.asclepi.core.service.api.ConsultationService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
-import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -38,6 +38,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final AnamnesisService anamnesisService;
     private final ConversionService conversionService;
 
+    @Transactional
     @Override
     public Consultation create(@Valid @NotNull CreateConsultationRequest createRequest) {
         Visit visit = visitService.getOne(createRequest.getVisit())
@@ -47,7 +48,7 @@ public class ConsultationServiceImpl implements ConsultationService {
         Consultation toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Consultation.class));
         toCreate.setAnamnesis(anamnesis);
         // todo may be better to set in another place
-        toCreate.setId(new ConsultationId(visit.getId(), IdGeneratorUtils.generateId().intValue()));
+        toCreate.setId(new ConsultationId(visit.getId(), (int) repository.count()));
         return repository.save(toCreate);
     }
 

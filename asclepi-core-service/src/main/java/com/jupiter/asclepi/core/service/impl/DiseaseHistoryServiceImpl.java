@@ -13,13 +13,13 @@ import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
-import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -35,6 +35,7 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
     private final ClientService clientService;
     private final EmployeeService employeeService;
 
+    @Transactional
     @Override
     public DiseaseHistory create(@Valid @NotNull CreateDiseaseHistoryRequest createRequest) {
         DiseaseHistory toCreate = Objects.requireNonNull(conversionService.convert(createRequest, DiseaseHistory.class));
@@ -43,7 +44,7 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
         Employee doctor = employeeService.getOne(createRequest.getDoctorId())
                 .orElseThrow(() -> new NonExistentIdException("Employee", createRequest.getClientId()));
         toCreate.setDoctor(doctor);
-        toCreate.setId(new DiseaseHistoryId(client.getId(), IdGeneratorUtils.generateId().intValue()));
+        toCreate.setId(new DiseaseHistoryId(client.getId(), (int) repository.count()));
         return repository.save(toCreate);
     }
 

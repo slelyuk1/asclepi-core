@@ -14,13 +14,13 @@ import com.jupiter.asclepi.core.service.api.AnalysisService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
-import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -37,13 +37,14 @@ public class AnalysisServiceImpl implements AnalysisService {
     private final VisitService visitService;
     private final ConversionService conversionService;
 
+    @Transactional
     @Override
     public Analysis create(@Valid @NotNull CreateAnalysisRequest createRequest) {
         GetVisitRequest visitGetter = createRequest.getVisit();
         Analysis toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Analysis.class));
         Visit visit = visitService.getOne(visitGetter)
                 .orElseThrow(() -> new NonExistentIdException("Visit", visitGetter));
-        toCreate.setId(new AnalysisId(visit.getId(), IdGeneratorUtils.generateId().intValue()));
+        toCreate.setId(new AnalysisId(visit.getId(), (int) repository.count()));
         return repository.save(toCreate);
     }
 

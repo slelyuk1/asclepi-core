@@ -7,7 +7,6 @@ import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.service.api.ClientService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
-import com.jupiter.asclepi.core.service.util.IdGeneratorUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -34,7 +33,6 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client create(@Valid @NotNull CreateClientRequest createRequest) {
         Client toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Client.class));
-        toCreate.setId(IdGeneratorUtils.generateId());
         return repository.save(toCreate);
     }
 

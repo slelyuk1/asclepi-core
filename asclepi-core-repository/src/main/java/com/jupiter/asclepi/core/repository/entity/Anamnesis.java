@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
@@ -20,6 +21,7 @@ import java.math.BigInteger;
 public class Anamnesis {
 
     @Id
+    @GeneratedValue
     private BigInteger id;
 
     @ManyToOne(optional = false)
