@@ -1,9 +1,8 @@
 package com.jupiter.asclepi.core.web.configuration;
 
+import com.jupiter.asclepi.core.web.configuration.property.SecurityProperties;
 import com.jupiter.asclepi.core.web.filter.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.ConversionService;
@@ -35,19 +34,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     // todo why it is not used
     // public static final String AUTHENTICATION_COOKIE_NAME = "access_token";
 
-    private final String serverSecret;
-    private final int serverInteger;
+    private final SecurityProperties properties;
     private final UserDetailsService userDetailsService;
     private final ConversionService conversionService;
 
     // todo use @ConfigurationProperties
     @Autowired
-    public WebSecurityConfiguration(@Value("${security.secret}") String serverSecret,
-                                    @Value("${security.serverInteger}") Integer serverInteger,
-                                    @Qualifier("defaultUserDetailService") UserDetailsService userDetailsService,
+    public WebSecurityConfiguration(SecurityProperties properties,
+                                    UserDetailsService userDetailsService,
                                     ConversionService conversionService) {
-        this.serverSecret = serverSecret;
-        this.serverInteger = serverInteger;
+        this.properties = properties;
         this.userDetailsService = userDetailsService;
         this.conversionService = conversionService;
     }
@@ -106,8 +102,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public TokenService tokenService() {
         KeyBasedPersistenceTokenService tokenService = new KeyBasedPersistenceTokenService();
-        tokenService.setServerSecret(serverSecret);
-        tokenService.setServerInteger(serverInteger);
+        tokenService.setServerSecret(properties.secret());
+        tokenService.setServerInteger(properties.serverInteger());
         tokenService.setSecureRandom(new SecureRandom());
         return tokenService;
     }

@@ -2,6 +2,7 @@ package com.jupiter.asclepi.core.web.exception;
 
 import com.jupiter.asclepi.core.model.response.error.ErrorInfo;
 import com.jupiter.asclepi.core.service.exception.AsclepiRuntimeException;
+import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,9 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
         if (cause instanceof AuthenticationException authenticationException) {
             businessExceptionHandler.handleAuthenticationException(authenticationException);
         }
+        if (cause instanceof NonExistentIdException nonExistentIdException) {
+            businessExceptionHandler.handleNonExistentIdException(nonExistentIdException);
+        }
         log.warn("Not recognized exception wrapped in AsclepiRuntimeException occurred: ", e);
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ErrorInfo(SERVICE_UNAVAILABLE_MESSAGE));
     }
@@ -41,7 +45,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull TransactionSystemException e) {
         Throwable maybeConstraintViolation = e.getOriginalException();
         if (maybeConstraintViolation != null
-                && maybeConstraintViolation.getCause() instanceof ConstraintViolationException constraintViolationException ) {
+                && maybeConstraintViolation.getCause() instanceof ConstraintViolationException constraintViolationException) {
             return businessExceptionHandler.handleConstraintViolationException(constraintViolationException);
         }
         log.warn("Not recognized TransactionSystemException exception occurred: ", e);

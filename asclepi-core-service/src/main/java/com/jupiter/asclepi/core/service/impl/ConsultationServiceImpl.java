@@ -47,7 +47,6 @@ public class ConsultationServiceImpl implements ConsultationService {
                 .orElseThrow(() -> new NonExistentIdException("Anamnesis", createRequest.getAnamnesisId()));
         Consultation toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Consultation.class));
         toCreate.setAnamnesis(anamnesis);
-        // todo may be better to set in another place
         toCreate.setId(new ConsultationId(visit.getId(), (int) repository.count()));
         return repository.save(toCreate);
     }
@@ -68,7 +67,6 @@ public class ConsultationServiceImpl implements ConsultationService {
         Consultation toCopyTo = getOne(editRequest.getConsultation())
                 .orElseThrow(() -> new NonExistentIdException("Visit", editRequest.getConsultation()));
         if (Objects.nonNull(editRequest.getAnamnesisId())) {
-            // todo may be better to set in another place
             Anamnesis toSet = anamnesisService.getOne(editRequest.getAnamnesisId())
                     .orElseThrow(() -> new NonExistentIdException("Anamnesis", editRequest.getAnamnesisId()));
             toCopyFrom.setAnamnesis(toSet);

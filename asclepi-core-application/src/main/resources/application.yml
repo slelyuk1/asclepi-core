@@ -1,29 +1,22 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/asclepi-core
-    username: asclepi_admin
-    password: asclepi_admin_password
-
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
-    open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         globally_quoted_identifiers: true
+    open-in-view: false
 
-# todo make these properties through annotationprocessing
-security:
-  secret: superSecretSecret
-  serverInteger: 1
-  admin:
-    login: admin
-    password: admin
-    name: AdminName
-    surname: AdminSurname
+server:
+  error:
+    include-stacktrace: never
+    include-message: always
 
-# todo configure logging
 logging:
   level:
-    root: info
+    root: INFO

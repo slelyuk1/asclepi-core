@@ -3,43 +3,34 @@ package com.jupiter.asclepi.core.web.configuration;
 import com.jupiter.asclepi.core.model.request.employee.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.repository.entity.employee.Role;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.jupiter.asclepi.core.web.configuration.property.AdminProperties;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AdminConfiguration implements InitializingBean {
-    private static final String ADDITIONAL_INFO = "Main admin user. Do not remove!";
-    private final String adminLogin;
-    private final String adminPassword;
-    private final String adminName;
-    private final String adminSurname;
-    private final EmployeeService employeeService;
+public class AdminConfiguration {
 
-    @Autowired
-    public AdminConfiguration(@Value("${security.admin.login}") String adminLogin,
-                              @Value("${security.admin.password}") String adminPassword,
-                              @Value("${security.admin.name}") String adminName,
-                              @Value("${security.admin.surname}") String adminSurname,
-                              EmployeeService employeeService) {
-        this.adminLogin = adminLogin;
-        this.adminPassword = adminPassword;
-        this.adminName = adminName;
-        this.adminSurname = adminSurname;
-        this.employeeService = employeeService;
+    private static final String ADDITIONAL_INFO = "Main admin user. Do not remove!";
+
+    @Bean
+    public CommandLineRunner adminCreationRunner(EmployeeService employeeService, AdminProperties properties) {
+        return args -> createAdminInSystem(employeeService, properties);
     }
 
-
-    @Override
-    public void afterPropertiesSet() {
+    private void createAdminInSystem(EmployeeService employeeService, AdminProperties properties) {
+        final String adminLogin = properties.login();
+        if (employeeService.findEmployeeByLogin(adminLogin).isPresent()) {
+            return;
+        }
         CreateEmployeeRequest createEmployeeRequest = new CreateEmployeeRequest();
-        createEmployeeRequest.setLogin(adminLogin);
-        createEmployeeRequest.setPassword(adminPassword);
+        createEmployeeRequest.setLogin(properties.login());
+        createEmployeeRequest.setPassword(properties.password());
         createEmployeeRequest.setRoleId(Role.ADMIN.getId());
-        createEmployeeRequest.setName(adminName);
-        createEmployeeRequest.setSurname(adminSurname);
+        createEmployeeRequest.setName(properties.name());
+        createEmployeeRequest.setSurname(properties.surname());
         createEmployeeRequest.setAdditionalInfo(ADDITIONAL_INFO);
         employeeService.create(createEmployeeRequest);
     }
+
 }

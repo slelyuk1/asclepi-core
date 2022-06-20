@@ -42,12 +42,12 @@ public class BusinessExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(LoginNotUniqueException.class)
-    public ResponseEntity<ErrorInfo> handleTransactionException(@NotNull LoginNotUniqueException e) {
+    public ResponseEntity<ErrorInfo> handleLoginNotUniqueException(@NotNull LoginNotUniqueException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ErrorInfo(e.getMessage()));
     }
 
     @ExceptionHandler(NonExistentIdException.class)
-    public ResponseEntity<ErrorInfo> handleTransactionException() {
+    public ResponseEntity<ErrorInfo> handleNonExistentIdException(NonExistentIdException e) {
         return ResponseEntity.notFound().header(CONTENT_TYPE, APPLICATION_JSON_VALUE).build();
     }
 

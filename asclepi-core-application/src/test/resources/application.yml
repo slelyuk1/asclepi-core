@@ -8,6 +8,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    hibernate:
+      ddl-auto: create-drop
 
 security:
   secret: testSecret
