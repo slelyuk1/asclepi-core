@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -34,6 +35,7 @@ class EmployeeServiceTest {
     }
 
     @Test
+    @WithMockUser
     void testSuccessfulCreation() {
         CreateEmployeeRequest request = helper.generateCreateRequest(false);
         Employee created = service.create(request);

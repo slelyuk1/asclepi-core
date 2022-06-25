@@ -1,43 +1,27 @@
 package com.jupiter.asclepi.core.repository.helper.api;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.PrePersist;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
-// todo consider @CreatedBy/@CreatedWhen annotation usage
-@SuppressWarnings("unused")
-@NoArgsConstructor
-@AllArgsConstructor
-public class AbstractCreationAware<T> implements CreationAware<T> {
+@Getter
+@Setter
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public class AbstractCreationAware {
 
-    private T creator;
+    @CreatedBy
+    private String creator;
+
+    @CreatedDate
+    @Column(nullable = false)
     private Date createdWhen;
 
-    @Override
-    public T getCreator() {
-        return creator;
-    }
-
-    @Override
-    public void setCreator(T creator) {
-        this.creator = creator;
-    }
-
-    @Override
-    public Date getCreatedWhen() {
-        return createdWhen;
-    }
-
-    @Override
-    public void setCreatedWhen(Date createdWhen) {
-        this.createdWhen = createdWhen;
-    }
-
-    @PrePersist
-    void prePersist() {
-        setCreatedWhen(new Date());
-        // todo set creator and its constraint when security implemented
-    }
 }

@@ -1,7 +1,6 @@
 package com.jupiter.asclepi.core.repository.entity.visit;
 
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Entity
-public class Visit extends AbstractCreationAware<Employee> {
+public class Visit extends AbstractCreationAware {
 
     @EmbeddedId
     private VisitId id;

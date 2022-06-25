@@ -6,9 +6,11 @@ import com.jupiter.asclepi.core.model.request.history.CreateDiseaseHistoryReques
 import com.jupiter.asclepi.core.model.request.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
+import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.math.BigInteger;
@@ -68,6 +70,12 @@ public class DiseaseHistoryTestHelper {
     public void assertEntityIsValidAfterCreation(CreateDiseaseHistoryRequest request, DiseaseHistory entity) {
         Assertions.assertEquals(request.getClientId(), entity.getClient().getId());
         Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
+        Assertions.assertNotNull(entity.getCreatedWhen());
+        String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
+                .map(UserDetails::getUsername)
+                .orElse(null);
+        Assertions.assertNotNull(currentLogin);
+        Assertions.assertEquals(currentLogin, entity.getCreator());
     }
 
     public void assertEntityIsValidAfterEdition(EditDiseaseHistoryRequest request, DiseaseHistory entity) {

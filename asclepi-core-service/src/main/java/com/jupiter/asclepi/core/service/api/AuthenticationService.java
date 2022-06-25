@@ -6,6 +6,6 @@ import org.springframework.security.core.Authentication;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public interface SecurityService {
+public interface AuthenticationService {
     Authentication generateAuthentication(@Valid @NotNull AuthenticationRequest request);
 }

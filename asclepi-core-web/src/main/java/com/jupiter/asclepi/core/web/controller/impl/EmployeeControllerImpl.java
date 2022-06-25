@@ -4,15 +4,16 @@ import com.jupiter.asclepi.core.model.request.employee.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.employee.EditEmployeeRequest;
 import com.jupiter.asclepi.core.model.response.EmployeeInfo;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
+import com.jupiter.asclepi.core.service.api.AuthenticationService;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
+import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import com.jupiter.asclepi.core.web.controller.EmployeeController;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,7 @@ import java.util.List;
 public class EmployeeControllerImpl implements EmployeeController {
 
     private final EmployeeService employeeService;
+    private final AuthenticationService authenticationService;
     private final ConversionService conversionService;
 
     @Override
@@ -65,7 +67,10 @@ public class EmployeeControllerImpl implements EmployeeController {
 
     @Override
     public ResponseEntity<EmployeeInfo> getOne() {
-        String login = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        String login = SecurityUtils.getPrincipal(UserDetails.class)
+                .map(UserDetails::getUsername)
+                // todo normal exception
+                .orElseThrow(() -> new IllegalStateException("Authentication must be present"));
         return employeeService.findEmployeeByLogin(login)
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
                 .map(ResponseEntity::ok)

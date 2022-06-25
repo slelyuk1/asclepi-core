@@ -6,10 +6,12 @@ import com.jupiter.asclepi.core.model.request.client.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
 import com.jupiter.asclepi.core.model.request.client.JobRequest;
 import com.jupiter.asclepi.core.repository.entity.client.Client;
+import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.math.BigInteger;
@@ -111,6 +113,13 @@ public class ClientTestHelper {
         Assertions.assertEquals(request.getResidence(), entity.getResidence());
         Assertions.assertEquals(request.getJob().getName(), entity.getJob().getName());
         Assertions.assertEquals(request.getJob().getOrganization(), entity.getJob().getOrganization());
+
+        Assertions.assertNotNull(entity.getCreatedWhen());
+        String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
+                .map(UserDetails::getUsername)
+                .orElse(null);
+        Assertions.assertNotNull(currentLogin);
+        Assertions.assertEquals(currentLogin, entity.getCreator());
     }
 
     public void assertEntityIsValidAfterEdition(EditClientRequest request, Client entity) {

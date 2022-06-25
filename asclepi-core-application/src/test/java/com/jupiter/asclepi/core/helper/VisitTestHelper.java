@@ -8,10 +8,12 @@ import com.jupiter.asclepi.core.model.request.visit.EditVisitRequest;
 import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
+import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.time.LocalDateTime;
@@ -88,6 +90,12 @@ public class VisitTestHelper {
         Assertions.assertEquals(request.getDiseaseHistory().getClientId(), entity.getDiseaseHistory().getClient().getId());
         Assertions.assertEquals(request.getDiseaseHistory().getNumber(), entity.getDiseaseHistory().getId().getNumber());
         Assertions.assertEquals(request.getWhen(), entity.getWhen());
+        Assertions.assertNotNull(entity.getCreatedWhen());
+        String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
+                .map(UserDetails::getUsername)
+                .orElse(null);
+        Assertions.assertNotNull(currentLogin);
+        Assertions.assertEquals(currentLogin, entity.getCreator());
     }
 
     public void assertEntityIsValidAfterEdition(EditVisitRequest request, Visit entity) {

@@ -1,6 +1,5 @@
 package com.jupiter.asclepi.core.repository.entity.client;
 
-import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +19,7 @@ import java.math.BigInteger;
 @Setter
 @ToString
 @Entity
-public class Client extends AbstractCreationAware<Employee> {
+public class Client extends AbstractCreationAware {
 
     @Id
     @GeneratedValue

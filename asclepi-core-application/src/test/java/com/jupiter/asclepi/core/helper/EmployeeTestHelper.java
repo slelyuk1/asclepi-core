@@ -6,9 +6,11 @@ import com.jupiter.asclepi.core.model.request.employee.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.employee.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.entity.employee.Role;
+import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Arrays;
@@ -124,6 +126,12 @@ public class EmployeeTestHelper {
         Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
         Assertions.assertEquals(request.getRoleId(), entity.getRole().getId());
         Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
+        Assertions.assertNotNull(entity.getCreatedWhen());
+        String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
+                .map(UserDetails::getUsername)
+                .orElse(null);
+        Assertions.assertNotNull(currentLogin);
+        Assertions.assertEquals(currentLogin, entity.getCreator());
     }
 
     public void assertEntityIsValidAfterEdition(EditEmployeeRequest request, Employee entity) {

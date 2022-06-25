@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
-public class DiseaseHistory extends AbstractCreationAware<Employee> {
+public class DiseaseHistory extends AbstractCreationAware {
 
     @EmbeddedId
     private DiseaseHistoryId id;

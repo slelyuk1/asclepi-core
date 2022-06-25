@@ -1,7 +1,6 @@
 package com.jupiter.asclepi.core.repository.entity.consultation;
 
 import com.jupiter.asclepi.core.repository.entity.Anamnesis;
-import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
 import lombok.Getter;
@@ -21,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @Entity(name = "consultation")
-public class Consultation extends AbstractCreationAware<Employee> {
+public class Consultation extends AbstractCreationAware {
 
     @EmbeddedId
     private ConsultationId id;

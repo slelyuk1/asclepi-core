@@ -11,10 +11,12 @@ import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.repository.entity.consultation.Consultation;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
+import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import java.util.Objects;
@@ -114,6 +116,12 @@ public class ConsultationTestHelper {
         Assertions.assertEquals(request.getVisit(), toCompare);
         Assertions.assertEquals(request.getAnamnesisId(), entity.getAnamnesis().getId());
         Assertions.assertEquals(request.getInspection(), entity.getInspection());
+        Assertions.assertNotNull(entity.getCreatedWhen());
+        String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
+                .map(UserDetails::getUsername)
+                .orElse(null);
+        Assertions.assertNotNull(currentLogin);
+        Assertions.assertEquals(currentLogin, entity.getCreator());
     }
 
     public void assertEntityIsValidAfterEdition(EditConsultationRequest request, Consultation entity) {

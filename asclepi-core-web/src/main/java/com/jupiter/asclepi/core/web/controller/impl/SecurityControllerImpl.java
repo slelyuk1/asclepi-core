@@ -1,7 +1,7 @@
 package com.jupiter.asclepi.core.web.controller.impl;
 
 import com.jupiter.asclepi.core.model.request.security.AuthenticationRequest;
-import com.jupiter.asclepi.core.service.api.SecurityService;
+import com.jupiter.asclepi.core.service.api.AuthenticationService;
 import com.jupiter.asclepi.core.web.configuration.WebSecurityConfiguration;
 import com.jupiter.asclepi.core.web.controller.SecurityController;
 import lombok.AllArgsConstructor;
@@ -21,13 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(WebSecurityConfiguration.AUTHENTICATION_ENDPOINT_PREFIX)
 public class SecurityControllerImpl implements SecurityController {
 
-    private final SecurityService securityService;
+    private final AuthenticationService authenticationService;
     private final TokenService tokenService;
     private final ConversionService conversionService;
 
     @Override
     public ResponseEntity<Void> authenticate(AuthenticationRequest request) {
-        Authentication authentication = securityService.generateAuthentication(request);
+        Authentication authentication = authenticationService.generateAuthentication(request);
         String serializedAuthentication = conversionService.convert(authentication, String.class);
         Token token = tokenService.allocateToken(serializedAuthentication);
         return ResponseEntity.ok()

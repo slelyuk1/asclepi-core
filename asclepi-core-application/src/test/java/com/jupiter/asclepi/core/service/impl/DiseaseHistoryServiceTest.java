@@ -22,6 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -75,6 +76,7 @@ class DiseaseHistoryServiceTest {
 
 
     @Test
+    @WithMockUser
     void testSuccessfulCreation() {
         CreateDiseaseHistoryRequest request = new CreateDiseaseHistoryRequest();
         request.setDoctorId(existingDoctor.getId());

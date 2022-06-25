@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @Entity
-public class Employee extends AbstractCreationAware<Employee> {
+public class Employee extends AbstractCreationAware {
 
     @Id
     @GeneratedValue
