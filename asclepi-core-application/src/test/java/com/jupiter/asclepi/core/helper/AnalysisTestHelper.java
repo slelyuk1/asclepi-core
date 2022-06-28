@@ -10,6 +10,7 @@ import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.entity.analysis.Analysis;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
@@ -118,12 +119,14 @@ public class AnalysisTestHelper {
         Assertions.assertEquals(request.getVisit(), toCompare);
         Assertions.assertEquals(request.getSummary(), entity.getSummary());
         Assertions.assertEquals(request.getTitle(), entity.getTitle());
-        Assertions.assertNotNull(entity.getCreatedWhen());
+        CreationData<String> creation = entity.getCreation();
+        Assertions.assertNotNull(creation);
+        Assertions.assertNotNull(creation.getWhen());
         String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
                 .map(UserDetails::getUsername)
                 .orElse(null);
         Assertions.assertNotNull(currentLogin);
-        Assertions.assertEquals(currentLogin, entity.getCreator());
+        Assertions.assertEquals(currentLogin, creation.getBy());
     }
 
     public void assertEntityIsValidAfterEdition(EditAnalysisRequest request, Analysis entity) {

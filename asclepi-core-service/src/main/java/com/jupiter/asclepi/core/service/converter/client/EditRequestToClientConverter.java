@@ -12,8 +12,8 @@ import org.springframework.core.convert.converter.Converter;
 public interface EditRequestToClientConverter extends Converter<EditClientRequest, Client> {
 
     @Override
-    @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "createdWhen", ignore = true)
+    // todo maybe more intuitive way for ignoring fields for operation
+    @Mapping(target = "creation", expression = "java(null)")
     Client convert(EditClientRequest request);
 
 }

@@ -13,8 +13,7 @@ public interface CreateRequestToEmployeeConverter extends Converter<CreateEmploy
     @Override
     @Mapping(target = "role", source = "roleId")
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdWhen", ignore = true)
-    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "creation", ignore = true)
     Employee convert(CreateEmployeeRequest request);
 
 }

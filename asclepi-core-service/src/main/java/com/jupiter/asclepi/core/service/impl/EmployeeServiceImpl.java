@@ -4,6 +4,7 @@ import com.jupiter.asclepi.core.model.request.employee.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.employee.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.EmployeeRepository;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
+import com.jupiter.asclepi.core.repository.entity.employee.Role;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
@@ -72,7 +73,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAll() {
-        return repository.findAll();
+        return repository.findAll().stream()
+                .filter(employee -> Role.ADMIN != employee.getRole())
+                .toList();
     }
 
     private boolean employeeWithLoginExists(String login) {

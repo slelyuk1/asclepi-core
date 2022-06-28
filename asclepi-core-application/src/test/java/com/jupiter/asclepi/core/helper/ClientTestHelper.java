@@ -6,6 +6,7 @@ import com.jupiter.asclepi.core.model.request.client.CreateClientRequest;
 import com.jupiter.asclepi.core.model.request.client.EditClientRequest;
 import com.jupiter.asclepi.core.model.request.client.JobRequest;
 import com.jupiter.asclepi.core.repository.entity.client.Client;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Assertions;
@@ -114,12 +115,14 @@ public class ClientTestHelper {
         Assertions.assertEquals(request.getJob().getName(), entity.getJob().getName());
         Assertions.assertEquals(request.getJob().getOrganization(), entity.getJob().getOrganization());
 
-        Assertions.assertNotNull(entity.getCreatedWhen());
+        CreationData<String> creation = entity.getCreation();
+        Assertions.assertNotNull(creation);
+        Assertions.assertNotNull(creation.getWhen());
         String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
                 .map(UserDetails::getUsername)
                 .orElse(null);
         Assertions.assertNotNull(currentLogin);
-        Assertions.assertEquals(currentLogin, entity.getCreator());
+        Assertions.assertEquals(currentLogin, creation.getBy());
     }
 
     public void assertEntityIsValidAfterEdition(EditClientRequest request, Client entity) {

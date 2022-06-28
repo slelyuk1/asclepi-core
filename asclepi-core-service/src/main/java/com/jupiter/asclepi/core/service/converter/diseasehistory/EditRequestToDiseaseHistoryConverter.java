@@ -13,10 +13,9 @@ public interface EditRequestToDiseaseHistoryConverter extends Converter<EditDise
     @Override
     @Mapping(target = "id", source = "diseaseHistory")
     @Mapping(target = "doctor.id", source = "doctorId")
+    @Mapping(target = "creation", expression = "java(null)")
     @Mapping(target = "client", ignore = true)
     @Mapping(target = "doctor", ignore = true)
-    @Mapping(target = "createdWhen", ignore = true)
-    @Mapping(target = "creator", ignore = true)
     DiseaseHistory convert(EditDiseaseHistoryRequest source);
 
 }

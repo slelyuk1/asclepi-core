@@ -1,5 +1,7 @@
 package com.jupiter.asclepi.core.model.response.client;
 
+import com.jupiter.asclepi.core.model.response.common.CreationInfo;
+
 import java.math.BigInteger;
 
 public record ClientInfo(
@@ -9,6 +11,7 @@ public record ClientInfo(
         String middleName,
         String residence,
         Boolean gender,
-        JobInfo job
+        JobInfo job,
+        CreationInfo creation
 ) {
 }

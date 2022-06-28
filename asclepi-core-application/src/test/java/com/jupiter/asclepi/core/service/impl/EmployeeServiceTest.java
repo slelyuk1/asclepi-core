@@ -72,7 +72,7 @@ class EmployeeServiceTest {
         entityManager.detach(another);
 
         Collection<Employee> all = service.getAll();
-        Assertions.assertEquals(3, all.size());
+        Assertions.assertEquals(2, all.size());
         Employee oneInfo = all.stream()
                 .filter(info -> Objects.equals(info.getId(), one.getId()))
                 .findAny()

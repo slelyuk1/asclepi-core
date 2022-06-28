@@ -6,6 +6,7 @@ import com.jupiter.asclepi.core.model.request.employee.CreateEmployeeRequest;
 import com.jupiter.asclepi.core.model.request.employee.EditEmployeeRequest;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.entity.employee.Role;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.BeanUtils;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class EmployeeTestHelper {
     private static final String TEST_LOGIN = "testLogin";
     private static final String TEST_PASSWORD = "testPassword";
-    private static final Role TEST_ROLE = Role.ADMIN;
+    private static final Role TEST_ROLE = Role.DOCTOR;
     private static final String TEST_NAME = "testName";
     private static final String TEST_SURNAME = "testSurname";
     private static final String TEST_MIDDLE = "testMiddleName";
@@ -126,12 +127,14 @@ public class EmployeeTestHelper {
         Assertions.assertEquals(request.getMiddleName(), entity.getMiddleName());
         Assertions.assertEquals(request.getRoleId(), entity.getRole().getId());
         Assertions.assertEquals(request.getAdditionalInfo(), entity.getAdditionalInfo());
-        Assertions.assertNotNull(entity.getCreatedWhen());
+        CreationData<String> creation = entity.getCreation();
+        Assertions.assertNotNull(creation);
+        Assertions.assertNotNull(creation.getWhen());
         String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
                 .map(UserDetails::getUsername)
                 .orElse(null);
         Assertions.assertNotNull(currentLogin);
-        Assertions.assertEquals(currentLogin, entity.getCreator());
+        Assertions.assertEquals(currentLogin, creation.getBy());
     }
 
     public void assertEntityIsValidAfterEdition(EditEmployeeRequest request, Employee entity) {

@@ -62,7 +62,6 @@ public class EmployeeControllerImpl implements EmployeeController {
         return employeeService.getAll().stream()
                 .map(employee -> conversionService.convert(employee, EmployeeInfo.class))
                 .toList();
-
     }
 
     @Override

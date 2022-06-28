@@ -1,25 +1,26 @@
 package com.jupiter.asclepi.core.repository.entity.client;
 
-import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 
+// todo think about persistable interface
 @Getter
 @Setter
 @ToString
 @Entity
-public class Client extends AbstractCreationAware {
+@EntityListeners(AuditingEntityListener.class)
+public class Client implements CreationAware<String> {
 
     @Id
     @GeneratedValue
@@ -43,10 +44,17 @@ public class Client extends AbstractCreationAware {
     @Embedded
     private Job job;
 
+    @Embedded
+    private CreationData<String> creation;
+
     public static Client fromId(BigInteger id) {
         Client toReturn = new Client();
         toReturn.setId(id);
         return toReturn;
+    }
+
+    public Client() {
+        creation = new CreationData<>();
     }
 
     @Override

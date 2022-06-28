@@ -29,18 +29,22 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
+@WithMockUser
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
@@ -255,11 +259,13 @@ class AnalysisControllerTest {
                 .andWithPrefix("visit.diseaseHistory.", DiseaseHistoryControllerTest.generateGetRequestDescriptors());
     }
 
-    private static FieldDescriptor[] generateInfoFieldDescriptor() {
-        return new FieldDescriptor[]{
+    private static List<FieldDescriptor> generateInfoFieldDescriptor() {
+        List<FieldDescriptor> infoDescriptors =  new ArrayList<>(List.of(
                 fieldWithPath("title").description("Title of analysis.").type(JsonFieldType.STRING),
                 fieldWithPath("summary").description("Summary of analysis.").type(JsonFieldType.STRING)
-        };
+        ));
+        infoDescriptors.addAll(applyPathPrefix("creation.", DiseaseHistoryControllerTest.generateCreationInfoDescriptors()));
+        return infoDescriptors;
     }
 
     private static FieldDescriptor[] generateGetRequestDescriptors() {

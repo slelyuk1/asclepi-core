@@ -14,8 +14,7 @@ public interface CreateRequestToConsultationConverter extends Converter<CreateCo
     @Mapping(target = "anamnesis.id", source = "anamnesisId")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "anamnesis", ignore = true)
-    @Mapping(target = "createdWhen", ignore = true)
-    @Mapping(target = "creator", ignore = true)
+    @Mapping(target = "creation", ignore = true)
     Consultation convert(CreateConsultationRequest source);
 
 }

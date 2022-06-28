@@ -13,8 +13,7 @@ public interface CreateRequestToClientConverter extends Converter<CreateClientRe
 
     @Override
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "creator", ignore = true)
-    @Mapping(target = "createdWhen", ignore = true)
+    @Mapping(target = "creation", ignore = true)
     Client convert(CreateClientRequest request);
 
 }

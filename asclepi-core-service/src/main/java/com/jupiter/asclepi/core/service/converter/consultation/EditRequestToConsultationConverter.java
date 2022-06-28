@@ -13,10 +13,9 @@ public interface EditRequestToConsultationConverter extends Converter<EditConsul
     @Override
     @Mapping(target = "id", source = "consultation")
     @Mapping(target = "anamnesis.id", source = "anamnesisId")
+    @Mapping(target = "creation", expression = "java(null)")
     @Mapping(target = "anamnesis", ignore = true)
     @Mapping(target = "visit", ignore = true)
-    @Mapping(target = "createdWhen", ignore = true)
-    @Mapping(target = "creator", ignore = true)
     Consultation convert(EditConsultationRequest source);
 
 }

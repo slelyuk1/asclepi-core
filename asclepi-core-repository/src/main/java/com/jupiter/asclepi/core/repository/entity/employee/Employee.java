@@ -1,16 +1,15 @@
 package com.jupiter.asclepi.core.repository.entity.employee;
 
-import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -18,7 +17,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @Entity
-public class Employee extends AbstractCreationAware {
+@EntityListeners(AuditingEntityListener.class)
+public class Employee implements CreationAware<String> {
 
     @Id
     @GeneratedValue
@@ -43,6 +43,12 @@ public class Employee extends AbstractCreationAware {
     private String middleName;
 
     private String additionalInfo;
+
+    private CreationData<String> creation;
+
+    public Employee() {
+        creation = new CreationData<>();
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -2,17 +2,16 @@ package com.jupiter.asclepi.core.repository.entity.consultation;
 
 import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
-import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +19,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 @Entity(name = "consultation")
-public class Consultation extends AbstractCreationAware {
+@EntityListeners(AuditingEntityListener.class)
+public class Consultation implements CreationAware<String> {
 
     @EmbeddedId
     private ConsultationId id;
@@ -36,8 +36,12 @@ public class Consultation extends AbstractCreationAware {
     @NotEmpty
     private String inspection;
 
+    @Embedded
+    private CreationData<String> creation;
+
     public Consultation() {
         id = new ConsultationId();
+        creation = new CreationData<>();
     }
 
     public void setId(ConsultationId id) {

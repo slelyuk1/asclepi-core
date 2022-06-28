@@ -1,5 +1,7 @@
 package com.jupiter.asclepi.core.model.response;
 
+import com.jupiter.asclepi.core.model.response.common.CreationInfo;
+
 public record EmployeeInfo(
         int id,
         String login,
@@ -7,6 +9,7 @@ public record EmployeeInfo(
         String name,
         String surname,
         String middleName,
-        String additionalInfo
+        String additionalInfo,
+        CreationInfo creation
 ) {
 }

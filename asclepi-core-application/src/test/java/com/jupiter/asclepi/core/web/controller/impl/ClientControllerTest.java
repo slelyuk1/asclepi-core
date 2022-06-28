@@ -19,12 +19,15 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -33,21 +36,11 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
+@WithMockUser
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 class ClientControllerTest {
-
-    private static final FieldDescriptor[] CLIENT_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
-            fieldWithPath("id").description("ID of the client in the system").type(JsonFieldType.NUMBER),
-            fieldWithPath("name").description("Name of the client in the system").type(JsonFieldType.STRING),
-            fieldWithPath("surname").description("Surname of the client in the system").type(JsonFieldType.STRING),
-            fieldWithPath("middleName").description("Middle name of the client in the system").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("residence").description("Residence of the client in the system").type(JsonFieldType.STRING),
-            fieldWithPath("gender").description("Gender of the client in the system (false = male, true = female)").type(JsonFieldType.BOOLEAN),
-            fieldWithPath("job.name").description("Job name of the client in the system").type(JsonFieldType.STRING),
-            fieldWithPath("job.organization").description("Job organization of the client in the system").type(JsonFieldType.STRING),
-    };
 
     private static final FieldDescriptor[] CREATE_CLIENT_REQUEST_FIELD_DESCRIPTORS = generateCreateRequestDescriptors();
     private static final FieldDescriptor[] EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS = generateEditClientRequestDescriptors();
@@ -104,7 +97,7 @@ class ClientControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("clientSuccessfulCreation",
                         requestFields(CREATE_CLIENT_REQUEST_FIELD_DESCRIPTORS),
-                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
+                        responseFields(generateInfoDescriptors())
                 ));
     }
 
@@ -117,7 +110,7 @@ class ClientControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("clientSuccessfulEdition",
                         requestFields(EDIT_CLIENT_REQUEST_FIELD_DESCRIPTORS),
-                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
+                        responseFields(generateInfoDescriptors())
                 ));
     }
 
@@ -141,7 +134,7 @@ class ClientControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("clientSuccessfulGetting",
                         pathParameters(parameterWithName("clientId").description("ID of the existing client")),
-                        responseFields(CLIENT_INFO_FIELD_DESCRIPTORS)
+                        responseFields(generateInfoDescriptors())
                 ));
     }
 
@@ -164,7 +157,23 @@ class ClientControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("clientSuccessfulGettingAll",
                         responseFields(fieldWithPath("[]").description("Array of ClientInfo").type(JsonFieldType.ARRAY))
-                                .andWithPrefix("[]", CLIENT_INFO_FIELD_DESCRIPTORS)
+                                .andWithPrefix("[].", generateInfoDescriptors())
                 ));
     }
+
+    private static List<FieldDescriptor> generateInfoDescriptors() {
+        List<FieldDescriptor> infoDescriptors = new ArrayList<>(List.of(
+                fieldWithPath("id").description("ID of the client in the system").type(JsonFieldType.NUMBER),
+                fieldWithPath("name").description("Name of the client in the system").type(JsonFieldType.STRING),
+                fieldWithPath("surname").description("Surname of the client in the system").type(JsonFieldType.STRING),
+                fieldWithPath("middleName").description("Middle name of the client in the system").type(JsonFieldType.STRING).optional(),
+                fieldWithPath("residence").description("Residence of the client in the system").type(JsonFieldType.STRING),
+                fieldWithPath("gender").description("Gender of the client in the system (false = male, true = female)").type(JsonFieldType.BOOLEAN),
+                fieldWithPath("job.name").description("Job name of the client in the system").type(JsonFieldType.STRING),
+                fieldWithPath("job.organization").description("Job organization of the client in the system").type(JsonFieldType.STRING)
+        ));
+        infoDescriptors.addAll(applyPathPrefix("creation.", DiseaseHistoryControllerTest.generateCreationInfoDescriptors()));
+        return infoDescriptors;
+    }
+
 }

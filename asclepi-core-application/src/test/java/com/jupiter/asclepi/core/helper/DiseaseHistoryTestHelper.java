@@ -6,6 +6,7 @@ import com.jupiter.asclepi.core.model.request.history.CreateDiseaseHistoryReques
 import com.jupiter.asclepi.core.model.request.history.EditDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import com.jupiter.asclepi.core.service.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
@@ -70,12 +71,14 @@ public class DiseaseHistoryTestHelper {
     public void assertEntityIsValidAfterCreation(CreateDiseaseHistoryRequest request, DiseaseHistory entity) {
         Assertions.assertEquals(request.getClientId(), entity.getClient().getId());
         Assertions.assertEquals(request.getDoctorId(), entity.getDoctor().getId());
-        Assertions.assertNotNull(entity.getCreatedWhen());
+        CreationData<String> creationData = entity.getCreation();
+        Assertions.assertNotNull(creationData);
+        Assertions.assertNotNull(creationData.getWhen());
         String currentLogin = SecurityUtils.getPrincipal(UserDetails.class)
                 .map(UserDetails::getUsername)
                 .orElse(null);
         Assertions.assertNotNull(currentLogin);
-        Assertions.assertEquals(currentLogin, entity.getCreator());
+        Assertions.assertEquals(currentLogin, creationData.getBy());
     }
 
     public void assertEntityIsValidAfterEdition(EditDiseaseHistoryRequest request, DiseaseHistory entity) {

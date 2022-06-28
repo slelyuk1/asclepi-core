@@ -1,17 +1,16 @@
 package com.jupiter.asclepi.core.repository.entity.visit;
 
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
-import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -19,7 +18,8 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Entity
-public class Visit extends AbstractCreationAware {
+@EntityListeners(AuditingEntityListener.class)
+public class Visit implements CreationAware<String> {
 
     @EmbeddedId
     private VisitId id;
@@ -31,6 +31,10 @@ public class Visit extends AbstractCreationAware {
     @NotNull
     private LocalDateTime when;
 
+    @Embedded
+    @AttributeOverride(name = "when", column = @Column(name = "created_when"))
+    private CreationData<String> creation;
+
     public static Visit fromId(VisitId id) {
         Visit toReturn = new Visit();
         toReturn.setId(id);
@@ -39,6 +43,7 @@ public class Visit extends AbstractCreationAware {
 
     public Visit() {
         id = new VisitId();
+        creation = new CreationData<>();
     }
 
     public void setId(VisitId id) {

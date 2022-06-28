@@ -16,7 +16,6 @@ security:
     name: AdminName
     surname: AdminSurname
 
-# todo configure logging
 logging:
   level:
     root: DEBUG

@@ -19,11 +19,14 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -32,20 +35,11 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
+@WithMockUser
 @SpringBootTest
 @Import(TestHelperConfiguration.class)
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 class EmployeeControllerTest {
-
-    private static final FieldDescriptor[] EMPLOYEE_INFO_FIELD_DESCRIPTORS = new FieldDescriptor[]{
-            fieldWithPath("id").description("ID of the employee in the system").type(JsonFieldType.NUMBER),
-            fieldWithPath("login").description("Login of the employee in the system").type(JsonFieldType.STRING),
-            fieldWithPath("roleId").description("Role ID of the employee in the system").type(JsonFieldType.NUMBER),
-            fieldWithPath("name").description("Name of the employee in the system").type(JsonFieldType.STRING),
-            fieldWithPath("surname").description("Surname of the employee in the system").type(JsonFieldType.STRING),
-            fieldWithPath("middleName").description("Middle Name of the employee in the system").type(JsonFieldType.STRING).optional(),
-            fieldWithPath("additionalInfo").description("Additional info about the employee in the system").type(JsonFieldType.STRING).optional()
-    };
 
     private static final FieldDescriptor[] CREATE_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS = generateCreateEmployeeRequestDescriptors();
     private static final FieldDescriptor[] EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS = generateEditEmployeeRequestDescriptors();
@@ -75,7 +69,7 @@ class EmployeeControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeSuccessfulCreation",
                         requestFields(CREATE_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
-                        responseFields(EMPLOYEE_INFO_FIELD_DESCRIPTORS)
+                        responseFields(generateInfoDescriptors())
                 ));
     }
 
@@ -101,7 +95,7 @@ class EmployeeControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeSuccessfulEdition",
                         requestFields(EDIT_EMPLOYEE_REQUEST_FIELD_DESCRIPTORS),
-                        responseFields(EMPLOYEE_INFO_FIELD_DESCRIPTORS)
+                        responseFields(generateInfoDescriptors())
                 ));
     }
 
@@ -141,7 +135,7 @@ class EmployeeControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeSuccessfulGetting",
                         pathParameters(parameterWithName("employeeId").description("ID of the existing employee")),
-                        responseFields(EMPLOYEE_INFO_FIELD_DESCRIPTORS)
+                        responseFields(generateInfoDescriptors())
                 ));
     }
 
@@ -164,7 +158,7 @@ class EmployeeControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(document("employeeSuccessfulGettingAll",
                         responseFields(fieldWithPath("[]").description("Array of EmployeeInfo").type(JsonFieldType.ARRAY))
-                                .andWithPrefix("[]", EMPLOYEE_INFO_FIELD_DESCRIPTORS)
+                                .andWithPrefix("[].", generateInfoDescriptors())
                 ));
     }
 
@@ -230,5 +224,19 @@ class EmployeeControllerTest {
                 constraintDocumentationHelper.fieldDescriptorFor("additionalInfo")
                         .description("Additional info about the edited employee").type(JsonFieldType.STRING).optional()
         };
+    }
+
+    private static List<FieldDescriptor> generateInfoDescriptors() {
+        List<FieldDescriptor> infoDescriptors = new ArrayList<>(List.of(
+                fieldWithPath("id").description("ID of the employee in the system").type(JsonFieldType.NUMBER),
+                fieldWithPath("login").description("Login of the employee in the system").type(JsonFieldType.STRING),
+                fieldWithPath("roleId").description("Role ID of the employee in the system").type(JsonFieldType.NUMBER),
+                fieldWithPath("name").description("Name of the employee in the system").type(JsonFieldType.STRING),
+                fieldWithPath("surname").description("Surname of the employee in the system").type(JsonFieldType.STRING),
+                fieldWithPath("middleName").description("Middle Name of the employee in the system").type(JsonFieldType.STRING).optional(),
+                fieldWithPath("additionalInfo").description("Additional info about the employee in the system").type(JsonFieldType.STRING).optional()
+        ));
+        infoDescriptors.addAll(applyPathPrefix("creation.", DiseaseHistoryControllerTest.generateCreationInfoDescriptors()));
+        return infoDescriptors;
     }
 }

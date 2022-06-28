@@ -3,12 +3,14 @@ package com.jupiter.asclepi.core.repository.entity.diseasehistory;
 import com.jupiter.asclepi.core.repository.entity.client.Client;
 import com.jupiter.asclepi.core.repository.entity.diagnosis.Diagnosis;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
-import com.jupiter.asclepi.core.repository.helper.api.AbstractCreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
+import com.jupiter.asclepi.core.repository.helper.api.CreationData;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,7 +20,8 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
-public class DiseaseHistory extends AbstractCreationAware {
+@EntityListeners(AuditingEntityListener.class)
+public class DiseaseHistory implements CreationAware<String> {
 
     @EmbeddedId
     private DiseaseHistoryId id;
@@ -33,6 +36,9 @@ public class DiseaseHistory extends AbstractCreationAware {
     @OneToMany
     private List<Diagnosis> diagnoses;
 
+    @Embedded
+    private CreationData<String> creation;
+
     public static DiseaseHistory fromId(DiseaseHistoryId id) {
         DiseaseHistory toReturn = new DiseaseHistory();
         toReturn.setId(id);
@@ -42,6 +48,7 @@ public class DiseaseHistory extends AbstractCreationAware {
     public DiseaseHistory() {
         id = new DiseaseHistoryId();
         diagnoses = new ArrayList<>();
+        creation = new CreationData<>();
     }
 
     public void setId(DiseaseHistoryId id) {
