@@ -229,11 +229,11 @@ public class VisitControllerTest {
         return infoDescriptors;
     }
 
-    public static FieldDescriptor[] generateGetRequestDescriptors() {
+    public static List<FieldDescriptor> generateGetRequestDescriptors() {
         ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetVisitRequest.class);
-        return new FieldDescriptor[]{
+        return List.of(
                 docHelper.fieldDescriptorFor("number").description("Number of visit.").type(JsonFieldType.NUMBER)
-        };
+        );
     }
 
     private static FieldDescriptor[] generateCreateRequestDescriptors() {

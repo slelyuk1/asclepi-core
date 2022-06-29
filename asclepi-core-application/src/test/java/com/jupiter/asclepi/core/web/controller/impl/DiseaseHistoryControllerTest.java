@@ -205,14 +205,14 @@ public class DiseaseHistoryControllerTest {
         );
     }
 
-    public static FieldDescriptor[] generateGetRequestDescriptors() {
+    public static List<FieldDescriptor> generateGetRequestDescriptors() {
         ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetDiseaseHistoryRequest.class);
-        return new FieldDescriptor[]{
+        return List.of(
                 docHelper.fieldDescriptorFor("clientId")
                         .description("ID of the client to which the created history will belong.").type(JsonFieldType.NUMBER),
                 docHelper.fieldDescriptorFor("number")
                         .description("Number of the disease history.").type(JsonFieldType.NUMBER)
-        };
+        );
     }
 
     private static FieldDescriptor[] generateCreateRequestDescriptors() {

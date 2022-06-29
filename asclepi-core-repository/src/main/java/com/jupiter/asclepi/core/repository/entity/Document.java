@@ -1,27 +1,33 @@
 package com.jupiter.asclepi.core.repository.entity;
 
+import com.jupiter.asclepi.core.repository.entity.analysis.Analysis;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.nio.file.Path;
 
-// todo configure disease history when its functionality will be implemented
-// todo configure analysis when its functionality will be implemented
-// todo configure for persistence (Viktor Muratov) (see com.jupiter.asclepi.core.model.entity.people.Employee)
-// todo configure validation (Viktor Muratov)
 @Getter
 @Setter
 @ToString
+@Entity
 public class Document {
 
+    @Id
+    @GeneratedValue
     private BigInteger id;
-    // todo write a converter like com.jupiter.asclepi.core.model.entity.converter.RoleConverter (Viktor Muratov)
+
+    @Column(nullable = false)
     private Path path;
+
     private String description;
+
+    @ManyToOne(optional = false)
+    private Analysis analysis;
 
     @Override
     public boolean equals(Object o) {

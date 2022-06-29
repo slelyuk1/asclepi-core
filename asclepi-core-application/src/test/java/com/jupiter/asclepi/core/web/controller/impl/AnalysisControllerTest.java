@@ -260,7 +260,7 @@ class AnalysisControllerTest {
     }
 
     private static List<FieldDescriptor> generateInfoFieldDescriptor() {
-        List<FieldDescriptor> infoDescriptors =  new ArrayList<>(List.of(
+        List<FieldDescriptor> infoDescriptors = new ArrayList<>(List.of(
                 fieldWithPath("title").description("Title of analysis.").type(JsonFieldType.STRING),
                 fieldWithPath("summary").description("Summary of analysis.").type(JsonFieldType.STRING)
         ));
@@ -268,11 +268,14 @@ class AnalysisControllerTest {
         return infoDescriptors;
     }
 
-    private static FieldDescriptor[] generateGetRequestDescriptors() {
+    public static List<FieldDescriptor> generateGetRequestDescriptors() {
         ConstraintDocumentationHelper docHelper = ConstraintDocumentationHelper.of(GetAnalysisRequest.class);
-        return new FieldDescriptor[]{
+        List<FieldDescriptor> descriptors = new ArrayList<>(List.of(
                 docHelper.fieldDescriptorFor("number").description("Number of analysis.").type(JsonFieldType.NUMBER)
-        };
+        ));
+        descriptors.addAll(applyPathPrefix("visit.", VisitControllerTest.generateGetRequestDescriptors()));
+        descriptors.addAll(applyPathPrefix("visit.diseaseHistory.", DiseaseHistoryControllerTest.generateGetRequestDescriptors()));
+        return descriptors;
     }
 
     private static FieldDescriptor[] generateCreateRequestDescriptors() {
