@@ -79,7 +79,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     @Override
     public List<Diagnosis> getForDiseaseHistory(@NotNull DiseaseHistory diseaseHistory) {
         Diagnosis toFind = new Diagnosis();
-        toFind.setDiseaseHistory(diseaseHistory);
+        toFind.setDiseaseHistory(DiseaseHistory.fromId(diseaseHistory.getId()));
         return repository.findAll(Example.of(toFind));
     }
 }

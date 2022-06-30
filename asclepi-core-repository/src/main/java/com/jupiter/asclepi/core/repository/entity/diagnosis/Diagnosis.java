@@ -1,23 +1,21 @@
 package com.jupiter.asclepi.core.repository.entity.diagnosis;
 
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @ToString
 @Entity
-public class Diagnosis {
+public class Diagnosis implements CustomPersistable<DiagnosisId> {
 
     @EmbeddedId
     private DiagnosisId id;
@@ -26,7 +24,7 @@ public class Diagnosis {
     @MapsId("diseaseHistoryId")
     private DiseaseHistory diseaseHistory;
 
-    @NotNull
+    @Column(nullable = false)
     private String disease;
 
     private String complications;
@@ -35,7 +33,7 @@ public class Diagnosis {
 
     private String specialityOfCourse;
 
-    @NotNull
+    @Column(nullable = false)
     private Boolean isFinal;
 
     public Diagnosis() {

@@ -1,16 +1,14 @@
 package com.jupiter.asclepi.core.repository.entity;
 
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigInteger;
 
@@ -18,7 +16,7 @@ import java.math.BigInteger;
 @Setter
 @ToString
 @Entity
-public class Anamnesis {
+public class Anamnesis implements CustomPersistable<BigInteger> {
 
     @Id
     @GeneratedValue
@@ -27,13 +25,13 @@ public class Anamnesis {
     @ManyToOne(optional = false)
     private DiseaseHistory diseaseHistory;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String complaints;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String morbi;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String vitae;
 
     @Override

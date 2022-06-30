@@ -5,7 +5,7 @@ import com.jupiter.asclepi.core.repository.entity.employee.Role;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-@Converter(autoApply = true)
+@Converter
 public class RoleAttributeConverter implements AttributeConverter<Role, Integer> {
 
     @Override

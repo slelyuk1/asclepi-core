@@ -262,7 +262,9 @@ class AnalysisControllerTest {
     private static List<FieldDescriptor> generateInfoFieldDescriptor() {
         List<FieldDescriptor> infoDescriptors = new ArrayList<>(List.of(
                 fieldWithPath("title").description("Title of analysis.").type(JsonFieldType.STRING),
-                fieldWithPath("summary").description("Summary of analysis.").type(JsonFieldType.STRING)
+                fieldWithPath("summary").description("Summary of analysis.").type(JsonFieldType.STRING),
+                // todo descriptor for array elements
+                fieldWithPath("documents").description("Documents linked to the analysis").type(JsonFieldType.ARRAY)
         ));
         infoDescriptors.addAll(applyPathPrefix("creation.", DiseaseHistoryControllerTest.generateCreationInfoDescriptors()));
         return infoDescriptors;

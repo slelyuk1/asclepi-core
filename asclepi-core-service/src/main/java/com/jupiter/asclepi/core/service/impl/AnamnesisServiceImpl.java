@@ -56,7 +56,7 @@ public class AnamnesisServiceImpl implements AnamnesisService {
     @Override
     public List<Anamnesis> getForDiseaseHistory(@Valid @NotNull DiseaseHistory history) {
         Anamnesis toFind = new Anamnesis();
-        toFind.setDiseaseHistory(history);
+        toFind.setDiseaseHistory(DiseaseHistory.fromId(history.getId()));
         return repository.findAll(Example.of(toFind));
     }
 }

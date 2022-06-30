@@ -1,8 +1,10 @@
 package com.jupiter.asclepi.core.repository.entity.analysis;
 
+import com.jupiter.asclepi.core.repository.entity.Document;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
 import com.jupiter.asclepi.core.repository.helper.api.CreationData;
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,14 +13,15 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Analysis implements CreationAware<String> {
+public class Analysis implements CustomPersistable<AnalysisId>, CreationAware<String> {
 
     @EmbeddedId
     private AnalysisId id;
@@ -27,19 +30,21 @@ public class Analysis implements CreationAware<String> {
     @MapsId("visitId")
     private Visit visit;
 
+    @Column(nullable = false)
     private String title;
 
-    @NotNull
+    @Column(nullable = false)
     private String summary;
 
-    // todo when documents functionality is implemented
-    // private List<Document> documents;
+    @OneToMany
+    private List<Document> documents;
 
     @Embedded
     private CreationData<String> creation;
 
     public Analysis() {
         id = new AnalysisId();
+        documents = new ArrayList<>();
         creation = new CreationData<>();
     }
 

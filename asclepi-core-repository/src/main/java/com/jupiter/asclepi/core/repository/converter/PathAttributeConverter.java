@@ -4,7 +4,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.nio.file.Path;
 
-@Converter(autoApply = true)
+@Converter
 public class PathAttributeConverter implements AttributeConverter<Path, String> {
 
     @Override

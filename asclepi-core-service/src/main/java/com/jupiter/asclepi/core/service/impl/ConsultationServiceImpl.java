@@ -89,13 +89,13 @@ public class ConsultationServiceImpl implements ConsultationService {
     @Override
     public List<Consultation> getForVisit(@NotNull Visit visit) {
         Consultation toFind = new Consultation();
-        toFind.setVisit(visit);
+        toFind.setVisit(Visit.fromId(visit.getId()));
         return repository.findAll(Example.of(toFind));
     }
 
     @Override
     public List<Consultation> getForDiseaseHistory(@NotNull DiseaseHistory history) {
-        return visitService.getForDiseaseHistory(history).stream()
+        return visitService.getForDiseaseHistory(DiseaseHistory.fromId(history.getId())).stream()
                 .flatMap(visit -> getForVisit(visit).stream())
                 .collect(Collectors.toList());
     }

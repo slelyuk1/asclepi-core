@@ -3,6 +3,7 @@ package com.jupiter.asclepi.core.repository.entity.visit;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
 import com.jupiter.asclepi.core.repository.helper.api.CreationData;
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,7 +12,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Visit implements CreationAware<String> {
+public class Visit implements CustomPersistable<VisitId>, CreationAware<String> {
 
     @EmbeddedId
     private VisitId id;
@@ -28,7 +28,7 @@ public class Visit implements CreationAware<String> {
     @MapsId("diseaseHistoryId")
     private DiseaseHistory diseaseHistory;
 
-    @NotNull
+    @Column(nullable = false)
     private LocalDateTime when;
 
     @Embedded

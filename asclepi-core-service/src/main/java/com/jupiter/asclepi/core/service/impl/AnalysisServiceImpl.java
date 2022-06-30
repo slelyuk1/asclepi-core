@@ -82,15 +82,14 @@ public class AnalysisServiceImpl implements AnalysisService {
     @Override
     public List<Analysis> getForVisit(@NotNull Visit getRequest) {
         Analysis toFind = new Analysis();
-        toFind.setVisit(getRequest);
+        toFind.setVisit(Visit.fromId(getRequest.getId()));
         return repository.findAll(Example.of(toFind));
     }
 
     @Override
     public List<Analysis> getForDiseaseHistory(@NotNull DiseaseHistory history) {
         Analysis toFind = new Analysis();
-        Visit visitToSearchBy = Visit.fromId(new VisitId(history.getId(), null));
-        toFind.setVisit(visitToSearchBy);
+        toFind.setVisit(Visit.fromId(new VisitId(history.getId(), null)));
         return repository.findAll(Example.of(toFind));
     }
 }

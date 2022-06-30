@@ -1,6 +1,8 @@
 package com.jupiter.asclepi.core.repository.entity;
 
+import com.jupiter.asclepi.core.repository.converter.PathAttributeConverter;
 import com.jupiter.asclepi.core.repository.entity.analysis.Analysis;
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,13 +17,14 @@ import java.nio.file.Path;
 @Setter
 @ToString
 @Entity
-public class Document {
+public class Document implements CustomPersistable<BigInteger> {
 
     @Id
     @GeneratedValue
     private BigInteger id;
 
     @Column(nullable = false)
+    @Convert(converter = PathAttributeConverter.class)
     private Path path;
 
     private String description;

@@ -22,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -76,7 +77,7 @@ public class DiseaseHistoryServiceImpl implements DiseaseHistoryService {
     @Override
     public List<DiseaseHistory> getForClient(Client client) {
         DiseaseHistory toFind = new DiseaseHistory();
-        toFind.setClient(client);
+        toFind.setClient(Client.fromId(client.getId()));
         return repository.findAll(Example.of(toFind));
     }
 }

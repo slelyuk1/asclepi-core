@@ -4,6 +4,7 @@ import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
 import com.jupiter.asclepi.core.repository.helper.api.CreationData;
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +13,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 @Entity(name = "consultation")
 @EntityListeners(AuditingEntityListener.class)
-public class Consultation implements CreationAware<String> {
+public class Consultation implements CustomPersistable<ConsultationId>, CreationAware<String> {
 
     @EmbeddedId
     private ConsultationId id;
@@ -29,11 +29,10 @@ public class Consultation implements CreationAware<String> {
     @MapsId("visitId")
     private Visit visit;
 
-    @NotNull
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Anamnesis anamnesis;
 
-    @NotEmpty
+    @Column(nullable = false)
     private String inspection;
 
     @Embedded

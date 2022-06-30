@@ -12,8 +12,6 @@ public interface AnalysisToInfoConverter extends Converter<Analysis, AnalysisInf
 
     @Override
     @Mapping(target = "analysis", source = "id")
-    @Mapping(target = "title")
-    @Mapping(target = "summary")
     AnalysisInfo convert(Analysis source);
 
 }

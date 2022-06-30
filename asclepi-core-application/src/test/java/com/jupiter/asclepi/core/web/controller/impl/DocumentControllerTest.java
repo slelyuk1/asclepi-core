@@ -227,7 +227,7 @@ class DocumentControllerTest extends AbstractDocumentTest {
     }
 
     // todo maybe use dochelper in responses too?
-    private static List<FieldDescriptor> generateInfoFieldDescriptors() {
+    public static List<FieldDescriptor> generateInfoFieldDescriptors() {
         List<FieldDescriptor> infoDescriptors = new ArrayList<>(List.of(
                 fieldWithPath("id").description("ID of the document in the system").type(JsonFieldType.NUMBER),
                 fieldWithPath("path").description("Path of the document in the system").type(JsonFieldType.STRING),

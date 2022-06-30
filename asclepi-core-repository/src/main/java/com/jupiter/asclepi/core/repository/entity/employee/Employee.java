@@ -1,7 +1,9 @@
 package com.jupiter.asclepi.core.repository.entity.employee;
 
+import com.jupiter.asclepi.core.repository.converter.RoleAttributeConverter;
 import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
 import com.jupiter.asclepi.core.repository.helper.api.CreationData;
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,34 +12,32 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Employee implements CreationAware<String> {
+public class Employee implements CustomPersistable<Integer>, CreationAware<String> {
 
     @Id
     @GeneratedValue
     private Integer id;
 
-    @NotBlank
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String login;
 
-    @NotBlank
+    @Column(nullable = false)
     private String password;
 
-    @NotNull
+    @Column(nullable = false)
+    @Convert(converter = RoleAttributeConverter.class)
     private Role role;
 
-    @NotBlank
+    @Column(nullable = false)
     private String name;
 
-    @NotBlank
+    @Column(nullable = false)
     private String surname;
 
     private String middleName;

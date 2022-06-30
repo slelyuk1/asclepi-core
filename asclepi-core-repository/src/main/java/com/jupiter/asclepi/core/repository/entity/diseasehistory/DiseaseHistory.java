@@ -5,6 +5,7 @@ import com.jupiter.asclepi.core.repository.entity.diagnosis.Diagnosis;
 import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.helper.api.CreationAware;
 import com.jupiter.asclepi.core.repository.helper.api.CreationData;
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,7 +22,7 @@ import java.util.List;
 @ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class DiseaseHistory implements CreationAware<String> {
+public class DiseaseHistory implements CustomPersistable<DiseaseHistoryId>, CreationAware<String> {
 
     @EmbeddedId
     private DiseaseHistoryId id;

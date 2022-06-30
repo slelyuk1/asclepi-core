@@ -5,8 +5,9 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Embeddable
 @Getter
@@ -17,6 +18,7 @@ public class CreationData<T> {
     private T by;
 
     @CreatedDate
-    private Date when;
+    @Column(nullable = false)
+    private LocalDateTime when;
 
 }
