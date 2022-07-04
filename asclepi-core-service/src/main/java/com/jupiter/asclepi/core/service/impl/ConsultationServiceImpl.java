@@ -56,16 +56,6 @@ public class ConsultationServiceImpl extends AbstractService<Consultation, Consu
     }
 
     @Override
-    public Boolean delete(@Valid @NotNull GetConsultationRequest deleteRequest) {
-        return getOne(deleteRequest)
-                .map(toDelete -> {
-                    getRepository().delete(toDelete);
-                    return true;
-                })
-                .orElse(false);
-    }
-
-    @Override
     public Consultation edit(@Valid @NotNull EditConsultationRequest editRequest) {
         Consultation toCopyFrom = Objects.requireNonNull(getConversionService().convert(editRequest, Consultation.class));
         Consultation toCopyTo = getOne(editRequest.getConsultation())

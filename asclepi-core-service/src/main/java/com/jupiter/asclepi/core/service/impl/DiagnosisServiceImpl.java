@@ -49,16 +49,6 @@ public class DiagnosisServiceImpl extends AbstractService<Diagnosis, DiagnosisId
     }
 
     @Override
-    public Boolean delete(@Valid @NotNull GetDiagnosisRequest deleteRequest) {
-        return getOne(deleteRequest)
-                .map(toDelete -> {
-                    getRepository().delete(toDelete);
-                    return true;
-                })
-                .orElse(false);
-    }
-
-    @Override
     public Diagnosis edit(@Valid @NotNull EditDiagnosisRequest editRequest) {
         Diagnosis toCopyTo = getOne(editRequest.getDiagnosis())
                 .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getDiagnosis()));

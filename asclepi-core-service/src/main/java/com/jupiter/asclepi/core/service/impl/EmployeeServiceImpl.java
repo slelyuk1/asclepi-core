@@ -54,16 +54,6 @@ public class EmployeeServiceImpl extends AbstractService<Employee, Integer> impl
     }
 
     @Override
-    public Boolean delete(@Valid @NotNull Integer toDeleteId) {
-        return getRepository().findById(toDeleteId)
-                .map(toDelete -> {
-                    getRepository().delete(toDelete);
-                    return true;
-                })
-                .orElse(false);
-    }
-
-    @Override
     public Employee edit(@Valid @NotNull EditEmployeeRequest editRequest) {
         Employee existing = getRepository().findById(editRequest.getId())
                 .orElseThrow(() -> new NonExistentIdException("Employee", editRequest.getId()));

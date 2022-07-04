@@ -40,16 +40,6 @@ public class AnamnesisServiceImpl extends AbstractService<Anamnesis, BigInteger>
     }
 
     @Override
-    public Boolean delete(@Valid @NotNull BigInteger toDeleteId) {
-        return getRepository().findById(toDeleteId)
-                .map(toDelete -> {
-                    getRepository().delete(toDelete);
-                    return true;
-                })
-                .orElse(false);
-    }
-
-    @Override
     public List<Anamnesis> getForDiseaseHistory(@Valid @NotNull DiseaseHistory history) {
         Anamnesis toFind = new Anamnesis();
         toFind.setDiseaseHistory(DiseaseHistory.fromId(history.getId()));

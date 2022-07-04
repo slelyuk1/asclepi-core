@@ -13,5 +13,5 @@ public interface CrudService<
         GetAllService<EntityType, IdType>,
         CreateService<CreateRequestType, EntityType, IdType>,
         EditService<EditRequestType, EntityType>,
-        DeleteService<GetRequestType, DeleteResponseType> {
+        DeleteService<GetRequestType, EntityType, IdType> {
 }

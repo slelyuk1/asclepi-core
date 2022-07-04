@@ -42,16 +42,6 @@ public class DocumentServiceImpl extends AbstractService<Document, BigInteger> i
     }
 
     @Override
-    public Boolean delete(@Valid @NotNull BigInteger toDeleteId) {
-        return getRepository().findById(toDeleteId)
-                .map(toDelete -> {
-                    getRepository().delete(toDelete);
-                    return true;
-                })
-                .orElse(false);
-    }
-
-    @Override
     public Document edit(@Valid @NotNull EditDocumentRequest editRequest) {
         Document toCopyFrom = Objects.requireNonNull(getConversionService().convert(editRequest, Document.class));
         Document existing = getOne(editRequest.getId())

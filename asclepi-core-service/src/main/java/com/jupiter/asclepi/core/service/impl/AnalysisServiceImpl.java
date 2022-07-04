@@ -50,16 +50,6 @@ public class AnalysisServiceImpl extends AbstractService<Analysis, AnalysisId> i
     }
 
     @Override
-    public Boolean delete(@Valid @NotNull GetAnalysisRequest deleteRequest) {
-        return getOne(deleteRequest)
-                .map(toDelete -> {
-                    getRepository().delete(toDelete);
-                    return true;
-                })
-                .orElse(false);
-    }
-
-    @Override
     public Analysis edit(@Valid @NotNull EditAnalysisRequest editRequest) {
         Analysis toCopyTo = getOne(editRequest.getAnalysis())
                 .orElseThrow(() -> new NonExistentIdException("Analysis", editRequest.getAnalysis()));

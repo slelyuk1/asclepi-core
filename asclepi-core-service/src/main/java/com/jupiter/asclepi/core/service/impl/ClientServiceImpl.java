@@ -41,16 +41,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Boolean delete(@Valid @NotNull BigInteger toDeleteId) {
-        return repository.findById(toDeleteId)
-                .map(toDelete -> {
-                    repository.delete(toDelete);
-                    return true;
-                })
-                .orElse(false);
-    }
-
-    @Override
     public Client edit(@Valid @NotNull EditClientRequest editRequest) {
         Client existing = repository.findById(editRequest.getId())
                 .orElseThrow(() -> new NonExistentIdException("Client", editRequest.getId()));
