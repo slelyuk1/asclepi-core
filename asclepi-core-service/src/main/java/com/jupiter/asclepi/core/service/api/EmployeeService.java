@@ -15,6 +15,11 @@ public interface EmployeeService extends CrudService<Integer, CreateEmployeeRequ
         return Employee.class;
     }
 
+    @Override
+    default Class<Integer> getIdClass() {
+        return Integer.class;
+    }
+
     Optional<Employee> findEmployeeByLogin(@NotNull String login);
 
 }

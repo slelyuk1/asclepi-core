@@ -59,8 +59,4 @@ public class ClientServiceImpl implements ClientService {
         return repository.save(existing);
     }
 
-    @Override
-    public Optional<Client> getOne(@Valid @NotNull BigInteger clientId) {
-        return repository.findById(clientId);
-    }
 }

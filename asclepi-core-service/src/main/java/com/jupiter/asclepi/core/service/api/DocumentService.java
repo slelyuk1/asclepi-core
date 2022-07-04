@@ -13,4 +13,9 @@ public interface DocumentService extends CrudService<BigInteger, CreateDocumentR
     default Class<Document> getEntityClass() {
         return Document.class;
     }
+
+    @Override
+    default Class<BigInteger> getIdClass() {
+        return BigInteger.class;
+    }
 }

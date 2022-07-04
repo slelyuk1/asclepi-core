@@ -15,8 +15,13 @@ import java.util.List;
 public interface AnalysisService extends CrudService<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, Analysis, AnalysisId, Boolean> {
 
     @Override
-    default Class<Analysis> getEntityClass(){
+    default Class<Analysis> getEntityClass() {
         return Analysis.class;
+    }
+
+    @Override
+    default Class<AnalysisId> getIdClass() {
+        return AnalysisId.class;
     }
 
     List<Analysis> getForVisit(@NotNull Visit visit);

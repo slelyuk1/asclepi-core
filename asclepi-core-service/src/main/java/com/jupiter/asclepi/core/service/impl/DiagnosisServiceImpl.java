@@ -68,12 +68,6 @@ public class DiagnosisServiceImpl extends AbstractService<Diagnosis, DiagnosisId
     }
 
     @Override
-    public Optional<Diagnosis> getOne(@Valid @NotNull GetDiagnosisRequest getRequest) {
-        DiagnosisId toFind = Objects.requireNonNull(getConversionService().convert(getRequest, DiagnosisId.class));
-        return getRepository().findById(toFind);
-    }
-
-    @Override
     public List<Diagnosis> getForDiseaseHistory(@NotNull DiseaseHistory diseaseHistory) {
         Diagnosis toFind = new Diagnosis();
         toFind.setDiseaseHistory(DiseaseHistory.fromId(diseaseHistory.getId()));

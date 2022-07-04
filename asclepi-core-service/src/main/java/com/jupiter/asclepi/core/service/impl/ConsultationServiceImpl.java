@@ -80,12 +80,6 @@ public class ConsultationServiceImpl extends AbstractService<Consultation, Consu
     }
 
     @Override
-    public Optional<Consultation> getOne(@Valid @NotNull GetConsultationRequest getRequest) {
-        ConsultationId id = Objects.requireNonNull(getConversionService().convert(getRequest, ConsultationId.class));
-        return getRepository().findById(id);
-    }
-
-    @Override
     public List<Consultation> getForVisit(@NotNull Visit visit) {
         Consultation toFind = new Consultation();
         toFind.setVisit(Visit.fromId(visit.getId()));

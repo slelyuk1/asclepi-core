@@ -9,7 +9,7 @@ public interface CrudService<
         EntityType extends Persistable<IdType>, IdType,
         DeleteResponseType
         > extends
-        GetService<GetRequestType, EntityType>,
+        GetService<GetRequestType, EntityType, IdType>,
         GetAllService<EntityType, IdType>,
         CreateService<CreateRequestType, EntityType, IdType>,
         EditService<EditRequestType, EntityType>,

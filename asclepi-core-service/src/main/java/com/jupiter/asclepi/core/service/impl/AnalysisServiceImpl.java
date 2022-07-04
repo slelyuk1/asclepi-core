@@ -69,13 +69,6 @@ public class AnalysisServiceImpl extends AbstractService<Analysis, AnalysisId> i
     }
 
     @Override
-    public Optional<Analysis> getOne(@Valid @NotNull GetAnalysisRequest getRequest) {
-        AnalysisId analysisId = Objects.requireNonNull(getConversionService().convert(getRequest, AnalysisId.class));
-
-        return getRepository().findById(analysisId);
-    }
-
-    @Override
     public List<Analysis> getForVisit(@NotNull Visit getRequest) {
         Analysis toFind = new Analysis();
         toFind.setVisit(Visit.fromId(getRequest.getId()));

@@ -20,6 +20,11 @@ public interface ConsultationService
         return Consultation.class;
     }
 
+    @Override
+    default Class<ConsultationId> getIdClass() {
+        return ConsultationId.class;
+    }
+
     List<Consultation> getForVisit(@NotNull Visit visit);
 
     List<Consultation> getForDiseaseHistory(@NotNull DiseaseHistory history);

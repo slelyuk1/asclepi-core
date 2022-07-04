@@ -68,12 +68,6 @@ public class DiseaseHistoryServiceImpl extends AbstractService<DiseaseHistory, D
     }
 
     @Override
-    public Optional<DiseaseHistory> getOne(@Valid @NotNull GetDiseaseHistoryRequest getRequest) {
-        DiseaseHistoryId id = Objects.requireNonNull(getConversionService().convert(getRequest, DiseaseHistoryId.class));
-        return getRepository().findById(id);
-    }
-
-    @Override
     public List<DiseaseHistory> getForClient(Client client) {
         DiseaseHistory toFind = new DiseaseHistory();
         toFind.setClient(Client.fromId(client.getId()));

@@ -50,11 +50,6 @@ public class AnamnesisServiceImpl extends AbstractService<Anamnesis, BigInteger>
     }
 
     @Override
-    public Optional<Anamnesis> getOne(@Valid @NotNull BigInteger getRequest) {
-        return getRepository().findById(getRequest);
-    }
-
-    @Override
     public List<Anamnesis> getForDiseaseHistory(@Valid @NotNull DiseaseHistory history) {
         Anamnesis toFind = new Anamnesis();
         toFind.setDiseaseHistory(DiseaseHistory.fromId(history.getId()));

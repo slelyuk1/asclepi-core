@@ -14,8 +14,13 @@ import java.util.List;
 public interface DiagnosisService extends CrudService<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, Diagnosis, DiagnosisId, Boolean> {
 
     @Override
-    default Class<Diagnosis> getEntityClass(){
+    default Class<Diagnosis> getEntityClass() {
         return Diagnosis.class;
+    }
+
+    @Override
+    default Class<DiagnosisId> getIdClass() {
+        return DiagnosisId.class;
     }
 
     List<Diagnosis> getForDiseaseHistory(@NotNull DiseaseHistory diseaseHistory);

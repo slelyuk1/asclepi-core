@@ -14,4 +14,9 @@ public interface ClientService
     default Class<Client> getEntityClass(){
         return Client.class;
     }
+
+    @Override
+    default Class<BigInteger> getIdClass(){
+        return BigInteger.class;
+    }
 }

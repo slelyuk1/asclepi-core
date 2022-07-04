@@ -77,11 +77,6 @@ public class EmployeeServiceImpl extends AbstractService<Employee, Integer> impl
     }
 
     @Override
-    public Optional<Employee> getOne(@Valid @NotNull Integer employeeId) {
-        return getRepository().findById(employeeId);
-    }
-
-    @Override
     public Optional<Employee> findEmployeeByLogin(@NotNull String login) {
         Employee toSearch = new Employee();
         toSearch.setLogin(login);

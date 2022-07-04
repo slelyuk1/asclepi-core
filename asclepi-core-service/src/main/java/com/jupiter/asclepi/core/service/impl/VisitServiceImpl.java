@@ -57,12 +57,6 @@ public class VisitServiceImpl extends AbstractService<Visit, VisitId> implements
     }
 
     @Override
-    public Optional<Visit> getOne(@Valid @NotNull GetVisitRequest getRequest) {
-        VisitId id = Objects.requireNonNull(getConversionService().convert(getRequest, VisitId.class));
-        return getRepository().findById(id);
-    }
-
-    @Override
     public List<Visit> getForDiseaseHistory(DiseaseHistory diseaseHistory) {
         Visit toFind = new Visit();
         toFind.setDiseaseHistory(DiseaseHistory.fromId(diseaseHistory.getId()));

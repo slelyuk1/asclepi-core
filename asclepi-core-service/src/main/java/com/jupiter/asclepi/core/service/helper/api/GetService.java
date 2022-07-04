@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
+@Deprecated
 public interface GetService<RequestType, GettingType> {
     Optional<GettingType> getOne(@Valid @NotNull RequestType getRequest);
 }

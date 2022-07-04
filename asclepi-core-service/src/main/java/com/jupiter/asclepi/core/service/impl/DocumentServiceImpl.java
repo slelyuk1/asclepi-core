@@ -60,9 +60,4 @@ public class DocumentServiceImpl extends AbstractService<Document, BigInteger> i
         return getRepository().save(existing);
     }
 
-    @Override
-    public Optional<Document> getOne(@Valid @NotNull BigInteger documentId) {
-        return getRepository().findById(documentId);
-    }
-
 }

@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface Service<EntityType extends Persistable<IdType>, IdType> {
 
+    Class<EntityType> getEntityClass();
+
+    Class<IdType> getIdClass();
+
     ConversionService getConversionService();
 
     JpaRepository<EntityType, IdType> getRepository();

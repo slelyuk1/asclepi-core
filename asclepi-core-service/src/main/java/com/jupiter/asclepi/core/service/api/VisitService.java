@@ -7,21 +7,26 @@ import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.repository.entity.visit.VisitId;
 import com.jupiter.asclepi.core.service.helper.api.EditService;
-import com.jupiter.asclepi.core.service.helper.api.GetService;
 import com.jupiter.asclepi.core.service.helper.api.v2.CreateService;
 import com.jupiter.asclepi.core.service.helper.api.v2.GetAllService;
+import com.jupiter.asclepi.core.service.helper.api.v2.GetService;
 
 import java.util.List;
 
 public interface VisitService extends
         CreateService<CreateVisitRequest, Visit, VisitId>,
         EditService<EditVisitRequest, Visit>,
-        GetService<GetVisitRequest, Visit>,
+        GetService<GetVisitRequest, Visit, VisitId>,
         GetAllService<Visit, VisitId> {
 
     @Override
     default Class<Visit> getEntityClass() {
         return Visit.class;
+    }
+
+    @Override
+    default Class<VisitId> getIdClass() {
+        return VisitId.class;
     }
 
     List<Visit> getForDiseaseHistory(DiseaseHistory diseaseHistory);
