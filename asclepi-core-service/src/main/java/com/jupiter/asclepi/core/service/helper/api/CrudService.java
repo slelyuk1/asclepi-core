@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.service.helper.api;
 
+@Deprecated
 public interface CrudService<GetRequestType, CreateRequestType, EditRequestType, ResponseType, DeleteResponseType> extends
         GetService<GetRequestType, ResponseType>,
         GetAllService<ResponseType>,

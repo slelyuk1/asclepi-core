@@ -9,6 +9,7 @@ import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -29,11 +30,14 @@ public class ClientServiceImpl implements ClientService {
     private final ConversionService conversionService;
     private final ClientRepository repository;
 
+    @Override
+    public ConversionService getConversionService() {
+        return conversionService;
+    }
 
     @Override
-    public Client create(@Valid @NotNull CreateClientRequest createRequest) {
-        Client toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Client.class));
-        return repository.save(toCreate);
+    public JpaRepository<Client, BigInteger> getRepository() {
+        return repository;
     }
 
     @Override
@@ -53,11 +57,6 @@ public class ClientServiceImpl implements ClientService {
         Client toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Client.class));
         CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
         return repository.save(existing);
-    }
-
-    @Override
-    public List<Client> getAll() {
-        return repository.findAll();
     }
 
     @Override

@@ -2,15 +2,15 @@ package com.jupiter.asclepi.core.service.impl;
 
 import com.jupiter.asclepi.core.model.request.document.CreateDocumentRequest;
 import com.jupiter.asclepi.core.model.request.document.EditDocumentRequest;
-import com.jupiter.asclepi.core.repository.DocumentRepository;
 import com.jupiter.asclepi.core.repository.entity.Document;
 import com.jupiter.asclepi.core.repository.entity.analysis.Analysis;
 import com.jupiter.asclepi.core.service.api.AnalysisService;
 import com.jupiter.asclepi.core.service.api.DocumentService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
+import com.jupiter.asclepi.core.service.helper.api.v2.AbstractService;
 import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
-import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -21,30 +21,31 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
 @Validated
-public class DocumentServiceImpl implements DocumentService {
-
-    private final DocumentRepository repository;
-    private final ConversionService conversionService;
+public class DocumentServiceImpl extends AbstractService<Document, BigInteger> implements DocumentService {
 
     private final AnalysisService analysisService;
 
+    public DocumentServiceImpl(ConversionService conversionService,
+                               JpaRepository<Document, BigInteger> repository,
+                               AnalysisService analysisService) {
+        super(conversionService, repository);
+        this.analysisService = analysisService;
+    }
+
     @Override
-    public Document create(@Valid @NotNull CreateDocumentRequest createRequest) {
-        Document toCreate = Objects.requireNonNull(conversionService.convert(createRequest, Document.class));
-        Analysis analysis = analysisService.getOne(createRequest.getAnalysis())
-                .orElseThrow(() -> new NonExistentIdException("Analysis", createRequest.getAnalysis()));
+    public void preProcessBeforeCreation(CreateDocumentRequest request, Document toCreate) {
+        Analysis analysis = analysisService.getOne(request.getAnalysis())
+                .orElseThrow(() -> new NonExistentIdException("Analysis", request.getAnalysis()));
         toCreate.setAnalysis(analysis);
-        return repository.save(toCreate);
     }
 
     @Override
     public Boolean delete(@Valid @NotNull BigInteger toDeleteId) {
-        return repository.findById(toDeleteId)
+        return getRepository().findById(toDeleteId)
                 .map(toDelete -> {
-                    repository.delete(toDelete);
+                    getRepository().delete(toDelete);
                     return true;
                 })
                 .orElse(false);
@@ -52,21 +53,16 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public Document edit(@Valid @NotNull EditDocumentRequest editRequest) {
-        Document toCopyFrom = Objects.requireNonNull(conversionService.convert(editRequest, Document.class));
+        Document toCopyFrom = Objects.requireNonNull(getConversionService().convert(editRequest, Document.class));
         Document existing = getOne(editRequest.getId())
                 .orElseThrow(() -> new NonExistentIdException("Document", editRequest.getId()));
         CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
-        return repository.save(existing);
-    }
-
-    @Override
-    public List<Document> getAll() {
-        return repository.findAll();
+        return getRepository().save(existing);
     }
 
     @Override
     public Optional<Document> getOne(@Valid @NotNull BigInteger documentId) {
-        return repository.findById(documentId);
+        return getRepository().findById(documentId);
     }
 
 }

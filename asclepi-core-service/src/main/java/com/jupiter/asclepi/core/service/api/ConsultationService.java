@@ -4,15 +4,21 @@ import com.jupiter.asclepi.core.model.request.consultation.CreateConsultationReq
 import com.jupiter.asclepi.core.model.request.consultation.EditConsultationRequest;
 import com.jupiter.asclepi.core.model.request.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.repository.entity.consultation.Consultation;
+import com.jupiter.asclepi.core.repository.entity.consultation.ConsultationId;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
-import com.jupiter.asclepi.core.service.helper.api.CrudService;
+import com.jupiter.asclepi.core.service.helper.api.v2.CrudService;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface ConsultationService
-        extends CrudService<GetConsultationRequest, CreateConsultationRequest, EditConsultationRequest, Consultation, Boolean> {
+        extends CrudService<GetConsultationRequest, CreateConsultationRequest, EditConsultationRequest, Consultation, ConsultationId, Boolean> {
+
+    @Override
+    default Class<Consultation> getEntityClass() {
+        return Consultation.class;
+    }
 
     List<Consultation> getForVisit(@NotNull Visit visit);
 
