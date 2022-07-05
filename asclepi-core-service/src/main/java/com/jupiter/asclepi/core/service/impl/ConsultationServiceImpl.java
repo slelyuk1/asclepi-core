@@ -2,7 +2,6 @@ package com.jupiter.asclepi.core.service.impl;
 
 import com.jupiter.asclepi.core.model.request.consultation.CreateConsultationRequest;
 import com.jupiter.asclepi.core.model.request.consultation.EditConsultationRequest;
-import com.jupiter.asclepi.core.model.request.consultation.GetConsultationRequest;
 import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.repository.entity.consultation.Consultation;
 import com.jupiter.asclepi.core.repository.entity.consultation.ConsultationId;
@@ -13,7 +12,6 @@ import com.jupiter.asclepi.core.service.api.ConsultationService;
 import com.jupiter.asclepi.core.service.api.VisitService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.helper.api.v2.AbstractService;
-import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,11 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Transactional
@@ -56,17 +52,12 @@ public class ConsultationServiceImpl extends AbstractService<Consultation, Consu
     }
 
     @Override
-    public Consultation edit(@Valid @NotNull EditConsultationRequest editRequest) {
-        Consultation toCopyFrom = Objects.requireNonNull(getConversionService().convert(editRequest, Consultation.class));
-        Consultation toCopyTo = getOne(editRequest.getConsultation())
-                .orElseThrow(() -> new NonExistentIdException("Visit", editRequest.getConsultation()));
-        if (Objects.nonNull(editRequest.getAnamnesisId())) {
-            Anamnesis toSet = anamnesisService.getOne(editRequest.getAnamnesisId())
-                    .orElseThrow(() -> new NonExistentIdException("Anamnesis", editRequest.getAnamnesisId()));
+    public void preProcessBeforeEditing(EditConsultationRequest request, Consultation existing, Consultation toCopyFrom) {
+        if (Objects.nonNull(request.getAnamnesisId())) {
+            Anamnesis toSet = anamnesisService.getOne(request.getAnamnesisId())
+                    .orElseThrow(() -> new NonExistentIdException("Anamnesis", request.getAnamnesisId()));
             toCopyFrom.setAnamnesis(toSet);
         }
-        CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, toCopyTo);
-        return getRepository().save(toCopyTo);
     }
 
     @Override

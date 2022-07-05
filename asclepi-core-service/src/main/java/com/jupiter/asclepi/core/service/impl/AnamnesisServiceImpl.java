@@ -17,7 +17,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AnamnesisServiceImpl extends AbstractService<Anamnesis, BigInteger> implements AnamnesisService {

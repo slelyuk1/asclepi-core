@@ -4,11 +4,15 @@ import org.springframework.data.domain.Persistable;
 
 import java.io.Serializable;
 
-public interface CustomPersistable<T extends Serializable> extends Persistable<T> {
+public interface CustomPersistable<IdType extends Serializable> extends Persistable<IdType> {
 
     @Override
     default boolean isNew() {
         return null == getId();
+    }
+
+    default String getEntityName(){
+        return getClass().getSimpleName();
     }
 
 }

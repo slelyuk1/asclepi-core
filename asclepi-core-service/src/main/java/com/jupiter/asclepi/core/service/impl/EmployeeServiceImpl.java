@@ -6,9 +6,7 @@ import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.entity.employee.Role;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
-import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.helper.api.v2.AbstractService;
-import com.jupiter.asclepi.core.service.util.CustomBeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,10 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Transactional
@@ -54,16 +50,11 @@ public class EmployeeServiceImpl extends AbstractService<Employee, Integer> impl
     }
 
     @Override
-    public Employee edit(@Valid @NotNull EditEmployeeRequest editRequest) {
-        Employee existing = getRepository().findById(editRequest.getId())
-                .orElseThrow(() -> new NonExistentIdException("Employee", editRequest.getId()));
-        Employee toCopyFrom = Objects.requireNonNull(getConversionService().convert(editRequest, Employee.class));
+    public void preProcessBeforeEditing(EditEmployeeRequest request, Employee edited, Employee toCopyFrom) {
         String newLogin = toCopyFrom.getLogin();
-        if (!existing.getLogin().equals(newLogin) && employeeWithLoginExists(newLogin)) {
+        if (!edited.getLogin().equals(newLogin) && employeeWithLoginExists(newLogin)) {
             throw new LoginNotUniqueException(newLogin);
         }
-        CustomBeanUtils.copyPropertiesWithoutNull(toCopyFrom, existing);
-        return getRepository().save(existing);
     }
 
     @Override

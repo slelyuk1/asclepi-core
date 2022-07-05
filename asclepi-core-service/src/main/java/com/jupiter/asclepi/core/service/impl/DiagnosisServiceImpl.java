@@ -2,8 +2,6 @@ package com.jupiter.asclepi.core.service.impl;
 
 
 import com.jupiter.asclepi.core.model.request.diagnosis.CreateDiagnosisRequest;
-import com.jupiter.asclepi.core.model.request.diagnosis.EditDiagnosisRequest;
-import com.jupiter.asclepi.core.model.request.diagnosis.GetDiagnosisRequest;
 import com.jupiter.asclepi.core.model.request.history.GetDiseaseHistoryRequest;
 import com.jupiter.asclepi.core.repository.entity.diagnosis.Diagnosis;
 import com.jupiter.asclepi.core.repository.entity.diagnosis.DiagnosisId;
@@ -12,7 +10,6 @@ import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import com.jupiter.asclepi.core.service.helper.api.v2.AbstractService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,11 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Transactional
 @Validated
@@ -46,15 +40,6 @@ public class DiagnosisServiceImpl extends AbstractService<Diagnosis, DiagnosisId
         DiseaseHistory diseaseHistory = diseaseHistoryService.getOne(diseaseHistoryGetter)
                 .orElseThrow(() -> new NonExistentIdException("Disease history", diseaseHistoryGetter));
         toCreate.setId(new DiagnosisId(diseaseHistory.getId(), (int) getRepository().count()));
-    }
-
-    @Override
-    public Diagnosis edit(@Valid @NotNull EditDiagnosisRequest editRequest) {
-        Diagnosis toCopyTo = getOne(editRequest.getDiagnosis())
-                .orElseThrow(() -> new NonExistentIdException("Disease history", editRequest.getDiagnosis()));
-        Diagnosis toCopyFrom = Objects.requireNonNull(getConversionService().convert(editRequest, Diagnosis.class));
-        BeanUtils.copyProperties(toCopyFrom, toCopyTo);
-        return getRepository().save(toCopyTo);
     }
 
     @Override

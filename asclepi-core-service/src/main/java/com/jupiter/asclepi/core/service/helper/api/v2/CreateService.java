@@ -1,13 +1,14 @@
 package com.jupiter.asclepi.core.service.helper.api.v2;
 
+import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.data.domain.Persistable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
-public interface CreateService<RequestType, EntityType extends Persistable<IdType>, IdType>
+public interface CreateService<RequestType, EntityType extends CustomPersistable<IdType>, IdType extends Serializable>
         extends Service<EntityType, IdType> {
 
     default EntityType create(@Valid @NotNull RequestType request) {
