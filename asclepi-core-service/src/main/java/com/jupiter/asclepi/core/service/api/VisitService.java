@@ -6,10 +6,10 @@ import com.jupiter.asclepi.core.model.request.visit.GetVisitRequest;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
 import com.jupiter.asclepi.core.repository.entity.visit.VisitId;
-import com.jupiter.asclepi.core.service.helper.api.v2.CreateService;
-import com.jupiter.asclepi.core.service.helper.api.v2.EditService;
-import com.jupiter.asclepi.core.service.helper.api.v2.GetAllService;
-import com.jupiter.asclepi.core.service.helper.api.v2.GetService;
+import com.jupiter.asclepi.core.service.helper.api.CreateService;
+import com.jupiter.asclepi.core.service.helper.api.EditService;
+import com.jupiter.asclepi.core.service.helper.api.GetAllService;
+import com.jupiter.asclepi.core.service.helper.api.GetService;
 
 import java.util.List;
 

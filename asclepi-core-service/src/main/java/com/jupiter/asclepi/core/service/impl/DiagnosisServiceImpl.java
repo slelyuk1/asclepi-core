@@ -9,7 +9,7 @@ import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.service.api.DiagnosisService;
 import com.jupiter.asclepi.core.service.api.DiseaseHistoryService;
 import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
-import com.jupiter.asclepi.core.service.helper.api.v2.AbstractService;
+import com.jupiter.asclepi.core.service.helper.api.AbstractService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;

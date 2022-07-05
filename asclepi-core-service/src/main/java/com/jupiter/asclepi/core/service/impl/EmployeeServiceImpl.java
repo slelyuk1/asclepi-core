@@ -6,7 +6,7 @@ import com.jupiter.asclepi.core.repository.entity.employee.Employee;
 import com.jupiter.asclepi.core.repository.entity.employee.Role;
 import com.jupiter.asclepi.core.service.api.EmployeeService;
 import com.jupiter.asclepi.core.service.exception.employee.LoginNotUniqueException;
-import com.jupiter.asclepi.core.service.helper.api.v2.AbstractService;
+import com.jupiter.asclepi.core.service.helper.api.AbstractService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;

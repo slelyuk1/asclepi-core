@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.service.helper.api.v2;
+package com.jupiter.asclepi.core.service.helper.api;
 
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Persistable;

@@ -7,7 +7,7 @@ import com.jupiter.asclepi.core.repository.entity.consultation.Consultation;
 import com.jupiter.asclepi.core.repository.entity.consultation.ConsultationId;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
 import com.jupiter.asclepi.core.repository.entity.visit.Visit;
-import com.jupiter.asclepi.core.service.helper.api.v2.CrudService;
+import com.jupiter.asclepi.core.service.helper.api.CrudService;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;

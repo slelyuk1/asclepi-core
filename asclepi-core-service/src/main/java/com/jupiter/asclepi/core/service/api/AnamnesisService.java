@@ -3,9 +3,9 @@ package com.jupiter.asclepi.core.service.api;
 import com.jupiter.asclepi.core.model.request.anamnesis.CreateAnamnesisRequest;
 import com.jupiter.asclepi.core.repository.entity.Anamnesis;
 import com.jupiter.asclepi.core.repository.entity.diseasehistory.DiseaseHistory;
-import com.jupiter.asclepi.core.service.helper.api.v2.CreateService;
-import com.jupiter.asclepi.core.service.helper.api.v2.DeleteService;
-import com.jupiter.asclepi.core.service.helper.api.v2.GetService;
+import com.jupiter.asclepi.core.service.helper.api.CreateService;
+import com.jupiter.asclepi.core.service.helper.api.DeleteService;
+import com.jupiter.asclepi.core.service.helper.api.GetService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.jupiter.asclepi.core.service.helper.api.v2;
+package com.jupiter.asclepi.core.service.helper.api;
 
 import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
 import org.springframework.core.convert.ConversionService;
@@ -12,7 +12,7 @@ public abstract class AbstractService<EntityType extends CustomPersistable<IdTyp
     private final ConversionService conversionService;
     private final JpaRepository<EntityType, IdType> repository;
 
-    public AbstractService(ConversionService conversionService, JpaRepository<EntityType, IdType> repository) {
+    protected AbstractService(ConversionService conversionService, JpaRepository<EntityType, IdType> repository) {
         this.conversionService = conversionService;
         this.repository = repository;
     }
@@ -22,7 +22,6 @@ public abstract class AbstractService<EntityType extends CustomPersistable<IdTyp
         return conversionService;
     }
 
-    // todo use custom interface
     @Override
     public JpaRepository<EntityType, IdType> getRepository() {
         return repository;
