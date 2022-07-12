@@ -11,8 +11,4 @@ public interface CustomPersistable<IdType extends Serializable> extends Persista
         return null == getId();
     }
 
-    default String getEntityName(){
-        return getClass().getSimpleName();
-    }
-
 }

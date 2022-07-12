@@ -87,7 +87,7 @@ public class ClientTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedCreatedRequest(CreateClientRequest request) throws JsonProcessingException {
-        return post("/api/v1/client/create")
+        return post("/api/v1/client/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

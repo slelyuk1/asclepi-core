@@ -1,14 +1,17 @@
 package com.jupiter.asclepi.core.web.helper.api;
 
-import org.springframework.http.ResponseEntity;
+import com.jupiter.asclepi.core.service.helper.api.EditService;
+import org.springframework.data.domain.Persistable;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("unused")
-public interface PatchController<RequestType, ResponseType> {
+public interface PatchController<RequestType, EntityType extends Persistable<IdType>, IdType, ResponseType> extends Controller<ResponseType> {
 
-    @PatchMapping("/")
-    ResponseEntity<ResponseType> edit(@NotNull @RequestBody RequestType editRequest);
+    @PatchMapping
+    default ResponseType edit(RequestType editRequest) {
+        EntityType edited = getServiceForPatch().edit(editRequest);
+        return getConversionService().convert(edited, getResponseClass());
+    }
+
+    EditService<RequestType, EntityType, IdType> getServiceForPatch();
 }

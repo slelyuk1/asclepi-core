@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface ConsultationService
-        extends CrudService<GetConsultationRequest, CreateConsultationRequest, EditConsultationRequest, Consultation, ConsultationId, Boolean> {
+        extends CrudService<GetConsultationRequest, CreateConsultationRequest, EditConsultationRequest, Consultation, ConsultationId> {
 
     @Override
     default Class<Consultation> getEntityClass() {

@@ -97,7 +97,7 @@ public class EmployeeTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedCreateRequest(CreateEmployeeRequest request) throws JsonProcessingException {
-        return post("/api/v1/employee/create")
+        return post("/api/v1/employee/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

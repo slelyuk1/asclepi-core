@@ -43,7 +43,7 @@ public class DiseaseHistoryTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedCreatedRequest(CreateDiseaseHistoryRequest request) throws JsonProcessingException {
-        return post("/api/v1/diseaseHistory/create")
+        return post("/api/v1/diseaseHistory/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

@@ -73,7 +73,7 @@ public abstract class AbstractDocumentTest {
     }
 
     protected final MockHttpServletRequestBuilder generateCreateRequest(Map<String, Object> params) throws JsonProcessingException {
-        return post("/api/v1/document/create")
+        return post("/api/v1/document/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(params));
     }

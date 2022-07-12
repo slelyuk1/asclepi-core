@@ -62,7 +62,7 @@ public class VisitTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedCreateRequest(CreateVisitRequest request) throws JsonProcessingException {
-        return post("/api/v1/visit/create")
+        return post("/api/v1/visit/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

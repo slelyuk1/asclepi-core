@@ -8,7 +8,7 @@ import com.jupiter.asclepi.core.service.helper.api.CrudService;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
-public interface EmployeeService extends CrudService<Integer, CreateEmployeeRequest, EditEmployeeRequest, Employee, Integer, Boolean> {
+public interface EmployeeService extends CrudService<Integer, CreateEmployeeRequest, EditEmployeeRequest, Employee, Integer> {
 
     @Override
     default Class<Employee> getEntityClass() {

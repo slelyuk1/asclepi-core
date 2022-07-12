@@ -59,7 +59,7 @@ public class AnamnesisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedCreateRequest(CreateAnamnesisRequest request) throws JsonProcessingException {
-        return post("/api/v1/anamnesis/create")
+        return post("/api/v1/anamnesis/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

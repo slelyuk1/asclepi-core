@@ -11,7 +11,7 @@ import com.jupiter.asclepi.core.service.helper.api.CrudService;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public interface DiagnosisService extends CrudService<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, Diagnosis, DiagnosisId, Boolean> {
+public interface DiagnosisService extends CrudService<GetDiagnosisRequest, CreateDiagnosisRequest, EditDiagnosisRequest, Diagnosis, DiagnosisId> {
 
     @Override
     default Class<Diagnosis> getEntityClass() {

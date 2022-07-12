@@ -7,7 +7,7 @@ import com.jupiter.asclepi.core.service.helper.api.CrudService;
 
 import java.math.BigInteger;
 
-public interface DocumentService extends CrudService<BigInteger, CreateDocumentRequest, EditDocumentRequest, Document, BigInteger, Boolean> {
+public interface DocumentService extends CrudService<BigInteger, CreateDocumentRequest, EditDocumentRequest, Document, BigInteger> {
 
     @Override
     default Class<Document> getEntityClass() {

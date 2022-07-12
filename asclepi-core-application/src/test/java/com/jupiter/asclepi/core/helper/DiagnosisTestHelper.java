@@ -77,7 +77,7 @@ public class DiagnosisTestHelper {
     }
 
     public MockHttpServletRequestBuilder createMockedCreateRequest(CreateDiagnosisRequest request) throws JsonProcessingException {
-        return post("/api/v1/diagnosis/create")
+        return post("/api/v1/diagnosis/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request));
     }

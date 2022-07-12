@@ -1,5 +1,6 @@
 package com.jupiter.asclepi.core.service.helper.api;
 
+import com.jupiter.asclepi.core.service.exception.shared.NonExistentIdException;
 import org.springframework.data.domain.Persistable;
 
 import javax.validation.Valid;
@@ -12,6 +13,11 @@ public interface GetService<RequestType, EntityType extends Persistable<IdType>,
     default Optional<EntityType> getOne(@Valid @NotNull RequestType getRequest) {
         IdType id = Objects.requireNonNull(getConversionService().convert(getRequest, getIdClass()));
         return getRepository().findById(id);
+    }
+
+    default EntityType getOneOrThrow(@Valid @NotNull RequestType getRequest) {
+        return getOne(getRequest)
+                .orElseThrow(() -> new NonExistentIdException(getEntityName(), getRequest));
     }
 
 }

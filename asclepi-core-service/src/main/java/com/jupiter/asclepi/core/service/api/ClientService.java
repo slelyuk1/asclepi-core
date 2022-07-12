@@ -8,7 +8,7 @@ import com.jupiter.asclepi.core.service.helper.api.CrudService;
 import java.math.BigInteger;
 
 public interface ClientService
-        extends CrudService<BigInteger, CreateClientRequest, EditClientRequest, Client, BigInteger, Boolean> {
+        extends CrudService<BigInteger, CreateClientRequest, EditClientRequest, Client, BigInteger> {
 
     @Override
     default Class<Client> getEntityClass(){

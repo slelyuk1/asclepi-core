@@ -12,7 +12,7 @@ import com.jupiter.asclepi.core.service.helper.api.CrudService;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-public interface AnalysisService extends CrudService<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, Analysis, AnalysisId, Boolean> {
+public interface AnalysisService extends CrudService<GetAnalysisRequest, CreateAnalysisRequest, EditAnalysisRequest, Analysis, AnalysisId> {
 
     @Override
     default Class<Analysis> getEntityClass() {

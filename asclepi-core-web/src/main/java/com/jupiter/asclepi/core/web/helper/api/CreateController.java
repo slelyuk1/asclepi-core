@@ -1,18 +1,21 @@
 package com.jupiter.asclepi.core.web.helper.api;
 
+import com.jupiter.asclepi.core.service.helper.api.CreateService;
+import org.springframework.data.domain.Persistable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.validation.constraints.NotNull;
+public interface CreateController<RequestType, EntityType extends Persistable<IdType>, IdType, ResponseType>
+        extends Controller<ResponseType> {
 
-@SuppressWarnings("unused")
-public interface CreateController<RequestType, ResponseType> {
-
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<ResponseType> create(@NotNull @RequestBody RequestType createRequest);
+    default ResponseType create(RequestType createRequest) {
+        EntityType entity = getServiceForCreation().create(createRequest);
+        return getConversionService().convert(entity, getResponseClass());
+    }
+
+    CreateService<RequestType, EntityType, IdType> getServiceForCreation();
 
 }

@@ -14,4 +14,8 @@ public interface Service<EntityType extends Persistable<IdType>, IdType> {
 
     JpaRepository<EntityType, IdType> getRepository();
 
+    default String getEntityName(){
+        return getEntityClass().getSimpleName();
+    }
+
 }

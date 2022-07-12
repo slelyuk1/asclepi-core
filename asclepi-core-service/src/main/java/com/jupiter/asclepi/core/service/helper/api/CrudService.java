@@ -1,15 +1,12 @@
 package com.jupiter.asclepi.core.service.helper.api;
 
-import com.jupiter.asclepi.core.repository.helper.api.CustomPersistable;
-
-import java.io.Serializable;
+import org.springframework.data.domain.Persistable;
 
 public interface CrudService<
         GetRequestType,
         CreateRequestType,
         EditRequestType,
-        EntityType extends CustomPersistable<IdType>, IdType extends Serializable,
-        DeleteResponseType // todo remove
+        EntityType extends Persistable<IdType>, IdType
         > extends
         GetService<GetRequestType, EntityType, IdType>,
         GetAllService<EntityType, IdType>,
